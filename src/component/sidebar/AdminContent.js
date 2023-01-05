@@ -1,10 +1,13 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { UserIcon } from "../../utility/icon/icon";
 import { logoSidebar } from "../../utility/icon/LogoSidebar";
+import Dashboard from "../admin/Dashboard";
 import SelectPeriode from "../SelectPeriode";
 
 function AdminContent() {
   const [select, setSelect] = useState("Dashboard");
+  const router = useRouter();
   return (
     <>
       <div className="mt-2 mb-16 h-screen">
@@ -21,25 +24,22 @@ function AdminContent() {
           {logoSidebar.map((res, i) => {
             return (
               <button
+                key={i}
                 onClick={() => {
                   setSelect(res.name);
+                  router.push({
+                    pathname: "/",
+                    query: { component: res.name },
+                  });
                 }}
                 className="flex gap-2 p-2 justify-start w-full"
                 style={{
-                  stroke:
-                    select === res.name
-                      ? "rgb(234, 88, 12)"
-                      : "rgb(51, 65, 85)",
-                  backgroundColor:
-                    select === res.name ? "rgb(255, 247, 237)" : "white",
-                  WebkitTextFillColor:
-                    select === res.name
-                      ? "rgb(234, 88, 12)"
-                      : "rgb(51, 65, 85)",
+                  stroke: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
+                  backgroundColor: select === res.name ? "rgb(255, 247, 237)" : "white",
+                  WebkitTextFillColor: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
                 }}
               >
-                <span className="">{res.icon} </span>{" "}
-                <span className="font-semibold">{res.name}</span>
+                <span className="">{res.icon} </span> <span className="font-semibold">{res.name}</span>
               </button>
             );
           })}
