@@ -1,18 +1,19 @@
 import React from "react";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import imageSlide from "../../utility/img/gambarSlide1.png";
 
 const slideImages = [
   {
-    url: "https://i.ibb.co/FWFR1R3/gambar-Slide1.png",
+    url: imageSlide.src,
     caption: "Slide 1",
   },
   {
-    url: "https://i.ibb.co/FWFR1R3/gambar-Slide1.png",
+    url: imageSlide.src,
     caption: "Slide 2",
   },
   {
-    url: "https://i.ibb.co/FWFR1R3/gambar-Slide1.png",
+    url: imageSlide.src,
     caption: "Slide 3",
   },
 ];
