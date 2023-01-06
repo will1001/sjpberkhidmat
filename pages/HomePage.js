@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DropDownIcon, FacebookIcon, InstagramIcon, LinkedInIcon, SearchIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../src/utility/icon/icon";
 import Logo from "../src/utility/Logo";
 import Slideshow from "../src/component/homepage/SlideShow";
@@ -13,11 +13,16 @@ import KabarSjpBerkhidmat from "../src/component/homepage/KabarSjpBerkhidmat";
 import KategoriKabar from "../src/component/homepage/KategoriKabar";
 import imageKosong from "../src/utility/img/gambarKosong.png";
 import LogoPKS from "../src/utility/LogoPKS";
+import DropDownPublikasi from "../src/component/homepage/DropDownPublikasi";
 
 const HomePage = () => {
+  const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
+  const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
+
   return (
     <>
-      <div className="absolute w-[1350px]">
+      <div onClick={handlePublikasi} className={`${dropDownPublikasi === false ? "hidden" : "visible"} absolute w-[1350px] h-[4750px] mt-[650px] z-10 bg-opacity-50 bg-slate-600 `}></div>
+      <div className="w-[1350px] ">
         <div className="flex bg-[#374151] h-[24px] w-full px-20 justify-between">
           <p className="flex items-center">
             <span className="text-[10px] font-normal text-[#E5E7EB]"> Official Website&nbsp;</span>
@@ -47,13 +52,13 @@ const HomePage = () => {
             </button>
           </div>
         </div>
-        <div className="flex bg-white w-full h-[72px] px-20 justify-between">
+        <div className="flex bg-white w-full h-[72px] px-20 justify-between z-20">
           <Logo />
           <div className="flex items-center gap-4 text-[16px] font-medium text-[#374151]">
             <p className="cursor-pointer">Beranda</p>
             <p className="cursor-pointer">Pemilu 2024</p>
-            <p className="flex cursor-pointer stroke-[#374151]">
-              Publikasi <DropDownIcon />
+            <p onClick={handlePublikasi} className={`flex cursor-pointer ${dropDownPublikasi === false ? "stroke-[#374151]" : "stroke-[#FF5001] "} `}>
+              <span className={dropDownPublikasi === false ? "" : "text-[#FF5001] "}>Publikasi</span> <DropDownIcon />
             </p>
             <p className="flex cursor-pointer stroke-[#374151]">
               Pendaftaran Anggota <DropDownIcon />
@@ -69,6 +74,10 @@ const HomePage = () => {
             </button>
           </div>
         </div>
+        <div className={`${dropDownPublikasi === false ? "hidden" : "visible"} z-20`}>
+          <DropDownPublikasi />
+        </div>
+
         <div style={{ backgroundImage: `url(${bgImage.src})` }} className="h-[350px] bg-no-repeat bg-cover">
           <Slideshow />
         </div>
@@ -130,7 +139,7 @@ const HomePage = () => {
         <div className="flex h-[240px] bg-[#374151] justify-between items-center pt-[39px]">
           <div className="flex  pl-[70px]">
             <LogoPKS />
-            <p className="pl-[32px] w-[580px]">
+            <div className="pl-[32px] w-[580px]">
               <span className="text-[16px] text-white font-semibold">
                 DEWAN PENGURUS PUSAT <br /> PARTAI KEADILAN SEJAHTERA
               </span>
@@ -140,7 +149,7 @@ const HomePage = () => {
               </span>
               <hr className="border-t-2 border-[#6B7280] mt-[52px]" />
               <span className="text-[12px] text-[#6B7280]">©2022 INKOR, Indonesia Korea Joint Company</span>
-            </p>
+            </div>
           </div>
           <div className="flex flex-col gap-1 pr-[70px] ">
             <p className="text-white">Pemilu 2024</p>
