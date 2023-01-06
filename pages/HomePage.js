@@ -6,12 +6,19 @@ import CountDown from "../src/component/homepage/CountDown";
 import KabarTerbaru from "../src/component/homepage/KabarTerbaru";
 import DaftarSimpatisanButton from "../src/component/homepage/DaftarSimpatisanButton";
 import DaftarRelawanButton from "../src/component/homepage/DaftarRelawanButton";
+import bgImage from "../src/utility/img/sliderBg.png";
+import Publikasi from "../src/component/homepage/Publikasi";
+import bgImage2 from "../src/utility/img/bgDaftarSimpatisan.png";
+import KabarSjpBerkhidmat from "../src/component/homepage/KabarSjpBerkhidmat";
+import KategoriKabar from "../src/component/homepage/KategoriKabar";
+import imageKosong from "../src/utility/img/gambarKosong.png";
+import LogoPKS from "../src/utility/LogoPKS";
 
 const HomePage = () => {
   return (
     <>
-      <div className="">
-        <div className="flex bg-[#374151] h-[24px] w-screen px-20 justify-between">
+      <div className="absolute w-[1350px]">
+        <div className="flex bg-[#374151] h-[24px] w-full px-20 justify-between">
           <p className="flex items-center">
             <span className="text-[10px] font-normal text-[#E5E7EB]"> Official Website&nbsp;</span>
             <span className="text-[10px] font-semibold text-white">Suryadi Jaya Purnama</span>
@@ -40,7 +47,7 @@ const HomePage = () => {
             </button>
           </div>
         </div>
-        <div className="flex bg-white w-screen h-[72px] px-20 justify-between">
+        <div className="flex bg-white w-full h-[72px] px-20 justify-between">
           <Logo />
           <div className="flex items-center gap-4 text-[16px] font-medium text-[#374151]">
             <p className="cursor-pointer">Beranda</p>
@@ -62,7 +69,7 @@ const HomePage = () => {
             </button>
           </div>
         </div>
-        <div style={{ backgroundImage: `url(https://i.ibb.co/JFCwjG1/sliderBg.png)` }} className="h-[350px] bg-no-repeat bg-cover">
+        <div style={{ backgroundImage: `url(${bgImage.src})` }} className="h-[350px] bg-no-repeat bg-cover">
           <Slideshow />
         </div>
         <div className="flex flex-col bg-[#ffece4] pb-[118px]">
@@ -76,10 +83,7 @@ const HomePage = () => {
             <CountDown />
           </div>
           <div className="flex px-[160px] gap-24 mt-[55px]">
-            <div className="font-bold text-[32px] text-slate-700">
-              <p className="mb-8">Publikasi</p>
-              <img className="w-[540px] h-[420px] rounded-xl object-cover" src="https://i.ibb.co/QvdSb0s/Frame-2519.png" alt="Frame-2519" border="0"></img>
-            </div>
+            <Publikasi />
             <div className="flex flex-col gap-2 font-bold text-slate-700 text-[26px] pt-[40px] object-contain">
               <p className="mb-2">Kabar Terbaru</p>
               <KabarTerbaru />
@@ -89,12 +93,62 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="flex pl-[680px] pb-[62px] gap-8 items-end h-[408px] w-screen bg-cover bg-no-repeat" style={{ backgroundImage: "url(https://i.ibb.co/VVFbyjL/Frame-2531.png)" }}>
+        <div className="flex pl-[680px] pb-[62px] gap-8 items-end h-[408px]  bg-cover bg-no-repeat" style={{ backgroundImage: `url(${bgImage2.src})` }}>
           <div className="cursor-pointer">
             <DaftarSimpatisanButton />
           </div>
           <div className="cursor-pointer">
             <DaftarRelawanButton />
+          </div>
+        </div>
+        <div className="flex pt-[103px] pl-[70px] pr-[70px]">
+          <div>
+            <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kabar SJP Berkhidmat</p>
+            <KabarSjpBerkhidmat />
+            <KabarSjpBerkhidmat />
+            <KabarSjpBerkhidmat />
+            <KabarSjpBerkhidmat />
+            <KabarSjpBerkhidmat />
+            <KabarSjpBerkhidmat />
+          </div>
+          <div className="pl-[150px]">
+            <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kategori Kabar</p>
+            <KategoriKabar />
+            <img className="mt-[47px] w-[350px] h-[300px] rounded-xl" src={imageKosong.src} alt="gambar  " />
+          </div>
+        </div>
+        <div className="bg-[#4B5563] h-[1372px]">
+          <p className="text-[39px] font-bold text-white pt-[67px] pl-[70px]">Program</p>
+        </div>
+        <div className="flex h-[248px] bg-[#FF5001] pt-[65px]">
+          <p className="text-white text-[26px] font-bold pl-[180px]">Sampaikan Aspirasi Anda Consectetur ut duis vitae diam tincidunt diam quis nec commodo. Mattis elit rhoncus vel</p>
+          <div className="pr-[144px]">
+            <p className="text-[18px] text-white">Consectetur ut duis vitae diam tincidunt diam quis nec commodo. Mattis elit rhoncus vel parturient </p>
+            <button className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">Sampaikan Aspirasi</button>
+          </div>
+        </div>
+        <div className="flex h-[240px] bg-[#374151] justify-between items-center pt-[39px]">
+          <div className="flex  pl-[70px]">
+            <LogoPKS />
+            <p className="pl-[32px] w-[580px]">
+              <span className="text-[16px] text-white font-semibold">
+                DEWAN PENGURUS PUSAT <br /> PARTAI KEADILAN SEJAHTERA
+              </span>
+              <br />
+              <span className="text-[12px] text-[#D1D5DB]">
+                MD Building | Jalan TB.Simatupang No.82 Pasar Minggu, Jakarta 12520, Indonesia <br /> Phone +62 21 7884 2116, Fax +62 21 7884 6456, E-Mail humas@pks.id <br /> Digital Service Centre (Call Centre) PKS +62 21 300 158 88
+              </span>
+              <hr className="border-t-2 border-[#6B7280] mt-[52px]" />
+              <span className="text-[12px] text-[#6B7280]">©2022 INKOR, Indonesia Korea Joint Company</span>
+            </p>
+          </div>
+          <div className="flex flex-col gap-1 pr-[70px] ">
+            <p className="text-white">Pemilu 2024</p>
+            <p className="text-white">Publikasi</p>
+            <p className="text-white">Gallery</p>
+            <p className="text-white">Rumah Aspirasi</p>
+            <p className="text-white">Daftar Relawan</p>
+            <p className="text-white">Daftar Simpatisan</p>
           </div>
         </div>
       </div>
