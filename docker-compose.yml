@@ -1,0 +1,12 @@
+version: '3'
+services:
+  sjp-frontend:
+    container_name: sjp-frontend
+    build: ./
+    restart: always
+  nginx:
+    container_name: sjp-frontend-nginx
+    build: ./nginx
+    ports:
+      - 8085:80
+    restart: always
