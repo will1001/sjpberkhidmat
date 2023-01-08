@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { PatternFormat } from "react-number-format";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Simpatisan = () => {
+  const router = new useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
 
   const [kabupaten, setKabupaten] = useState([]);
@@ -10,6 +12,7 @@ const Simpatisan = () => {
   const [kelurahan, setKelurahan] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
+    id_relawan: "",
     nik: "",
     email: "",
     date_birth: "",
@@ -43,6 +46,11 @@ const Simpatisan = () => {
 
   const daftarSimpatisan = () => {
     axios.post(base_url + `user/simpatisan`, formData).then((res) => {
+      alert("Pendaftaran Berhasil!");
+      router.push({
+        pathname: "/",
+        query: { component: "Simpatisan" },
+      });
       console.log(res.data);
     });
   };
@@ -125,6 +133,9 @@ const Simpatisan = () => {
               id="gender"
               className="h-[40px] w-[363px] border text-[#374151] outline-0"
             >
+              <option value="" selected disabled>
+                Pilih Jenis Kelamin
+              </option>
               <option value="L">L</option>
               <option value="P">P</option>
             </select>

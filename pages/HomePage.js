@@ -93,7 +93,15 @@ const HomePage = ({ router }) => {
               </span>{" "}
               <DropDownIcon />
             </p>
-            <p className="flex cursor-pointer stroke-[#374151]">
+            <p
+              onClick={() => {
+                router.push({
+                  pathname: "Admin",
+                  query: { component: "Relawan" },
+                });
+              }}
+              className="flex cursor-pointer stroke-[#374151]"
+            >
               Pendaftaran Anggota <DropDownIcon />
             </p>
             <button>
