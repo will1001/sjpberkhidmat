@@ -14,8 +14,10 @@ import KategoriKabar from "../src/component/homepage/KategoriKabar";
 import imageKosong from "../src/utility/img/gambarKosong.png";
 import LogoPKS from "../src/utility/LogoPKS";
 import DropDownPublikasi from "../src/component/homepage/DropDownPublikasi";
+import { withRouter } from "next/router";
+import Daftar from "./Daftar";
 
-const HomePage = () => {
+const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
 
@@ -103,10 +105,15 @@ const HomePage = () => {
           </div>
         </div>
         <div className="flex pl-[680px] pb-[62px] gap-8 items-end h-[408px]  bg-cover bg-no-repeat" style={{ backgroundImage: `url(${bgImage2.src})` }}>
-          <div className="cursor-pointer">
+          <div
+            onClick={() => {
+              router.push("Daftar");
+            }}
+            className="cursor-pointer"
+          >
             <DaftarSimpatisanButton />
           </div>
-          <div className="cursor-pointer">
+          <div onClick={() => router.push("DaftarRelawan")} className="cursor-pointer">
             <DaftarRelawanButton />
           </div>
         </div>
@@ -165,4 +172,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default withRouter(HomePage);

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import KabarTerbaru from "./KabarTerbaru";
 
 const DropDownPublikasi = () => {
   const [selected, setSelected] = useState("button1");
@@ -33,7 +34,18 @@ const DropDownPublikasi = () => {
           Kesehatan
         </button>
       </div>
-      DropDownPublikasi
+      <div className="flex flex-col pt-[57px] gap-2">
+        <KabarTerbaru />
+        <KabarTerbaru />
+        <KabarTerbaru />
+        <KabarTerbaru />
+      </div>
+      <div className="flex flex-col pt-[57px] gap-2 pl-[91px]">
+        <KabarTerbaru />
+        <KabarTerbaru />
+        <KabarTerbaru />
+        <KabarTerbaru />
+      </div>
     </div>
   );
 };

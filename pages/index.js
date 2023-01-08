@@ -6,7 +6,6 @@ import HomePage from "./HomePage";
 export default function Home() {
   return (
     <>
-      {/* <Admin /> */}
       <HomePage />
     </>
   );
