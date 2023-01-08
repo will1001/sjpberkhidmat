@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 const Relawan = () => {
   const router = new useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
+
+  const [kabupaten, setKabupaten] = useState([]);
+  const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -15,22 +18,38 @@ const Relawan = () => {
     role: "relawan",
     phone: "",
     jabatan: "",
+    id_kabupaten: "",
+    id_kecamatan: "",
     target_desa: "",
     password: "",
   });
 
   useEffect(() => {
     axios
-      .get(base_url + "user/kelurahans")
-      .then((res) => setKelurahan(res.data));
-  }, []);
+      .get(base_url + "user/kabupaten")
+      .then((res) => setKabupaten(res.data));
+  }, [kabupaten, kecamatan, kelurahan]);
+
+  const changeKabupaten = (idKabupaten) => {
+    setFormData({ ...formData, id_kabupaten: idKabupaten });
+    axios.get(base_url + `user/kecamatan/${idKabupaten}`).then((res) => {
+      setKecamatan(res.data);
+    });
+  };
+
+  const changeKecamatan = (idKecamatan) => {
+    setFormData({ ...formData, id_kecamatan: idKecamatan });
+    axios.get(base_url + `user/kelurahan/${idKecamatan}`).then((res) => {
+      setKelurahan(res.data);
+    });
+  };
 
   const daftarRelawan = () => {
     axios.post(base_url + `user/register`, formData).then((res) => {
       console.log(res.data);
       alert("Pendaftaran Berhasil!");
       router.push({
-        pathname: "/",
+        pathname: "/Admin",
         query: { component: "Simpatisan" },
       });
     });
@@ -113,6 +132,54 @@ const Relawan = () => {
               </select>
             </div>
             {/* target desa */}
+            <div className="flex justify-between items-center pr-[140px]">
+              <label
+                htmlFor="kabupaten"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
+                Kabupaten Kota
+              </label>
+              <select
+                onChange={(e) => changeKabupaten(e.target.value)}
+                id="kabupaten"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
+                <option value="" disabled selected>
+                  Pilih Kabupaten
+                </option>
+                {kabupaten.data?.map((res, i) => {
+                  return (
+                    <option key={i} value={res._id}>
+                      {res.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="flex justify-between items-center pr-[140px]">
+              <label
+                htmlFor="kecamatan"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
+                Kecamatan
+              </label>
+              <select
+                onChange={(e) => changeKecamatan(e.target.value)}
+                id="kecamatan"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
+                <option value="" disabled selected>
+                  Pilih Kecamatan
+                </option>
+                {kecamatan.data?.map((res, i) => {
+                  return (
+                    <option key={i} value={res._id}>
+                      {res.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label
                 htmlFor="target_desa"

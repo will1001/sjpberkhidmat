@@ -7,6 +7,8 @@ const Simpatisan = () => {
   const router = new useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
 
+  const [relawan, setRelawan] = useState([]);
+
   const [kabupaten, setKabupaten] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
@@ -25,6 +27,7 @@ const Simpatisan = () => {
   });
 
   useEffect(() => {
+    axios.get(base_url + "user/relawan").then((res) => setRelawan(res.data));
     axios
       .get(base_url + "user/kabupaten")
       .then((res) => setKabupaten(res.data));
@@ -48,7 +51,7 @@ const Simpatisan = () => {
     axios.post(base_url + `user/simpatisan`, formData).then((res) => {
       alert("Pendaftaran Berhasil!");
       router.push({
-        pathname: "/",
+        pathname: "/Admin",
         query: { component: "Simpatisan" },
       });
       console.log(res.data);
@@ -69,12 +72,22 @@ const Simpatisan = () => {
               Relawan Pengajak (Opsional)
             </label>
             <select
+              onChange={(e) =>
+                setFormData({ ...formData, id_relawan: e.target.value })
+              }
               id="pengajak"
               className="h-[40px] w-[363px] border text-[#374151]"
             >
-              <option value="Chandra Pradana">Chandra Pradana</option>
-              <option value="Pengajak1">Pengajak1</option>
-              <option value="Pengajak2">Pengajak2</option>
+              <option value="" disabled selected>
+                Pilih Relawan
+              </option>
+              {relawan.data?.map((res, i) => {
+                return (
+                  <option key={i} value={res._id}>
+                    {res.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
