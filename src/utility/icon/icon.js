@@ -371,7 +371,7 @@ export function SearchIcon() {
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M11.25 11.25L7.75 7.75M8.91667 4.83333C8.91667 7.0885 7.0885 8.91667 4.83333 8.91667C2.57817 8.91667 0.75 7.0885 0.75 4.83333C0.75 2.57817 2.57817 0.75 4.83333 0.75C7.0885 0.75 8.91667 2.57817 8.91667 4.83333Z"
-        stroke="white"
+        stroke="curent"
         strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"

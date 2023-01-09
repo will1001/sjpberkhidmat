@@ -49,7 +49,7 @@ const HomePage = ({ router }) => {
             <button>
               <TikTokIcon />
             </button>
-            <button className="pl-4">
+            <button className="pl-4 stroke-white">
               <SearchIcon />
             </button>
           </div>

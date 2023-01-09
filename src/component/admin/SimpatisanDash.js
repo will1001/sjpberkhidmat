@@ -10,9 +10,7 @@ const SimpatisanDash = () => {
   const [simpatisan, setSimpatisan] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(base_url + "user/simpatisan")
-      .then((res) => setSimpatisan(res.data));
+    axios.get(base_url + "user/simpatisan").then((res) => setSimpatisan(res.data));
   }, []);
 
   const columns = [

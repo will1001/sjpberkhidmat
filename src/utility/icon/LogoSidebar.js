@@ -1,20 +1,10 @@
 import Dashboard from "../../component/admin/Dashboard";
+import DptDps from "../../component/admin/dpt_dps/DptDps";
 import RealCount from "../../component/admin/RealCount";
 import Relawan from "../../component/admin/RelawanDash";
 import Simpatisan from "../../component/admin/SimpatisanDash";
 
-import {
-  DashboardIcon,
-  RealCountIcon,
-  DPTDPSIcon,
-  ProgramIcon,
-  Logistic,
-  Publikasi,
-  SetingSliderIcon,
-  DaftarAkunIcon,
-  SimpatisanIcon,
-  RelawanIcon,
-} from "./icon";
+import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, Publikasi, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon } from "./icon";
 export const logoSidebar = [
   {
     name: "Dashboard",
@@ -28,7 +18,7 @@ export const logoSidebar = [
     icon: <RealCountIcon />,
     component: <RealCount />,
   },
-  { name: "DPT/DPS", path: "/dpt-dps", icon: <DPTDPSIcon /> },
+  { name: "DPT/DPS", path: "/dpt-dps", icon: <DPTDPSIcon />, component: <DptDps /> },
   { name: "Program", path: "/program", icon: <ProgramIcon /> },
   { name: "Logistic", path: "/logistic", icon: <Logistic /> },
   { name: "Publikasi", path: "/publikasi", icon: <Publikasi /> },
