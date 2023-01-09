@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PatternFormat } from "react-number-format";
-import { DaftarRelawanIcon } from "../../utility/icon/icon";
+import { DaftarRelawanIcon, ShowPassIcon } from "../../utility/icon/icon";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -11,6 +11,9 @@ const Relawan = () => {
   const [kabupaten, setKabupaten] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
+
+  // password hide & show
+  const [passwordType, setPasswordType] = useState("password");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -161,13 +164,13 @@ const Relawan = () => {
               <label htmlFor="password" className="text-[14px] text-[#374151] ">
                 Set Password
               </label>
-              <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"password"} id="password" />
+              <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={passwordType} id="password" />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="password" className="text-[14px] text-[#374151] ">
                 Set Ulang Password
               </label>
-              <input className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"password"} id="password" />
+              <input className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={passwordType} id="password" />
             </div>
           </div>
 

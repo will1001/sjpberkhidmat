@@ -504,3 +504,23 @@ export function DeletIcon() {
     </svg>
   );
 }
+export function ShowPassIcon() {
+  return (
+    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M13.469 10.4151C13.4731 11.7958 12.3572 12.9185 10.9765 12.9226C9.59581 12.9268 8.47316 11.8109 8.469 10.4302C8.46484 9.04947 9.58075 7.92681 10.9615 7.92265C12.3422 7.9185 13.4648 9.03441 13.469 10.4151Z"
+        stroke="#111827"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M3.01757 10.4466C4.06928 7.06247 7.22045 4.60057 10.9518 4.58933C14.6831 4.5781 17.8491 7.021 18.9212 10.3987C17.8694 13.7828 14.7183 16.2447 10.9869 16.2559C7.25558 16.2672 4.08962 13.8243 3.01757 10.4466Z"
+        stroke="#111827"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

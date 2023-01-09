@@ -37,13 +37,19 @@ const RelawanDash = () => {
       name: "Target Desa",
       selector: (row) => row.target_desa.name,
     },
-    // {
-    //   name: "Aksi",
-    //   selector: (row) => row.aksi,
-    // },
+    {
+      name: "Aksi",
+      selector: (row) => row.aksi,
+    },
   ];
-
-  const data = relawan.data;
+  //   const data2 = (relawan.data[0].aksi = <DeletIcon />);
+  let data = relawan.data;
+  let i = 0;
+  if (data) {
+    for (const res of data) {
+      data[i++].aksi = <DeletIcon />;
+    }
+  }
 
   // const data = [
   //   {
