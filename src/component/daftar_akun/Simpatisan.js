@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { PatternFormat } from "react-number-format";
-import axios from "axios";
 import { useRouter } from "next/router";
+import useFetch from "../../API/useFetch";
+import axiosFetch from "../../API/axiosFetch";
 
 const Simpatisan = () => {
-  const router = new useRouter();
-  const base_url = "https://api.sjpberkhidmat.id/";
+  const relawan = useFetch("user/relawan");
+  const kabupaten = useFetch("user/kabupaten");
 
-  const [relawan, setRelawan] = useState([]);
-
-  const [kabupaten, setKabupaten] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
+
   const [formData, setFormData] = useState({
     name: "",
     id_relawan: "",
@@ -26,42 +25,25 @@ const Simpatisan = () => {
     address: "",
   });
 
-  useEffect(() => {
-    axios.get(base_url + "user/relawan").then((res) => setRelawan(res.data));
-    axios
-      .get(base_url + "user/kabupaten")
-      .then((res) => setKabupaten(res.data));
-  }, [kabupaten, kecamatan, kelurahan]);
-
-  const changeKabupaten = (idKabupaten) => {
+  const changeKabupaten = async (idKabupaten) => {
     setFormData({ ...formData, id_kabupaten: idKabupaten });
-    axios.get(base_url + `user/kecamatan/${idKabupaten}`).then((res) => {
-      setKecamatan(res.data);
-    });
+    const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
+    setKecamatan(res.data);
   };
 
-  const changeKecamatan = (idKecamatan) => {
+  const changeKecamatan = async (idKecamatan) => {
     setFormData({ ...formData, id_kecamatan: idKecamatan });
-    axios.get(base_url + `user/kelurahan/${idKecamatan}`).then((res) => {
-      setKelurahan(res.data);
-    });
+    const res = await axiosFetch("get", `user/kelurahan/${idKecamatan}`);
+    setKelurahan(res.data);
   };
 
-  const daftarSimpatisan = () => {
-    axios.post(base_url + `user/simpatisan`, formData).then((res) => {
-      alert("Pendaftaran Berhasil!");
-      router.push({
-        pathname: "/Admin",
-        query: { component: "Simpatisan" },
-      });
-      console.log(res.data);
-    });
+  const register = async () => {
+    const res = await axiosFetch("post", `user/simpatisan`, formData);
   };
 
   return (
     <form>
       <div className="pl-[67px] ">
-        {/* relawan pengajak */}
         <div>
           <p className="text-[#D1D5DB] font-medium ">RELAWAN</p>
           <div className="flex items-center">
@@ -283,7 +265,7 @@ const Simpatisan = () => {
         </div>
         <div
           onClick={() => {
-            daftarSimpatisan();
+            register();
           }}
           className="h-[42px] w-[240px] bg-[#E44700] rounded-md mt-[27px] cursor-pointer ml-[375px] text-[18px] text-white font-semibold items-center justify-center flex"
         >
