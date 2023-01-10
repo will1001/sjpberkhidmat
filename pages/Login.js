@@ -1,5 +1,8 @@
-import { withRouter } from "next/router";
-import React from "react";
+import { useRouter, withRouter } from "next/router";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axiosFetch from "../src/API/axiosFetch";
+import { setToken } from "../src/redux/userReducer";
 import Logo from "../src/utility/Logo";
 
 const Login = ({ router }) => {
@@ -25,6 +28,25 @@ const Login = ({ router }) => {
     left: "64px",
     top: "57px",
   };
+  const dispatch = useDispatch();
+  const roles = useSelector((state) => state.user.roles);
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const login = async () => {
+    const res = await axiosFetch("post", `user/login`, formData);
+    if (res.data) {
+      dispatch(
+        setToken({ token: res.data.access_token, roles: res.data.roles })
+      );
+    }
+    if (roles == "relawan") {
+      router.push({ pathname: "Admin", query: { component: "Simpatisan" } });
+    }
+  };
 
   return (
     <div style={containerStyle}>
@@ -37,8 +59,15 @@ const Login = ({ router }) => {
               <label htmlFor="email" className="text-[14px] text-[#374151] ">
                 Email
               </label>
-              {/* onChange={(e) => setFormData({ ...formData, email: e.target.value })} */}
-              <input className="h-[40px] rounded-md border text-[#374151] px-2 outline-0" type={"email"} id="email" />
+
+              <input
+                onChange={(e) =>
+                  setFormData({ ...formData, username: e.target.value })
+                }
+                className="h-[40px] rounded-md border text-[#374151] px-2 outline-0"
+                type={"email"}
+                id="email"
+              />
             </div>
 
             {/* password */}
@@ -46,17 +75,33 @@ const Login = ({ router }) => {
               <label htmlFor="password" className="text-[14px] text-[#374151] ">
                 Password
               </label>
-              {/* onChange={(e) => setFormData({ ...formData, password: e.target.value })} */}
-              <input className="h-[40px] border rounded-md text-[#374151] px-2 outline-0" type={"password"} id="password" />
+
+              <input
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                className="h-[40px] border rounded-md text-[#374151] px-2 outline-0"
+                type={"password"}
+                id="password"
+              />
             </div>
 
             {/* button submit */}
-            <div className="flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]">Login</div>
+            <div
+              onClick={() => {
+                login();
+              }}
+              className="flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]"
+            >
+              Login
+            </div>
           </div>
         </form>
         <p className="text-[#374151]">
           <span>Lupa Password / Email Anda? </span>
-          <span className="text-[#FF5001] font-semibold cursor-pointer">Klik Disini</span>
+          <span className="text-[#FF5001] font-semibold cursor-pointer">
+            Klik Disini
+          </span>
         </p>
         <p className="text-[#374151] items-center flex flex-col">
           <span>
@@ -82,8 +127,20 @@ const Login = ({ router }) => {
             }
             className="text-[#9CA3AF] mt-[15px] flex items-center cursor-pointer"
           >
-            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              width="20"
+              height="21"
+              viewBox="0 0 20 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199"
+                stroke="#9CA3AF"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             Kembali ke homepage
           </span>
