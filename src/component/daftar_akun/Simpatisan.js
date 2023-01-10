@@ -5,8 +5,8 @@ import useFetch from "../../API/useFetch";
 import axiosFetch from "../../API/axiosFetch";
 
 const Simpatisan = () => {
-  const relawan = useFetch("user/relawan");
-  const kabupaten = useFetch("user/kabupaten");
+  const relawan = useFetch("get", "user/relawan");
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
@@ -39,6 +39,7 @@ const Simpatisan = () => {
 
   const register = async () => {
     const res = await axiosFetch("post", `user/simpatisan`, formData);
+    console.log(res);
   };
 
   return (

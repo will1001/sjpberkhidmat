@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { PatternFormat } from "react-number-format";
 import { DaftarRelawanIcon, ShowPassIcon } from "../../utility/icon/icon";
-import axios from "axios";
 import { useRouter } from "next/router";
 import useFetch from "../../API/useFetch";
 import axiosFetch from "../../API/axiosFetch";
 
 const Relawan = () => {
   const router = new useRouter();
-  const kabupaten = useFetch("user/kabupaten");
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
