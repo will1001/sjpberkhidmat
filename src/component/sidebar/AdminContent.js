@@ -22,26 +22,30 @@ function AdminContent() {
         <hr />
         <div className="mt-4 ">
           {logoSidebar.map((res, i) => {
-            return (
-              <button
-                key={i}
-                onClick={() => {
-                  setSelect(res.name);
-                  router.push({
-                    pathname: "/Admin",
-                    query: { component: res.name },
-                  });
-                }}
-                className="flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center"
-                style={{
-                  stroke: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
-                  backgroundColor: select === res.name ? "rgb(255, 247, 237)" : "white",
-                  WebkitTextFillColor: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
-                }}
-              >
-                <span className="">{res.icon} </span> <span className="font-semibold">{res.name}</span>
-              </button>
-            );
+            if (res.name === undefined) {
+              <div className="hidden"></div>;
+            } else {
+              return (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setSelect(res.name);
+                    router.push({
+                      pathname: "/Admin",
+                      query: { component: res.name },
+                    });
+                  }}
+                  className="flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center"
+                  style={{
+                    stroke: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
+                    backgroundColor: select === res.name ? "rgb(255, 247, 237)" : "white",
+                    WebkitTextFillColor: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
+                  }}
+                >
+                  <span className="">{res.icon} </span> <span className="font-semibold">{res.name}</span>
+                </button>
+              );
+            }
           })}
         </div>
       </div>

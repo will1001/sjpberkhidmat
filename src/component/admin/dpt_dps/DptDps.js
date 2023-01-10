@@ -5,10 +5,16 @@ import axios from "axios";
 import NewButton from "../../NewButton";
 import Icon2 from "../../../utility/icon/Icon_import.png";
 import Icon1 from "../../../utility/icon/Icon_export.png";
-import DataTable, { createTheme } from "react-data-table-component";
-import { customStyles } from "../../../utility/tabelstyle";
+import edit from "../../../utility/icon/edit_icon.png";
+import deletIcon from "../../../utility/icon/delet_icon.png";
+import DataTable from "react-data-table-component";
+import { customStyles, conditionalRowStyles } from "../../../utility/tabelstyle";
+import { useRouter } from "next/router";
+import EksportDataDpt from "./EksportData";
+import RealCount from "../RealCount";
 
 const DptDps = () => {
+  const router = useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
   const [kabupaten, setKabupaten] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
@@ -64,43 +70,52 @@ const DptDps = () => {
     {
       name: "NIK",
       selector: (row) => row.nik,
-      width: "200px ",
+      width: "150px ",
     },
     {
       name: "Nama",
       selector: (row) => row.name,
+      width: "160px ",
     },
     {
       name: "Tempat Lahir",
       selector: (row) => row.temaptLahir,
+      width: "110px ",
     },
     {
       name: "Tanggal Lahir",
       selector: (row) => row.birthDay,
+      width: "90px ",
     },
     {
       name: "Kabupaten",
       selector: (row) => row.kabupaten,
+      width: "120px ",
     },
     {
       name: "Kecamatan",
       selector: (row) => row.kecamatan,
+      width: "100px ",
     },
     {
       name: "Desa / Kel",
       selector: (row) => row.desa,
+      width: "90px ",
     },
     {
       name: "Status Perkawinan",
       selector: (row) => row.status,
+      width: "120px ",
     },
     {
       name: "Jenis Kelamin",
       selector: (row) => row.gender,
+      width: "100px ",
     },
     {
       name: "Alamat",
       selector: (row) => row.alamat,
+      width: "220px ",
     },
   ];
 
@@ -135,7 +150,7 @@ const DptDps = () => {
   ];
 
   return (
-    <div className="pl-[60px] pt-[45px] w-screen">
+    <div className="pl-[40px] pt-[45px] w-screen">
       <div className="flex items-center">
         <p className="font-bold text-[#374151] text-[32px] pr-[240px]">DPT / DPS Dapil II Prov. NTB</p>
         <JumlahDptDps />
@@ -163,7 +178,7 @@ const DptDps = () => {
             Filter
           </label>
           <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[214px] rounded-md border text-[#374151]">
-            <option value="" disabled selected>
+            <option value="kabupaten" disabled selected>
               Pilih Kabupaten
             </option>
             {kabupaten.data?.map((res, i) => {
@@ -175,12 +190,8 @@ const DptDps = () => {
             })}
           </select>
           {/* dropdown kecamatan */}
-          <select
-            //   onChange={(e) => changeKabupaten(e.target.value)}
-            id="kecamatan"
-            className="h-[40px] w-[169px] rounded-md border text-[#374151] ml-[19px]"
-          >
-            <option value="" disabled selected>
+          <select onChange={(e) => e.target.value} id="kecamatan" className="h-[40px] w-[169px] rounded-md border text-[#374151] ml-[19px]">
+            <option value="kecamatan" disabled selected>
               Pilih Kecamatan
             </option>
             {kecamatan.data?.map((res, i) => {
@@ -194,11 +205,29 @@ const DptDps = () => {
         </form>
         <div className="pl-[80px] flex gap-3">
           <NewButton style={ImportButton} title={"Impor"} icon={Icon2} />
-          <NewButton style={exportButton} icon={Icon1} />
+          <NewButton
+            action={() => {
+              router.push({
+                pathname: "/Admin",
+                query: { component: "EksportDataDpt" },
+              });
+            }}
+            style={exportButton}
+            icon={Icon1}
+          />
         </div>
       </div>
-      <div className="w-[900px]">
-        <DataTable columns={columns} data={data} customStyles={customStyles} />
+      <div className="w-[955px] mt-4 flex">
+        <DataTable columns={columns} data={data} customStyles={customStyles} conditionalRowStyles={conditionalRowStyles} />
+        <div className="w-[88px]">
+          <p className="h-[51px] flex items-center justify-center bg-[#374151] text-white"> Aksi</p>
+          <div key={1} className="h-[57px] border-b-2 border-l-2">
+            <div className="flex justify-center pt-4 gap-2">
+              <img className="cursor-pointer" src={edit.src} alt="edit" />
+              <img className="cursor-pointer" src={deletIcon.src} alt="edit" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

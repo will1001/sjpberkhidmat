@@ -13,7 +13,7 @@ function Admin({ router }) {
         </div>
         <div className="basis-9/12">
           {logoSidebar.map((res, i) => {
-            if (router.query.component === res.name) {
+            if (router.query.component === res.path) {
               return <div key={i}>{res.component}</div>;
             }
           })}
