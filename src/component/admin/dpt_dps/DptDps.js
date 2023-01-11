@@ -150,10 +150,12 @@ const DptDps = () => {
   ];
 
   return (
-    <div className="pl-[40px] pt-[45px] w-screen">
-      <div className="flex items-center">
-        <p className="font-bold text-[#374151] text-[32px] pr-[240px]">DPT / DPS Dapil II Prov. NTB</p>
-        <JumlahDptDps />
+    <div className="pl-[40px] pt-[45px] ">
+      <div className="flex items-center justify-between">
+        <p className="font-bold text-[#374151] text-[32px]">DPT / DPS Dapil II Prov. NTB</p>
+        <div className="pr-[20px]">
+          <JumlahDptDps />
+        </div>
       </div>
       <div className="flex gap-3 mt-2">
         <div className="w-[209px] h-[42px] bg-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
@@ -203,7 +205,7 @@ const DptDps = () => {
             })}
           </select>
         </form>
-        <div className="pl-[80px] flex gap-3">
+        <div className="ml-[60px] flex gap-3">
           <NewButton style={ImportButton} title={"Impor"} icon={Icon2} />
           <NewButton
             action={() => {
