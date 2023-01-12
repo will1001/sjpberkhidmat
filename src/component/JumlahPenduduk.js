@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 
-function JumlahPenduduk({ title, total, icon, h, w, totalSize, titleSize }) {
-  const [select, setSelect] = useState(false);
+function JumlahPenduduk({ title, total, icon, h, w, totalSize, titleSize, active }) {
   return (
     <button
+      value={title}
       style={{ width: w, height: h }}
-      onClick={() => {
-        setSelect(!select);
-      }}
-      className={` ${select === true ? "text-white" : "text-orange-600"}
-      ${select === true ? "bg-orange-600" : "bg-white"}
-      ${select === true ? "stroke-white" : "stroke-orange-600"}
+      className={` 
+      ${title === active ? "text-white" : "text-orange-600"}
+      ${title === active ? "bg-orange-600" : "bg-white"}
+      ${title === active ? "stroke-white" : "stroke-orange-600"}
        flex border rounded-md   border-orange-300 justify-start p-4 items-center gap-4`}
     >
       <div className="flex items-center gap-2">

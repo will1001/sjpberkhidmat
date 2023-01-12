@@ -11,7 +11,7 @@ const MataramContent = ({ data }) => {
     <div>
       <div className="flex gap-2 mb-4">
         <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
-          <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />
+        <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />
       </div>
       <h1 className="text-[32px] font-bold text-slate-700">Kota Mataram</h1>
       <div className="flex mt-8 justify-between">
