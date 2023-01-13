@@ -6,7 +6,7 @@ import ButtonPopUpInfo from "../ButtonPopUpInfo";
 
 function PetaKekuatanContent() {
   return (
-    <div className="mt-4 h-screen sm:h-[500px]">
+    <div className="mt-4 ">
       <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       <ButtonPopUpInfo />
       <hr className="w-full h-1 bg-gray-100 border-0 rounded  mt-8" />

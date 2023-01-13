@@ -37,16 +37,25 @@ const Login = ({ router }) => {
   });
 
   const login = async () => {
-    const res = await axiosFetch("post", `user/login`, formData);
-    if (res.data) {
-      dispatch(
-        setToken({ token: res.data.access_token, roles: res.data.roles })
-      );
-    }
-    if (roles == "relawan") {
-      router.push({ pathname: "Admin", query: { component: "Simpatisan" } });
-    }
+    const res = await axiosFetch("post", `user/login`, formData)
+      .then((res) => {
+        if (res?.data) {
+          dispatch(setToken({ token: res.data.access_token, roles: res.data.roles }));
+        } else {
+          return <p>Loading.....</p>;
+        }
+        if (roles === "admin") {
+          router.push({ pathname: "Admin", query: { component: "Dashboard" } });
+        }
+        if (roles === "relawan") {
+          router.push({ pathname: "Admin", query: { component: "RealCount" } });
+        }
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
   };
+  // console.log(formData);
 
   return (
     <div style={containerStyle}>
@@ -60,14 +69,7 @@ const Login = ({ router }) => {
                 Email
               </label>
 
-              <input
-                onChange={(e) =>
-                  setFormData({ ...formData, username: e.target.value })
-                }
-                className="h-[40px] rounded-md border text-[#374151] px-2 outline-0"
-                type={"email"}
-                id="email"
-              />
+              <input onChange={(e) => setFormData({ ...formData, username: e.target.value })} className="h-[40px] rounded-md border text-[#374151] px-2 outline-0" type={"email"} id="email" />
             </div>
 
             {/* password */}
@@ -76,32 +78,18 @@ const Login = ({ router }) => {
                 Password
               </label>
 
-              <input
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className="h-[40px] border rounded-md text-[#374151] px-2 outline-0"
-                type={"password"}
-                id="password"
-              />
+              <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="h-[40px] border rounded-md text-[#374151] px-2 outline-0" type={"password"} id="password" />
             </div>
 
             {/* button submit */}
-            <div
-              onClick={() => {
-                login();
-              }}
-              className="flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]"
-            >
+            <div onClick={login} className="cursor-pointer flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]">
               Login
             </div>
           </div>
         </form>
         <p className="text-[#374151]">
           <span>Lupa Password / Email Anda? </span>
-          <span className="text-[#FF5001] font-semibold cursor-pointer">
-            Klik Disini
-          </span>
+          <span className="text-[#FF5001] font-semibold cursor-pointer">Klik Disini</span>
         </p>
         <p className="text-[#374151] items-center flex flex-col">
           <span>
@@ -127,20 +115,8 @@ const Login = ({ router }) => {
             }
             className="text-[#9CA3AF] mt-[15px] flex items-center cursor-pointer"
           >
-            <svg
-              width="20"
-              height="21"
-              viewBox="0 0 20 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199"
-                stroke="#9CA3AF"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Kembali ke homepage
           </span>

@@ -25,35 +25,6 @@ const HomePage = ({ router }) => {
     <>
       <div onClick={handlePublikasi} className={`${dropDownPublikasi === false ? "hidden" : "visible"} absolute w-[1350px] h-[4750px] mt-[650px] z-10 bg-opacity-50 bg-slate-600 `}></div>
       <div className="w-[1350px] ">
-        <div className="flex bg-[#374151] h-[24px] w-full px-20 justify-between">
-          <p className="flex items-center">
-            <span className="text-[10px] font-normal text-[#E5E7EB]"> Official Website&nbsp;</span>
-            <span className="text-[10px] font-semibold text-white">Suryadi Jaya Purnama</span>
-          </p>
-          <div className="flex items-center gap-1">
-            <button>
-              <LinkedInIcon />
-            </button>
-            <button>
-              <InstagramIcon />
-            </button>
-            <button>
-              <FacebookIcon />
-            </button>
-            <button>
-              <YouTubeIcon />
-            </button>
-            <button>
-              <TwitterIcon />
-            </button>
-            <button>
-              <TikTokIcon />
-            </button>
-            <button className="pl-4 stroke-white">
-              <SearchIcon />
-            </button>
-          </div>
-        </div>
         <div className="flex bg-white w-full h-[72px] px-20 justify-between z-20">
           <Logo />
           <div className="flex items-center gap-4 text-[16px] font-medium text-[#374151]">
@@ -62,15 +33,7 @@ const HomePage = ({ router }) => {
             <p onClick={handlePublikasi} className={`flex cursor-pointer ${dropDownPublikasi === false ? "stroke-[#374151]" : "stroke-[#FF5001] "} `}>
               <span className={dropDownPublikasi === false ? "" : "text-[#FF5001] "}>Publikasi</span> <DropDownIcon />
             </p>
-            <p
-              onClick={() => {
-                router.push({
-                  pathname: "Admin",
-                  query: { component: "Relawan" },
-                });
-              }}
-              className="flex cursor-pointer stroke-[#374151]"
-            >
+            <p className="flex cursor-pointer stroke-[#374151]">
               Pendaftaran Anggota <DropDownIcon />
             </p>
             <button>
@@ -169,28 +132,53 @@ const HomePage = ({ router }) => {
             <button className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">Sampaikan Aspirasi</button>
           </div>
         </div>
-        <div className="flex h-[240px] bg-[#374151] justify-between items-center pt-[39px]">
-          <div className="flex  pl-[70px]">
-            <LogoPKS />
-            <div className="pl-[32px] w-[580px]">
-              <span className="text-[16px] text-white font-semibold">
-                DEWAN PENGURUS PUSAT <br /> PARTAI KEADILAN SEJAHTERA
-              </span>
-              <br />
-              <span className="text-[12px] text-[#D1D5DB]">
-                MD Building | Jalan TB.Simatupang No.82 Pasar Minggu, Jakarta 12520, Indonesia <br /> Phone +62 21 7884 2116, Fax +62 21 7884 6456, E-Mail humas@pks.id <br /> Digital Service Centre (Call Centre) PKS +62 21 300 158 88
-              </span>
-              <hr className="border-t-2 border-[#6B7280] mt-[52px]" />
-              <span className="text-[12px] text-[#6B7280]">©2022 INKOR, Indonesia Korea Joint Company</span>
+        <div style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.02)" }} className="flex h-[240px] justify-between pr-[120px]">
+          <div className="flex flex-col justify-center pl-[70px]">
+            <div className="flex justify-center w-[560px]">
+              <Logo />
+              <div className="pl-[32px] w-[580px]">
+                <p className="text-[16px] text-[#4B5563] font-semibold">H. SURYADI JAYA PURNAMA, S.T.</p>
+
+                <p className="text-[12px] text-[#FF5001]">DPR RI Dapil II Provinsi Nusa Tenggara Barat</p>
+                <p className="text-[12px] text-[#4B5563]">
+                  Bekerja bersama untuk membangun masa depan yang <br /> lebih baik bagi masyarakat dan generasi yang akan datang.
+                </p>
+              </div>
             </div>
+            <div className="border  border-[#6B7280] mt-[52px]" />
+            <span className="text-[12px] text-[#4B5563]">Copyright © 2022. Website Resmi SJP Berkhidmat dikelola oleh Tim Internal</span>
           </div>
-          <div className="flex flex-col gap-1 pr-[70px] ">
-            <p className="text-white">Pemilu 2024</p>
-            <p className="text-white">Publikasi</p>
-            <p className="text-white">Gallery</p>
-            <p className="text-white">Rumah Aspirasi</p>
-            <p className="text-white">Daftar Relawan</p>
-            <p className="text-white">Daftar Simpatisan</p>
+
+          <div className="flex flex-col gap-1 text-[#4B5563] justify-center">
+            <p className="">Pemilu 2024</p>
+            <p className="">Publikasi</p>
+            <p className="">Gallery</p>
+            <p className="">Rumah Aspirasi</p>
+            <p className="">Daftar Relawan</p>
+            <p className="">Daftar Simpatisan</p>
+          </div>
+          <div className="flex flex-col gap-3 justify-center">
+            <p className="flex justify-center font-semibold text-[16px] text-[#4B5563]">Social Media</p>
+            <div className="flex items-center gap-3">
+              <button>
+                <LinkedInIcon />
+              </button>
+              <a className="cursor-pointer" target="_blank" href="https://www.instagram.com/suryadi.sjp/?igshid=OGQ2MjdiOTE=">
+                <InstagramIcon />
+              </a>
+              <a className="cursor-pointer" href="https://www.facebook.com/sjp.officialpage?mibextid=ZbWKwL" target="_blank">
+                <FacebookIcon />
+              </a>
+              <button>
+                <YouTubeIcon />
+              </button>
+              <a className="cursor-pointer" href="https://twitter.com/suryadi_sjpntb" target="_blank">
+                <TwitterIcon />
+              </a>
+              <button>
+                <TikTokIcon />
+              </button>
+            </div>
           </div>
         </div>
       </div>

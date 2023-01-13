@@ -1,11 +1,13 @@
 import axios from "axios";
 import { object } from "prop-types";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../API/useFetch";
 import { Logistic, ProgramIcon, RelawanIcon, SimpatisanIcon, TpsIcon } from "../utility/icon/icon";
 import JumlahPenduduk from "./JumlahPenduduk";
 import NewButton from "./NewButton";
 import TabelPopUp from "./petakekuatan/tabel";
+import { setButton } from "../redux/button/popUpReducer";
 
 const ButtonPopUpInfo = () => {
   const base_url = "https://api.sjpberkhidmat.id/";
@@ -23,19 +25,29 @@ const ButtonPopUpInfo = () => {
     title: "",
     text: "",
   });
+  const dispatch = useDispatch();
+  const roles = useSelector((state) => state.button.name);
 
   const handleButton = (button) => {
-    active !== button ? setActive(button) : setActive("");
-    active !== button ? setPopUp(true) : setPopUp(false);
-    if (button === "Simpatisan") {
-      setTabelTitle({ text: "Tambah Simpatisan", title: "Jumlah Simpatisan SJP Berkhidmat" });
-    } else if (button === "Relawan") {
-      setTabelTitle({ text: "Tambah Relawan", title: "Jumlah Relawan SJP Berkhidmat" });
-    } else if (button === "Program") {
-      setTabelTitle({ text: undefined, title: "Rencana Program " });
-    } else if (button === "Logistik") {
-      setTabelTitle({ text: undefined, title: "Persebaran Logistik" });
+    if (button !== roles) {
+      dispatch(setButton({ name: button }));
+      dispatch(setButton({ change: true }));
+    } else {
+      dispatch(setButton({ change: false }));
     }
+
+    // console.log(roles);
+    // active !== button ? setActive(button) : setActive("");
+    // active !== button ? setPopUp(true) : setPopUp(false);
+    // if (roles === "Simpatisan") {
+    //   setTabelTitle({ text: "Tambah Simpatisan", title: "Jumlah Simpatisan SJP Berkhidmat" });
+    // } else if (roles === "Relawan") {
+    //   setTabelTitle({ text: "Tambah Relawan", title: "Jumlah Relawan SJP Berkhidmat" });
+    // } else if (roles === "Program") {
+    //   setTabelTitle({ text: undefined, title: "Rencana Program " });
+    // } else if (roles === "Logistik") {
+    //   setTabelTitle({ text: undefined, title: "Persebaran Logistik" });
+    // }
   };
 
   //   console.log(relawan);
@@ -72,7 +84,7 @@ const ButtonPopUpInfo = () => {
           <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
       </div>
-      <div style={popUp === false ? { visibility: "hidden" } : { visibility: "visible" }} className="z-50 phone:top phone:absolute phone:w-[780px] mt-[50px] laptop:absolute laptop:w-[975px]  bg-white  right-0 ">
+      <div style={popUp === false ? { visibility: "hidden" } : { visibility: "visible" }} className="z-50 absolute mt-[50px] right-0 laptop:w-[975px]  bg-white ">
         <div className="mt-[39px] ml-[49px]">
           <div className="flex justify-between items-center">
             <p className="text-[26px] text-[#374151] font-bold phone:mr-0 mr-[120px]">{tabelTitle.title}</p>

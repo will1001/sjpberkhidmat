@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 const TabelPopUp = ({ data }) => {
-  console.log(data?.data, "ini data");
+  // console.log(data?.data, "ini data");
 
   return (
     <div>
-      <table className="w-full table-fixed mx-4 divide-y divide-gray-200">
+      <table className="w-full  mx-4 divide-y divide-gray-200">
         <thead>
           <tr>
             <th scope="col" className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase ">

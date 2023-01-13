@@ -28,13 +28,13 @@ function Dashboard() {
           <JumlahPenduduk title={"Jumlah Simpatisan"} total={"123.456"} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"89px"} />
         </div>
         <div className="ml-24 mt-6 mb-8">
-          <button
+          <div
             onClick={() => {
               router.push("/PetaKekuatan");
             }}
           >
             <Button title={"Peta Kekuatan"} text={"white"} icon={<PetaKekuatanIcon />} w={"280px"} h={"63px"} bgColor={"rgb(51, 65, 85)"} />
-          </button>
+          </div>
         </div>
         <div className="ml-24">
           <PetaLombok />
