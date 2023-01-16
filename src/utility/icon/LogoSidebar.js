@@ -6,6 +6,7 @@ import Relawan from "../../component/admin/RelawanDash";
 import Simpatisan from "../../component/admin/SimpatisanDash";
 import AkunTimSjp from "../../component/akunTimSjp/AkunTimSjp";
 import RumahAspirasi from "../../component/aspirasi/RumahAspirasi";
+import Program from "../../component/program/IndexProgram";
 
 import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, Publikasi, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon, AspirasiIcon, TambahAkunIcon } from "./icon";
 export const logoSidebar = [
@@ -23,7 +24,7 @@ export const logoSidebar = [
     role: "relawan",
   },
   { name: "DPT/DPS", path: "DptDps", icon: <DPTDPSIcon />, component: <DptDps /> },
-  { name: "Program", path: "/program", icon: <ProgramIcon /> },
+  { name: "Program", path: "/program", icon: <ProgramIcon />, component: <Program /> },
   { name: "Logistic", path: "/logistic", icon: <Logistic />, role: "relawan" },
   { name: "Publikasi", path: "/publikasi", icon: <Publikasi /> },
   { name: "Daftar Akun", path: "/daftar-akun", icon: <DaftarAkunIcon /> },

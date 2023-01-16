@@ -206,8 +206,9 @@ export function PendudukIcon() {
 export function BackIcon() {
   return (
     <svg width="44" height="45" viewBox="0 0 44 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="44" height="44" transform="translate(0 0.91124)" fill="#FF5001" />
-      <path d="M21 29.9112L14 22.9112L21 15.9112M29 29.9112L22 22.9112L29 15.9112" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M0.5 16.0781C0.5 7.51771 7.43959 0.578125 16 0.578125H43.5V43.5781H16C7.43959 43.5781 0.5 36.6385 0.5 28.0781V16.0781Z" fill="#FFECE4" />
+      <path d="M21 29.0781L14 22.0781L21 15.0781M29 29.0781L22 22.0781L29 15.0781" stroke="#FF5001" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M0.5 16.0781C0.5 7.51771 7.43959 0.578125 16 0.578125H43.5V43.5781H16C7.43959 43.5781 0.5 36.6385 0.5 28.0781V16.0781Z" stroke="#FF5001" />
     </svg>
   );
 }

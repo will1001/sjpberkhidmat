@@ -12,9 +12,6 @@ function Dashboard() {
 
   return (
     <div className="bg-orange-50">
-      <button>
-        <BackIcon />
-      </button>
       <div className="pt-4 pl-8 ">
         <h1 className="font-bold text-[32px] text-slate-700 ml-24">Dapil Nusa Tenggara Barat II</h1>
         <div className="flex ml-24 item-center gap-4 mt-2">
