@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../src/API/useFetch";
 import NewButton from "../src/component/NewButton";
 import TabelPopUp from "../src/component/petakekuatan/tabel";
 import PetaKekuatanContent from "../src/component/sidebar/PetaKekuatanContent";
 import SideBar from "../src/component/sidebar/SideBar";
+import { setButton } from "../src/redux/button/popUpReducer";
 import { BackIcon } from "../src/utility/icon/icon";
 import PetaLombok from "../src/utility/PetaLombok";
 
@@ -18,19 +19,17 @@ function PetaKekuatan() {
     axios.get(base_url + "user/relawan").then((res) => setRelawan(res.data));
   }, []);
 
-  const [tabelTitle, setTabelTitle] = useState({
-    title: "",
-    text: "",
-  });
+  const buttonName = useSelector((state) => state.button);
+  const HandleClose = () => {
+    useDispatch(setButton({ title: "", button: "", name: "", change: "" }));
+  };
+  // const [buttonTitle, setButtonTitle] = useState({
+  //   name: buttonName.button.title,
+  //   button: buttonName.button.button,
+  // });
 
-  const test1 = useSelector((state) => state.button.change);
-  const [popUp, setPopUp] = useState();
-  useEffect(() => {
-    setPopUp(test1);
-    // console.log(test1, "ini test");
-  }, []);
-
-  console.log(test1);
+  console.log(buttonName.button);
+  // console.log(buttonName.button);
 
   const styleBtn = {
     padding: "9px 20px",
@@ -47,6 +46,7 @@ function PetaKekuatan() {
   };
   return (
     <div className="w-[1350px]">
+      <div onClick={() => HandleClose} className="w-[30px] h-[30px] bg-black"></div>
       <div className="flex w-full">
         <div className="flex basis-3/12 ">
           <SideBar content={<PetaKekuatanContent />} />
@@ -58,13 +58,13 @@ function PetaKekuatan() {
             <PetaLombok />
           </div>
 
-          <div style={popUp === false ? { visibility: "hidden" } : { visibility: "visible" }} className="absolute border top-[55%] pl-[20px]  w-[980px]  bg-white ">
+          <div style={buttonName.button.change === false ? { visibility: "hidden" } : { visibility: "visible" }} className="absolute border top-[55%] pl-[20px]  w-[980px]  bg-white ">
             <div className="mt-[39px] ml-[49px]">
               <div className="flex justify-between items-center">
-                <p className="text-[26px] text-[#374151] font-bold phone:mr-0 mr-[120px]">{tabelTitle.title}</p>
+                <p className="text-[26px] text-[#374151] font-bold phone:mr-0 mr-[120px]">{buttonName.button.title}</p>
                 <div className="flex items-center gap-8">
-                  <div style={tabelTitle.text === undefined ? { visibility: "collapse" } : {}}>
-                    <NewButton title={"tabelTitle.text"} style={styleBtn} />
+                  <div style={buttonName.button.button === undefined ? { visibility: "collapse" } : {}}>
+                    <NewButton title={buttonName.button.button} style={styleBtn} />
                   </div>
 
                   <p className="text-[#E44700] text-[14px] underline cursor-pointer mr-[69px] phone:mr-6">Lihat Detail</p>

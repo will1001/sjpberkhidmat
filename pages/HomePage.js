@@ -169,9 +169,9 @@ const HomePage = ({ router }) => {
               <a className="cursor-pointer" href="https://www.facebook.com/sjp.officialpage?mibextid=ZbWKwL" target="_blank">
                 <FacebookIcon />
               </a>
-              <button>
+              <a className="cursor-pointer" href="https://youtube.com/@suryadijayapurnama_sjp4774" target="_blank">
                 <YouTubeIcon />
-              </button>
+              </a>
               <a className="cursor-pointer" href="https://twitter.com/suryadi_sjpntb" target="_blank">
                 <TwitterIcon />
               </a>

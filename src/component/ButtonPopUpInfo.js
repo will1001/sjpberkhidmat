@@ -19,39 +19,39 @@ const ButtonPopUpInfo = () => {
     axios.get(base_url + "user/relawan").then((res) => setRelawan(res.data));
   }, []);
 
-  const [active, setActive] = useState();
-  const [popUp, setPopUp] = useState(false);
-  const [tabelTitle, setTabelTitle] = useState({
-    title: "",
-    text: "",
-  });
+  const [active, setActive] = useState("");
+  const [triger, setTriger] = useState(false);
+  const [triger1, setTriger1] = useState(false);
+
+  const buttonName = useSelector((state) => state.button);
   const dispatch = useDispatch();
-  const roles = useSelector((state) => state.button.name);
-
   const handleButton = (button) => {
-    if (button !== roles) {
-      dispatch(setButton({ name: button }));
-      dispatch(setButton({ change: true }));
-    } else {
-      dispatch(setButton({ change: false }));
-    }
+    active !== button && setActive(button);
 
-    // console.log(roles);
-    // active !== button ? setActive(button) : setActive("");
-    // active !== button ? setPopUp(true) : setPopUp(false);
-    // if (roles === "Simpatisan") {
-    //   setTabelTitle({ text: "Tambah Simpatisan", title: "Jumlah Simpatisan SJP Berkhidmat" });
-    // } else if (roles === "Relawan") {
-    //   setTabelTitle({ text: "Tambah Relawan", title: "Jumlah Relawan SJP Berkhidmat" });
-    // } else if (roles === "Program") {
-    //   setTabelTitle({ text: undefined, title: "Rencana Program " });
-    // } else if (roles === "Logistik") {
-    //   setTabelTitle({ text: undefined, title: "Persebaran Logistik" });
-    // }
+    if (button === "Relawan") {
+      setTriger(true);
+      dispatch(setButton({ title: "Jumlah Relawan SJP Berkhidmat", button: "Tambah Relawan", name: active, change: triger }));
+    } else if (button === "Simpatisan") {
+      setTriger(true);
+      dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: active, change: triger }));
+    } else if (button === "Logistik") {
+      setTriger(true);
+      dispatch(setButton({ title: "Persebaran Logistik", button: undefined, name: active, change: triger }));
+    } else if (button === "Program") {
+      setTriger(true);
+      dispatch(setButton({ title: "Program SJP Berkhidmat", button: undefined, name: active, change: triger }));
+    } else {
+      dispatch(setButton({ title: "", button: "", name: "", change: false }));
+    }
+    // active !== button ?  : setActive("");
+    // button == "Relawan" ?  : dispatch(setButton({ title: "", button: "", name: "" }));
+    // active === "Simpatisan" ? dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: "Simpatisan" })) : dispatch(setButton({ title: "", button: "", name: "" }));
+    // active === "Logistik" ? dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: "Logistik" })) : dispatch(setButton({ title: "", button: "", name: "" }));
+    // active === "Program" ? dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: "Program" })) : dispatch(setButton({ title: "", button: "", name: "" }));
   };
 
-  //   console.log(relawan);
-
+  // console.log(active, triger, triger1);
+  // console.log(buttonName.button.change);
   const styleBtn = {
     padding: "9px 20px",
     gap: "8px",
@@ -83,21 +83,6 @@ const ButtonPopUpInfo = () => {
         <span onClick={() => handleButton("Program")}>
           <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
-      </div>
-      <div style={popUp === false ? { visibility: "hidden" } : { visibility: "visible" }} className="z-50 absolute mt-[50px] right-0 laptop:w-[975px]  bg-white ">
-        <div className="mt-[39px] ml-[49px]">
-          <div className="flex justify-between items-center">
-            <p className="text-[26px] text-[#374151] font-bold phone:mr-0 mr-[120px]">{tabelTitle.title}</p>
-            <div className="flex items-center gap-8">
-              <div style={tabelTitle.text === undefined ? { visibility: "collapse" } : {}}>
-                <NewButton title={tabelTitle.text} style={styleBtn} />
-              </div>
-
-              <p className="text-[#E44700] text-[14px] underline cursor-pointer mr-[69px] phone:mr-6">Lihat Detail</p>
-            </div>
-          </div>
-          <TabelPopUp data={relawan} />
-        </div>
       </div>
     </>
   );

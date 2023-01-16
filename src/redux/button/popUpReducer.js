@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  name: "",
-  change: "",
-};
+const initialState = { button: { name: "", change: "", title: "", button: "" } };
 
 export const buttonSlice = createSlice({
   name: "button",
   initialState,
   reducers: {
     setButton: (state, action) => {
-      state.change = action.payload.change;
-      state.name = action.payload.name;
+      state.button.change = action.payload.change;
+      state.button.name = action.payload.name;
+      state.button.title = action.payload.title;
+      state.button.button = action.payload.button;
     },
   },
 });
