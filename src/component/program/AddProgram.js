@@ -103,11 +103,14 @@ const AddProgram = () => {
   //   console.log(formProgram);
   console.log(formProgram);
 
-  const postData = new FormData();
-
   const postArtikel = async () => {
+    const a = new FormData();
+    a.append("title", formProgram.title);
+    a.append("description", formProgram.category);
+    a.append("category", formProgram.description);
+    a.append("image", formProgram.image);
     {
-      await axiosFetch("post", `user/articles`, formProgram)
+      await axiosFetch("post", `user/articles`, a)
         .then((res) => console.log(res))
         .catch((error) => {
           console.log(error);
