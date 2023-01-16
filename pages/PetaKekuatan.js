@@ -46,7 +46,6 @@ function PetaKekuatan() {
   };
   return (
     <div className="w-[1350px]">
-      <div onClick={() => HandleClose} className="w-[30px] h-[30px] bg-black"></div>
       <div className="flex w-full">
         <div className="flex basis-3/12 ">
           <SideBar content={<PetaKekuatanContent />} />

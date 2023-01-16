@@ -21,7 +21,6 @@ const ButtonPopUpInfo = () => {
 
   const [active, setActive] = useState("");
   const [triger, setTriger] = useState(false);
-  const [triger1, setTriger1] = useState(false);
 
   const buttonName = useSelector((state) => state.button);
   const dispatch = useDispatch();
