@@ -14,7 +14,7 @@ import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import axiosFetch from "../../API/axiosFetch";
 import { useSelector } from "react-redux";
 
-const AddProgram = () => {
+const EditProgram = () => {
   const publikasiStyle = {
     width: "155px",
     height: "42px",
@@ -42,50 +42,41 @@ const AddProgram = () => {
     color: "#374151",
   };
 
-  //   const handleFormat = (e) => {
-  //     setFormat(e.target.value);
-  //   };
   const [format, setFormat] = useState();
   const refTextArea = useRef(format);
   const [switchButton, setSwitchButton] = useState(false);
-  const [popUp, setPopUp] = useState(false);
-  const [formProgram, setFormProgram] = useState({
-    title: "",
-    description: "",
-    // wilayah: "",
-    category: "",
-    image: "",
-    publication: "",
-  });
+
   const kabupaten = useFetch("get", "user/kabupaten");
-  const artikel = useFetch("get", "user/articles?page=1");
 
   const categoryProgram = [
     {
       id: 1,
       name: "Bantuan Sosial",
+      title: "bantuan Sosial",
     },
     {
       id: 2,
       name: "Infrastruktur",
+      title: "infrastruktur",
     },
-    { id: 3, name: "Pendidikan" },
-    { id: 4, name: "Lapangan Kerja" },
-    {
-      name: "Peraturan Daerah",
-    },
-    { id: 5, name: "Ormas & Keagamaan" },
-    {
-      id: 6,
-      name: "Kesehatan",
-    },
+    { id: 3, name: "Pendidikan", title: "pendidikan" },
+    { id: 4, name: "Lapangan Kerja", title: "lapanganKerja" },
+    { id: 5, name: "Peraturan Daerah", title: "peraturanDaerah" },
+    { id: 6, name: "Ormas & Keagamaan", title: "ormasKeagamaan" },
     {
       id: 7,
-      name: "Politik & Pemerintahan",
+      name: "Kesehatan",
+      title: "kesehatan",
     },
     {
       id: 8,
+      name: "Politik & Pemerintahan",
+      title: "politik",
+    },
+    {
+      id: 9,
       name: "Ekonomi & Bisnis",
+      title: "ekonomiBisnis",
     },
   ];
 
@@ -103,10 +94,9 @@ const AddProgram = () => {
   const postArtikel = async () => {
     const a = new FormData();
     a.append("title", formProgram.title);
-    a.append("description", formProgram.description);
-    a.append("category", formProgram.category);
+    a.append("description", formProgram.category);
+    a.append("category", formProgram.description);
     a.append("image", formProgram.image);
-
     {
       await axiosFetch("post", `user/articles`, a)
         .then((res) => console.log(res))
@@ -115,13 +105,25 @@ const AddProgram = () => {
         });
     }
   };
-  console.log(formProgram);
 
+  let dataEdit = useSelector((state) => state.artikel);
+  const [formProgram, setFormProgram] = useState();
+
+  useEffect(() => {
+    setFormProgram(dataEdit?.artikel?.dataEdit?.data?.data);
+    // setFormEdit();
+  }, []);
+
+  console.log(dataEdit);
   return (
     <>
-      <div className={`bg-slate-400 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${popUp === true ? "visible" : "hidden"}`}>
+      {/* <div className="h-[300px] w-[300px]">
+        <img src={formProgram?.image} alt="" />
+      </div> */}
+
+      <div className={`bg-slate-400 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${switchButton === true ? "visible" : "hidden"}`}>
         <div className="h-[410px] w-[620px] ml-[416px] mt-[120px] bg-white absolute">
-          <div onClick={() => setPopUp(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
+          <div onClick={() => setSwitchButton(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
             X
           </div>
           <div className="flex justify-center mt-[30px]">
@@ -130,7 +132,7 @@ const AddProgram = () => {
           <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">Publikasikan Program?</p>
           <p className="text-[#374151] flex justify-center pb-[32px]">anda akan menambahkan data program</p>
           <div className="flex justify-center items-center gap-8">
-            <div onClick={() => setPopUp(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
+            <div onClick={() => setSwitchButton(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
               <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
             </div>
             <div onClick={postArtikel} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
@@ -142,7 +144,7 @@ const AddProgram = () => {
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <Logo />
         <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[450px]">Publikasi Program</p>
-        <div onClick={() => setPopUp(!popUp)}>
+        <div onClick={() => setSwitchButton(!switchButton)}>
           <NewButton title={"Publikasikan"} style={publikasiStyle} />
         </div>
         <NewButton title={"Simpan Draft"} style={draftStyle} />
@@ -159,8 +161,8 @@ const AddProgram = () => {
             </label>
             <input
               onChange={(e) => setFormProgram({ ...formProgram, title: e.target.value })}
+              value={formProgram?.title}
               className="border border-[#D1D5DB] h-[48px] outline-0 rounded-md p-[12px] text-[#374151] font-medium"
-              value={formProgram.title}
               type={"text"}
               id="title"
             />
@@ -190,11 +192,11 @@ const AddProgram = () => {
               </div>
             </div>
             <textarea
-              onChange={(e) => setFormProgram({ ...formProgram, description: e.target.value })}
+              onChange={(e) => setFormProgram({ ...formProgram, category: e.target.value })}
               ref={refTextArea}
               id="description_program"
               name="description_program"
-              value={formProgram.description}
+              value={formProgram?.category}
               className={`h-[592px] outline-0 border  border-[#D1D5DB] p-[14px]`}
             />
           </div>
@@ -203,11 +205,8 @@ const AddProgram = () => {
           <p className="font-bold text-[#374151] text-[18px] mb-[16px]">Publikasi di Website</p>
           <div className="flex items-center gap-4">
             <div
-              onClick={() => {
-                setSwitchButton(!switchButton);
-                setFormProgram({ ...formProgram, publication: switchButton });
-              }}
-              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${formProgram.publication === true ? ` bg-[#FF5001]  justify-end` : "bg-[#6B7280]"}`}
+              onClick={() => setFormProgram({ ...formProgram, publication: !formProgram.publication })}
+              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${formProgram?.publication === true ? ` bg-[#FF5001]  justify-end` : "bg-[#6B7280]"}`}
             >
               <div className={`bg-white w-[26px] h-[26px] rounded-full`}></div>
             </div>
@@ -238,7 +237,7 @@ const AddProgram = () => {
                     <div
                       //   onClick={() => setFormProgram({ ...formProgram, wilayah: res?.name.toLowerCase() })}
                       value={res.name}
-                      key={res._id}
+                      key={res.id}
                       className="flex font-sans items-center justify-center rounded-full h-[38px] px-[18px] bg-[#374151] text-[12px] text-white"
                     >
                       {res.name}
@@ -253,13 +252,13 @@ const AddProgram = () => {
                   key={res.id}
                   onClick={() => {
                     setSelecCategory(res.name);
-                    setFormProgram({ ...formProgram, category: res?.name });
+                    setFormProgram({ ...formProgram, description: res?.title });
                   }}
-                  value={selectCategory}
+                  value={formProgram?.description?.toLowerCase()}
                   className="flex items-center gap-4"
                 >
-                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${res.name === selectCategory ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
-                  <p className={`text-[16px] font-medium ${res.name === selectCategory ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
+                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${formProgram?.description?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
+                  <p className={`text-[16px] font-medium ${formProgram?.description?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
                 </div>
               );
             })}
@@ -267,7 +266,7 @@ const AddProgram = () => {
 
             <ImageUploading
               multiple
-              value={images}
+              value={formProgram?.image}
               onChange={(e) => {
                 console.log(e[0].file);
                 setFormProgram({ ...formProgram, image: e[0].file });
@@ -297,4 +296,4 @@ const AddProgram = () => {
   );
 };
 
-export default AddProgram;
+export default EditProgram;
