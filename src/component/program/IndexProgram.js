@@ -5,6 +5,7 @@ import NewButton from "../NewButton";
 import icon from "../../utility/icon/centerIcon.png";
 import edit from "../../utility/icon/edit_icon.png";
 import delet from "../../utility/icon/delet_icon.png";
+import hapusImg from "../../utility/img/hapusData.png";
 import axiosFetch from "../../API/axiosFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { editArtikel } from "../../redux/artikel/getIdArtikel";
@@ -42,15 +43,17 @@ const indexProgram = () => {
     router.push("/artikel/UbahProgram");
   };
 
+  const [alertHapus, setAlertHapus] = useState(false);
+
   const handleDelet = (id) => {
     const res = axiosFetch("delete", `user/articles/${id}`)
       .then((res) => {
-        console.log("berhasil hapus");
+        console.log("data dihapus");
+        setAlertHapus(false);
+        window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };
-
-  console.log(data);
 
   return (
     <div className="ml-[59px] mt-[67px]">
@@ -58,7 +61,6 @@ const indexProgram = () => {
       <div className="mb-[20px]">
         <NewButton title={"Tambah Program"} style={style} action={() => handleTambah()} />
       </div>
-
       {data?.map((res) => {
         return (
           <div key={res.id} className="h-[72px] flex items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
@@ -77,8 +79,30 @@ const indexProgram = () => {
             >
               <img src={edit.src} alt="edit.png" />
             </div>
-            <div onClick={() => handleDelet(res._id)} className="h-[40px] flex items-center justify-center w-[48px] cursor-pointer border-2 border-[#B91C1C] rounded-md">
+            <div onClick={() => setAlertHapus(true)} className="h-[40px] flex items-center justify-center w-[48px] cursor-pointer border-2 border-[#B91C1C] rounded-md">
               <img src={delet.src} alt="delet.src" />
+            </div>
+            <div style={alertHapus === false ? { visibility: "hidden" } : { visibility: "visible", background: "rgba(55, 65, 81, 0.03)" }} className="absolute top-0 left-0 w-screen h-screen">
+              <div className="h-[420px] w-[610px] rounded-md absolute bg-white border border-orange-600 top-[120px] left-[416px]">
+                <div onClick={() => setAlertHapus(false)} className="absolute pr-2 pt-1 text-[20px] font-semibold text-[#9CA3AF] cursor-pointer top-0 right-0">
+                  X
+                </div>
+                <div className="py-4 flex flex-col gap-2 mt-8">
+                  <div className="flex justify-center">
+                    <img src={hapusImg.src} alt="hapus.png" />
+                  </div>
+                  <p className="flex justify-center text-[32px] font-bold text-slate-800">Hapus Data?</p>
+                  <p className="flex justify-center text-[18px] text-slate-800">Anda akan menghapus data program</p>
+                  <div className="flex gap-6 justify-center">
+                    <div onClick={() => setAlertHapus(false)} className="h-[42px] rounded-md w-[184px] bg-orange-600 text-[20px] font-semibold text-white cursor-pointer flex justify-center items-center">
+                      Batalkan
+                    </div>
+                    <div onClick={() => handleDelet(res._id)} className="h-[42px] rounded-md w-[184px] bg-white border border-slate-800 cursor-pointer text-[20px] font-semibold text-slate-800 flex justify-center items-center">
+                      Hapus
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );

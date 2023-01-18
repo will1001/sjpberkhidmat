@@ -100,12 +100,15 @@ const AddProgram = () => {
     setImages(imageList);
   };
 
+  //   const switchPublication = () =>
+
   const postArtikel = async () => {
     const a = new FormData();
     a.append("title", formProgram.title);
     a.append("description", formProgram.description);
     a.append("category", formProgram.category);
     a.append("image", formProgram.image);
+    a.append("publication", formProgram.publication);
 
     {
       await axiosFetch("post", `user/articles`, a)

@@ -5,7 +5,6 @@ import Slideshow from "../src/component/homepage/SlideShow";
 import CountDown from "../src/component/homepage/CountDown";
 import KabarTerbaru from "../src/component/homepage/KabarTerbaru";
 import DaftarSimpatisanButton from "../src/component/homepage/DaftarSimpatisanButton";
-import DaftarRelawanButton from "../src/component/homepage/DaftarRelawanButton";
 import bgImage from "../src/utility/img/sliderBg.png";
 import Publikasi from "../src/component/homepage/Publikasi";
 import bgImage2 from "../src/utility/img/gantiBg.png";
@@ -14,7 +13,10 @@ import KategoriKabar from "../src/component/homepage/KategoriKabar";
 import imageKosong from "../src/utility/img/gambarKosong.png";
 import DropDownPublikasi from "../src/component/homepage/DropDownPublikasi";
 import { withRouter } from "next/router";
-import NewButton from "../src/component/NewButton";
+import cariProgramIcon from "../src/utility/icon/searchIcon.png";
+import prevIcon from "../src/utility/icon/previous.png";
+import nextIcon from "../src/utility/icon/next.png";
+
 import detailProgramImg from "../src/utility/img/detailProgram.png";
 import { useDispatch } from "react-redux";
 import useFetch from "../src/API/useFetch";
@@ -23,22 +25,8 @@ const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
 
-  const buttonStyle = {
-    padding: "12px 28px",
-    gap: " 8px",
-    width: "167px",
-    height: "49px",
-    background: "#E44700",
-    borderRadius: "4px",
-    fontFamily: "Work Sans",
-    fontWeight: "600",
-    fontSize: "18px",
-    lineHeight: "130%",
-    textAlign: "center",
-    color: "#FFFFFF",
-  };
   const dispatch = useDispatch();
-  const getArtikel = useFetch("get", "user/articles?page=1");
+  const getArtikel = useFetch("get", "user//articles?page=1&limit=8");
   console.log(getArtikel?.data);
 
   return (
@@ -152,15 +140,29 @@ const HomePage = ({ router }) => {
         </div>
         {/* program / artikel */}
 
-        <div className="bg-[#4B5563] h-[1372px] pt-[67px] pl-[70px] pr-[257px]">
-          <div className="flex items-center  justify-between mb-[60px]">
-            <p className="text-[39px] font-bold text-white ">Program SJP Berkhidmat</p>
-            <NewButton style={buttonStyle} title={"Lihat Semua"} />
+        <div className="bg-[#4B5563] h-[1684px] pt-[67px] px-[120px] flex flex-col items-center">
+          <div className="flex items-center  justify-center mb-[60px]">
+            <p className="text-[39px] font-bold text-white">Program SJP Berkhidmat</p>
+          </div>
+          <div className="flex justify-between w-full mb-[21px]">
+            <input
+              style={{ backgroundImage: `url(${cariProgramIcon.src})` }}
+              className="w-[317px] bg-no-repeat bg-right h-[40px] rounded-md outline-0 pl-2 pr-8 text-[14px] text-slate-800 font-semibold"
+              type={"text"}
+              id="search"
+              placeholder="cari program..."
+            />
+            <div className="flex items-center">
+              <p className="text-white text-[14px]">Daerah Tujuan</p>
+              <select className="w-[214px] h-[40px] rounded-md outline-0 pl-2 pr-8 text-[14px] text-slate-800 font-semibold" id="kota">
+                <option>Kabupaten / Kota</option>
+              </select>
+            </div>
           </div>
           {getArtikel?.data?.map((res) => {
             return (
-              <div className="flex border border-[#6B7280] justify-between mb-[21px] rounded-md">
-                <div style={{ overflow: "hidden" }} className="py-[21px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
+              <div className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">
+                <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
                   <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
                   <p className="text-white text-[21px] font-bold">{res?.title}</p>
                   <p className="text-white text-[16px] h-[32px] flex">{res?.description}</p>
@@ -171,6 +173,25 @@ const HomePage = ({ router }) => {
               </div>
             );
           })}
+          <div className="flex justify-between w-full items-center mt-[21px]">
+            <div className="flex items-center gap-4">
+              <div className="w-[62px] h-[36px] rounded-md border border-white flex flex-row items-center justify-center text-white">
+                <select className="bg-[#4B5563] outline-0">
+                  <option>10</option>
+                </select>
+              </div>
+              <p className="text-white">Showing 1 - 10 of 85</p>
+            </div>
+            <div className="flex gap-1">
+              <img src={prevIcon.src} alt="prev.png" />
+              <div className="flex w-[40px] h-[34px] justify-center bg-orange-600 rounded-sm text-white items-center">1</div>
+              <div className="flex w-[40px] h-[34px] justify-center  rounded-sm text-white items-center">2</div>
+              <div className="flex w-[40px] h-[34px] justify-center  rounded-sm text-white items-center">3</div>
+              <div className="flex w-[40px] h-[34px] justify-center  rounded-sm text-white items-center">...</div>
+              <div className="flex w-[40px] h-[34px] justify-center  rounded-sm text-white items-center">4</div>
+              <img src={nextIcon.src} alt="next.png" />
+            </div>
+          </div>
         </div>
         <div className="flex h-[248px] bg-[#FF5001] pt-[65px]">
           <p className="text-white text-[26px] font-bold pl-[180px] w-full">
