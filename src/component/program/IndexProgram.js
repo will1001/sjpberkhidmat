@@ -63,13 +63,13 @@ const indexProgram = () => {
       </div>
       {data?.map((res) => {
         return (
-          <div key={res.id} className="h-[72px] flex items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
+          <div key={res._id} className="h-[72px] flex items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
             <div>
               <img src={icon.src} alt="icon.png" />
             </div>
-            <p className="text-[#374151] text-[18px] font-medium pl-2  w-full">{res.title}</p>
-            <div className="h-[36px] w-[108px] bg-[#FFECE4] rounded-sm flex items-center justify-center">
-              <p className="text-[#FF5001] text-[14px] font-semibold">{res?.publication === true ? "Published" : "Unpublished"}</p>
+            <p className={`text-[18px] font-medium pl-2  w-full `}>{res.title}</p>
+            <div className={`h-[36px] w-[108px]  rounded-sm flex items-center justify-center ${res?.publication === true ? "text-[#FF5001] bg-[#FFECE4]" : "text-[#374151] bg-[#D1D5DB]"}`}>
+              <p className={`text-[14px] px-2 font-semibold `}>{res?.publication === true ? "Published" : "Unpublished"}</p>
             </div>
             <div
               onClick={() => {
@@ -82,7 +82,7 @@ const indexProgram = () => {
             <div onClick={() => setAlertHapus(true)} className="h-[40px] flex items-center justify-center w-[48px] cursor-pointer border-2 border-[#B91C1C] rounded-md">
               <img src={delet.src} alt="delet.src" />
             </div>
-            <div style={alertHapus === false ? { visibility: "hidden" } : { visibility: "visible", background: "rgba(55, 65, 81, 0.03)" }} className="absolute top-0 left-0 w-screen h-screen">
+            <div style={alertHapus === false ? { visibility: "hidden" } : { visibility: "visible", background: "rgba(55, 65, 81, 0.32)" }} className="absolute top-0 left-0 w-screen h-[1200px]">
               <div className="h-[420px] w-[610px] rounded-md absolute bg-white border border-orange-600 top-[120px] left-[416px]">
                 <div onClick={() => setAlertHapus(false)} className="absolute pr-2 pt-1 text-[20px] font-semibold text-[#9CA3AF] cursor-pointer top-0 right-0">
                   X

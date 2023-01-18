@@ -13,6 +13,7 @@ import uploadFile from "../../utility/icon/uploadIcon.png";
 import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import axiosFetch from "../../API/axiosFetch";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const EditProgram = () => {
   const publikasiStyle = {
@@ -91,15 +92,21 @@ const EditProgram = () => {
     setImages(imageList);
   };
 
-  const postArtikel = async () => {
+  const router = useRouter();
+  const postArtikel = async (id) => {
     const a = new FormData();
     a.append("title", formProgram.title);
     a.append("description", formProgram.category);
     a.append("category", formProgram.description);
     a.append("image", formProgram.image);
+    a.append("publication", formProgram.publication);
+    a.append("id_keabupaten", formProgram.wilayah);
     {
-      await axiosFetch("post", `user/articles`, a)
-        .then((res) => console.log(res))
+      await axiosFetch("put", `user/articles/:${id}`, a)
+        .then((res) => {
+          console.log(res);
+          router.push("Admin");
+        })
         .catch((error) => {
           console.log(error);
         });
@@ -129,14 +136,14 @@ const EditProgram = () => {
           <div className="flex justify-center mt-[30px]">
             <img src={publikasiProgram.src} alt="publikasi_program.png" />
           </div>
-          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">Publikasikan Program?</p>
-          <p className="text-[#374151] flex justify-center pb-[32px]">anda akan menambahkan data program</p>
+          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">Simpan Program?</p>
+          <p className="text-[#374151] flex justify-center pb-[32px]">anda akan merubah data program</p>
           <div className="flex justify-center items-center gap-8">
             <div onClick={() => setSwitchButton(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
               <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
             </div>
-            <div onClick={postArtikel} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
-              <p className="text-[18px] text-[#fff] font-semibold">Publikasikan</p>
+            <div onClick={() => postArtikel(formProgram?._id)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+              <p className="text-[18px] text-[#fff] font-semibold">Simpan</p>
             </div>
           </div>
         </div>
@@ -145,12 +152,12 @@ const EditProgram = () => {
         <Logo />
         <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[450px]">Publikasi Program</p>
         <div onClick={() => setSwitchButton(!switchButton)}>
-          <NewButton title={"Publikasikan"} style={publikasiStyle} />
+          <NewButton title={"Simpan"} style={publikasiStyle} />
         </div>
-        <NewButton title={"Simpan Draft"} style={draftStyle} />
-        <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
+        {/* <NewButton title={"Simpan Draft"} style={draftStyle} /> */}
+        {/* <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
           <DeletIcon />
-        </div>
+        </div> */}
       </div>
       <div className="flex pb-[96px]">
         <div className="basis-8/12 bg-[#F9FAFB] pl-[42px] pt-[44px] pr-[60px]">
@@ -192,11 +199,11 @@ const EditProgram = () => {
               </div>
             </div>
             <textarea
-              onChange={(e) => setFormProgram({ ...formProgram, category: e.target.value })}
+              onChange={(e) => setFormProgram({ ...formProgram, description: e.target.value })}
               ref={refTextArea}
               id="description_program"
               name="description_program"
-              value={formProgram?.category}
+              value={formProgram?.description}
               className={`h-[592px] outline-0 border  border-[#D1D5DB] p-[14px]`}
             />
           </div>
@@ -218,7 +225,7 @@ const EditProgram = () => {
               Kabupaten / Kota
             </label>
             <input
-              //   onChange={(e) => setFormProgram({ ...formProgram, wilayah: e.target.value })}
+              onChange={(e) => setFormProgram({ ...formProgram, wilayah: e.target.value })}
               className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
               value={formProgram?.wilayah}
               type={"text"}
@@ -235,7 +242,7 @@ const EditProgram = () => {
                 .map((res) => {
                   return (
                     <div
-                      //   onClick={() => setFormProgram({ ...formProgram, wilayah: res?.name.toLowerCase() })}
+                      onClick={() => setFormProgram({ ...formProgram, wilayah: res?.name.toLowerCase() })}
                       value={res.name}
                       key={res.id}
                       className="flex font-sans items-center justify-center rounded-full h-[38px] px-[18px] bg-[#374151] text-[12px] text-white"
@@ -252,13 +259,13 @@ const EditProgram = () => {
                   key={res.id}
                   onClick={() => {
                     setSelecCategory(res.name);
-                    setFormProgram({ ...formProgram, description: res?.title });
+                    setFormProgram({ ...formProgram, category: res?.title });
                   }}
-                  value={formProgram?.description?.toLowerCase()}
+                  value={formProgram?.category?.toLowerCase()}
                   className="flex items-center gap-4"
                 >
-                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${formProgram?.description?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
-                  <p className={`text-[16px] font-medium ${formProgram?.description?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
+                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${formProgram?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
+                  <p className={`text-[16px] font-medium ${formProgram?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
                 </div>
               );
             })}

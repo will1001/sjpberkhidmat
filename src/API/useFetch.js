@@ -21,7 +21,7 @@ const useFetch = (method, url) => {
         const res = await axios.get(base_url + url, { headers });
         setData(res.data.data);
       } catch (err) {
-        setError(true);
+        setError(err);
       }
       setLoading(false);
     };

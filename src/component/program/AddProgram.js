@@ -11,6 +11,7 @@ import useFetch from "../../API/useFetch";
 import ImageUploading from "react-images-uploading";
 import uploadFile from "../../utility/icon/uploadIcon.png";
 import publikasiProgram from "../../utility/img/publikasiProgram.png";
+import berhasilImg from "../../utility/img/berhasiPost.png";
 import axiosFetch from "../../API/axiosFetch";
 import { useSelector } from "react-redux";
 
@@ -52,10 +53,10 @@ const AddProgram = () => {
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
-    // wilayah: "",
+    wilayah: "",
     category: "",
     image: "",
-    publication: "",
+    publication: false,
   });
   const kabupaten = useFetch("get", "user/kabupaten");
   const artikel = useFetch("get", "user/articles?page=1");
@@ -109,16 +110,27 @@ const AddProgram = () => {
     a.append("category", formProgram.category);
     a.append("image", formProgram.image);
     a.append("publication", formProgram.publication);
-
+    a.append("id_kabupaten", formProgram.wilayah);
     {
       await axiosFetch("post", `user/articles`, a)
-        .then((res) => console.log(res))
+        .then((res) => {
+          console.log(res);
+          setBerhasil(true);
+        })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-  console.log(formProgram);
+
+  const [berhasil, setBerhasil] = useState(false);
+  const handleBerhasil = () => {
+    setFormProgram({ ...formProgram, title: "", category: "", description: "", image: "", publication: false, wilayah: "" });
+    setPopUp(false);
+    setBerhasil(false);
+  };
+
+  console.log(kabupaten);
 
   return (
     <>
@@ -127,27 +139,35 @@ const AddProgram = () => {
           <div onClick={() => setPopUp(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
             X
           </div>
-          <div className="flex justify-center mt-[30px]">
-            <img src={publikasiProgram.src} alt="publikasi_program.png" />
-          </div>
-          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">Publikasikan Program?</p>
-          <p className="text-[#374151] flex justify-center pb-[32px]">anda akan menambahkan data program</p>
+          <div className="flex justify-center mt-[30px]">{berhasil === false ? <img src={publikasiProgram.src} alt="publikasi_program.png" /> : <img src={berhasilImg.src} alt="berhasil.png" />}</div>
+          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">{berhasil === false ? "Publikasikan Program?" : "Publikasi Berhasil"}</p>
+          <p className="text-[#374151] flex justify-center pb-[32px]">{berhasil === false ? "anda akan menambahkan data program" : "Program telah ditambakan"}</p>
           <div className="flex justify-center items-center gap-8">
-            <div onClick={() => setPopUp(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
-              <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
-            </div>
-            <div onClick={postArtikel} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
-              <p className="text-[18px] text-[#fff] font-semibold">Publikasikan</p>
-            </div>
+            {berhasil === false ? (
+              <>
+                <div onClick={() => setPopUp(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
+                  <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
+                </div>
+                <div onClick={postArtikel} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+                  <p className="text-[18px] text-[#fff] font-semibold">Publikasikan</p>
+                </div>
+              </>
+            ) : (
+              <div onClick={handleBerhasil} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+                <p className="text-[18px] text-[#fff] font-semibold">OK</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <Logo />
         <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[450px]">Publikasi Program</p>
+        {/* button publikasian */}
         <div onClick={() => setPopUp(!popUp)}>
           <NewButton title={"Publikasikan"} style={publikasiStyle} />
         </div>
+        {/* button simpan draft */}
         <NewButton title={"Simpan Draft"} style={draftStyle} />
         <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
           <DeletIcon />
@@ -222,7 +242,7 @@ const AddProgram = () => {
               Kabupaten / Kota
             </label>
             <input
-              //   onChange={(e) => setFormProgram({ ...formProgram, wilayah: e.target.value })}
+              onChange={(e) => setFormProgram({ ...formProgram, wilayah: e.target.value })}
               className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
               value={formProgram?.wilayah}
               type={"text"}
@@ -239,7 +259,7 @@ const AddProgram = () => {
                 .map((res) => {
                   return (
                     <div
-                      //   onClick={() => setFormProgram({ ...formProgram, wilayah: res?.name.toLowerCase() })}
+                      onClick={() => setFormProgram({ ...formProgram, wilayah: res?.name.toLowerCase() })}
                       value={res.name}
                       key={res._id}
                       className="flex font-sans items-center justify-center rounded-full h-[38px] px-[18px] bg-[#374151] text-[12px] text-white"
