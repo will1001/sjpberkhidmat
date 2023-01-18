@@ -110,7 +110,7 @@ const AddProgram = () => {
     a.append("category", formProgram.category);
     a.append("image", formProgram.image);
     a.append("publication", formProgram.publication);
-    a.append("id_kabupaten", formProgram.wilayah);
+    a.append("id_kabupaten", formProgram.id_kabupaten);
     {
       await axiosFetch("post", `user/articles`, a)
         .then((res) => {
@@ -130,7 +130,7 @@ const AddProgram = () => {
     setBerhasil(false);
   };
 
-  console.log(kabupaten);
+  console.log(formProgram);
 
   return (
     <>
@@ -242,9 +242,9 @@ const AddProgram = () => {
               Kabupaten / Kota
             </label>
             <input
-              onChange={(e) => setFormProgram({ ...formProgram, wilayah: e.target.value })}
+              onChange={(e) => setFormProgram({ ...formProgram, id_kabupaten: e.target.value })}
               className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
-              value={formProgram?.wilayah}
+              value={formProgram?.id_kabupaten}
               type={"text"}
               id="kota"
             />

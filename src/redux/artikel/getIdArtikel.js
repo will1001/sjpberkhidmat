@@ -15,7 +15,7 @@ export const editArtikelSlice = createSlice({
   initialState,
   reducers: {
     editArtikel: (state, action) => {
-      state.artikel.dataEdit = action.payload;
+      state = action.payload;
     },
   },
 });

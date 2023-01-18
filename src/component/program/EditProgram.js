@@ -15,7 +15,7 @@ import axiosFetch from "../../API/axiosFetch";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-const EditProgram = () => {
+const EditProgram = ({ close, data }) => {
   const publikasiStyle = {
     width: "155px",
     height: "42px",
@@ -93,35 +93,34 @@ const EditProgram = () => {
   };
 
   const router = useRouter();
+
+  const [formProgram, setFormProgram] = useState({ title: "", description: "", wilayah: "", category: "", image: "", publication: false });
+
   const postArtikel = async (id) => {
     const a = new FormData();
-    a.append("title", formProgram.title);
-    a.append("description", formProgram.category);
-    a.append("category", formProgram.description);
-    a.append("image", formProgram.image);
-    a.append("publication", formProgram.publication);
-    a.append("id_keabupaten", formProgram.wilayah);
+    a.append("title", dataEdit.title);
+    a.append("description", dataEdit.description);
+    a.append("category", dataEdit.category);
+    a.append("image", dataEdit.image);
+    a.append("publication", dataEdit.publication);
+    a.append("id_keabupaten", dataEdit.id_keabupaten);
     {
-      await axiosFetch("put", `user/articles/:${id}`, a)
+      await axiosFetch("put", `user/articles/${id}`, a)
         .then((res) => {
-          console.log(res);
-          router.push("Admin");
+          //   console.log(res);
+          console.log(dataEdit);
+          close();
+          window.location.reload(false);
         })
         .catch((error) => {
           console.log(error);
         });
     }
   };
+  const [dataEdit, setDataEdit] = useState(data);
 
-  let dataEdit = useSelector((state) => state.artikel);
-  const [formProgram, setFormProgram] = useState();
+  console.log(dataEdit, "ini data edit");
 
-  useEffect(() => {
-    setFormProgram(dataEdit?.artikel?.dataEdit?.data?.data);
-    // setFormEdit();
-  }, []);
-
-  console.log(dataEdit);
   return (
     <>
       {/* <div className="h-[300px] w-[300px]">
@@ -142,7 +141,7 @@ const EditProgram = () => {
             <div onClick={() => setSwitchButton(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
               <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
             </div>
-            <div onClick={() => postArtikel(formProgram?._id)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+            <div onClick={() => postArtikel(dataEdit?._id)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
               <p className="text-[18px] text-[#fff] font-semibold">Simpan</p>
             </div>
           </div>
@@ -150,8 +149,8 @@ const EditProgram = () => {
       </div>
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <Logo />
-        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[450px]">Publikasi Program</p>
-        <div onClick={() => setSwitchButton(!switchButton)}>
+        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[400px]">Edit Program</p>
+        <div onClick={() => setSwitchButton(true)}>
           <NewButton title={"Simpan"} style={publikasiStyle} />
         </div>
         {/* <NewButton title={"Simpan Draft"} style={draftStyle} /> */}
@@ -167,8 +166,8 @@ const EditProgram = () => {
               Judul Program
             </label>
             <input
-              onChange={(e) => setFormProgram({ ...formProgram, title: e.target.value })}
-              value={formProgram?.title}
+              onChange={(e) => setDataEdit({ ...dataEdit, title: e.target.value })}
+              value={dataEdit?.title}
               className="border border-[#D1D5DB] h-[48px] outline-0 rounded-md p-[12px] text-[#374151] font-medium"
               type={"text"}
               id="title"
@@ -199,11 +198,11 @@ const EditProgram = () => {
               </div>
             </div>
             <textarea
-              onChange={(e) => setFormProgram({ ...formProgram, description: e.target.value })}
+              onChange={(e) => setDataEdit({ ...dataEdit, description: e.target.value })}
               ref={refTextArea}
               id="description_program"
               name="description_program"
-              value={formProgram?.description}
+              value={dataEdit?.description}
               className={`h-[592px] outline-0 border  border-[#D1D5DB] p-[14px]`}
             />
           </div>
@@ -212,8 +211,8 @@ const EditProgram = () => {
           <p className="font-bold text-[#374151] text-[18px] mb-[16px]">Publikasi di Website</p>
           <div className="flex items-center gap-4">
             <div
-              onClick={() => setFormProgram({ ...formProgram, publication: !formProgram.publication })}
-              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${formProgram?.publication === true ? ` bg-[#FF5001]  justify-end` : "bg-[#6B7280]"}`}
+              onClick={() => setDataEdit({ ...dataEdit, publication: !dataEdit.publication })}
+              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${dataEdit?.publication === true ? ` bg-[#FF5001]  justify-end` : "bg-[#6B7280]"}`}
             >
               <div className={`bg-white w-[26px] h-[26px] rounded-full`}></div>
             </div>
@@ -225,9 +224,9 @@ const EditProgram = () => {
               Kabupaten / Kota
             </label>
             <input
-              onChange={(e) => setFormProgram({ ...formProgram, wilayah: e.target.value })}
+              onChange={(e) => setDataEdit({ ...dataEdit, id_keabupaten: e.target.value })}
               className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
-              value={formProgram?.wilayah}
+              value={dataEdit?.wilayah}
               type={"text"}
               id="kota"
             />
@@ -242,9 +241,9 @@ const EditProgram = () => {
                 .map((res) => {
                   return (
                     <div
-                      onClick={() => setFormProgram({ ...formProgram, wilayah: res?.name.toLowerCase() })}
+                      onClick={() => setDataEdit({ ...dataEdit, wilayah: res?.name.toLowerCase() })}
                       value={res.name}
-                      key={res.id}
+                      key={res._id}
                       className="flex font-sans items-center justify-center rounded-full h-[38px] px-[18px] bg-[#374151] text-[12px] text-white"
                     >
                       {res.name}
@@ -259,13 +258,13 @@ const EditProgram = () => {
                   key={res.id}
                   onClick={() => {
                     setSelecCategory(res.name);
-                    setFormProgram({ ...formProgram, category: res?.title });
+                    setDataEdit({ ...dataEdit, category: res?.title });
                   }}
-                  value={formProgram?.category?.toLowerCase()}
+                  value={dataEdit?.category?.toLowerCase()}
                   className="flex items-center gap-4"
                 >
-                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${formProgram?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
-                  <p className={`text-[16px] font-medium ${formProgram?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
+                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${dataEdit?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
+                  <p className={`text-[16px] font-medium ${dataEdit?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
                 </div>
               );
             })}
@@ -276,7 +275,7 @@ const EditProgram = () => {
               value={formProgram?.image}
               onChange={(e) => {
                 console.log(e[0].file);
-                setFormProgram({ ...formProgram, image: e[0].file });
+                setDataEdit({ ...dataEdit, image: e[0].file });
               }}
               maxNumber={maxNumber}
               dataURLKey="data_url"
