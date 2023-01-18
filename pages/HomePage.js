@@ -24,10 +24,12 @@ import useFetch from "../src/API/useFetch";
 const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const dispatch = useDispatch();
+  const [search, setSearch] = useState();
   const getArtikel = useFetch("get", "user//articles?page=1&limit=8");
-  console.log(getArtikel?.data);
+  console.log(kabupaten);
 
   return (
     <>
@@ -146,9 +148,11 @@ const HomePage = ({ router }) => {
           </div>
           <div className="flex justify-between w-full mb-[21px]">
             <input
+              onChange={(e) => setSearch(e.target.value)}
               style={{ backgroundImage: `url(${cariProgramIcon.src})` }}
               className="w-[317px] bg-no-repeat bg-right h-[40px] rounded-md outline-0 pl-2 pr-8 text-[14px] text-slate-800 font-semibold"
               type={"text"}
+              value={search}
               id="search"
               placeholder="cari program..."
             />
@@ -156,22 +160,27 @@ const HomePage = ({ router }) => {
               <p className="text-white text-[14px]">Daerah Tujuan</p>
               <select className="w-[214px] h-[40px] rounded-md outline-0 pl-2 pr-8 text-[14px] text-slate-800 font-semibold" id="kota">
                 <option>Kabupaten / Kota</option>
+                {kabupaten?.data?.map((res) => (
+                  <option key={res?._id}>{res?.name}</option>
+                ))}
               </select>
             </div>
           </div>
           {getArtikel?.data?.map((res) => {
-            return (
-              <div className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">
-                <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
-                  <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
-                  <p className="text-white text-[21px] font-bold">{res?.title}</p>
-                  <p className="text-white text-[16px] h-[32px] flex">{res?.description}</p>
+            if (res.publication === true) {
+              return (
+                <div key={res._id} className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">
+                  <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
+                    <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
+                    <p className="text-white text-[21px] font-bold">{res?.title}</p>
+                    <p className="text-white text-[16px] h-[32px] flex">{res?.description}</p>
+                  </div>
+                  <div className="border-l-[1px] border-[#6B7280] cursor-pointer flex items-center">
+                    <img className="" src={detailProgramImg.src} alt="lihatDetail.png" />
+                  </div>
                 </div>
-                <div className="border-l-[1px] border-[#6B7280] cursor-pointer flex items-center">
-                  <img className="" src={detailProgramImg.src} alt="lihatDetail.png" />
-                </div>
-              </div>
-            );
+              );
+            }
           })}
           <div className="flex justify-between w-full items-center mt-[21px]">
             <div className="flex items-center gap-4">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import RealCountPenduduk from "./realcount/RealCountPenduduk";
 import ProgresBar from "../../utility/ProgresBar";
 import AlertInput from "./realcount/AlertInput";
+import { useRouter } from "next/router";
 
 const RealCount = () => {
   const [activ, setActive] = useState("button1");
@@ -9,6 +10,8 @@ const RealCount = () => {
     if (button !== activ) setActive(button);
     else setActive("");
   };
+
+  const router = useRouter();
 
   return (
     <div className="p-8 ml-2">
@@ -30,8 +33,12 @@ const RealCount = () => {
           Calon DPR RI
         </button>
       </div>
-      <AlertInput />
-      <button className="mt-4 w-[220px] h-[42px] bg-[#E44700] text-white text-[18px] font-semibold rounded-md">Input Calon & Partai</button>
+      <div>
+        <AlertInput />
+      </div>
+      <button onClick={() => router.push("RealCountAdmn")} className="mt-4 w-[220px] h-[42px] bg-[#E44700] text-white text-[18px] font-semibold rounded-md">
+        Input Calon & Partai
+      </button>
     </div>
   );
 };

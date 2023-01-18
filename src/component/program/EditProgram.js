@@ -103,7 +103,7 @@ const EditProgram = ({ close, data }) => {
     a.append("category", dataEdit.category);
     a.append("image", dataEdit.image);
     a.append("publication", dataEdit.publication);
-    a.append("id_keabupaten", dataEdit.id_keabupaten);
+    a.append("id_kabupaten", dataEdit.id_kabupaten);
     {
       await axiosFetch("put", `user/articles/${id}`, a)
         .then((res) => {
@@ -224,16 +224,16 @@ const EditProgram = ({ close, data }) => {
               Kabupaten / Kota
             </label>
             <input
-              onChange={(e) => setDataEdit({ ...dataEdit, id_keabupaten: e.target.value })}
+              onChange={(e) => setDataEdit({ ...dataEdit, id_kabupaten: e.target.value })}
               className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
-              value={dataEdit?.wilayah}
+              value={dataEdit?.id_kabupaten}
               type={"text"}
               id="kota"
             />
             <div className="flex items-center gap-2">
               {kabupaten?.data
-                ?.filter((item, i) => {
-                  const search = formProgram?.wilayah?.toLowerCase();
+                ?.filter((item) => {
+                  const search = dataEdit?.id_kabupaten?.toLowerCase();
                   const name = item?.name.toLowerCase();
                   return search && name?.match(search);
                 })
@@ -241,7 +241,7 @@ const EditProgram = ({ close, data }) => {
                 .map((res) => {
                   return (
                     <div
-                      onClick={() => setDataEdit({ ...dataEdit, wilayah: res?.name.toLowerCase() })}
+                      onClick={() => setDataEdit({ ...dataEdit, id_kabupaten: res?.name.toLowerCase() })}
                       value={res.name}
                       key={res._id}
                       className="flex font-sans items-center justify-center rounded-full h-[38px] px-[18px] bg-[#374151] text-[12px] text-white"

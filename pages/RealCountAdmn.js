@@ -1,7 +1,8 @@
 import React from "react";
+import TambahPartai from "../src/component/admin/realcount/TambahPartai";
 
 function RealCountAdmn() {
-  return <div>RealCountAdmn</div>;
+  return <TambahPartai />;
 }
 
 export default RealCountAdmn;
