@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TambahPartai from "../src/component/admin/realcount/TambahPartai";
 
 function RealCountAdmn() {
