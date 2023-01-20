@@ -15,14 +15,18 @@ const TambahPartai = () => {
   };
 
   const getPartai = useFetch("get", "user/real_count/partai");
+
+  useEffect(() => {
+    console.log("first render");
+  }, [getPartai]);
   const [popUp, setPopUp] = useState(false);
 
-  console.log(getPartai);
+  //   console.log(getPartai);
   const router = useRouter();
 
   return (
     <div style={containerStyle} className="mx-[80px] mt-[55px]">
-      <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + "user/real_count/partai"} />
+      {/* <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + "user/real_count/partai"} /> */}
       <p className="flex justify-center text-[32px] text-[#374151] font-bold pt-[42px]">Input Calon & Partai</p>
       <p className="flex justify-center text-[#374151] pt-[10px]">Periode 2024 - 2029</p>
       <div className="flex justify-center pt-[40px]">

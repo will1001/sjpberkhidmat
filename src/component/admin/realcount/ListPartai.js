@@ -10,7 +10,7 @@ import axiosFetch from "../../../API/axiosFetch";
 const ListPartai = ({ title, logo, id, nomor }) => {
   const [detailForm, setDetailForm] = useState(false);
   const [formPartai, setFormPartai] = useState({
-    logo: "",
+    logo: [logo],
     nama: title,
   });
   const maxNumber = 1;
@@ -38,7 +38,7 @@ const ListPartai = ({ title, logo, id, nomor }) => {
   //         });
   //     }
   //   };
-  //   console.log(logo);
+  console.log(formPartai.logo);
   return (
     <>
       <div className="flex pl-[41px] h-[72px] bg-white border border-[#D1D5DB] rounded-t-md">
@@ -60,17 +60,19 @@ const ListPartai = ({ title, logo, id, nomor }) => {
               <div className="flex mt-[38px]">
                 <p className="text-[16px] text-[#6B7280] flex items-end mr-[142px]">Logo Partai</p>
                 <div className="flex  items-end">
-                  {imageList?.map((image, index) => (
-                    <div key={index} className="mr-2 flex items-end">
-                      <img className="flex" src={image["data_url"]} alt="" width="137" />
-                    </div>
-                  ))}
-                  <div className="flex items-center gap-1 pl-[18px] pr-[24px] h-[43px] border border-[#E44700] rounded-md text-[18px] text-[#E44700] font-semibold">
-                    <div>
-                      <img src={logo.src} alt="upload.png" />
-                    </div>
+                  <div className="mr-2 flex items-end">
+                    {formPartai.logo[0]?.data_url === undefined ? (
+                      <img className="flex" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formPartai.logo[0]} alt="" width="137" />
+                    ) : (
+                      <img className="flex" src={formPartai.logo[0]?.data_url} alt="" width="137" />
+                    )}
+                  </div>
 
-                    {imageList.length === 0 ? (
+                  <div className="flex items-center gap-1 pl-[18px] pr-[24px] h-[43px] border border-[#E44700] rounded-md text-[18px] text-[#E44700] font-semibold">
+                    <div className="">
+                      <img src={uploadImg.src} alt="upload.png" />
+                    </div>
+                    {formPartai.logo.length === 0 ? (
                       <p className="cursor-pointer" onClick={onImageUpload}>
                         Upload Logo
                       </p>
@@ -78,8 +80,7 @@ const ListPartai = ({ title, logo, id, nomor }) => {
                       <p
                         className="cursor-pointer"
                         onClick={() => {
-                          onImageRemove(imageList);
-                          ubahLogo;
+                          onImageRemove(formPartai.logo);
                         }}
                       >
                         ReUpload

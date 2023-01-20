@@ -50,8 +50,13 @@ const RealCount = () => {
             res === undefined ? (
               <p>Loading...</p>
             ) : (
-              <div key={res._id} className="h-[69px] border">
-                <p className="text-[16px] font-semibold text-[#374151]">{res?.name}</p>
+              <div key={res._id} className="h-[69px] border-[0.5px] flex px-[21px] gap-3">
+                <p className="text-[21px] font-medium text-[#374151] flex items-center">18%</p>
+                <div className="flex items-center">
+                  <img className="h-[50px] w-[50px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
+                </div>
+
+                <p className="text-[16px] flex items-center font-semibold text-[#374151]">{res?.name}</p>
               </div>
             )
           )}
@@ -63,8 +68,22 @@ const RealCount = () => {
               <p>Loading...</p>
             ) : (
               <div key={res._id} className="h-[69px] border">
-                <p className="text-[16px] font-semibold text-[#374151]">{res?.name}</p>
-                <p className="text-[14px]  text-[#E44700]">Fraksi {res.id_partai}</p>
+                <div className="flex items-center px-[12px] gap-3 py-2">
+                  <p className="text-[#374151] text-[26px] font-semibold">55%</p>
+                  <div className="flex flex-col justify-center">
+                    <p className="text-[14px] text-[#6B7280]">Total Suara</p>
+                    <p className="text-[16px] text-[#374151] font-bold">57.135</p>
+                  </div>
+
+                  <div className="flex items-center">
+                    <img className="h-[56px] w-[48px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
+                  </div>
+
+                  <div>
+                    <p className="text-[16px] font-semibold text-[#374151]">{res?.name}</p>
+                    <p className="text-[14px]  text-[#E44700]">Fraksi {res.id_partai}</p>
+                  </div>
+                </div>
               </div>
             )
           )}
