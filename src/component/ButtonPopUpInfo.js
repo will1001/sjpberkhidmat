@@ -60,7 +60,7 @@ const ButtonPopUpInfo = ({ type, data }) => {
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>ini mataram</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Utara</p>
           </div>
         </div>
         {/* kota mataram */}
@@ -68,7 +68,7 @@ const ButtonPopUpInfo = ({ type, data }) => {
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>ini mataram</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kota Mataram</p>
           </div>
         </div>
         {/* lombok barat */}
