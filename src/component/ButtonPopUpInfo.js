@@ -1,73 +1,41 @@
-import axios from "axios";
-import { object } from "prop-types";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import useFetch from "../API/useFetch";
 import { Logistic, ProgramIcon, RelawanIcon, SimpatisanIcon, TpsIcon } from "../utility/icon/icon";
 import JumlahPenduduk from "./JumlahPenduduk";
-import NewButton from "./NewButton";
-import TabelPopUp from "./petakekuatan/tabel";
-import { setButton } from "../redux/button/popUpReducer";
+import kotaIcon from "../utility/peta/kota_icon.png";
+import relawan from "../utility/peta/relawan.png";
+import logistik from "../utility/peta/logistik.png";
+import simpatisan from "../utility/peta/simpatisan.png";
+import program from "../utility/peta/program.png";
 
-const ButtonPopUpInfo = () => {
-  const base_url = "https://api.sjpberkhidmat.id/";
-  const kabupaten = useFetch("get", "user/kabupaten");
+const ButtonPopUpInfo = ({ type, data }) => {
+  const [active, setActive] = useState();
+  const [icon, setIcon] = useState(kotaIcon);
 
-  const [relawan, setRelawan] = useState([]);
+  const handleButton = (button) => {
+    active !== button ? setActive(button) : setActive();
+  };
 
   useEffect(() => {
-    axios.get(base_url + "user/relawan").then((res) => setRelawan(res.data));
-  }, []);
-
-  const [active, setActive] = useState("");
-  const [triger, setTriger] = useState(false);
-
-  const buttonName = useSelector((state) => state.button);
-  const dispatch = useDispatch();
-  const handleButton = (button) => {
-    active !== button && setActive(button);
-
-    if (button === "Relawan") {
-      setTriger(true);
-      dispatch(setButton({ title: "Jumlah Relawan SJP Berkhidmat", button: "Tambah Relawan", name: active, change: triger }));
-    } else if (button === "Simpatisan") {
-      setTriger(true);
-      dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: active, change: triger }));
-    } else if (button === "Logistik") {
-      setTriger(true);
-      dispatch(setButton({ title: "Persebaran Logistik", button: undefined, name: active, change: triger }));
-    } else if (button === "Program") {
-      setTriger(true);
-      dispatch(setButton({ title: "Program SJP Berkhidmat", button: undefined, name: active, change: triger }));
+    if (active === "Relawan") {
+      setIcon(relawan);
+    } else if (active === "Simpatisan") {
+      setIcon(simpatisan);
+    } else if (active === "Logistik") {
+      setIcon(logistik);
+    } else if (active === "Program") {
+      setIcon(program);
     } else {
-      dispatch(setButton({ title: "", button: "", name: "", change: false }));
+      setIcon(kotaIcon);
     }
-    // active !== button ?  : setActive("");
-    // button == "Relawan" ?  : dispatch(setButton({ title: "", button: "", name: "" }));
-    // active === "Simpatisan" ? dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: "Simpatisan" })) : dispatch(setButton({ title: "", button: "", name: "" }));
-    // active === "Logistik" ? dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: "Logistik" })) : dispatch(setButton({ title: "", button: "", name: "" }));
-    // active === "Program" ? dispatch(setButton({ title: "Jumlah Simpatisan SJP Berkhidmat", button: "Tambah Simpatisan", name: "Program" })) : dispatch(setButton({ title: "", button: "", name: "" }));
-  };
+  }, [handleButton]);
 
-  // console.log(active, triger, triger1);
-  // console.log(buttonName.button.change);
-  const styleBtn = {
-    padding: "9px 20px",
-    gap: "8px",
-    width: "158px",
-    height: "35px",
-    border: "1px solid #E44700",
-    borderRadius: "4px",
-    fontWeight: "600",
-    fontSize: "14px",
-    lineHeight: "120%",
-    textAlign: "center",
-    color: "#E44700",
-  };
+  const [namaKecamatan, setNamaKecamatan] = useState({});
+
+  // console.log(data);
 
   return (
     <>
-      <div className="flex mt-8 justify-between">
+      <div className="flex mt-8  gap-2">
         <span id="1" onClick={() => handleButton("Relawan")}>
           <JumlahPenduduk active={active} title={"Relawan"} icon={<RelawanIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
@@ -82,6 +50,104 @@ const ButtonPopUpInfo = () => {
         <span onClick={() => handleButton("Program")}>
           <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
+      </div>
+
+      {/* semua kab / kota */}
+      <div className={`${type === "kab_kota" ? "visible" : "hidden"}`}>
+        {/* div popup */}
+        {/* lombok utara */}
+        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[110px] rounded-md ">
+          <img className="h-[24px]" src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>ini mataram</p>
+          </div>
+        </div>
+        {/* kota mataram */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[600px] top-[250px] rounded-md ">
+          <img className="h-[24px]" src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>ini mataram</p>
+          </div>
+        </div>
+        {/* lombok barat */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[550px] top-[430px] rounded-md ">
+          <img className="h-[24px]" src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Barat</p>
+          </div>
+        </div>
+        {/* lombok tengah */}
+        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[890px] top-[350px] rounded-md ">
+          <img className="h-[24px]" src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Tengah</p>
+          </div>
+        </div>
+        {/* lombok timur */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[1000px] top-[230px] rounded-md ">
+          <img className="h-[24px]" src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Timur</p>
+          </div>
+        </div>
+      </div>
+
+      {/* detail mataram */}
+      <div className={`${type === "mataram" ? "visible" : "hidden"}`}>
+        {/* div popup */}
+        {/* ampenan */}
+        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[780px] top-[310px] rounded-md ">
+          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. </p>
+          </div>
+        </div>
+        {/* sekarbela */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[500px] top-[590px] rounded-md ">
+          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. </p>
+          </div>
+        </div>
+        {/* mataram */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[780px] top-[630px] rounded-md ">
+          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. </p>
+          </div>
+        </div>
+        {/* selaparang */}
+        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[490px] top-[350px] rounded-md ">
+          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. </p>
+          </div>
+        </div>
+        {/* cakranegara */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[900px] top-[430px] rounded-md ">
+          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. </p>
+          </div>
+        </div>
+        {/* sandubaya */}
+        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[1000px] top-[560px] rounded-md ">
+          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <div>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. </p>
+          </div>
+        </div>
       </div>
     </>
   );
