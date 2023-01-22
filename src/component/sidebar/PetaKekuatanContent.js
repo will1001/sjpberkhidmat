@@ -17,7 +17,7 @@ function PetaKekuatanContent({ toParent, dataKabupaten }) {
       pathname: "/peta_kekuatan/DetailKota",
       query: { kota: res },
     });
-    console.log(res);
+    // console.log(res);
   };
 
   return (

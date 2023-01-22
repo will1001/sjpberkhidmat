@@ -4,97 +4,69 @@ import Button from "../Button";
 import JumlahPenduduk from "../JumlahPenduduk";
 import ProgressBar from "../../utility/ProgresBar";
 import ContacRelawan from "../ContacRelawan";
+import ButtonPopUpInfo from "../ButtonPopUpInfo";
+import ButtonKecamatan from "../petakekuatan/ButtonKecamatan";
 
 const DetailDesaContent = ({ data }) => {
   const [active, setActive] = useState("hidden");
   const handleActive = () => {
     active === "hidden" ? setActive("visible") : setActive("hidden");
   };
+  const persentase = (10 / 20) * 100;
+
+  console.log(data);
 
   return (
     <>
-      <div className={`${active} absolute w-[398px] top-0 left-[552px] bg-white`}>
-        <button onClick={handleActive} className="absolute right-0">
-          <svg width="44" height="45" viewBox="0 0 44 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 16.5C0 7.66344 7.16344 0.5 16 0.5H44V44.5H16C7.16344 44.5 0 37.3366 0 28.5V16.5Z" fill="#FF5001" />
-            <path d="M16 28.5L28 16.5M16 16.5L28 28.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <ContacRelawan />
-      </div>
-
       <div>
-        <div className="flex gap-2 mt-4">
-          <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
-          <Button title={"Per Kab/Kota"} text={"white"} icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"201px"} h={"53px"} />
-          <HomeIcon />
+        <div className="flex gap-2 mb-4">
+          <div onClick={() => router.back()}>
+            <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
+          </div>
         </div>
-        <div className="mt-4">
-          <p className="text-[32px] font-bold text-slate-700">Desa {data?.nama}</p>
-          <p className="text-[26px] font-medium text-slate-700">Kec. Ampenan</p>
-        </div>
-        <div className="flex mt-2 gap-4">
-          <JumlahPenduduk title={"Relawan"} icon={<TpsIcon />} total="123.123" h={"63px"} w={"175px"} totalSize={"21px"} titleSize={"18px"} />
-          <JumlahPenduduk title={"Relawan"} icon={<TpsIcon />} total="123.123" h={"63px"} w={"175px"} totalSize={"21px"} titleSize={"18px"} />
-        </div>
-        <div className="flex gap-4 mt-4">
-          <JumlahPenduduk title={"Relawan"} icon={<TpsIcon />} total="123.123" h={"63px"} w={"175px"} totalSize={"21px"} titleSize={"18px"} />
-          <JumlahPenduduk title={"Relawan"} icon={<TpsIcon />} total="123.123" h={"63px"} w={"175px"} totalSize={"21px"} titleSize={"18px"} />
-        </div>
-        <div className="mt-8">
-          <p className="text-[18px] font-bold text-slate-700">Real Count</p>
-          <ProgressBar bgcolor={"#FF5001"} progress={"95"} height={"24px"} />
-        </div>
-        <hr className="w-full h-1 bg-gray-100 border-0 rounded  mt-8" />
-        <div className="mt-4">
-          <p className="text-[18px] font-bold text-slate-700">Target Simpatisan</p>
-          <ProgressBar bgcolor={"#FF5001"} progress={"95"} height={"11px"} />
-          <div className="flex justify-between items-end pr-16 mt-4">
-            <div className="text-[18px] font-normal text-slate-700">
-              <p>Jumlah DPT</p>
-              <p>Jumlah DPS</p>
-              <p>Jumlah TPS</p>
-              <p className="mt-4">Relawan</p>
-              <p>Simpatisan</p>
-            </div>
-            <div className="text-[18px] font-bold text-slate-700">
-              <p>325.124</p>
-              <p>325.124</p>
-              <p>25</p>
-              <p className="mt-4 text-orange-600">42</p>
-              <p className="text-orange-600">325.574</p>
-            </div>
-            <div className="text-[16px] font-normal text-orange-600">
-              <p>.</p>
-              <p>.</p>
-              <p>.</p>
-              <p className="underline mt-4">
-                <button onClick={handleActive}>Lihat Detail</button>
-              </p>
-              <p className="underline">
-                <button>Lihat Detail</button>
-              </p>
+        <h1 className="text-[32px] font-bold text-slate-700">Kec. {data?.nama}</h1>
+        <ButtonKecamatan data={data?.id} />
+        <p className="text-[18px] text-slate-700 font-bold mt-2">Real Count</p>
+        <ProgressBar progress={persentase.toFixed()} bgcolor={"#FF5001"} height={"24px"} />
+        <div className="mt-4 border-t-2">
+          <div className="flex justify-between text[18px] text-[#374151] font-bold">
+            <p className="w-[180px]">Target Simpatisan</p>
+            <div className="flex gap-2">
+              <p className="text-[#6B7280]">100.000 /</p>
+              <p>200.000</p>
             </div>
           </div>
-          <div className="mt-4">
-            <p className="font-bold text-[18px] text-slate-700 mb-2">Program</p>
-            <ul>
-              <li className="w-[486px] p-4 mb-2 border">
-                <p className="text-[18px] font-semibold text-slate-700">title program</p>
-                <p className="text-[16px] font-normal text-slate-700">
-                  Do irure anim velit est laboris irure est ipsum non cupidatat. Qui duis consectetur adipisicing ex ex duis exercitation exercitation eu irure. Elit dolore cillum exercitation reprehenderit ex occaecat aliquip sit deserunt
-                  sint fugiat. Laboris nisi Lorem voluptate amet pariatur nulla nostrud ullamco. Ut sunt eiusmod ad anim laborum exercitation culpa ex irure irure ex.
-                </p>
-              </li>
-              <li className="w-[486px] p-4 mb-2 border">
-                <p className="text-[18px] font-semibold text-slate-700">title program</p>
-                <p className="text-[16px] font-normal text-slate-700">
-                  Do irure anim velit est laboris irure est ipsum non cupidatat. Qui duis consectetur adipisicing ex ex duis exercitation exercitation eu irure. Elit dolore cillum exercitation reprehenderit ex occaecat aliquip sit deserunt
-                  sint fugiat. Laboris nisi Lorem voluptate amet pariatur nulla nostrud ullamco. Ut sunt eiusmod ad anim laborum exercitation culpa ex irure irure ex.
-                </p>
-              </li>
-            </ul>
-          </div>
+          <ProgressBar progress={persentase.toFixed()} bgcolor={"#FF5001"} height={"11px"} />
+          <p className="flex">
+            <span className="w-[180px] font-normal text-slate-700 text-[18px] mb-3">Suara Periode Lalu </span> <span className="text-[#374151] font-semibold text-[18px]">123.123</span>
+          </p>
+          <p className="flex">
+            <span className="w-[180px] font-normal text-slate-700 text-[18px]">Jumlah DPT </span> <span className="text-[#374151] font-semibold text-[18px]">123.123</span>
+          </p>
+          <p className="flex ">
+            <span className="w-[180px] font-normal text-slate-700 text-[18px]">Jumlah DPS </span> <span className="text-[#374151] font-semibold text-[18px]">123.123</span>
+          </p>
+          <p className="flex  mb-4">
+            <span className="w-[180px] font-normal text-slate-700 text-[18px]">Jumlah TPS </span> <span className="text-[#374151] font-semibold text-[18px]">123.123 </span>
+          </p>
+        </div>
+        <div className=" mt-4">
+          <p className="flex ">
+            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Relawan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+            <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
+          </p>
+          <p className="flex ">
+            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Simpatisan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+            <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
+          </p>
+          <p className="flex  ">
+            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Logistik </span> <span className="w-[100px] font-semibold text-[18px] text-[#FF5001]">123.123</span>
+            <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
+          </p>
+          <p className="flex ">
+            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Program </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+            <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
+          </p>
         </div>
       </div>
     </>
