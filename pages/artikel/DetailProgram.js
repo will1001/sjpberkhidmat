@@ -24,7 +24,7 @@ function DetailProgram({ router }) {
 
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
   const [search, setSearch] = useState();
-  const getArtikel = useFetch("get", "user//articles?page=1&limit=8");
+  const getArtikel = useFetch("get", "user/articles?page=1&limit=8");
 
   return (
     <div>

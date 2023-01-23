@@ -109,6 +109,7 @@ const AddProgram = () => {
     a.append("description", formProgram.description);
     a.append("category", formProgram.category);
     a.append("image", formProgram.image);
+    a.append("type", "program");
     a.append("publication", formProgram.publication);
     a.append("id_kabupaten", formProgram.id_kabupaten);
     {

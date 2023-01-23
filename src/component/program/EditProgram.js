@@ -105,10 +105,10 @@ const EditProgram = ({ close, data }) => {
 
   const postArtikel = async (id) => {
     const a = new FormData();
+    if (dataEdit.image instanceof File) a.append("image", dataEdit.image);
     a.append("title", dataEdit.title);
     a.append("description", dataEdit.description);
     a.append("category", dataEdit.category);
-    a.append("image", dataEdit.image);
     a.append("publication", dataEdit.publication);
     a.append("id_kabupaten", dataEdit.id_kabupaten);
     {
