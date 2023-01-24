@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const useFetch = (method, url) => {
   const [data, setData] = useState(null);
+  const [metaData, setMetaData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -19,8 +20,8 @@ const useFetch = (method, url) => {
       try {
         setLoading(true);
         const res = await axios.get(base_url + url, { headers });
-        console.log(res);
         setData(res.data.data);
+        setMetaData(res.data.metadata);
       } catch (err) {
         setError(err);
       }
@@ -29,7 +30,7 @@ const useFetch = (method, url) => {
     fetchData();
   }, [url]);
 
-  return { data, loading, error };
+  return { metaData, data, loading, error };
 };
 
 export default useFetch;

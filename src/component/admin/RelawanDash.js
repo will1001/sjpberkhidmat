@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { DeletIcon } from "../../utility/icon/icon";
-import axios from "axios";
+import PeopleIcon from "../../utility/icon/people.png";
+import SearchInput from "../SearchInput";
+import useFetch from "../../API/useFetch";
+import ButtonPrimary from "../ButtonPrimary";
 
 const RelawanDash = () => {
-  const base_url = "https://api.sjpberkhidmat.id/";
-
-  const [relawan, setRelawan] = useState([]);
-
-  useEffect(() => {
-    axios.get(base_url + "user/relawan").then((res) => setRelawan(res.data));
-  }, []);
+  const relawan = useFetch("get", "user/relawan?page=1");
+  const pekerjaan = useFetch("get", "user/jobs");
 
   const columns = [
     {
@@ -42,8 +40,7 @@ const RelawanDash = () => {
       selector: (row) => row.aksi,
     },
   ];
-  //   const data2 = (relawan.data[0].aksi = <DeletIcon />);
-  let data = relawan.data;
+  let data = relawan.data ? relawan.data : [];
   let i = 0;
   if (data) {
     for (const res of data) {
@@ -51,31 +48,55 @@ const RelawanDash = () => {
     }
   }
 
-  // const data = [
-  //   {
-  //     id: 1,
-  //     nama: "Chandra Pradana",
-  //     rekrut: "444",
-  //     email: "rubensip@gmail.coms",
-  //     noHp: "3485 8580 0238 751",
-  //     pekerjaan: "Tokoh Agama",
-  //     target: "Barabali, Beber",
-  //     aksi: <DeletIcon />,
-  //   },
-  //   {
-  //     id: 2,
-  //     nama: "Beetlejuice",
-  //     rekrut: "1988",
-  //     email: "1988",
-  //     noHp: "1988",
-  //     pekerjaan: "1988",
-  //     target: "1988",
-  //     aksi: <DeletIcon />,
-  //   },
-  // ];
   return (
-    <div>
-      Relawan
+    <div className="">
+      <div className="flex justify-between items-center px-[40px] py-[10px]">
+        <h1 className="text-4xl font-bold">Relawan</h1>
+        <div className="flex items-center border border-orange-400 p-[5px] rounded-lg">
+          <img src={PeopleIcon.src} className="h-[36px] m-[5px]" />
+          <div>
+            <p className="text-orange-500 text-2xl">{relawan.metaData?.total}</p>
+            <p className="text-xl">Relawan</p>
+          </div>
+        </div>
+      </div>
+      <div className="px-[40px] py-[10px]">
+        <ButtonPrimary title={"Tambah Akun Relawan"} action={() => {}} />
+      </div>
+      <div className="flex justify-between items-center px-[40px] py-[10px]">
+        <SearchInput placeholder={"Cari Data"} />
+        <select
+          // onChange={(e) =>
+          //   setFormData({ ...formData, pekerjaan: e.target.value })
+          // }
+          id="pekerjaan"
+          className="h-[40px] w-[363px] border text-[#374151]"
+        >
+          <option value="" disabled selected>
+            Pilih Pekerjaan
+          </option>
+          {pekerjaan.data?.map((res, i) => {
+            return (
+              <option key={i} value={res._id}>
+                {res.name}
+              </option>
+            );
+          })}
+        </select>
+        <div>
+          <span>Urutkan </span>
+          <select
+            // onChange={(e) =>
+            //   setFormData({ ...formData, pekerjaan: e.target.value })
+            // }
+            id="pekerjaan"
+            className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
+          >
+            <option value="terbaru">Terbaru</option>
+            <option value="terbanyak">Terbanyak Rekrut</option>
+          </select>
+        </div>
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   );
