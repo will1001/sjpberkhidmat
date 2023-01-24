@@ -33,7 +33,7 @@ const DptDps = () => {
   });
 
   useEffect(() => {
-    axios.get(base_url + "user/kabupaten").then((res) => setKabupaten(res.data));
+    axios.get(base_url + "user/kabupaten?filter=lombok").then((res) => setKabupaten(res.data));
   }, [kabupaten, kecamatan]);
 
   const changeKabupaten = (idKabupaten) => {

@@ -29,7 +29,7 @@ const EksportDataDpt = () => {
   });
 
   useEffect(() => {
-    axios.get(base_url + "user/kabupaten").then((res) => setKabupaten(res.data));
+    axios.get(base_url + "user/kabupaten?filter=lombok").then((res) => setKabupaten(res.data));
   }, []);
 
   const changeKabupaten = (idKabupaten, name) => {

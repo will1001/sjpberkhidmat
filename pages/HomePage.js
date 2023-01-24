@@ -34,7 +34,7 @@ import useFetch from "../src/API/useFetch";
 const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
-  const kabupaten = useFetch("get", "user/kabupaten");
+  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
 
   const dispatch = useDispatch();
   const [search, setSearch] = useState();

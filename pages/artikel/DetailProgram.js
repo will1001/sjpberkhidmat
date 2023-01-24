@@ -20,7 +20,7 @@ import detailProgramImg from "../../src/utility/img/detailProgram.png";
 
 function DetailProgram({ router }) {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
-  const kabupaten = useFetch("get", "user/kabupaten");
+  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
 
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
   const [search, setSearch] = useState();

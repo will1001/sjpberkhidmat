@@ -13,7 +13,7 @@ export const wilayahSlice = createSlice({
   initialState,
   reducers: {
     getKabupaten: async (state, action) => {
-      const data = await axiosFetch("get", "user/kabupaten");
+      const data = await axiosFetch("get", "user/kabupaten?filter=lombok");
       console.log(state);
       // state.kabupaten.push("data?.data[0]");
     },

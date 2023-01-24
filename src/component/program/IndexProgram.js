@@ -47,18 +47,18 @@ const indexProgram = () => {
     // console.log(id);
   };
   const handleDelet = (id) => {
-    console.log(id);
+    // console.log(id);
 
-    // const res = axiosFetch("delete", `user/articles/${id}`)
-    //   .then((res) => {
-    //     console.log("data dihapus");
-    //     setAlertHapus(false);
-    //     window.location.reload(false);
-    //   })
-    //   .catch((err) => console.log(err));
+    const res = axiosFetch("delete", `user/articles/${id}`)
+      .then((res) => {
+        console.log("data dihapus");
+        setAlertHapus(false);
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
   };
 
-  console.log(data);
+  // console.log(data);
   return (
     <>
       {editActive === true ? (

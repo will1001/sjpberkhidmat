@@ -6,7 +6,7 @@ import PetaLombok from "../src/utility/PetaLombok";
 
 function PetaKekuatan() {
   const base_url = "https://api.sjpberkhidmat.id/";
-  const kabupaten = useFetch("get", "user/kabupaten");
+  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
   const [relawan, setRelawan] = useState([]);
 
   const dataChill = (data) => console.log(data);
