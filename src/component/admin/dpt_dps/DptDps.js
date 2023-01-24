@@ -8,7 +8,10 @@ import Icon1 from "../../../utility/icon/Icon_export.png";
 import edit from "../../../utility/icon/edit_icon.png";
 import deletIcon from "../../../utility/icon/delet_icon.png";
 import DataTable from "react-data-table-component";
-import { customStyles, conditionalRowStyles } from "../../../utility/tabelstyle";
+import {
+  customStyles,
+  conditionalRowStyles,
+} from "../../../utility/tabelstyle";
 import { useRouter } from "next/router";
 import EksportDataDpt from "./EksportData";
 import RealCount from "../RealCount";
@@ -33,7 +36,9 @@ const DptDps = () => {
   });
 
   useEffect(() => {
-    axios.get(base_url + "user/kabupaten?filter=lombok").then((res) => setKabupaten(res.data));
+    axios
+      .get(base_url + "user/kabupaten")
+      .then((res) => setKabupaten(res.data));
   }, [kabupaten, kecamatan]);
 
   const changeKabupaten = (idKabupaten) => {
@@ -152,17 +157,23 @@ const DptDps = () => {
   return (
     <div className="pl-[40px] pt-[45px] ">
       <div className="flex items-center justify-between">
-        <p className="font-bold text-[#374151] text-[32px]">DPT / DPS Dapil II Prov. NTB</p>
+        <p className="font-bold text-[#374151] text-[32px]">
+          DPT / DPS Dapil II Prov. NTB
+        </p>
         <div className="pr-[20px]">
           <JumlahDptDps />
         </div>
       </div>
       <div className="flex gap-3 mt-2">
         <div className="w-[209px] h-[42px] bg-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
-          <p className="font-semibold text-white text-[18px]">Tambah DPT / DPS</p>
+          <p className="font-semibold text-white text-[18px]">
+            Tambah DPT / DPS
+          </p>
         </div>
         <div className="w-[255px] h-[42px] bg-white border border-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
-          <p className="font-semibold text-[#E44700] text-[18px]">Input Jumlah Penduduk</p>
+          <p className="font-semibold text-[#E44700] text-[18px]">
+            Input Jumlah Penduduk
+          </p>
         </div>
       </div>
       <div className="mt-[20px] flex">
@@ -170,16 +181,32 @@ const DptDps = () => {
         <form>
           <div className="flex">
             <label htmlFor="search"></label>
-            <input className="h-[40px] w-[239px]  rounded-md border text-[#374151] px-2 outline-0 pr-8" placeholder="Cari Data" type={"text"} id="search" />
-            <img className="absolute ml-[210px] mt-3 cursor-pointer" src={cariIcon.src} alt="searchIcon.png" />
+            <input
+              className="h-[40px] w-[239px]  rounded-md border text-[#374151] px-2 outline-0 pr-8"
+              placeholder="Cari Data"
+              type={"text"}
+              id="search"
+            />
+            <img
+              className="absolute ml-[210px] mt-3 cursor-pointer"
+              src={cariIcon.src}
+              alt="searchIcon.png"
+            />
           </div>
         </form>
         {/*filter  drop down kab / kota */}
         <form>
-          <label htmlFor="kabupaten" className="text-[14px] text-[#374151] mx-3">
+          <label
+            htmlFor="kabupaten"
+            className="text-[14px] text-[#374151] mx-3"
+          >
             Filter
           </label>
-          <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[214px] rounded-md border text-[#374151]">
+          <select
+            onChange={(e) => changeKabupaten(e.target.value)}
+            id="kabupaten"
+            className="h-[40px] w-[214px] rounded-md border text-[#374151]"
+          >
             <option value="kabupaten" disabled selected>
               Pilih Kabupaten
             </option>
@@ -192,7 +219,11 @@ const DptDps = () => {
             })}
           </select>
           {/* dropdown kecamatan */}
-          <select onChange={(e) => e.target.value} id="kecamatan" className="h-[40px] w-[169px] rounded-md border text-[#374151] ml-[19px]">
+          <select
+            onChange={(e) => e.target.value}
+            id="kecamatan"
+            className="h-[40px] w-[169px] rounded-md border text-[#374151] ml-[19px]"
+          >
             <option value="kecamatan" disabled selected>
               Pilih Kecamatan
             </option>
@@ -220,9 +251,17 @@ const DptDps = () => {
         </div>
       </div>
       <div className="w-[955px] mt-4 flex">
-        <DataTable columns={columns} data={data} customStyles={customStyles} conditionalRowStyles={conditionalRowStyles} />
+        <DataTable
+          columns={columns}
+          data={data}
+          customStyles={customStyles}
+          conditionalRowStyles={conditionalRowStyles}
+        />
         <div className="w-[88px]">
-          <p className="h-[51px] flex items-center justify-center bg-[#374151] text-white"> Aksi</p>
+          <p className="h-[51px] flex items-center justify-center bg-[#374151] text-white">
+            {" "}
+            Aksi
+          </p>
           <div key={1} className="h-[57px] border-b-2 border-l-2">
             <div className="flex justify-center pt-4 gap-2">
               <img className="cursor-pointer" src={edit.src} alt="edit" />

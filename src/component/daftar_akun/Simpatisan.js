@@ -7,7 +7,7 @@ import DaftarFailed from "./DaftarFailed";
 
 const Simpatisan = () => {
   const relawan = useFetch("get", "user/relawan");
-  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
+  const kabupaten = useFetch("get", "user/kabupaten");
   const [errorMessage, setErrorMessage] = useState("");
   const [handleError, setHandelError] = useState(false);
   const [handleSuccess, setHandelSuccess] = useState(false);

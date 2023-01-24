@@ -29,7 +29,9 @@ const EksportDataDpt = () => {
   });
 
   useEffect(() => {
-    axios.get(base_url + "user/kabupaten?filter=lombok").then((res) => setKabupaten(res.data));
+    axios
+      .get(base_url + "user/kabupaten")
+      .then((res) => setKabupaten(res.data));
   }, []);
 
   const changeKabupaten = (idKabupaten, name) => {
@@ -43,14 +45,27 @@ const EksportDataDpt = () => {
   return (
     // checkbox Kab / kota
     <div className="pt-[40px] pl-[60px] w-[980px]">
-      <p className="text-[#374151] text-[32px] font-bold">Ekspor Data DPT / DPS</p>
+      <p className="text-[#374151] text-[32px] font-bold">
+        Ekspor Data DPT / DPS
+      </p>
       <div className="flex mt-[59px]">
-        <p className="text-[16px] text-[#374151] font-semibold">Kabupaten /Kota</p>
+        <p className="text-[16px] text-[#374151] font-semibold">
+          Kabupaten /Kota
+        </p>
         <div className="grid grid-rows-5 grid-flow-col-dense gap-4 ml-[42px]">
           {kabupaten.data?.map((res, i) => {
             return (
               <div key={i} className="flex gap-2 ml-[32px] items-center">
-                <input onClick={(e) => changeKabupaten(e.target.value, e.target.name)} type="checkbox" id={res._id} name={res.name} value={res._id} className="w-[30px] h-[30px] border-[#374151] outline-0 accent-[#FF5001]" />
+                <input
+                  onClick={(e) =>
+                    changeKabupaten(e.target.value, e.target.name)
+                  }
+                  type="checkbox"
+                  id={res._id}
+                  name={res.name}
+                  value={res._id}
+                  className="w-[30px] h-[30px] border-[#374151] outline-0 accent-[#FF5001]"
+                />
                 <label className="text-[#374151]" htmlFor="lobar">
                   {res.name}
                 </label>
@@ -63,12 +78,20 @@ const EksportDataDpt = () => {
 
       {/* ceheckbox kecamatan */}
       <div className="flex mt-[59px]">
-        <p className="text-[16px] text-[#374151] w-[160px]  mr-[8px] font-semibold">{formData.name}</p>
+        <p className="text-[16px] text-[#374151] w-[160px]  mr-[8px] font-semibold">
+          {formData.name}
+        </p>
         <div className="grid grid-rows-6 grid-flow-col-dense gap-4">
           {kecamatan.data?.map((res, i) => {
             return (
               <div key={i} className="flex gap-2 ml-[32px] items-center">
-                <input className="w-[30px] h-[30px] border-[#374151] outline-0 accent-[#FF5001]" type="checkbox" id="kabupaten" name="kabupaten" value="kabupaten" />
+                <input
+                  className="w-[30px] h-[30px] border-[#374151] outline-0 accent-[#FF5001]"
+                  type="checkbox"
+                  id="kabupaten"
+                  name="kabupaten"
+                  value="kabupaten"
+                />
                 <label className="text-[#374151]" htmlFor="kabupaten">
                   {res.name}
                 </label>
@@ -81,9 +104,17 @@ const EksportDataDpt = () => {
 
       {/* checkbox desa belum tampil */}
       <div className="flex">
-        <p className="text-[16px] text-[#374151] w-[160px]  mr-[16px] font-semibold">desa</p>
+        <p className="text-[16px] text-[#374151] w-[160px]  mr-[16px] font-semibold">
+          desa
+        </p>
         <div className="flex  gap-2 ml-[32px] items-center">
-          <input className="w-[30px] h-[30px] border-[#374151] outline-0 accent-[#FF5001]" type="checkbox" id="kabupaten" name="kabupaten" value="kabupaten" />
+          <input
+            className="w-[30px] h-[30px] border-[#374151] outline-0 accent-[#FF5001]"
+            type="checkbox"
+            id="kabupaten"
+            name="kabupaten"
+            value="kabupaten"
+          />
           <label className="text-[#374151]" htmlFor="kabupaten">
             Semua Desa / Kelurahan
           </label>
@@ -91,11 +122,18 @@ const EksportDataDpt = () => {
       </div>
       {/* input manual belum berfungsi */}
       <div className="flex mt-[59px] mb-[100px]">
-        <p className="text-[16px] text-[#374151] w-[160px]  mr-[12px] font-semibold">Input Manual</p>
+        <p className="text-[16px] text-[#374151] w-[160px]  mr-[12px] font-semibold">
+          Input Manual
+        </p>
         <div className="">
           <div className="flex gap-2 ml-[32px] items-center">
             <label className="text-[#374151]" htmlFor="kabupaten"></label>
-            <input className="w-[363px] h-[40px] px-2 border rounded-md border-[#374151] focus:border-[#E44700]  outline-0" type="type " id="kabupaten" name="kabupaten" />
+            <input
+              className="w-[363px] h-[40px] px-2 border rounded-md border-[#374151] focus:border-[#E44700]  outline-0"
+              type="type "
+              id="kabupaten"
+              name="kabupaten"
+            />
           </div>
         </div>
       </div>

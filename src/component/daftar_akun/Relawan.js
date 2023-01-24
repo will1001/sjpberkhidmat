@@ -9,7 +9,7 @@ import DaftarFailed from "./DaftarFailed";
 
 const Relawan = () => {
   const router = new useRouter();
-  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);

@@ -58,8 +58,8 @@ const AddProgram = () => {
     image: "",
     publication: false,
   });
-  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
-  const artikel = useFetch("get", "user/articles?page=1");
+  const kabupaten = useFetch("get", "user/kabupaten");
+  const artikel = useFetch("get", "user/articles?page=1&type=program");
 
   const categoryProgram = [
     {

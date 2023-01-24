@@ -34,11 +34,14 @@ import useFetch from "../src/API/useFetch";
 const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
-  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const dispatch = useDispatch();
   const [search, setSearch] = useState();
-  const getArtikel = useFetch("get", "user//articles?page=1&limit=8");
+  const getArtikel = useFetch(
+    "get",
+    "user/articles?page=1&limit=8&type=program"
+  );
 
   return (
     <>
@@ -229,7 +232,7 @@ const HomePage = ({ router }) => {
               </select>
             </div>
           </div>
-            {getArtikel?.data?.map((res) => {
+          {getArtikel?.data?.map((res) => {
             if (res.publication === true) {
               return (
                 <div

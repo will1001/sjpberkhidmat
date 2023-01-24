@@ -47,7 +47,7 @@ const EditProgram = ({ close, data }) => {
   const refTextArea = useRef(format);
   const [switchButton, setSwitchButton] = useState(false);
 
-  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const categoryProgram = [
     {
