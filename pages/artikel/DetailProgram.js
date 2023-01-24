@@ -98,11 +98,27 @@ function DetailProgram({ router }) {
             {router.query.kabupaten}
           </span>
         </div>
-        <img
-          className="m-[50px]"
-          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image}
-          alt=""
-        />
+        {["png", "jpeg", "jpg"].includes(
+          router.query.image.split(".").pop().toLowerCase()
+        ) && (
+          <img
+            className="m-[50px]"
+            src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image}
+            alt=""
+          />
+        )}
+        {["mp4", "mkv"].includes(
+          router.query.image.split(".").pop().toLowerCase()
+        ) && (
+          <video className="m-[50px]" width="920" height="740" controls>
+            <source
+              src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image}
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        )}
+
         <div>{router.query.description}</div>
       </div>
       <div className="bg-[#4B5563] h-[1684px] pt-[67px] px-[120px] flex flex-col items-center">
