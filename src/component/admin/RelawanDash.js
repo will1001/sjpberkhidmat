@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { DeletIcon } from "../../utility/icon/icon";
 import PeopleIcon from "../../utility/icon/people.png";
-import axios from "axios";
-import SearchInput from "../searchInput";
+import SearchInput from "../SearchInput";
 import useFetch from "../../API/useFetch";
 import ButtonPrimary from "../ButtonPrimary";
 
