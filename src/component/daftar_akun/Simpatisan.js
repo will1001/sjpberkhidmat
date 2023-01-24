@@ -8,6 +8,7 @@ import DaftarFailed from "./DaftarFailed";
 const Simpatisan = () => {
   const relawan = useFetch("get", "user/relawan");
   const kabupaten = useFetch("get", "user/kabupaten");
+  const pekerjaan = useFetch("get", "user/jobs");
   const [errorMessage, setErrorMessage] = useState("");
   const [handleError, setHandelError] = useState(false);
   const [handleSuccess, setHandelSuccess] = useState(false);
@@ -22,6 +23,7 @@ const Simpatisan = () => {
     date_birth: "",
     gender: "",
     phone: "",
+    pekerjaan: "",
     id_kabupaten: "",
     id_kecamatan: "",
     id_desa: "",
@@ -214,6 +216,32 @@ const Simpatisan = () => {
           {/* alamat simpatisan */}
           <div className="flex flex-col gap-3">
             <p className="text-[#D1D5DB] font-medium ">IDENTITAS PRIBADI</p>
+            <div className="flex justify-between items-center pr-[140px]">
+              <label
+                htmlFor="pekerjaan"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
+                Pekerjaan
+              </label>
+              <select
+                onChange={(e) =>
+                  setFormData({ ...formData, pekerjaan: e.target.value })
+                }
+                id="pekerjaan"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
+                <option value="" disabled selected>
+                  Pilih Pekerjaan
+                </option>
+                {pekerjaan.data?.map((res, i) => {
+                  return (
+                    <option key={i} value={res._id}>
+                      {res.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label
                 htmlFor="kabupaten"

@@ -28,7 +28,7 @@ const DptDps = () => {
     email: "",
     role: "relawan",
     phone: "",
-    jabatan: "",
+    pekerjaan: "",
     id_kabupaten: "",
     id_kecamatan: "",
     target_desa: "",
