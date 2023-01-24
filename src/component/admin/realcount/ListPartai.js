@@ -6,6 +6,8 @@ import openImg from "../../../utility/icon/SelectIcon.png";
 import deletImg from "../../../utility/icon/delet_icon.png";
 import ReactImageUploading from "react-images-uploading";
 import axiosFetch from "../../../API/axiosFetch";
+import useFetch from "../../../API/useFetch";
+import axios from "axios";
 
 const ListPartai = ({ title, logo, id, nomor }) => {
   const [detailForm, setDetailForm] = useState(false);
@@ -15,30 +17,43 @@ const ListPartai = ({ title, logo, id, nomor }) => {
   });
   const maxNumber = 1;
   const onChange = (imageList, addUpdateIndex) => {
-    // console.log(imageList, "image lis");
-    setFormPartai({ ...formPartai, logo: imageList });
-  };
-  const ubahLogo = () => {
-    setFormPartai({ ...formPartai, logo: imageList });
+    console.log(imageList, "image lis");
+    setFormPartai({ ...formPartai, logo: imageList[0] });
   };
 
-  //   const postPartai = async () => {
-  //     const a = new FormData();
-  //     a.append("name", formPartai.nama);
-  //     a.append("logo", formPartai.logo[0].file);
+  const deletePartai = async (id) => {
+    {
+      await axiosFetch("delete", `user/real_count/partai/${id}`)
+        .then((res) => {
+          //   console.log(res);
+          console.log(res);
+          window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
-  //     {
-  //       await axiosFetch("post", `user/real_count/partai`, a)
-  //         .then((res) => {
-  //           console.log(res);
-  //           console.log(a);
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     }
-  //   };
+  const editPartai = async (id) => {
+    const a = new FormData();
+    // a.append("name", formPartai.nama);
+    // a.append("logo", formPartai.logo[0].file);
+    // if (formPartai.logo instanceof File) a.append("image", formPartai.logo);
+
+    {
+      await axiosFetch("put", `user/real_count/partai/${id}`, { name: formPartai.nama })
+        .then((res) => {
+          console.log(res);
+          // console.log(a);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   console.log(formPartai.logo);
+  // console.log(formPartai.logo[0].file);
   return (
     <>
       <div className="flex pl-[41px] h-[72px] bg-white border border-[#D1D5DB] rounded-t-md">
@@ -53,7 +68,16 @@ const ListPartai = ({ title, logo, id, nomor }) => {
       </div>
       {/*  */}
 
-      <ReactImageUploading multiple value={formPartai.logo} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+      <ReactImageUploading
+        multiple
+        value={formPartai.logo}
+        onChange={(e) => {
+          console.log(e[0].file);
+          setFormPartai({ ...formPartai, logo: e[0].file });
+        }}
+        maxNumber={maxNumber}
+        dataURLKey="data_url"
+      >
         {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
           <>
             <div className={` bg-white border border-[#D1D5DB] px-[41px] ${detailForm === false ? "hidden" : "visible"}`}>
@@ -61,10 +85,17 @@ const ListPartai = ({ title, logo, id, nomor }) => {
                 <p className="text-[16px] text-[#6B7280] flex items-end mr-[142px]">Logo Partai</p>
                 <div className="flex  items-end">
                   <div className="mr-2 flex items-end">
-                    {formPartai.logo[0]?.data_url === undefined ? (
-                      <img className="flex" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formPartai.logo[0]} alt="" width="137" />
+                    {formPartai?.logo?.length === undefined ? (
+                      <p>Loading...</p>
                     ) : (
-                      <img className="flex" src={formPartai.logo[0]?.data_url} alt="" width="137" />
+                      <>
+                        {" "}
+                        {formPartai?.logo[0]?.data_url === undefined ? (
+                          <img className="flex" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formPartai.logo[0]} alt="" width="137" />
+                        ) : (
+                          <img className="flex" src={formPartai.logo[0]?.data_url} alt="" width="137" />
+                        )}
+                      </>
                     )}
                   </div>
 
@@ -72,19 +103,25 @@ const ListPartai = ({ title, logo, id, nomor }) => {
                     <div className="">
                       <img src={uploadImg.src} alt="upload.png" />
                     </div>
-                    {formPartai.logo.length === 0 ? (
-                      <p className="cursor-pointer" onClick={onImageUpload}>
-                        Upload Logo
-                      </p>
+                    {formPartai?.logo?.length === undefined ? (
+                      <p>Loading...</p>
                     ) : (
-                      <p
-                        className="cursor-pointer"
-                        onClick={() => {
-                          onImageRemove(formPartai.logo);
-                        }}
-                      >
-                        ReUpload
-                      </p>
+                      <>
+                        {formPartai.logo.length === 0 ? (
+                          <p className="cursor-pointer" onClick={onImageUpload}>
+                            Upload Logo
+                          </p>
+                        ) : (
+                          <p
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setFormPartai({ ...formPartai, logo: [] });
+                            }}
+                          >
+                            ReUpload
+                          </p>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -100,13 +137,10 @@ const ListPartai = ({ title, logo, id, nomor }) => {
                 />
               </div>
               <div className="flex justify-end mt-[29px] mb-[49px]">
-                <div
-                  // onClick={postPartai}
-                  className="flex cursor-pointer items-center text-[18px] text-white font-semibold px-[21px] bg-[#E44700] rounded-md h-[43px]"
-                >
+                <div onClick={() => editPartai(id)} className="flex cursor-pointer items-center text-[18px] text-white font-semibold px-[21px] bg-[#E44700] rounded-md h-[43px]">
                   Simpan Data
                 </div>
-                <div onClick={() => console.log(id)} className="h-[42px] w-[42px] flex items-center justify-center ml-2 rounded-md border border-[#B91C1C] cursor-pointer">
+                <div onClick={() => deletePartai(id)} className="h-[42px] w-[42px] flex items-center justify-center ml-2 rounded-md border border-[#B91C1C] cursor-pointer">
                   <img src={deletImg.src} alt="delet.png" />
                 </div>
               </div>

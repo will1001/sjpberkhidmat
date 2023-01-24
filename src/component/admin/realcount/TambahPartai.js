@@ -16,12 +16,14 @@ const TambahPartai = () => {
 
   const getPartai = useFetch("get", "user/real_count/partai");
 
-  useEffect(() => {
-    console.log("first render");
-  }, [getPartai]);
   const [popUp, setPopUp] = useState(false);
+  const [list, setList] = useState();
 
-  //   console.log(getPartai);
+  useEffect(() => {
+    setList(getPartai);
+  }, [ListPartai]);
+
+  // console.log(list);
   const router = useRouter();
 
   return (
@@ -37,7 +39,7 @@ const TambahPartai = () => {
           <p>Loading.........</p>
         ) : (
           <div key={res._id} className={`mx-[110px] mt-[12px]`}>
-            <ListPartai title={res.name} nomor={index + 1} logo={res.logo} />
+            <ListPartai title={res.name} nomor={index + 1} logo={res.logo} id={res._id.toString()} />
           </div>
         )
       )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RealCountPenduduk from "./realcount/RealCountPenduduk";
 import ProgresBar from "../../utility/ProgresBar";
 import AlertInput from "./realcount/AlertInput";
@@ -16,7 +16,7 @@ const RealCount = () => {
   const router = useRouter();
   const dataCalon = useFetch("get", "user/real_count/calon");
   const dataPartai = useFetch("get", "user/real_count/partai");
-  console.log(dataPartai);
+  console.log(dataPartai.data);
 
   return (
     <div className="p-8 ml-2">
@@ -38,14 +38,12 @@ const RealCount = () => {
           Calon DPR RI
         </button>
       </div>
-      {dataCalon?.data?.length === 0 && (
-        <div>
-          <AlertInput />
-        </div>
-      )}
 
       {page === "partai" ? (
         <>
+          <div className={`${dataPartai?.data?.length === 0 ? "visible" : "hidden"} mb-4`}>
+            <AlertInput />
+          </div>
           {dataPartai?.data?.map((res) =>
             res === undefined ? (
               <p>Loading...</p>
@@ -53,7 +51,7 @@ const RealCount = () => {
               <div key={res._id} className="h-[69px] border-[0.5px] flex px-[21px] gap-3">
                 <p className="text-[21px] font-medium text-[#374151] flex items-center">18%</p>
                 <div className="flex items-center">
-                  <img className="h-[50px] w-[50px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
+                  <img className="h-[50px] w-[40px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
                 </div>
 
                 <p className="text-[16px] flex items-center font-semibold text-[#374151]">{res?.name}</p>
@@ -63,6 +61,9 @@ const RealCount = () => {
         </>
       ) : (
         <>
+          <div className={`${dataCalon?.data?.length === 0 ? "visible" : "hidden"} mb-4`}>
+            <AlertInput />
+          </div>
           {dataCalon?.data.map((res) =>
             res === undefined ? (
               <p>Loading...</p>
@@ -76,7 +77,7 @@ const RealCount = () => {
                   </div>
 
                   <div className="flex items-center">
-                    <img className="h-[56px] w-[48px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
+                    <img className="h-[50px] w-[50px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
                   </div>
 
                   <div>

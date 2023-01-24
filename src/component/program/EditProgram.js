@@ -111,6 +111,7 @@ const EditProgram = ({ close, data }) => {
     a.append("category", dataEdit.category);
     a.append("publication", dataEdit.publication);
     a.append("id_kabupaten", dataEdit.id_kabupaten);
+    console.log(a);
     {
       await axiosFetch("put", `user/articles/${id}`, a)
         .then((res) => {
@@ -126,7 +127,7 @@ const EditProgram = ({ close, data }) => {
   };
   const [dataEdit, setDataEdit] = useState(data);
 
-  console.log(dataEdit, "ini data edit");
+  // console.log(dataEdit, "ini data edit");
 
   return (
     <>
@@ -134,38 +135,21 @@ const EditProgram = ({ close, data }) => {
         <img src={formProgram?.image} alt="" />
       </div> */}
 
-      <div
-        className={`bg-slate-400 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${
-          switchButton === true ? "visible" : "hidden"
-        }`}
-      >
+      <div className={`bg-slate-400 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${switchButton === true ? "visible" : "hidden"}`}>
         <div className="h-[410px] w-[620px] ml-[416px] mt-[120px] bg-white absolute">
-          <div
-            onClick={() => setSwitchButton(false)}
-            className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer"
-          >
+          <div onClick={() => setSwitchButton(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
             X
           </div>
           <div className="flex justify-center mt-[30px]">
             <img src={publikasiProgram.src} alt="publikasi_program.png" />
           </div>
-          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">
-            Simpan Program?
-          </p>
-          <p className="text-[#374151] flex justify-center pb-[32px]">
-            anda akan merubah data program
-          </p>
+          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">Simpan Program?</p>
+          <p className="text-[#374151] flex justify-center pb-[32px]">anda akan merubah data program</p>
           <div className="flex justify-center items-center gap-8">
-            <div
-              onClick={() => setSwitchButton(false)}
-              className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center"
-            >
+            <div onClick={() => setSwitchButton(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
               <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
             </div>
-            <div
-              onClick={() => postArtikel(dataEdit?._id)}
-              className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center"
-            >
+            <div onClick={() => postArtikel(dataEdit?._id)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
               <p className="text-[18px] text-[#fff] font-semibold">Simpan</p>
             </div>
           </div>
@@ -173,9 +157,7 @@ const EditProgram = ({ close, data }) => {
       </div>
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <Logo />
-        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[400px]">
-          Edit Program
-        </p>
+        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[400px]">Edit Program</p>
         <div onClick={() => setSwitchButton(true)}>
           <NewButton title={"Simpan"} style={publikasiStyle} />
         </div>
@@ -192,9 +174,7 @@ const EditProgram = ({ close, data }) => {
               Judul Program
             </label>
             <input
-              onChange={(e) =>
-                setDataEdit({ ...dataEdit, title: e.target.value })
-              }
+              onChange={(e) => setDataEdit({ ...dataEdit, title: e.target.value })}
               value={dataEdit?.title}
               className="border border-[#D1D5DB] h-[48px] outline-0 rounded-md p-[12px] text-[#374151] font-medium"
               type={"text"}
@@ -202,10 +182,7 @@ const EditProgram = ({ close, data }) => {
             />
 
             {/* description  */}
-            <label
-              id="title"
-              className="text-[#6B7280] text-[16px] font-serif pt-[60px]"
-            >
+            <label id="title" className="text-[#6B7280] text-[16px] font-serif pt-[60px]">
               detail Program
             </label>
             <div className="flex h-[72px] bg-[#6B7280] border rounde-sm items-center px-[16px] text-[#374151] font-serif gap-6">
@@ -224,39 +201,19 @@ const EditProgram = ({ close, data }) => {
                 </select>
               </div>
               <div className="flex gap-2">
-                <div className="flex bg-white h-[48px] w-[48px] font-semibold items-center justify-center border rounded-md cursor-pointer">
-                  B
-                </div>
-                <div className="flex bg-white h-[48px] w-[48px] italic items-center justify-center border rounded-md cursor-pointer">
-                  I
-                </div>
-                <div className="flex bg-white h-[48px] w-[48px] underline items-center justify-center border rounded-md cursor-pointer">
-                  U
-                </div>
+                <div className="flex bg-white h-[48px] w-[48px] font-semibold items-center justify-center border rounded-md cursor-pointer">B</div>
+                <div className="flex bg-white h-[48px] w-[48px] italic items-center justify-center border rounded-md cursor-pointer">I</div>
+                <div className="flex bg-white h-[48px] w-[48px] underline items-center justify-center border rounded-md cursor-pointer">U</div>
               </div>
               <div className="flex gap-2">
-                <div
-                  style={{ backgroundImage: `url(${center.src})` }}
-                  className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer"
-                />
-                <div
-                  style={{ backgroundImage: `url(${left.src})` }}
-                  className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer"
-                />
-                <div
-                  style={{ backgroundImage: `url(${justify.src})` }}
-                  className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer"
-                />
-                <div
-                  style={{ backgroundImage: `url(${right.src})` }}
-                  className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer"
-                />
+                <div style={{ backgroundImage: `url(${center.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
+                <div style={{ backgroundImage: `url(${left.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
+                <div style={{ backgroundImage: `url(${justify.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
+                <div style={{ backgroundImage: `url(${right.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
               </div>
             </div>
             <textarea
-              onChange={(e) =>
-                setDataEdit({ ...dataEdit, description: e.target.value })
-              }
+              onChange={(e) => setDataEdit({ ...dataEdit, description: e.target.value })}
               ref={refTextArea}
               id="description_program"
               name="description_program"
@@ -266,33 +223,19 @@ const EditProgram = ({ close, data }) => {
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
-          <p className="font-bold text-[#374151] text-[18px] mb-[16px]">
-            Publikasi di Website
-          </p>
+          <p className="font-bold text-[#374151] text-[18px] mb-[16px]">Publikasi di Website</p>
           <div className="flex items-center gap-4">
             <div
-              onClick={() =>
-                setDataEdit({ ...dataEdit, publication: !dataEdit.publication })
-              }
-              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${
-                dataEdit?.publication === true
-                  ? ` bg-[#FF5001]  justify-end`
-                  : "bg-[#6B7280]"
-              }`}
+              onClick={() => setDataEdit({ ...dataEdit, publication: !dataEdit.publication })}
+              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${dataEdit?.publication === true ? ` bg-[#FF5001]  justify-end` : "bg-[#6B7280]"}`}
             >
               <div className={`bg-white w-[26px] h-[26px] rounded-full`}></div>
             </div>
             <p className="font-medium text-[#374151]">Publikasikan</p>
           </div>
-          <p className="text-[18px] text-[#374151] font-bold pt-[38px] pb-[24px]">
-            Wilayah Tujuan Program
-          </p>
+          <p className="text-[18px] text-[#374151] font-bold pt-[38px] pb-[24px]">Wilayah Tujuan Program</p>
           <div className="flex flex-col gap-2">
-            <label
-              id="kota"
-              value="kota"
-              className="text-[12px] text-[#374151]"
-            >
+            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               Kabupaten / Kota
             </label>
             {/* <input
@@ -302,13 +245,7 @@ const EditProgram = ({ close, data }) => {
               type={"text"}
               id="kota"
             /> */}
-            <select
-              onChange={(e) =>
-                setFormProgram({ ...formProgram, id_kabupaten: e.target.value })
-              }
-              id="kabupaten"
-              className="h-[40px] w-[363px] border text-[#374151]"
-            >
+            <select onChange={(e) => setFormProgram({ ...formProgram, id_kabupaten: e.target.value })} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
               <option value="" disabled selected>
                 Pilih Kabupaten
               </option>
@@ -346,9 +283,7 @@ const EditProgram = ({ close, data }) => {
                   );
                 })}
             </div>
-            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">
-              category Program
-            </p>
+            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">category Program</p>
             {categoryProgram.map((res) => {
               return (
                 <div
@@ -360,30 +295,12 @@ const EditProgram = ({ close, data }) => {
                   value={dataEdit?.category?.toLowerCase()}
                   className="flex items-center gap-4"
                 >
-                  <div
-                    className={`h-[30px] w-[30px] rounded-full cursor-pointer ${
-                      dataEdit?.category?.toLowerCase() ===
-                      res.title.toLocaleLowerCase()
-                        ? "bg-[#FF5001]"
-                        : "border-2 border-[#D1D5DB]"
-                    }  `}
-                  />
-                  <p
-                    className={`text-[16px] font-medium ${
-                      dataEdit?.category?.toLowerCase() ===
-                      res.title.toLocaleLowerCase()
-                        ? "text-[#FF5001]"
-                        : "text-[#374151]"
-                    }`}
-                  >
-                    {res.name}
-                  </p>
+                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${dataEdit?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
+                  <p className={`text-[16px] font-medium ${dataEdit?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
                 </div>
               );
             })}
-            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">
-              Media File (Foto / Video)
-            </p>
+            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
 
             <ImageUploading
               multiple
@@ -397,24 +314,14 @@ const EditProgram = ({ close, data }) => {
             >
               {({ onImageUpload, isDragging, dragProps }) => (
                 // write your building UI
-                <div
-                  className="h-[112px] border border-[#D1D5DB]"
-                  style={isDragging ? { background: "#FF5001" } : undefined}
-                >
+                <div className="h-[112px] border border-[#D1D5DB]" style={isDragging ? { background: "#FF5001" } : undefined}>
                   <div className="flex justify-center items-center">
-                    <button
-                      className="flex flex-col items-center pt-4"
-                      onClick={onImageUpload}
-                      {...dragProps}
-                    >
+                    <button className="flex flex-col items-center pt-4" onClick={onImageUpload} {...dragProps}>
                       <img src={uploadFile.src} alt="upload here" />
                       <p className="text-[12px] text-[#000000] font-semibold">
-                        <span className="text-[#FF5001]">Upload a file </span>of
-                        drag and drop{" "}
+                        <span className="text-[#FF5001]">Upload a file </span>of drag and drop{" "}
                       </p>
-                      <p className="text-[12px] font-normal">
-                        PNG, JPG, MP4 upto 32MB
-                      </p>
+                      <p className="text-[12px] font-normal">PNG, JPG, MP4 upto 32MB</p>
                     </button>
                   </div>
                 </div>

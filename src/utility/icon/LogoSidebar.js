@@ -3,6 +3,7 @@ import DptDps from "../../component/admin/dpt_dps/DptDps";
 import EksportDataDpt from "../../component/admin/dpt_dps/EksportData";
 import RealCount from "../../component/admin/RealCount";
 import Relawan from "../../component/admin/RelawanDash";
+import SetingSlider from "../../component/admin/seting_slider/SetingSlider";
 import Simpatisan from "../../component/admin/SimpatisanDash";
 import AkunTimSjp from "../../component/akunTimSjp/AkunTimSjp";
 import RumahAspirasi from "../../component/aspirasi/RumahAspirasi";
@@ -32,7 +33,7 @@ export const logoSidebar = [
   { name: "Simpatisan", path: "Simpatisan", icon: <SimpatisanIcon />, component: <Simpatisan />, role: "relawan" },
   { name: "Aspirasi", path: "RumahAspirasi", icon: <AspirasiIcon />, component: <RumahAspirasi />, role: "relawan" },
 
-  { name: "Seting Slider", path: "/seting-slider", icon: <SetingSliderIcon /> },
+  { name: "Seting Slider", path: "SetingSlider", icon: <SetingSliderIcon />, component: <SetingSlider /> },
   { name: "Akun Tim SJP", path: "AkunTimSJP", icon: <TambahAkunIcon />, component: <AkunTimSjp /> },
   { path: "EksportDataDpt", component: <EksportDataDpt /> },
 ];

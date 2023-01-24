@@ -34,6 +34,7 @@ const InputPartai = ({ getPartai }) => {
           console.log(res);
           console.log(a);
           setFormPartai({ logo: "", nama: "" });
+          window.location.reload(false);
         })
         .catch((error) => {
           console.log(error);
