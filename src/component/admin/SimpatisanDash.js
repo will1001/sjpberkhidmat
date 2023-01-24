@@ -5,9 +5,7 @@ import { DeletIcon } from "../../utility/icon/icon";
 import useFetch from "../../API/useFetch";
 
 const SimpatisanDash = () => {
-  const base_url = "https://api.sjpberkhidmat.id/";
-
-  const simpatisan = useFetch("get", "user/simpatisan");
+  const simpatisan = useFetch("get", "user/simpatisan?page=1");
 
   const columns = [
     {
@@ -36,7 +34,7 @@ const SimpatisanDash = () => {
     // },
   ];
 
-  const data = simpatisan.data ? simpatisan.data : [];
+  const data = simpatisan.data ? simpatisan.data.data : [];
 
   return (
     <div>
