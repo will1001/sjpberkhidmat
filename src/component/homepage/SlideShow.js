@@ -1,26 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import useFetch from "../../API/useFetch";
-import Image from "next/image";
 
-const Slideshow = () => {
+const Slideshow = ({ data }) => {
   const getSlider = useFetch("get", "user/slider");
+  const [image, setImage] = useState();
+  useEffect(() => {
+    if (getSlider === undefined) {
+      return <p>Loading........</p>;
+    } else {
+      setImage(getSlider.data);
+    }
+  }, []);
 
-  console.log(getSlider);
-  return (
-    <Slide>
-      {getSlider?.data?.map((res) => (
-        <>
-          <div
-            className="bg-contain bg-no-repeat bg-center mx-auto mt-10  h-[260px] w-[1083px]"
-            key={res._id}
-            style={res.image === undefined ? <p>Loading....</p> : { backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image})` }}
-          ></div>
-        </>
-      ))}
-    </Slide>
-  );
+  console.log(data);
+  if (data === null) {
+    return <p>Loading....</p>;
+  } else {
+    return (
+      <Slide>
+        {data?.map((res) => (
+          <div className="rounded-md flex bg-contain bg-no-repeat bg-center mx-auto mt-10  h-[260px] w-[1083px]" key={res._id} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image})` }}></div>
+        ))}
+      </Slide>
+    );
+  }
 };
 
 export default Slideshow;

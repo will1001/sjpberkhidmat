@@ -32,7 +32,7 @@ const HomePage = ({ router }) => {
 
   const getSlider = useFetch("get", "user/slider");
 
-  console.log(getSlider);
+  // console.log(getSlider);
 
   return (
     <>
@@ -80,7 +80,7 @@ const HomePage = ({ router }) => {
         </div>
 
         <div style={{ backgroundImage: `url(${bgImage.src})` }} className="h-[350px] bg-no-repeat bg-cover">
-          <Slideshow />
+          <Slideshow data={getSlider?.data} />
         </div>
         <div className="flex flex-col bg-[#ffece4] pb-[118px]">
           <div className="flex items-center justify-center gap-6 px-12 rounded-xl mx-auto mt-[55px] h-[137px] bg-[#FF5001]">
@@ -88,7 +88,7 @@ const HomePage = ({ router }) => {
             <p>
               <span className="font-bold text-white text-[26px]">Ayo Gunakan Hak Pilih Anda</span>
               <br />
-              <span className="text-white text-[18px]">Consequat quis semper enim enim massa augue.</span>
+              <span className="text-white text-[18px]">17 Agustus 2023 Pemilihan Umum DPR RI</span>
             </p>
             <CountDown />
           </div>
