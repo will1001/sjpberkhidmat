@@ -24,7 +24,10 @@ function DetailProgram({ router }) {
 
   const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
   const [search, setSearch] = useState();
-  const getArtikel = useFetch("get", "user/articles?page=1&limit=8");
+  const getArtikel = useFetch(
+    "get",
+    "user/articles?page=1&limit=8&type=program"
+  );
 
   return (
     <div>
@@ -95,11 +98,27 @@ function DetailProgram({ router }) {
             {router.query.kabupaten}
           </span>
         </div>
-        <img
-          className="m-[50px]"
-          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image}
-          alt=""
-        />
+        {["png", "jpeg", "jpg"].includes(
+          router.query.image.split(".").pop().toLowerCase()
+        ) && (
+          <img
+            className="m-[50px]"
+            src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image}
+            alt=""
+          />
+        )}
+        {["mp4", "mkv"].includes(
+          router.query.image.split(".").pop().toLowerCase()
+        ) && (
+          <video className="m-[50px]" width="920" height="740" controls>
+            <source
+              src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image}
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        )}
+
         <div>{router.query.description}</div>
       </div>
       <div className="bg-[#4B5563] h-[1684px] pt-[67px] px-[120px] flex flex-col items-center">
@@ -222,83 +241,83 @@ function DetailProgram({ router }) {
         </div>
       </div>
       <div
-          style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.02)" }}
-          className="flex h-[240px] justify-between pr-[120px]"
-        >
-          <div className="flex flex-col justify-center pl-[70px]">
-            <div className="flex justify-center w-[560px]">
-              <Logo />
-              <div className="pl-[32px] w-[580px]">
-                <p className="text-[16px] text-[#4B5563] font-semibold">
-                  H. SURYADI JAYA PURNAMA, S.T.
-                </p>
+        style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.02)" }}
+        className="flex h-[240px] justify-between pr-[120px]"
+      >
+        <div className="flex flex-col justify-center pl-[70px]">
+          <div className="flex justify-center w-[560px]">
+            <Logo />
+            <div className="pl-[32px] w-[580px]">
+              <p className="text-[16px] text-[#4B5563] font-semibold">
+                H. SURYADI JAYA PURNAMA, S.T.
+              </p>
 
-                <p className="text-[12px] text-[#FF5001]">
-                  DPR RI Dapil II Provinsi Nusa Tenggara Barat
-                </p>
-                <p className="text-[12px] text-[#4B5563]">
-                  Bekerja bersama untuk membangun masa depan yang <br /> lebih
-                  baik bagi masyarakat dan generasi yang akan datang.
-                </p>
-              </div>
+              <p className="text-[12px] text-[#FF5001]">
+                DPR RI Dapil II Provinsi Nusa Tenggara Barat
+              </p>
+              <p className="text-[12px] text-[#4B5563]">
+                Bekerja bersama untuk membangun masa depan yang <br /> lebih
+                baik bagi masyarakat dan generasi yang akan datang.
+              </p>
             </div>
-            <div className="border  border-[#6B7280] mt-[52px]" />
-            <span className="text-[12px] text-[#4B5563]">
-              Copyright © 2022. Website Resmi SJP Berkhidmat dikelola oleh Tim
-              Internal
-            </span>
           </div>
+          <div className="border  border-[#6B7280] mt-[52px]" />
+          <span className="text-[12px] text-[#4B5563]">
+            Copyright © 2022. Website Resmi SJP Berkhidmat dikelola oleh Tim
+            Internal
+          </span>
+        </div>
 
-          <div className="flex flex-col gap-1 text-[#4B5563] justify-center">
-            <p className="">Pemilu 2024</p>
-            <p className="">Publikasi</p>
-            <p className="">Gallery</p>
-            <p className="">Rumah Aspirasi</p>
-            <p className="">Daftar Relawan</p>
-            <p className="">Daftar Simpatisan</p>
-          </div>
-          <div className="flex flex-col gap-3 justify-center">
-            <p className="flex justify-center font-semibold text-[16px] text-[#4B5563]">
-              Social Media
-            </p>
-            <div className="flex items-center gap-3">
-              <button>
-                <LinkedInIcon />
-              </button>
-              <a
-                className="cursor-pointer"
-                target="_blank"
-                href="https://www.instagram.com/suryadi.sjp/?igshid=OGQ2MjdiOTE="
-              >
-                <InstagramIcon />
-              </a>
-              <a
-                className="cursor-pointer"
-                href="https://www.facebook.com/sjp.officialpage?mibextid=ZbWKwL"
-                target="_blank"
-              >
-                <FacebookIcon />
-              </a>
-              <a
-                className="cursor-pointer"
-                href="https://youtube.com/@suryadijayapurnama_sjp4774"
-                target="_blank"
-              >
-                <YouTubeIcon />
-              </a>
-              <a
-                className="cursor-pointer"
-                href="https://twitter.com/suryadi_sjpntb"
-                target="_blank"
-              >
-                <TwitterIcon />
-              </a>
-              <button>
-                <TikTokIcon />
-              </button>
-            </div>
+        <div className="flex flex-col gap-1 text-[#4B5563] justify-center">
+          <p className="">Pemilu 2024</p>
+          <p className="">Publikasi</p>
+          <p className="">Gallery</p>
+          <p className="">Rumah Aspirasi</p>
+          <p className="">Daftar Relawan</p>
+          <p className="">Daftar Simpatisan</p>
+        </div>
+        <div className="flex flex-col gap-3 justify-center">
+          <p className="flex justify-center font-semibold text-[16px] text-[#4B5563]">
+            Social Media
+          </p>
+          <div className="flex items-center gap-3">
+            <button>
+              <LinkedInIcon />
+            </button>
+            <a
+              className="cursor-pointer"
+              target="_blank"
+              href="https://www.instagram.com/suryadi.sjp/?igshid=OGQ2MjdiOTE="
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              className="cursor-pointer"
+              href="https://www.facebook.com/sjp.officialpage?mibextid=ZbWKwL"
+              target="_blank"
+            >
+              <FacebookIcon />
+            </a>
+            <a
+              className="cursor-pointer"
+              href="https://youtube.com/@suryadijayapurnama_sjp4774"
+              target="_blank"
+            >
+              <YouTubeIcon />
+            </a>
+            <a
+              className="cursor-pointer"
+              href="https://twitter.com/suryadi_sjpntb"
+              target="_blank"
+            >
+              <TwitterIcon />
+            </a>
+            <button>
+              <TikTokIcon />
+            </button>
           </div>
         </div>
+      </div>
     </div>
   );
 }

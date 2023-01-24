@@ -21,8 +21,8 @@ const Tabel = () => {
       selector: (row) => row.noHp,
     },
     {
-      name: "Jabatan",
-      selector: (row) => row.jabatan,
+      name: "pekerjaan",
+      selector: (row) => row.pekerjaan,
     },
     {
       name: "Target",
@@ -41,7 +41,7 @@ const Tabel = () => {
       rekrut: "444",
       email: "rubensip@gmail.coms",
       noHp: "3485 8580 0238 751",
-      jabatan: "Tokoh Agama",
+      pekerjaan: "Tokoh Agama",
       target: "Barabali, Beber",
       aksi: <DeletIcon />,
     },
@@ -51,7 +51,7 @@ const Tabel = () => {
       rekrut: "1988",
       email: "1988",
       noHp: "1988",
-      jabatan: "1988",
+      pekerjaan: "1988",
       target: "1988",
       aksi: "1988",
     },

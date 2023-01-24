@@ -50,6 +50,7 @@ const AddProgram = () => {
   const refTextArea = useRef(format);
   const [switchButton, setSwitchButton] = useState(false);
   const [popUp, setPopUp] = useState(false);
+  const ref = useRef();
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -58,8 +59,8 @@ const AddProgram = () => {
     image: "",
     publication: false,
   });
-  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
-  const artikel = useFetch("get", "user/articles?page=1");
+  const kabupaten = useFetch("get", "user/kabupaten");
+  const artikel = useFetch("get", "user/articles?page=1&type=program");
 
   const categoryProgram = [
     {
@@ -112,6 +113,7 @@ const AddProgram = () => {
     a.append("type", "program");
     a.append("publication", formProgram.publication);
     a.append("id_kabupaten", formProgram.id_kabupaten);
+    // console.log(formProgram);
     {
       await axiosFetch("post", `user/articles`, a)
         .then((res) => {
@@ -418,41 +420,34 @@ const AddProgram = () => {
               Media File (Foto / Video)
             </p>
 
-            <ImageUploading
-              multiple
-              value={images}
-              onChange={(e) => {
-                console.log(e[0].file);
-                setFormProgram({ ...formProgram, image: e[0].file });
-              }}
-              maxNumber={maxNumber}
-              dataURLKey="data_url"
+            <label
+              for="file_upload"
+              className="h-[112px] border border-[#D1D5DB] cursor-pointer"
             >
-              {({ onImageUpload, isDragging, dragProps }) => (
-                // write your building UI
-                <div
-                  className="h-[112px] border border-[#D1D5DB]"
-                  style={isDragging ? { background: "#FF5001" } : undefined}
-                >
-                  <div className="flex justify-center items-center">
-                    <button
-                      className="flex flex-col items-center pt-4"
-                      onClick={onImageUpload}
-                      {...dragProps}
-                    >
-                      <img src={uploadFile.src} alt="upload here" />
-                      <p className="text-[12px] text-[#000000] font-semibold">
-                        <span className="text-[#FF5001]">Upload a file </span>of
-                        drag and drop{" "}
-                      </p>
-                      <p className="text-[12px] font-normal">
-                        PNG, JPG, MP4 upto 32MB
-                      </p>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </ImageUploading>
+              <div className="flex flex-col items-center pt-4">
+                <img src={uploadFile.src} alt="upload here" />
+                <p className="text-[12px] text-[#000000] font-semibold">
+                  <span className="text-[#FF5001]">Upload a file </span>of drag
+                  and drop{" "}
+                </p>
+                <p className="text-[12px] font-normal">
+                    PNG, JPG, MP4 upto 32MB
+                  </p>
+              </div>
+              <input
+                onChange={(e) => {
+                  console.log(e.target.files);
+                  setFormProgram({
+                    ...formProgram,
+                    image: e.target.files[0],
+                  });
+                }}
+                id="file_upload"
+                type="file"
+                class="hidden"
+              />
+            </label>
+
           </div>
         </div>
       </div>

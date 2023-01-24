@@ -10,6 +10,7 @@ import DaftarFailed from "./DaftarFailed";
 const Relawan = () => {
   const router = new useRouter();
   const kabupaten = useFetch("get", "user/kabupaten");
+  const pekerjaan = useFetch("get", "user/jobs");
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
@@ -26,7 +27,7 @@ const Relawan = () => {
     email: "",
     role: "relawan",
     phone: "",
-    jabatan: "",
+    pekerjaan: "",
     id_kabupaten: "",
     id_kecamatan: "",
     target_desa: "",
@@ -150,26 +151,31 @@ const Relawan = () => {
                   className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
                 />
               </div>
-              {/* jabatan */}
+              {/* pekerjaan */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label
-                  htmlFor="jabatan"
+                  htmlFor="pekerjaan"
                   className="text-[14px] text-[#374151] pr-[72px]"
                 >
-                  Jabatan
+                  Pekerjaan
                 </label>
                 <select
                   onChange={(e) =>
-                    setFormData({ ...formData, jabatan: e.target.value })
+                    setFormData({ ...formData, pekerjaan: e.target.value })
                   }
-                  id="jabatan"
-                  className="h-[40px] w-[363px] border outline-0 text-[#374151]"
+                  id="pekerjaan"
+                  className="h-[40px] w-[363px] border text-[#374151]"
                 >
-                  <option value="" selected disabled>
-                    Pilih Jabatan
+                  <option value="" disabled selected>
+                    Pilih Pekerjaan
                   </option>
-                  <option value="Tokoh Masyarakat">Tokoh Masyarakat</option>
-                  <option value="Tokoh Agama">Tokoh Agama</option>
+                  {pekerjaan.data?.map((res, i) => {
+                    return (
+                      <option key={i} value={res._id}>
+                        {res.name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               {/* target desa */}

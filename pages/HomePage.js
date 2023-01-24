@@ -38,7 +38,10 @@ const HomePage = ({ router }) => {
 
   const dispatch = useDispatch();
   const [search, setSearch] = useState();
-  const getArtikel = useFetch("get", "user//articles?page=1&limit=8");
+  const getArtikel = useFetch(
+    "get",
+    "user/articles?page=1&limit=8&type=program"
+  );
 
   return (
     <>
@@ -229,7 +232,7 @@ const HomePage = ({ router }) => {
               </select>
             </div>
           </div>
-            {getArtikel?.data?.map((res) => {
+          {getArtikel?.data?.map((res) => {
             if (res.publication === true) {
               return (
                 <div
