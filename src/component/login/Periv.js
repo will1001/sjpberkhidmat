@@ -2,8 +2,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import axiosFetch from "../../API/axiosFetch";
+import perivikasi from "../../utility/img/perivikasi_email.png";
 
-const ForgotPass = ({ pageForgot, pagePeriv }) => {
+const Periv = ({ kePageLogin }) => {
   const router = useRouter();
   const containerStyle = {
     position: "absolute",
@@ -44,26 +45,17 @@ const ForgotPass = ({ pageForgot, pagePeriv }) => {
   return (
     <div style={containerStyle}>
       <div style={containWrap}>
-        <p className="text-[#374151] text-[26px] font-bold">Bantuan Login SJP Berkhidmat</p>
+        <img src={perivikasi.src} alt="perivikasi_email.png" />
+        <p className="text-[#374151] text-[26px] font-bold">Silahkan Cek Emial Anda</p>
         <div className="flex justify-center items-center border-b-2 pb-4">
-          <p className="flex flex-col items-center text-[#374151]">
-            <span>Kami akan mengirimkan link untuk mengatur ulang </span>
-            <span>password anda melalui akun email anda yang telah</span> terdaftar.
+          <p className="items-center flex flex-col text-[#374151]">
+            <span>Kami telah mengirimkan link untuk reset password </span> <span>anda melalui email.</span>
           </p>
-        </div>
-        <div className="w-full px-6 text-[#6B7280]">
-          <label htmlFor="email">Email</label>
-          <input placeholder="Masukan Email Anda" onChange={(e) => setEmail(e.target.value.toString())} className="w-full border mt-2 text-[16px] h-[48px] rounded-md p-4 outline-0" type={"email"} />
-        </div>
-        <div className="w-full px-6">
-          <div onClick={reqReset} className="flex justify-center items-center cursor-pointer h-[41px] w-full bg-[#E44700] rounded-sm">
-            <p className="text-white font-semibold text-[18px]">Reset Password</p>
-          </div>
         </div>
         <p className="text-[#374151]">
           Coba Login Lagi?&nbsp;
-          <span onClick={pageForgot} className="text-[#FF5001] font-semibold cursor-pointer">
-            Kembali Ke Login
+          <span onClick={kePageLogin} className="text-[#FF5001] font-semibold cursor-pointer">
+            Kembali ke Login
           </span>
         </p>
         <span
@@ -84,4 +76,4 @@ const ForgotPass = ({ pageForgot, pagePeriv }) => {
   );
 };
 
-export default ForgotPass;
+export default Periv;

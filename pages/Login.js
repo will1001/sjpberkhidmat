@@ -8,6 +8,7 @@ import show from "../src/utility/icon/show_password.png";
 import hide from "../src/utility/icon/hide_password.png";
 import ForgotPass from "../src/component/login/ForgotPass";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
+import Periv from "../src/component/login/Periv";
 
 const Login = ({ router }) => {
   const containerStyle = {
@@ -60,8 +61,15 @@ const Login = ({ router }) => {
       });
   };
 
+  const setPageForgot = () => {
+    setPage("login");
+  };
+  const setPageverif = () => {
+    setPage("perivikasi");
+  };
+
   const [passType, setPasType] = useState("password");
-  const [page, setPage] = useState("login");
+  const [page, setPage] = useState("perivikasi");
   console.log(roles);
 
   useEffect(() => {
@@ -149,11 +157,9 @@ const Login = ({ router }) => {
       </div>
     );
   } else if (page === "lupa password") {
-    return (
-      <ReCaptchaProvider reCaptchaKey="6LdEdiUkAAAAAL9_sILySgAYMZKuGlmcy2W1IvAj">
-        <ForgotPass />;
-      </ReCaptchaProvider>
-    );
+    return <ForgotPass pageForgot={setPageForgot} pagePeriv={setPageverif} />;
+  } else if (page === "perivikasi") {
+    return <Periv kePageLogin={setPageForgot} />;
   }
 };
 
