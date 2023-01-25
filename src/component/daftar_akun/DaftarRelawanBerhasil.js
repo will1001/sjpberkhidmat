@@ -39,15 +39,7 @@ const DaftarRelawanBerhasil = ({ router, props }) => {
             <p className="flex items-center justify-center">Mari Berkolaborasi untuk menjalankan program</p>
             <p className="flex items-center justify-center">pemerintah daerah bersama SJP Berkhidmat.</p>
           </div>
-          <div
-            onClick={() =>
-              router.push({
-                pathname: "/Admin",
-                query: { component: "Relawan" },
-              })
-            }
-            className="flex justify-center mt-[32px]"
-          >
+          <div onClick={() => router.push("Login")} className="flex justify-center mt-[32px]">
             <NewButton title={"OK"} style={berhasiDaftar} />
           </div>
         </div>
