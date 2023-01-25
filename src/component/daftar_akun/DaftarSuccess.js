@@ -39,15 +39,7 @@ const DaftarSuccess = ({ props, router }) => {
             <p className="flex items-center justify-center">Mari bersama menjadi bagian perubahan</p>
             <p className="flex items-center justify-center">Pulau Lombok yang lebih baik.</p>
           </div>
-          <div
-            onClick={() =>
-              router.push({
-                pathname: "/Admin",
-                query: { component: "Simpatisan" },
-              })
-            }
-            className="flex justify-center mt-[32px]"
-          >
+          <div onClick={() => router.push("Login")} className="flex justify-center mt-[32px]">
             <NewButton title={"OK"} style={berhasiDaftar} />
           </div>
         </div>
