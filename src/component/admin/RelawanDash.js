@@ -7,6 +7,12 @@ import useFetch from "../../API/useFetch";
 import ButtonPrimary from "../ButtonPrimary";
 
 const RelawanDash = () => {
+  const customStyles = {
+    headCells: {
+      style: { backgroundColor: "#374151", color: "white" },
+    },
+  };
+
   const relawan = useFetch("get", "user/relawan?page=1");
   const pekerjaan = useFetch("get", "user/jobs");
 
@@ -55,7 +61,9 @@ const RelawanDash = () => {
         <div className="flex items-center border border-orange-400 p-[5px] rounded-lg">
           <img src={PeopleIcon.src} className="h-[36px] m-[5px]" />
           <div>
-            <p className="text-orange-500 text-2xl">{relawan.metaData?.total}</p>
+            <p className="text-orange-500 text-2xl">
+              {relawan.metaData?.total}
+            </p>
             <p className="text-xl">Relawan</p>
           </div>
         </div>
@@ -97,7 +105,9 @@ const RelawanDash = () => {
           </select>
         </div>
       </div>
-      <DataTable columns={columns} data={data} />
+      <div className="px-[40px] py-[10px]">
+        <DataTable columns={columns} data={data} customStyles={customStyles} />
+      </div>
     </div>
   );
 };
