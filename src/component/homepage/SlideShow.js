@@ -4,15 +4,15 @@ import "react-slideshow-image/dist/styles.css";
 import useFetch from "../../API/useFetch";
 
 const Slideshow = ({ data }) => {
-  const getSlider = useFetch("get", "user/slider");
+  // const getSlider = useFetch("get", "user/slider");
   const [image, setImage] = useState();
-  useEffect(() => {
-    if (getSlider === undefined) {
-      return <p>Loading........</p>;
-    } else {
-      setImage(getSlider.data);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (getSlider === undefined) {
+  //     return <p>Loading........</p>;
+  //   } else {
+  //     setImage(getSlider.data);
+  //   }
+  // }, []);
 
   console.log(data);
   if (data === null) {

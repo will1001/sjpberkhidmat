@@ -30,9 +30,10 @@ const HomePage = ({ router }) => {
   const [search, setSearch] = useState();
   const getArtikel = useFetch("get", "user/articles?page=1&limit=8&type=program");
 
-  const getSlider = useFetch("get", "user/slider");
+  const getSlider = useFetch("get", "user/slider?type=slider");
+  const getBackground = useFetch("get", "user/slider?type=background");
 
-  // console.log(getSlider);
+  console.log(getBackground.data);
 
   return (
     <>
@@ -78,10 +79,14 @@ const HomePage = ({ router }) => {
         <div className={`${dropDownPublikasi === false ? "hidden" : "visible"} z-20`}>
           <DropDownPublikasi />
         </div>
+        {getBackground?.data === null ? (
+          <p>Loading....</p>
+        ) : (
+          <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + getBackground?.data[0]?.image})` }} className="h-[350px] bg-no-repeat bg-cover">
+            <Slideshow data={getSlider?.data} />
+          </div>
+        )}
 
-        <div style={{ backgroundImage: `url(${bgImage.src})` }} className="h-[350px] bg-no-repeat bg-cover">
-          <Slideshow data={getSlider?.data} />
-        </div>
         <div className="flex flex-col bg-[#ffece4] pb-[118px]">
           <div className="flex items-center justify-center gap-6 px-12 rounded-xl mx-auto mt-[55px] h-[137px] bg-[#FF5001]">
             <img className="object-cover  h-[92px]  rounded-2xl" src="https://i.ibb.co/tpcPypN/Frame-2512.jpg" alt="gunakan-hak-pilih" />
