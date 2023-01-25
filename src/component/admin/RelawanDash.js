@@ -5,6 +5,7 @@ import PeopleIcon from "../../utility/icon/people.png";
 import SearchInput from "../SearchInput";
 import useFetch from "../../API/useFetch";
 import ButtonPrimary from "../ButtonPrimary";
+import axiosFetch from "../../API/axiosFetch";
 
 const RelawanDash = () => {
   const customStyles = {
@@ -13,7 +14,24 @@ const RelawanDash = () => {
     },
   };
 
-  const relawan = useFetch("get", "user/relawan?page=1");
+  const [pekerjaanFilter, setPekerjaanFilter] = useState(null);
+  const [sorting, setSorting] = useState(null);
+  const [keyword, setKeyword] = useState(null);
+  const [relawan, setRelawan] = useState([]);
+
+  useEffect(() => {
+    axiosFetch(
+      "get",
+      `user/relawan?page=${1}${
+        pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
+      }${sorting !== null ? "&sort=" + sorting : ""}${
+        keyword !== null ? "&keyword=" + keyword : ""
+      }`
+    )
+      .then((res) => setRelawan(res.data))
+      .catch((err) => console.log(err));
+  }, [pekerjaanFilter, sorting, keyword]);
+
   const pekerjaan = useFetch("get", "user/jobs");
 
   const columns = [
@@ -35,7 +53,7 @@ const RelawanDash = () => {
     },
     {
       name: "pekerjaan",
-      selector: (row) => row.pekerjaan,
+      selector: (row) => row.pekerjaans.name,
     },
     {
       name: "Target Desa",
@@ -72,11 +90,16 @@ const RelawanDash = () => {
         <ButtonPrimary title={"Tambah Akun Relawan"} action={() => {}} />
       </div>
       <div className="flex justify-between items-center px-[40px] py-[10px]">
-        <SearchInput placeholder={"Cari Data"} />
+        <SearchInput
+          placeholder={"Cari Data"}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
         <select
-          // onChange={(e) =>
-          //   setFormData({ ...formData, pekerjaan: e.target.value })
-          // }
+          onChange={(e) => {
+            setTimeout(() => {
+              setPekerjaanFilter(e.target.value);
+            }, 3000);
+          }}
           id="pekerjaan"
           className="h-[40px] w-[363px] border text-[#374151]"
         >
@@ -94,10 +117,8 @@ const RelawanDash = () => {
         <div>
           <span>Urutkan </span>
           <select
-            // onChange={(e) =>
-            //   setFormData({ ...formData, pekerjaan: e.target.value })
-            // }
-            id="pekerjaan"
+            onChange={(e) => setSorting(e.target.value)}
+            id="sorting"
             className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
           >
             <option value="terbaru">Terbaru</option>
