@@ -69,7 +69,7 @@ const Login = ({ router }) => {
   };
 
   const [passType, setPasType] = useState("password");
-  const [page, setPage] = useState("perivikasi");
+  const [page, setPage] = useState("login");
   console.log(roles);
 
   useEffect(() => {
