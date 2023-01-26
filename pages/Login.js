@@ -57,7 +57,8 @@ const Login = ({ router }) => {
         }
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        console.log(err);
+        alert(err?.response?.data?.message);
       });
   };
 

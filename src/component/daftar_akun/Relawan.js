@@ -8,7 +8,9 @@ import DaftarRelawanBerhasil from "./DaftarRelawanBerhasil";
 import DaftarFailed from "./DaftarFailed";
 import hide from "../../utility/icon/hide_password.png";
 import show from "../../utility/icon/show_password.png";
+import detailSuratImg from "../../utility/icon/detail_surat.png";
 import homeIcn from "../../utility/icon/home_icon.png";
+import SuratPernyataan from "./SuratPernyataan";
 
 const Relawan = () => {
   const router = new useRouter();
@@ -25,6 +27,8 @@ const Relawan = () => {
   const [popUp, setPopUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [handleError, setHandelError] = useState(false);
+  const [surat, setSurat] = useState(false);
+  const [agreement, setAgreement] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -52,13 +56,17 @@ const Relawan = () => {
   };
 
   const register = async () => {
-    {
-      await axiosFetch("post", `user/register`, formData)
-        .then(() => setPopUp(true))
-        .catch((error) => {
-          setHandelError(true);
-          setErrorMessage(error.response.data.message);
-        });
+    if (agreement === true) {
+      {
+        await axiosFetch("post", `user/register`, formData)
+          .then(() => setPopUp(true))
+          .catch((error) => {
+            setHandelError(true);
+            setErrorMessage(error.response.data.message);
+          });
+      }
+    } else {
+      alert("Centang Persetujuan Surat Pernyataan");
     }
   };
 
@@ -71,8 +79,7 @@ const Relawan = () => {
     }
   };
 
-  // console.log(formData.password);
-  // console.log(passwordMatch);
+  // console.log(alamat);
 
   return (
     <>
@@ -88,7 +95,7 @@ const Relawan = () => {
       </div>
       <div>
         <form>
-          <div className="pl-[67px] ">
+          <div className="pl-[67px] pb-[100px]">
             <div className="flex flex-col gap-3">
               <p className="text-[#374151] text-[32px] font-bold mb-[27px] ">Tambah Akun Relawan</p>
               {/* nama */}
@@ -142,7 +149,12 @@ const Relawan = () => {
                 <label htmlFor="kabupaten" className="text-[14px] text-[#374151] pr-[72px]">
                   Kabupaten Kota
                 </label>
-                <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+                <select
+                  onChange={(e) => {
+                    changeKabupaten(e.target.value);
+                  }}
+                  className="h-[40px] w-[363px] border text-[#374151]"
+                >
                   <option value="" disabled selected>
                     Pilih Kabupaten
                   </option>
@@ -224,6 +236,30 @@ const Relawan = () => {
                     <img onClick={() => setPasswordType2("password")} className="cursor-pointer" src={show.src} alt="show.png" />
                   )}
                 </div>
+              </div>
+            </div>
+            <div className="border-t-2 mt-8 pt-4 flex items-center gap-[80px]">
+              <p>Detail Surat Pernyataan</p>
+              <div onClick={() => setSurat(true)} className="flex border gap-2 cursor-pointer border-[#E44700] px-4 rounded-md h-[41px] items-center">
+                <img src={detailSuratImg.src} alt="detail surat" />
+                <p className="text-[#E44700] font-semibold ">Baca Detail Surat</p>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-[40px]  ">
+              <input
+                onClick={(e) => {
+                  setAgreement(!agreement);
+                }}
+                className="h-[30px] w-[38px]"
+                type={"checkbox"}
+              />
+              <p className="text-[#374151]">
+                Dengan ini saya menyatakan telah membaca dan menyetujui “Surat Pernyataan”
+                <br /> bergabung menjadi Relawan SJP Berkhidmat, dan BENAR mengajukan diri <br />
+                sebagai Relawan tanpa tekanan dari pihak manapun.
+              </p>
+              <div className={`${surat === false ? "hidden" : "visible"}`}>
+                <SuratPernyataan close={() => setSurat(false)} nama={formData.name} alamat={formData.id_kabupaten} phone={formData.phone} />
               </div>
             </div>
             <div className="flex mt-[40px] justify-end pr-[140px] gap-3">
