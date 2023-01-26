@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { DeletIcon } from "../../utility/icon/icon";
+import EditIcon from "../../utility/icon/edit2.png";
 import PeopleIcon from "../../utility/icon/people.png";
 import SearchInput from "../SearchInput";
 import useFetch from "../../API/useFetch";
@@ -18,6 +19,13 @@ const RelawanDash = () => {
   const [sorting, setSorting] = useState(null);
   const [keyword, setKeyword] = useState(null);
   const [relawan, setRelawan] = useState([]);
+
+  const editRelawan = () => {
+    console.log("Edit Relawan");
+  };
+  const hapusRelawan = () => {
+    console.log("Hpaus Relawan");
+  };
 
   useEffect(() => {
     axiosFetch(
@@ -68,7 +76,23 @@ const RelawanDash = () => {
   let i = 0;
   if (data) {
     for (const res of data) {
-      data[i++].aksi = <DeletIcon />;
+      data[i++].aksi = (
+        <div className="flex justify-between w-[55px] cursor-pointer">
+          <img
+            onClick={() => {
+              editRelawan();
+            }}
+            src={EditIcon.src}
+          />
+          <div
+            onClick={() => {
+              hapusRelawan();
+            }}
+          >
+            <DeletIcon />
+          </div>
+        </div>
+      );
     }
   }
 
