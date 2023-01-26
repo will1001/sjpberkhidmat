@@ -4,11 +4,43 @@ import backIcon from "../src/utility/icon/back_orange.png";
 import { useRouter } from "next/router";
 import Logo from "../src/utility/Logo";
 import uploadFile from "../src/utility/icon/uploadIcon.png";
+import useFetch from "../src/API/useFetch";
+import axiosFetch from "../src/API/axiosFetch";
 
 const Aspirasi = () => {
   const router = useRouter();
   const [image, setImage] = useState();
   const [preview, setPreview] = useState();
+  const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
+  const [kecamatan, setKecamatan] = useState();
+  const [desa, setDesa] = useState();
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+
+  const [form, setForm] = useState({
+    id_kabupaten: "",
+    id_kecamatan: "",
+    id_desa: "",
+    perihal: "",
+    detail: "",
+    image: [],
+    nama: "",
+    email: "",
+    noHp: "",
+  });
+
+  const changeKecamatan = async (idKabupaten) => {
+    const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
+    setKecamatan(res.data);
+    setForm({ ...form, id_kabupaten: idKabupaten });
+  };
+
+  const changeDesa = async (idKecamatan) => {
+    const res = await axiosFetch("get", `user/kelurahan/${idKecamatan}`);
+    setDesa(res.data);
+    setForm({ ...form, id_kecamatan: idKecamatan });
+  };
 
   useEffect(() => {
     if (image === undefined) {
@@ -19,7 +51,51 @@ const Aspirasi = () => {
     }
   }, [image]);
 
-  console.log(preview);
+  useEffect(() => {
+    setError(false);
+  }, [form]);
+
+  const postAspirasi = async () => {
+    const a = new FormData();
+    a.append("id_kabupaten", form.id_kabupaten);
+    a.append("id_kecamatan", form.id_kecamatan);
+    a.append("id_kelurahan", form.id_desa);
+    a.append("email", form.email);
+    a.append("name", form.nama);
+    a.append("phone", form.noHp);
+    a.append("perihal", form.perihal);
+    a.append("detail", form.detail);
+    if (form.image.length !== 0) {
+      a.append("image", form.image);
+    }
+
+    {
+      await axiosFetch("post", `user/aspirasi`, a)
+        .then((res) => {
+          console.log(res);
+          setForm({
+            id_kabupaten: "",
+            id_kecamatan: "",
+            id_desa: "",
+            perihal: "",
+            detail: "",
+            image: [],
+            nama: "",
+            email: "",
+            noHp: "",
+          });
+          setPreview();
+          setSuccess(true);
+        })
+        .catch((error) => {
+          //   console.log(error.response.data.message);
+          setError(true);
+          setErrorMessage(error.response.data.message);
+        });
+    }
+  };
+
+  console.log(errorMessage);
 
   return (
     <>
@@ -41,36 +117,58 @@ const Aspirasi = () => {
         <div className="mt-[58px] flex flex-col gap-2 text-[#374151] pb-[150px]">
           <p className=" text-[21px] font-bold">Rumah Aspirasi</p>
           <div className="flex justify-between items-center">
-            <label>Nama</label>
-            <input className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"} />
+            <label id="nama">Nama</label>
+            <input value={form.nama} id="nama" onChange={(e) => setForm({ ...form, nama: e.target.value })} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"} />
           </div>
+
           <div className="flex justify-between items-center">
             <label>Email</label>
-            <input className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"email"} />
+            <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"email"} />
           </div>
           <div className="flex justify-between items-center border-b-2 pb-8">
             <label>No.HP</label>
-            <input className="border h-[48px] w-[479px] px-2 outline-0 rounded-md " type={"number"} />
+            <input value={form.noHp} onChange={(e) => setForm({ ...form, noHp: e.target.value })} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md " type={"number"} />
           </div>
           <div className="flex justify-between items-center mt-6">
             <label>Perihal</label>
-            <input className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"} />
+            <input value={form.perihal} onChange={(e) => setForm({ ...form, perihal: e.target.value })} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"} />
           </div>
           <div className="flex justify-between items-center">
             <label>Kabupaten</label>
-            <select className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"}></select>
+            <select defaultValue={""} onChange={(e) => changeKecamatan(e.target.value)} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"}>
+              <option value={form.id_kabupaten}></option>
+              {kabupaten?.data?.map((res) => (
+                <option key={res._id} value={res._id}>
+                  {res.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex justify-between items-center">
             <label>Kecamatan</label>
-            <select className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"}></select>
+            <select onChange={(e) => changeDesa(e.target.value)} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"}>
+              <option value={form.id_kecamatan}></option>
+              {kecamatan?.data?.map((res) => (
+                <option key={res._id} value={res._id}>
+                  {res.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex justify-between items-center">
             <label>Desa</label>
-            <select className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"}></select>
+            <select onChange={(e) => setForm({ ...form, id_desa: e.target.value })} className="border h-[48px] w-[479px] px-2 outline-0 rounded-md" type={"text"}>
+              <option value={form.id_desa}></option>
+              {desa?.data?.map((res) => (
+                <option key={res._id} value={res._id}>
+                  {res.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex justify-between">
             <label>Detail Aspirasi</label>
-            <textarea className="border h-[179px] w-[479px] px-2 py-2 outline-0 rounded-md" type={"text"} />
+            <textarea value={form.detail} onChange={(e) => setForm({ ...form, detail: e.target.value })} className="border h-[179px] w-[479px] px-2 py-2 outline-0 rounded-md" type={"text"} />
           </div>
           <div className="flex gap-[110px]">
             <p>Foto (Opsional)</p>
@@ -85,7 +183,7 @@ const Aspirasi = () => {
                 </div>
                 <input
                   onChange={(e) => {
-                    // console.log(e.target.value);
+                    setForm({ ...form, image: e.target.files[0] });
                     setImage([e.target.files[0]]);
                   }}
                   id="file_upload"
@@ -108,8 +206,26 @@ const Aspirasi = () => {
               </>
             )}
           </div>
-          <div className="flex w-full justify-end mt-[37px]">
-            <p className="h-[42px] bg-[#FF5001] flex items-center rounded-md px-4 cursor-pointer text-white font-medium">Sampaikan Aspirasi</p>
+          {error === true && (
+            <div className={`w-full flex  justify-center`}>
+              <p className={` text-[18px] flex items-center font-medium border border-[#B91C1C] h-[42px] px-4 rounded-sm text-[#B91C1C]`}>{errorMessage}</p>
+            </div>
+          )}
+          {success === true && (
+            <div className="w-full flex justify-center ">
+              <p className="flex flex-col items-center text-[18px] bg-[#FF5001] p-4 rounded-md text-white font-medium">
+                Berhasil Menyampaikan Aspirasi
+                <span className="text-[16px] italic font-normal underline cursor-pointer" onClick={() => setSuccess(false)}>
+                  Close
+                </span>
+              </p>
+            </div>
+          )}
+
+          <div className="flex w-full justify-end  mt-[37px]">
+            <p onClick={postAspirasi} className="h-[42px] bg-[#FF5001] flex items-center rounded-md px-4 cursor-pointer text-white font-medium">
+              Sampaikan Aspirasi
+            </p>
           </div>
         </div>
       </div>
