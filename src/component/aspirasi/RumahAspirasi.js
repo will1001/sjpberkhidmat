@@ -46,8 +46,8 @@ const RumahAspirasi = () => {
       .catch((err) => console.log(err));
     return res;
   };
-  console.log(typeSearch);
-  console.log(page?.data);
+  // console.log(filterKelurahan);
+  // console.log(page?.data);
   return (
     <>
       <div className="absolute pr-[50px] h-[1120px] bg-orange-100 bg-opacity-30">
@@ -111,14 +111,26 @@ const RumahAspirasi = () => {
               {page?.data
                 ?.filter((res) => {
                   if (filterKelurahan) {
-                    const search = res.id_kelurahan.includes(filterKelurahan);
-                    return search;
+                    if (filterKelurahan === "Pilih Desa / Kelurahan") {
+                      setFilterKelurahan();
+                    } else {
+                      const search = res.id_kelurahan.includes(filterKelurahan);
+                      return search;
+                    }
                   } else if (filterKecamatan) {
-                    const search = res.id_kecamatan.includes(filterKecamatan);
-                    return search;
+                    if (filterKecamatan === "Pilih Kecamatan") {
+                      setFilterKecamatan();
+                    } else {
+                      const search = res.id_kecamatan.includes(filterKecamatan);
+                      return search;
+                    }
                   } else if (filterWilayah) {
-                    const search = res.id_kabupaten.includes(filterWilayah);
-                    return search;
+                    if (filterWilayah === "Pilih Kabupaten") {
+                      setFilterWilayah();
+                    } else {
+                      const search = res.id_kabupaten.includes(filterWilayah);
+                      return search;
+                    }
                   } else {
                     return res;
                   }
