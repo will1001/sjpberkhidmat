@@ -4,8 +4,10 @@ import showIcon from "../../utility/icon/show_password.png";
 import deletIcon from "../../utility/icon/delet_icon.png";
 import searchIcon from "../../utility/icon/searchIcon.png";
 import useFetch from "../../API/useFetch";
+import { useRouter } from "next/router";
 
 const RumahAspirasi = () => {
+  const router = useRouter();
   const [page, setPage] = useState();
   const [alertHapus, setAlertHapus] = useState(false);
   const [kecamatan, setKecamatan] = useState();
@@ -14,6 +16,9 @@ const RumahAspirasi = () => {
   const [filterKecamatan, setFilterKecamatan] = useState();
   const [filterKelurahan, setFilterKelurahan] = useState();
   const [typeSearch, setTypeSearch] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState([]);
+  const [total, setTotal] = useState();
 
   const kabupaten = useFetch("get", "user/kabupaten?filter=lombok");
   const changeKecamatan = async (id_kabupaten) => {
@@ -30,10 +35,10 @@ const RumahAspirasi = () => {
   };
 
   useEffect(() => {
-    const res = axiosFetch("get", "/user/aspirasi?page=1")
+    const res = axiosFetch("get", `/user/aspirasi?page=${currentPage}`)
       .then((res) => setPage(res.data))
       .catch((err) => console.log(err));
-  }, [alertHapus]);
+  }, [alertHapus, currentPage]);
 
   const deleteAspirasi = async (id) => {
     console.log(id);
@@ -46,8 +51,26 @@ const RumahAspirasi = () => {
       .catch((err) => console.log(err));
     return res;
   };
-  // console.log(filterKelurahan);
-  // console.log(page?.data);
+
+  useEffect(() => {
+    if (page === undefined) {
+      setCurrentPage();
+    } else {
+      setCurrentPage(page?.metadata?.currentPage);
+      setTotalPage(page?.metadata?.totalPage);
+      setTotal(page?.metadata?.total);
+    }
+  }, [page]);
+
+  let arr = [];
+
+  for (var i = 1; i <= totalPage; i++) {
+    var obj = { page: i };
+
+    arr.push(obj);
+  }
+
+  console.log(page);
   return (
     <>
       <div className="absolute pr-[50px] h-[1120px] bg-orange-100 bg-opacity-30">
@@ -152,7 +175,28 @@ const RumahAspirasi = () => {
                       <td className="w-[150px] break-words">{res.kelurahan.name}</td>
                       <td className="w-[200px] break-words overflow-hidden">{res.detail}</td>
                       <td className="w-[100px] flex gap-2 items-center justify-center">
-                        <img className="h-[24px] w-[24px] cursor-pointer" src={showIcon.src} alt="edit icon" />
+                        <img
+                          onClick={() => {
+                            router.push({
+                              pathname: "aspirasi/DetailAspirasi",
+                              query: {
+                                id: res._id,
+                                nama: res.name,
+                                phone: res.phone,
+                                email: res.email,
+                                perihal: res.perihal,
+                                detail: res.detail,
+                                image: res.image,
+                                kabupaten: res.kabupaten.name,
+                                kecamatan: res.kecamatan.name,
+                                kelurahan: res.kelurahan.name,
+                              },
+                            });
+                          }}
+                          className="h-[24px] w-[24px] cursor-pointer"
+                          src={showIcon.src}
+                          alt="edit icon"
+                        />
                         {alertHapus === false ? (
                           <img onClick={() => setAlertHapus(true)} className="h-[24px] w-[24px] cursor-pointer" src={deletIcon.src} alt="delet icon" />
                         ) : (
@@ -170,6 +214,23 @@ const RumahAspirasi = () => {
                   </tbody>
                 ))}
             </table>
+          </div>
+          <div className="flex justify-between items-center mt-4  ">
+            <div className="flex items-center gap-2">
+              <select className="flex justify-center  rounded-md  h-[36px] px-2 border outline-none border-[#D1D5DB] text-[#828282] text-[14px] ">
+                <option>10</option>
+                <option>10</option>
+                <option>10</option>
+              </select>
+              <p className="text-[#828282] text-[14px]">Showing 1 - 10 of {total}</p>
+            </div>
+            <div className="flex items-center mt-4 gap-1">
+              {arr?.map((res, i) => (
+                <p key={i} onClick={() => setCurrentPage(res.page)} className={`text-[14px] px-3 py-1 rounded-md flex cursor-pointer ${res.page === currentPage ? "text-white bg-[#FF5001]" : "text-[#111827]"}`}>
+                  {res.page}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </div>
