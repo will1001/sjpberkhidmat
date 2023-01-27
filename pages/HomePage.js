@@ -12,7 +12,7 @@ import KabarSjpBerkhidmat from "../src/component/homepage/KabarSjpBerkhidmat";
 import KategoriKabar from "../src/component/homepage/KategoriKabar";
 import imageKosong from "../src/utility/img/gambarKosong.png";
 import DropDownPublikasi from "../src/component/homepage/DropDownPublikasi";
-import { withRouter } from "next/router";
+import Router, { withRouter } from "next/router";
 import cariProgramIcon from "../src/utility/icon/searchIcon.png";
 import prevIcon from "../src/utility/icon/previous.png";
 import nextIcon from "../src/utility/icon/next.png";
@@ -223,7 +223,9 @@ const HomePage = ({ router }) => {
           </p>
           <div className="pr-[144px] w-full ml-[39px]">
             <p className="text-[18px]  text-white">Kami menantikan dukungan dan masukan Anda. Ayo bersama-sama kita wujudkan perubahan yang diinginkan!</p>
-            <button className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">Sampaikan Aspirasi</button>
+            <button onClick={() => Router.push("Aspirasi")} className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">
+              Sampaikan Aspirasi
+            </button>
           </div>
         </div>
         <div style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.02)" }} className="flex h-[240px] justify-between pr-[120px]">
