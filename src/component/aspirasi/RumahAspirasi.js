@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosFetch from "../../API/axiosFetch";
-import editIcon from "../../utility/icon/edit_icon.png";
+import showIcon from "../../utility/icon/show_password.png";
 import deletIcon from "../../utility/icon/delet_icon.png";
 import searchIcon from "../../utility/icon/searchIcon.png";
 import useFetch from "../../API/useFetch";
@@ -137,7 +137,7 @@ const RumahAspirasi = () => {
                 })
                 .filter((res) => {
                   if (typeSearch) {
-                    const search = res.perihal.includes(typeSearch);
+                    const search = res.perihal.toLowerCase().includes(typeSearch.toLowerCase());
                     return search;
                   } else {
                     return res;
@@ -146,13 +146,13 @@ const RumahAspirasi = () => {
                 .map((res, index) => (
                   <tbody key={res._id} className="flex items-center" style={(index + 1) % 2 !== 0 ? { background: "#F9FAFB" } : { background: "white" }}>
                     <tr className="px-4 py-2 flex gap-2 text-[#374151] h-[65px]">
-                      <td className="w-[178px] break-words overflow-hidden">{res.detail}</td>
+                      <td className="w-[178px] break-words overflow-hidden">{res.perihal}</td>
                       <td className="w-[150px] break-words">{res.kabupaten.name}</td>
                       <td className="w-[150px] break-words">{res.kecamatan.name}</td>
                       <td className="w-[150px] break-words">{res.kelurahan.name}</td>
                       <td className="w-[200px] break-words overflow-hidden">{res.detail}</td>
                       <td className="w-[100px] flex gap-2 items-center justify-center">
-                        <img className="h-[24px] w-[24px] cursor-pointer" src={editIcon.src} alt="edit icon" />
+                        <img className="h-[24px] w-[24px] cursor-pointer" src={showIcon.src} alt="edit icon" />
                         {alertHapus === false ? (
                           <img onClick={() => setAlertHapus(true)} className="h-[24px] w-[24px] cursor-pointer" src={deletIcon.src} alt="delet icon" />
                         ) : (

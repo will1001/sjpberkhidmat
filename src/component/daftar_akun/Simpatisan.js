@@ -53,7 +53,7 @@ const Simpatisan = () => {
           setHandelSuccess(true);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+          console.log(err);
           setHandelError(true);
           setErrorMessage(err.response.data.message);
         });

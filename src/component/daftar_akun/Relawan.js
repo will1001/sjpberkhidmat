@@ -41,6 +41,10 @@ const Relawan = () => {
     id_kecamatan: "",
     target_desa: "",
     password: "",
+    date_birth: "",
+    place_birth: "",
+    gender: "",
+    address: "",
   });
 
   const changeKabupaten = async (idKabupaten) => {
@@ -61,6 +65,7 @@ const Relawan = () => {
         await axiosFetch("post", `user/register`, formData)
           .then(() => setPopUp(true))
           .catch((error) => {
+            console.log(error);
             setHandelError(true);
             setErrorMessage(error.response.data.message);
           });
@@ -79,7 +84,7 @@ const Relawan = () => {
     }
   };
 
-  // console.log(alamat);
+  console.log(formData);
 
   return (
     <>
@@ -98,6 +103,7 @@ const Relawan = () => {
           <div className="pl-[67px] pb-[100px]">
             <div className="flex flex-col gap-3">
               <p className="text-[#374151] text-[32px] font-bold mb-[27px] ">Tambah Akun Relawan</p>
+              <p className="text-[#D1D5DB] font-medium mb-3">IDENTITAS PRIBADI</p>
               {/* nama */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="nama_akun" className="text-[14px] text-[#374151] ">
@@ -126,6 +132,29 @@ const Relawan = () => {
                 </label>
                 <PatternFormat onChange={(e) => setFormData({ ...formData, nik: e.target.value })} id="NIK" format="#### #### #### ###" allowEmptyFormatting className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]" />
               </div>
+              {/* gender */}
+              <div className="flex justify-between items-center pr-[140px]">
+                <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
+                  Jenis Kelamin
+                </label>
+                <select onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151]">
+                  <option value="" disabled selected>
+                    Pilih Jenis Kelamin
+                  </option>
+                  <option value={"L"}>L</option>
+                  <option value={"P"}>P</option>
+                </select>
+              </div>
+              {/* tgl lahir */}
+              <div className="flex justify-between items-center pr-[140px]">
+                <label htmlFor="tanggal lahir" className="text-[14px] text-[#374151] ">
+                  Tempat & Tgl Lahir
+                </label>
+                <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
+                  <input onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
+                  <input onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })} className=" outline-0" type="date" id="tanggal lahir" name="trip-start" defaultValue="" min="1945-01-01" max="2024-12-31"></input>
+                </div>
+              </div>
               {/* pekerjaan */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
@@ -145,6 +174,7 @@ const Relawan = () => {
                 </select>
               </div>
               {/* target desa */}
+              <p className="text-[#D1D5DB] font-medium my-3">ALAMAT RELAWAN</p>
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="kabupaten" className="text-[14px] text-[#374151] pr-[72px]">
                   Kabupaten Kota
@@ -200,6 +230,10 @@ const Relawan = () => {
                     );
                   })}
                 </select>
+              </div>
+              <div className="flex justify-between items-center pr-[140px]">
+                <label className="text-[14px] text-[#374151]">Alamat</label>
+                <input onChange={(e) => setFormData({ ...formData, address: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="text" />
               </div>
             </div>
             <div className="border-b-2 my-[30px]" />
@@ -259,7 +293,7 @@ const Relawan = () => {
                 sebagai Relawan tanpa tekanan dari pihak manapun.
               </p>
               <div className={`${surat === false ? "hidden" : "visible"}`}>
-                <SuratPernyataan close={() => setSurat(false)} nama={formData.name} alamat={formData.id_kabupaten} phone={formData.phone} />
+                <SuratPernyataan close={() => setSurat(false)} nama={formData.name} alamat={formData.alamat} tanggalLahir={formData.date_birth} tempat={formData.place_birth} phone={formData.phone} />
               </div>
             </div>
             <div className="flex mt-[40px] justify-end pr-[140px] gap-3">

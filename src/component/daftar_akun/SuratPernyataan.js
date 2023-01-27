@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../utility/Logo";
 
-const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone }) => {
+const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone, tempat }) => {
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
   const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const date = new Date();
-  const [visibility, setVisibilty] = useState();
+  const [tanggal, setTanggal] = useState();
+  function reformatDate(dateStr) {
+    var dArr = dateStr.split("-"); // ex input: "2010-01-18"
+    return dArr[2] + "/" + dArr[1] + "/" + dArr[0]; //ex output: "18/01/10"
+  }
+  useEffect(() => {
+    if (tanggalLahir) {
+      const res = reformatDate(tanggalLahir);
+      setTanggal(res);
+    }
+  }, [tanggalLahir]);
 
-  console.log(nama);
+  //   console.log(tanggal);
   return (
     <div onClick={close} className="absolute top-0 left-0 bg-[#374151] w-screen h-[1400px] bg-opacity-30">
       <div className="absolute left-[350px] top-0 bg-white w-[650px] pb-[50px] px-[53px] pt-[43px] mt-[45px] rounded-sm shadow-lg">
@@ -35,7 +45,9 @@ const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone }) => {
             <p className="w-[180px] flex justify-between">
               Tempat Tanggal Lahir <span>:</span>
             </p>
-            <p className="border-b-[1px] border-[#374151] w-full">.{tanggalLahir}</p>
+            <p className="border-b-[1px] border-[#374151] w-full">
+              {tempat} {tanggal}
+            </p>
           </div>
           <div className="flex gap-2 items-center mb-1">
             <p className="w-[180px] flex justify-between">
