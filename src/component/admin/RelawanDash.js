@@ -7,7 +7,7 @@ import SearchInput from "../SearchInput";
 import useFetch from "../../API/useFetch";
 import ButtonPrimary from "../ButtonPrimary";
 import axiosFetch from "../../API/axiosFetch";
-import RoundedBorderButton from "../roundedBorderButton";
+import RoundedBorderButton from "../RoundedBorderButton";
 import { useDispatch } from "react-redux";
 import { showPopUpDashRelawan } from "../../redux/panelReducer";
 
