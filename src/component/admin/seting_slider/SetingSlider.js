@@ -10,6 +10,7 @@ const SetingSlider = () => {
   const [popup, setPopup] = useState(false);
   const [slider, setSlider] = useState([]);
   const [background, setBackground] = useState();
+  const [banner, setBanner] = useState();
   const [popupType, setPopupTyope] = useState();
   const [idSlider, setIdSlider] = useState();
   const [type, setType] = useState();
@@ -73,6 +74,9 @@ const SetingSlider = () => {
     axiosFetch("get", "user/slider?type=background")
       .then((res) => setBackground(res.data))
       .catch((err) => console.log(err));
+    axiosFetch("get", "user/slider?type=banner")
+      .then((res) => setBanner(res.data))
+      .catch((err) => console.log(err));
   }, [popup]);
 
   console.log(background);
@@ -129,10 +133,14 @@ const SetingSlider = () => {
                       )}
 
                       {image.length === 0 ? (
-                        <p className=" flex items-center justify-center" onClick={onImageUpload}>
+                        <p
+                          className=" flex items-center justify-center"
+                          onClick={onImageUpload}
+                        >
                           <span className="cursor-pointer border border-[#FF5001] text-[#FF5001] font-semibold h-[42px] flex items-center px-4 rounded-md">
                             {type === "slider" && <>Upload Slider</>}
-                            {type === "background" && <>Upload Poster</>}
+                            {type === "background" && <>Upload background</>}
+                            {type === "banner" && <>Upload Poster</>}
                           </span>
                         </p>
                       ) : (
@@ -278,7 +286,9 @@ const SetingSlider = () => {
         </div>
       </div>
       <div className="pt-[67px] pl-[60px]">
-        <p className="text-[32px] text-[#374151] font-bold mb-[42px]">Seting Slider</p>
+        <p className="text-[32px] text-[#374151] font-bold mb-[42px]">
+          Seting Slider
+        </p>
         <div className="flex justify-between mb-4">
           <div>
             <button
@@ -297,9 +307,18 @@ const SetingSlider = () => {
               Tambah Slider
             </button>
             {slider?.data?.map((res) => (
-              <div key={res._id} className="flex items-center gap-3 mb-4 border-b-2 pb-4">
-                <img className="w-[192px] h-[111px] rounded-md" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} alt="image_slider.png" />
-                <p className="text-[16px] w-[300px] text-[#374151]">{res.image.toString()}</p>
+              <div
+                key={res._id}
+                className="flex items-center gap-3 mb-4 border-b-2 pb-4"
+              >
+                <img
+                  className="w-[192px] h-[111px] rounded-md"
+                  src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image}
+                  alt="image_slider.png"
+                />
+                <p className="text-[16px] w-[300px] text-[#374151]">
+                  {res.image.toString()}
+                </p>
                 <div
                   onClick={() => {
                     setPopup(true);
@@ -309,7 +328,11 @@ const SetingSlider = () => {
                   }}
                   className="flex h-[42px] w-[42px] justify-center items-center rounded-md cursor-pointer bg-[#FF5001]"
                 >
-                  <img className="h-[24px] w-[24px]" src={uploadIcon.src} alt="icon_upload.png" />
+                  <img
+                    className="h-[24px] w-[24px]"
+                    src={uploadIcon.src}
+                    alt="icon_upload.png"
+                  />
                 </div>
                 <div
                   onClick={() => {
@@ -319,7 +342,11 @@ const SetingSlider = () => {
                   }}
                   className="flex h-[42px] w-[42px] justify-center items-center rounded-md cursor-pointer bg-white border border-[#B91C1C]"
                 >
-                  <img className="h-[24px] w-[24px]" src={deleteIcon.src} alt="icon_upload.png" />
+                  <img
+                    className="h-[24px] w-[24px]"
+                    src={deleteIcon.src}
+                    alt="icon_upload.png"
+                  />
                 </div>
               </div>
             ))}
@@ -331,7 +358,11 @@ const SetingSlider = () => {
         <div className="flex justify-between">
           <div>
             <button
-              style={background?.data?.length === 1 ? { visibility: "hidden" } : { visibility: "visible" }}
+              style={
+                background?.data?.length === 1
+                  ? { visibility: "hidden" }
+                  : { visibility: "visible" }
+              }
               className="h-[43px] bg-[#FF5001] rounded-md px-[21px] text-[18px] text-white font-semibold mb-[46px]"
               onClick={() => {
                 setPopup(true);
@@ -339,12 +370,21 @@ const SetingSlider = () => {
                 setType("background");
               }}
             >
-              Tambah Sidebar Poster
+              Tambah Background Slider
             </button>
             {background?.data?.map((res) => (
-              <div key={res._id} className="flex items-center gap-3 mb-4 border-b-2 pb-4">
-                <img className="w-[192px] h-[111px] rounded-md" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} alt="image_slider.png" />
-                <p className="text-[16px] w-[300px] text-[#374151]">{res.image.toString()}</p>
+              <div
+                key={res._id}
+                className="flex items-center gap-3 mb-4 border-b-2 pb-4"
+              >
+                <img
+                  className="w-[192px] h-[111px] rounded-md"
+                  src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image}
+                  alt="image_slider.png"
+                />
+                <p className="text-[16px] w-[300px] text-[#374151]">
+                  {res.image.toString()}
+                </p>
                 <div
                   onClick={() => {
                     setPopup(true);
@@ -354,7 +394,11 @@ const SetingSlider = () => {
                   }}
                   className="flex h-[42px] w-[42px] justify-center items-center rounded-md cursor-pointer bg-[#FF5001]"
                 >
-                  <img className="h-[24px] w-[24px]" src={uploadIcon.src} alt="icon_upload.png" />
+                  <img
+                    className="h-[24px] w-[24px]"
+                    src={uploadIcon.src}
+                    alt="icon_upload.png"
+                  />
                 </div>
                 <div
                   onClick={() => {
@@ -364,7 +408,77 @@ const SetingSlider = () => {
                   }}
                   className="flex h-[42px] w-[42px] justify-center items-center rounded-md cursor-pointer bg-white border border-[#B91C1C]"
                 >
-                  <img className="h-[24px] w-[24px]" src={deleteIcon.src} alt="icon_upload.png" />
+                  <img
+                    className="h-[24px] w-[24px]"
+                    src={deleteIcon.src}
+                    alt="icon_upload.png"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="pr-[42px] pl-[50px]">
+            <img src={instruksiSidebar.src} alt="instruksi.png" />
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <div>
+            <button
+              style={
+                banner?.data?.length === 1
+                  ? { visibility: "hidden" }
+                  : { visibility: "visible" }
+              }
+              className="h-[43px] bg-[#FF5001] rounded-md px-[21px] text-[18px] text-white font-semibold mb-[46px]"
+              onClick={() => {
+                setPopup(true);
+                setPopupTyope("upload_image");
+                setType("banner");
+              }}
+            >
+              Tambah Sidebar Poster
+            </button>
+            {banner?.data?.map((res) => (
+              <div
+                key={res._id}
+                className="flex items-center gap-3 mb-4 border-b-2 pb-4"
+              >
+                <img
+                  className="w-[192px] h-[111px] rounded-md"
+                  src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image}
+                  alt="image_slider.png"
+                />
+                <p className="text-[16px] w-[300px] text-[#374151]">
+                  {res.image.toString()}
+                </p>
+                <div
+                  onClick={() => {
+                    setPopup(true);
+                    setPopupTyope("edit_image");
+                    setIdSlider(res._id);
+                    setImageEdit(res.image);
+                  }}
+                  className="flex h-[42px] w-[42px] justify-center items-center rounded-md cursor-pointer bg-[#FF5001]"
+                >
+                  <img
+                    className="h-[24px] w-[24px]"
+                    src={uploadIcon.src}
+                    alt="icon_upload.png"
+                  />
+                </div>
+                <div
+                  onClick={() => {
+                    setPopup(true);
+                    setPopupTyope("hapus_image");
+                    setIdSlider(res._id);
+                  }}
+                  className="flex h-[42px] w-[42px] justify-center items-center rounded-md cursor-pointer bg-white border border-[#B91C1C]"
+                >
+                  <img
+                    className="h-[24px] w-[24px]"
+                    src={deleteIcon.src}
+                    alt="icon_upload.png"
+                  />
                 </div>
               </div>
             ))}
