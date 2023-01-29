@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mantine/core": "^5.10.2",
+    "@mantine/hooks": "^5.10.2",
     "@mantine/rte": "^5.10.2",
     "@next/font": "13.1.1",
     "@reduxjs/toolkit": "^1.9.1",
