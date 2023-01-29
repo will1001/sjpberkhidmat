@@ -97,11 +97,11 @@ const DetailAspirasi = () => {
               </div>
             </div>
           </div>
-          <p className="text-[#6B7280] mt-2">Detail Aspirasi</p>
+          <p className="text-[#6B7280] mt-2 ">Detail Aspirasi</p>
           <div className="flex items-center border px-3 py-2 rounded-sm mt-2">
             <p className="text-[#374151] font-normal">{router.query.detail}</p>
           </div>
-          <div className="flex justify-center"> {router.query.image && <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image} />}</div>
+          <div className="flex justify-center mt-4 "> {router.query.image && <img className="rounded-md" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image} />}</div>
         </div>
       </div>
     </>

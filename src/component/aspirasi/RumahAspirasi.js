@@ -77,7 +77,7 @@ const RumahAspirasi = () => {
         <div className="ml-[60px] mt-[60px]">
           <p className="text-[#374151] text-[32px] font-bold">Rumah Aspirasi</p>
           <div className="flex gap-3 items-center mt-[23px] mb-[14px] text-[#374151]">
-            <div className="h-[32px]  border border-[#D1D5DB] rounded-sm px-2 flex items-center">
+            <div className="h-[32px] bg-white border border-[#D1D5DB] rounded-sm px-2 flex items-center">
               <input onChange={(e) => setTypeSearch(e.target.value)} className="outline-none" placeholder="Cari Data" type={"text"} />
               <img src={searchIcon.src} alt="search icon" />
             </div>
