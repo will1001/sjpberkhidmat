@@ -7,6 +7,9 @@ import SearchInput from "../SearchInput";
 import useFetch from "../../API/useFetch";
 import ButtonPrimary from "../ButtonPrimary";
 import axiosFetch from "../../API/axiosFetch";
+import RoundedBorderButton from "../roundedBorderButton";
+import { useDispatch } from "react-redux";
+import { showPopUpDashRelawan } from "../../redux/panelReducer";
 
 const RelawanDash = () => {
   const customStyles = {
@@ -14,6 +17,8 @@ const RelawanDash = () => {
       style: { backgroundColor: "#374151", color: "white" },
     },
   };
+
+  const dispatch = useDispatch();
 
   const [pekerjaanFilter, setPekerjaanFilter] = useState(null);
   const [sorting, setSorting] = useState(null);
@@ -110,8 +115,17 @@ const RelawanDash = () => {
           </div>
         </div>
       </div>
+      <div className="flex justify-start items-center px-[40px] py-[10px]">
+        <RoundedBorderButton title={"Relawan"} status="active" />
+        <RoundedBorderButton title={"Target Per Desa"} status="inactive" />
+      </div>
       <div className="px-[40px] py-[10px]">
-        <ButtonPrimary title={"Tambah Akun Relawan"} action={() => {}} />
+        <ButtonPrimary
+          title={"Tambah Akun Relawan"}
+          action={() => {
+            dispatch(showPopUpDashRelawan({}));
+          }}
+        />
       </div>
       <div className="flex justify-between items-center px-[40px] py-[10px]">
         <SearchInput

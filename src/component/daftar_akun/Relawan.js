@@ -84,7 +84,6 @@ const Relawan = () => {
     }
   };
 
-  console.log(formData);
 
   return (
     <>
