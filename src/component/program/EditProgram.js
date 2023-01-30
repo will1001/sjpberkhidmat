@@ -12,8 +12,12 @@ import ImageUploading from "react-images-uploading";
 import uploadFile from "../../utility/icon/uploadIcon.png";
 import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import axiosFetch from "../../API/axiosFetch";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+
+const DynamicHeader = dynamic(() => import("./TextEditor"), {
+  ssr: false,
+});
 
 const EditProgram = ({ close, data }) => {
   const publikasiStyle = {
