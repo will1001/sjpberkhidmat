@@ -66,10 +66,12 @@ function DetailProgram({ router }) {
         </div>
         {["png", "jpeg", "jpg"].includes(router?.query?.image?.split(".").pop().toLowerCase()) && <img className="m-[50px]" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image} alt="" />}
         {["mp4", "mkv"].includes(router?.query?.image?.split(".").pop().toLowerCase()) && (
-          <video className="m-[50px]" width="920" height="740" controls>
-            <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <div className="flex justify-center h-[458px] w-[948px]">
+            <video className="my-[20px]" controls>
+              <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         )}
         <td dangerouslySetInnerHTML={{ __html: router.query.description }} />
       </div>
@@ -104,7 +106,9 @@ function DetailProgram({ router }) {
                 <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
                   <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
                   <p className="text-white text-[21px] font-bold">{res?.title}</p>
-                  <p className="text-white text-[16px] h-[32px] flex">{res?.description}</p>
+                  <p className="text-white text-[16px] h-[32px] flex">
+                    <td dangerouslySetInnerHTML={{ __html: res.description }} />
+                  </p>
                 </div>
                 <div
                   onClick={() => {

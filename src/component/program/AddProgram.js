@@ -32,6 +32,7 @@ const AddProgram = () => {
 
   //   const handleFormat = (e) => {
   //     setFormat(e.target.value);
+
   //   };
 
   const [switchButton, setSwitchButton] = useState(false);
@@ -89,7 +90,7 @@ const AddProgram = () => {
 
   //   const switchPublication = () =>
 
-  const postArtikel = async () => {
+  const postArtikel = async (e) => {
     const a = new FormData();
     a.append("title", formProgram.title);
     a.append("description", formProgram.description);
@@ -98,7 +99,7 @@ const AddProgram = () => {
     a.append("type", "program");
     a.append("publication", formProgram.publication);
     a.append("id_kabupaten", formProgram.id_kabupaten);
-    // console.log(formProgram);
+    console.log(e);
     {
       await axiosFetch("post", `user/articles`, a)
         .then((res) => {
@@ -156,18 +157,18 @@ const AddProgram = () => {
   }, [formProgram.image]);
 
   useEffect(() => {
-    if (videoPreview !== undefined) {
-      const res = <ReactPlayer height={200} width={400} playing={true} controls={true} volume={1} url={`${videoPreview}`} />;
-      setVideoPlay(res);
-      return res;
+    if (formProgram?.image?.type === "video/mp4") {
+      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${videoPreview}`} />);
+    } else {
+      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${videoPreview}`} />);
     }
   }, [videoPreview]);
 
-  console.log(videoPlay);
+  // console.log(formProgram.image);
 
   return (
     <>
-      <div className={`bg-slate-400 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${popUp === true ? "visible" : "hidden"}`}>
+      <div className={`bg-slate-400 bg-opacity-50 z-50 absolute w-screen top-0 h-[1100px] ${popUp === true ? "visible" : "hidden"}`}>
         <div className="h-[410px] w-[620px] ml-[416px] mt-[120px] bg-white absolute">
           <div onClick={() => setPopUp(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
             X
@@ -228,23 +229,6 @@ const AddProgram = () => {
               detail Program
             </label>
             <div className="w-[790px]">{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
-
-            {/* <DynamicHeader
-              onChange={(e) => {
-                setFormProgram({ ...formProgram, description: e.target.value });
-              }}
-              value={formProgram.description}
-            /> */}
-            {/* <textarea
-              onChange={(e) => {
-                setFormProgram({ ...formProgram, description: e.target.value });
-              }}
-              ref={refTextArea}
-              id="description_program"
-              name="description_program"
-              value={formProgram.description}
-              className={`h-[592px] outline-0 border  border-[#D1D5DB] p-[14px]`}
-            /> */}
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
@@ -266,13 +250,6 @@ const AddProgram = () => {
             <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               Kabupaten / Kota
             </label>
-            {/* <input
-              onChange={(e) => setFormProgram({ ...formProgram, id_kabupaten: e.target.value })}
-              className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
-              value={formProgram?.id_kabupaten}
-              type={"text"}
-              id="kota"
-            /> */}
             <select onChange={(e) => setFormProgram({ ...formProgram, id_kabupaten: e.target.value })} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
               <option value="" disabled selected>
                 Pilih Kabupaten
@@ -330,13 +307,12 @@ const AddProgram = () => {
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              {videoPlay !== undefined ? (
-                <div>{videoPlay}</div>
-              ) : (
-                <div>
+              <div className={`${formProgram.image && "visible"}`}>
+                <div className={`${videoPreview === undefined ? "hidden" : "visible"}`}> {videoPlay === undefined ? <p>Loading....</p> : videoPlay}</div>
+                <div className={`${imagePreview === undefined ? "hidden" : "visible"}`}>
                   <img src={imagePreview} alt="preview" />
                 </div>
-              )}
+              </div>
 
               <div className="flex flex-col items-center pt-4">
                 <img src={uploadFile.src} alt="upload here" />
