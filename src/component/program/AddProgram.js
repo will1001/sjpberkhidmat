@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import { DeletIcon } from "../../utility/icon/icon";
 import Logo from "../../utility/Logo";
 import NewButton from "../NewButton";
@@ -8,6 +9,7 @@ import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import berhasilImg from "../../utility/img/berhasiPost.png";
 import axiosFetch from "../../API/axiosFetch";
 import dynamic from "next/dynamic";
+import ReactPlayer from "react-player";
 
 const DynamicHeader = dynamic(() => import("./TextEditor"), {
   ssr: false,
@@ -27,28 +29,13 @@ const AddProgram = () => {
     textAlign: "center",
     color: "#FFFFFF",
   };
-  const draftStyle = {
-    width: "159px",
-    height: "42px",
-    border: "1px solid #9CA3AF",
-    borderRadius: "4px",
-    fontFamily: "Work Sans",
-    fontStyle: "normal",
-    fontWeight: "600",
-    fontSize: "18px",
-    lineHeight: "120%",
-    textAlign: "center",
-    color: "#374151",
-  };
 
   //   const handleFormat = (e) => {
   //     setFormat(e.target.value);
   //   };
-  const [format, setFormat] = useState();
-  const refTextArea = useRef(format);
+
   const [switchButton, setSwitchButton] = useState(false);
   const [popUp, setPopUp] = useState(false);
-  const ref = useRef();
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -143,8 +130,40 @@ const AddProgram = () => {
   const callTextEditor = (setFormProgram, value, formProgram) => {
     return <DynamicHeader value={value} setFormProgram={setFormProgram} formProgram={formProgram} />;
   };
+  const [imagePreview, setImagePreview] = useState();
+  const [videoPreview, setVideoPreview] = useState();
+  const [videoPlay, setVideoPlay] = useState();
+  useEffect(() => {
+    if (formProgram.image) {
+      {
+        if (formProgram.image.type === "video/mp4") {
+          setVideoPreview(URL.createObjectURL(formProgram.image));
+          setImagePreview();
+        } else if (formProgram.image.type === "image/jpeg") {
+          setImagePreview(URL.createObjectURL(formProgram.image));
+          setVideoPreview();
+        } else if (formProgram.image.type === "image/jpg") {
+          setImagePreview(URL.createObjectURL(formProgram.image));
+          setVideoPreview();
+        } else if (formProgram.image.type === "image/png") {
+          setImagePreview(URL.createObjectURL(formProgram.image));
+          setVideoPreview();
+        } else {
+          alert("format file tidak di dukung");
+        }
+      }
+    }
+  }, [formProgram.image]);
 
-  console.log(formProgram.description);
+  useEffect(() => {
+    if (videoPreview !== undefined) {
+      const res = <ReactPlayer height={200} width={400} playing={true} controls={true} volume={1} url={`${videoPreview}`} />;
+      setVideoPlay(res);
+      return res;
+    }
+  }, [videoPreview]);
+
+  console.log(videoPlay);
 
   return (
     <>
@@ -175,16 +194,18 @@ const AddProgram = () => {
         </div>
       </div>
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
-        <Logo />
-        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[450px]">Publikasi Program</p>
-        {/* button publikasian */}
-        <div onClick={() => setPopUp(!popUp)}>
-          <NewButton title={"Publikasikan"} style={publikasiStyle} />
-        </div>
-        {/* button simpan draft */}
-        <NewButton title={"Simpan Draft"} style={draftStyle} />
-        <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
-          <DeletIcon />
+        <div className="flex justify-between w-full pr-[40px]">
+          <Logo />
+          {/* button publikasian */}
+          <div className="flex items-center gap-3">
+            {" "}
+            <div onClick={() => setPopUp(!popUp)}>
+              <NewButton title={"Publikasikan"} style={publikasiStyle} />
+            </div>
+            <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
+              <DeletIcon />
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex pb-[96px]">
@@ -308,8 +329,15 @@ const AddProgram = () => {
               );
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
-
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
+              {videoPlay !== undefined ? (
+                <div>{videoPlay}</div>
+              ) : (
+                <div>
+                  <img src={imagePreview} alt="preview" />
+                </div>
+              )}
+
               <div className="flex flex-col items-center pt-4">
                 <img src={uploadFile.src} alt="upload here" />
                 <p className="text-[12px] text-[#000000] font-semibold">
