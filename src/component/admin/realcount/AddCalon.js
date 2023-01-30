@@ -127,15 +127,23 @@ const AddCalon = ({ nama, logo, partai, nomor }) => {
                       <img
                         className="flex"
                         src={image["data_url"]}
-                        alt=""
+                        alt="asdasdada"
                         width="137"
                       />
                     </div>
                   ))}
+                  <>
+                    <img
+                      src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + logo}
+                      className="w-[100px] mr-3"
+                      alt=""
+                    />
+                  </>
                   <div className="flex items-center gap-1 pl-[18px] pr-[24px] h-[43px] border border-[#E44700] rounded-md text-[18px] text-[#E44700] font-semibold">
                     <div>
                       <img src={uploadImg.src} alt="upload.png" />
                     </div>
+
                     {logo === undefined ? (
                       <>
                         {imageList.length === 0 ? (
