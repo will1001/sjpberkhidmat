@@ -9,7 +9,7 @@ import ButtonPrimary from "../ButtonPrimary";
 import axiosFetch from "../../API/axiosFetch";
 import RoundedBorderButton from "../RoundedBorderButton";
 import { useDispatch } from "react-redux";
-import { showPopUpDashRelawan } from "../../redux/panelReducer";
+import { showOrHidePopUpDash } from "../../redux/panelReducer";
 
 const RelawanDash = () => {
   const customStyles = {
@@ -123,7 +123,8 @@ const RelawanDash = () => {
         <ButtonPrimary
           title={"Tambah Akun Relawan"}
           action={() => {
-            dispatch(showPopUpDashRelawan({}));
+            dispatch(showOrHidePopUpDash({ type: "Relawan" }));
+            
           }}
         />
       </div>

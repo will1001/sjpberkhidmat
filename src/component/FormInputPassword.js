@@ -8,32 +8,36 @@ function FormInputPassword({
   onChange,
   onClickHide,
   onclickShow,
+  value,
 }) {
   return (
     <div className="flex justify-start items-center my-3">
       <label className="text-[14px] w-[20%] text-[#374151] mr-[50px]">
         {label}
       </label>
-      <input
-        onChange={onChange}
-        className="h-[40px] w-[70%] border text-[#374151] px-2 outline-0"
-        type={type}
-      />
-      {type === "password" ? (
-        <img
-          className="cursor-pointer"
-          onClick={onclickShow}
-          src={hide.src}
-          alt="hide.png"
+      <div className="flex justify-between items-center border text-[#374151] px-2 outline-0 w-[70%]">
+        <input
+          value={value}
+          onChange={onChange}
+          className="h-[40px] w-full "
+          type={type}
         />
-      ) : (
-        <img
-          onClick={onClickHide}
-          className="cursor-pointer"
-          src={show.src}
-          alt="show.png"
-        />
-      )}
+        {type === "password" ? (
+          <img
+            className="cursor-pointer"
+            onClick={onclickShow}
+            src={hide.src}
+            alt="hide.png"
+          />
+        ) : (
+          <img
+            onClick={onClickHide}
+            className="cursor-pointer"
+            src={show.src}
+            alt="show.png"
+          />
+        )}
+      </div>
     </div>
   );
 }
