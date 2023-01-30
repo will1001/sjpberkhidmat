@@ -169,6 +169,11 @@ const AddProgram = () => {
       }
     }
   }, [formProgram.image]);
+  const [videoPlay, setVideoPlay] = useState();
+  useEffect(() => {
+    const videoPlay = <ReactPlayer height={200} width={400} playing={true} controls={true} volume={1} url={`${videoPreview}`} />;
+    setVideoPlay(videoPlay);
+  }, [videoPreview]);
   console.log(formProgram.image.type);
   console.log(imagePreview);
   console.log(videoPreview);
@@ -339,12 +344,12 @@ const AddProgram = () => {
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
 
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              {videoPreview === undefined ? (
+              {formProgram?.image?.type === "video/mp4" ? (
+                videoPlay
+              ) : (
                 <div>
                   <img src={imagePreview} alt="preview" />
                 </div>
-              ) : (
-                <ReactPlayer height={200} width={400} playing={true} controls={true} volume={1} url={`${videoPreview}`} />
               )}
 
               <div className="flex flex-col items-center pt-4">
