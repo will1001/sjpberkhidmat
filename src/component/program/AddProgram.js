@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import { DeletIcon } from "../../utility/icon/icon";
 import Logo from "../../utility/Logo";
 import NewButton from "../NewButton";
@@ -8,6 +9,8 @@ import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import berhasilImg from "../../utility/img/berhasiPost.png";
 import axiosFetch from "../../API/axiosFetch";
 import dynamic from "next/dynamic";
+import FilePlayer from "react-player/file";
+import ReactPlayer from "react-player";
 
 const DynamicHeader = dynamic(() => import("./TextEditor"), {
   ssr: false,
@@ -143,8 +146,32 @@ const AddProgram = () => {
   const callTextEditor = (setFormProgram, value, formProgram) => {
     return <DynamicHeader value={value} setFormProgram={setFormProgram} formProgram={formProgram} />;
   };
-
-  console.log(formProgram.description);
+  const [imagePreview, setImagePreview] = useState();
+  const [videoPreview, setVideoPreview] = useState();
+  useEffect(() => {
+    if (formProgram.image) {
+      {
+        if (formProgram.image.type === "video/mp4") {
+          setVideoPreview(URL.createObjectURL(formProgram.image));
+          setImagePreview();
+        } else if (formProgram.image.type === "image/jpeg") {
+          setImagePreview(URL.createObjectURL(formProgram.image));
+          setVideoPreview();
+        } else if (formProgram.image.type === "image/jpg") {
+          setImagePreview(URL.createObjectURL(formProgram.image));
+          setVideoPreview();
+        } else if (formProgram.image.type === "image/png") {
+          setImagePreview(URL.createObjectURL(formProgram.image));
+          setVideoPreview();
+        } else {
+          alert("format file tidak di dukung");
+        }
+      }
+    }
+  }, [formProgram.image]);
+  console.log(formProgram.image.type);
+  console.log(imagePreview);
+  console.log(videoPreview);
 
   return (
     <>
@@ -175,16 +202,18 @@ const AddProgram = () => {
         </div>
       </div>
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
-        <Logo />
-        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[450px]">Publikasi Program</p>
-        {/* button publikasian */}
-        <div onClick={() => setPopUp(!popUp)}>
-          <NewButton title={"Publikasikan"} style={publikasiStyle} />
-        </div>
-        {/* button simpan draft */}
-        <NewButton title={"Simpan Draft"} style={draftStyle} />
-        <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
-          <DeletIcon />
+        <div className="flex justify-between w-full pr-[40px]">
+          <Logo />
+          {/* button publikasian */}
+          <div className="flex items-center gap-3">
+            {" "}
+            <div onClick={() => setPopUp(!popUp)}>
+              <NewButton title={"Publikasikan"} style={publikasiStyle} />
+            </div>
+            <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
+              <DeletIcon />
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex pb-[96px]">
@@ -310,6 +339,14 @@ const AddProgram = () => {
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
 
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
+              {videoPreview === undefined ? (
+                <div>
+                  <img src={imagePreview} alt="preview" />
+                </div>
+              ) : (
+                <ReactPlayer height={200} width={400} playing={true} controls={true} volume={1} url={`${videoPreview}`} />
+              )}
+
               <div className="flex flex-col items-center pt-4">
                 <img src={uploadFile.src} alt="upload here" />
                 <p className="text-[12px] text-[#000000] font-semibold">
