@@ -4,6 +4,7 @@ import NewButton from "../../src/component/NewButton";
 import { DeletIcon } from "../../src/utility/icon/icon";
 import Logo from "../../src/utility/Logo";
 import uploadFile from "../../src/utility/icon/uploadIcon.png";
+import PopupBerhasil from "../../src/component/publikasi/PopupBerhasil";
 const DynamicHeader = dynamic(() => import("../../src/component/program/TextEditor"), {
   ssr: false,
 });
@@ -53,6 +54,8 @@ const TambahData = () => {
   ];
 
   const [selectCategory, setSelecCategory] = useState();
+  const [popUp, setPopUp] = useState(false);
+  const [berhasil, setBerhasil] = useState(false);
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -68,13 +71,13 @@ const TambahData = () => {
   console.log(formProgram);
   return (
     <>
-      {" "}
+      <PopupBerhasil popUp={popUp} setPopUp={setPopUp} berhasil={berhasil} setBerhasil={setBerhasil} />
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <div className="flex justify-between w-full pr-[40px]">
           <Logo />
           {/* button publikasian */}
           <div className="flex items-center gap-3">
-            <div onClick={() => setPopUp(!popUp)}>
+            <div onClick={() => setPopUp(true)}>
               <NewButton title={"Publikasikan"} style={publikasiStyle} />
             </div>
             {/* tombol simpan draft */}

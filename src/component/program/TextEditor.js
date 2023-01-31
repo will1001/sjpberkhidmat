@@ -6,7 +6,6 @@ function TextEditor({ value, setFormProgram, formProgram }) {
   return (
     <>
       <label>
-        <input />
         <RichTextEditor
           value={value}
           onChange={(e) => setFormProgram({ ...formProgram, description: e })}
