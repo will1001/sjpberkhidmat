@@ -19,8 +19,11 @@ const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone, tempat }) =
 
   //   console.log(tanggal);
   return (
-    <div onClick={close} className="absolute top-0 left-0 bg-[#374151] w-screen h-[1400px] bg-opacity-30">
+    <div className="absolute top-0 left-0 bg-[#374151] w-screen h-[1400px] bg-opacity-30">
       <div className="absolute left-[350px] top-0 bg-white w-[650px] pb-[50px] px-[53px] pt-[43px] mt-[45px] rounded-sm shadow-lg">
+        <div onClick={close} className="absolute top-0 right-0 px-2 font-semibold cursor-pointer">
+          X
+        </div>
         <div className="flex items-center justify-between border-b-2 border-[#374151]">
           <Logo />
           <p className="text-[#374151] text-[18px] font-semibold">
