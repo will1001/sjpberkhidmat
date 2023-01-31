@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import uploadImg from "../../../utility/icon/uploadFoto.png";
 import listImg from "../../../utility/icon/centerIcon.png";
 import closeImg from "../../../utility/icon/closeForm.png";
@@ -6,10 +6,8 @@ import openImg from "../../../utility/icon/SelectIcon.png";
 import deletImg from "../../../utility/icon/delet_icon.png";
 import ReactImageUploading from "react-images-uploading";
 import axiosFetch from "../../../API/axiosFetch";
-import useFetch from "../../../API/useFetch";
-import axios from "axios";
 
-const ListPartai = ({ title, logo, id, nomor }) => {
+const ListPartai = ({ title, logo, id, nomor, setPopup, popUp }) => {
   const [detailForm, setDetailForm] = useState(false);
   const [formPartai, setFormPartai] = useState({
     logo: [logo],
@@ -35,16 +33,24 @@ const ListPartai = ({ title, logo, id, nomor }) => {
     }
   };
 
+  const [editImage, setEditImage] = useState();
+  useEffect(() => {
+    if (formPartai.logo instanceof File) {
+      setEditImage(URL.createObjectURL(formPartai?.logo));
+    }
+  }, [formPartai?.logo]);
   const editPartai = async (id) => {
     const a = new FormData();
-    // a.append("name", formPartai.nama);
-    // a.append("logo", formPartai.logo[0].file);
-    // if (formPartai.logo instanceof File) a.append("image", formPartai.logo);
+    a.append("name", formPartai.nama);
+    if (formPartai.logo instanceof File) {
+      a.append("image", formPartai.logo);
+    }
 
     {
-      await axiosFetch("put", `user/real_count/partai/${id}`, { name: formPartai.nama })
+      await axiosFetch("put", `user/real_count/partai/${id}`, a)
         .then((res) => {
           console.log(res);
+          setPopup(!false);
           // console.log(a);
         })
         .catch((error) => {
@@ -52,7 +58,7 @@ const ListPartai = ({ title, logo, id, nomor }) => {
         });
     }
   };
-  console.log(formPartai.logo);
+  console.log(setPopup);
   // console.log(formPartai.logo[0].file);
   return (
     <>
@@ -85,44 +91,30 @@ const ListPartai = ({ title, logo, id, nomor }) => {
                 <p className="text-[16px] text-[#6B7280] flex items-end mr-[142px]">Logo Partai</p>
                 <div className="flex  items-end">
                   <div className="mr-2 flex items-end">
-                    {formPartai?.logo?.length === undefined ? (
-                      <p>Loading...</p>
-                    ) : (
-                      <>
-                        {" "}
-                        {formPartai?.logo[0]?.data_url === undefined ? (
-                          <img className="flex" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formPartai.logo[0]} alt="" width="137" />
-                        ) : (
-                          <img className="flex" src={formPartai.logo[0]?.data_url} alt="" width="137" />
-                        )}
-                      </>
-                    )}
+                    <>{editImage === undefined ? <img className="flex" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formPartai.logo[0]} alt="" width="137" /> : <img className="flex" src={`${editImage}`} alt="" width="137" />}</>
                   </div>
 
                   <div className="flex items-center gap-1 pl-[18px] pr-[24px] h-[43px] border border-[#E44700] rounded-md text-[18px] text-[#E44700] font-semibold">
                     <div className="">
                       <img src={uploadImg.src} alt="upload.png" />
                     </div>
-                    {formPartai?.logo?.length === undefined ? (
-                      <p>Loading...</p>
-                    ) : (
-                      <>
-                        {formPartai.logo.length === 0 ? (
-                          <p className="cursor-pointer" onClick={onImageUpload}>
-                            Upload Logo
-                          </p>
-                        ) : (
-                          <p
-                            className="cursor-pointer"
-                            onClick={() => {
-                              setFormPartai({ ...formPartai, logo: [] });
-                            }}
-                          >
-                            ReUpload
-                          </p>
-                        )}
-                      </>
-                    )}
+
+                    <>
+                      {formPartai?.logo?.length === 0 ? (
+                        <p className="cursor-pointer" onClick={onImageUpload}>
+                          Upload Logo
+                        </p>
+                      ) : (
+                        <p
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setFormPartai({ ...formPartai, logo: [] });
+                          }}
+                        >
+                          ReUpload
+                        </p>
+                      )}
+                    </>
                   </div>
                 </div>
               </div>
