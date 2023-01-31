@@ -10,6 +10,7 @@ import axiosFetch from "../../API/axiosFetch";
 import RoundedBorderButton from "../RoundedBorderButton";
 import { useDispatch } from "react-redux";
 import { showOrHidePopUpDash } from "../../redux/panelReducer";
+import ListTargetDesa from "../ListTargetDesa";
 
 const RelawanDash = () => {
   const customStyles = {
@@ -24,6 +25,7 @@ const RelawanDash = () => {
   const [sorting, setSorting] = useState(null);
   const [keyword, setKeyword] = useState(null);
   const [relawan, setRelawan] = useState([]);
+  const [relawanSub, setRelawanSub] = useState("relawan");
 
   const editRelawan = () => {
     console.log("Edit Relawan");
@@ -35,7 +37,7 @@ const RelawanDash = () => {
   useEffect(() => {
     axiosFetch(
       "get",
-      `user/relawan?page=${1}${
+      `user/relawan?page=${1}&limit=100${
         pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
       }${sorting !== null ? "&sort=" + sorting : ""}${
         keyword !== null ? "&keyword=" + keyword : ""
@@ -43,9 +45,10 @@ const RelawanDash = () => {
     )
       .then((res) => setRelawan(res.data))
       .catch((err) => console.log(err));
-  }, [pekerjaanFilter, sorting, keyword]);
+  }, [pekerjaanFilter, sorting, keyword, relawanSub]);
 
   const pekerjaan = useFetch("get", "user/jobs");
+  const kabupaten = useFetch("get", "user/kabupaten");
 
   const columns = [
     {
@@ -109,65 +112,95 @@ const RelawanDash = () => {
           <img src={PeopleIcon.src} className="h-[36px] m-[5px]" />
           <div>
             <p className="text-orange-500 text-2xl">
-              {relawan.metaData?.total}
+              {relawan.metadata?.total}
             </p>
             <p className="text-xl">Relawan</p>
           </div>
         </div>
       </div>
       <div className="flex justify-start items-center px-[40px] py-[10px]">
-        <RoundedBorderButton title={"Relawan"} status="active" />
-        <RoundedBorderButton title={"Target Per Desa"} status="inactive" />
-      </div>
-      <div className="px-[40px] py-[10px]">
-        <ButtonPrimary
-          title={"Tambah Akun Relawan"}
-          action={() => {
-            dispatch(showOrHidePopUpDash({ type: "Relawan" }));
-            
+        <RoundedBorderButton
+          onClick={() => {
+            setRelawanSub("relawan");
           }}
+          title={"Relawan"}
+          status={relawanSub === "relawan" ? "active" : "inactive"}
+        />
+        <RoundedBorderButton
+          onClick={() => {
+            setRelawanSub("target_per_desa");
+          }}
+          title={"Target Per Desa"}
+          status={relawanSub === "target_per_desa" ? "active" : "inactive"}
         />
       </div>
-      <div className="flex justify-between items-center px-[40px] py-[10px]">
-        <SearchInput
-          placeholder={"Cari Data"}
-          onChange={(e) => setKeyword(e.target.value)}
-        />
-        <select
-          onChange={(e) => {
-            setTimeout(() => {
-              setPekerjaanFilter(e.target.value);
-            }, 3000);
-          }}
-          id="pekerjaan"
-          className="h-[40px] w-[363px] border text-[#374151]"
-        >
-          <option value="" disabled selected>
-            Pilih Pekerjaan
-          </option>
-          {pekerjaan.data?.map((res, i) => {
-            return (
-              <option key={i} value={res._id}>
-                {res.name}
+      {relawanSub === "relawan" ? (
+        <>
+          <div className="px-[40px] py-[10px]">
+            <ButtonPrimary
+              title={"Tambah Akun Relawan"}
+              action={() => {
+                dispatch(showOrHidePopUpDash({ type: "Relawan" }));
+              }}
+            />
+          </div>
+          <div className="flex justify-between items-center px-[40px] py-[10px]">
+            <SearchInput
+              placeholder={"Cari Data"}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <select
+              onChange={(e) => {
+                setTimeout(() => {
+                  setPekerjaanFilter(e.target.value);
+                }, 3000);
+              }}
+              id="pekerjaan"
+              className="h-[40px] w-[363px] border text-[#374151]"
+            >
+              <option value="" disabled selected>
+                Pilih Pekerjaan
               </option>
+              {pekerjaan.data?.map((res, i) => {
+                return (
+                  <option key={i} value={res._id}>
+                    {res.name}
+                  </option>
+                );
+              })}
+            </select>
+            <div>
+              <span>Urutkan </span>
+              <select
+                onChange={(e) => setSorting(e.target.value)}
+                id="sorting"
+                className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
+              >
+                <option value="terbaru">Terbaru</option>
+                <option value="terbanyak">Terbanyak Rekrut</option>
+              </select>
+            </div>
+          </div>
+          <div className="px-[40px] py-[10px]">
+            <DataTable
+              columns={columns}
+              data={data}
+              customStyles={customStyles}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="px-[40px] py-[10px]">
+          {kabupaten.data?.map((res, i) => {
+            return (
+              <ListTargetDesa
+                label={res.name}
+                id_kab={res.id}
+              />
             );
           })}
-        </select>
-        <div>
-          <span>Urutkan </span>
-          <select
-            onChange={(e) => setSorting(e.target.value)}
-            id="sorting"
-            className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
-          >
-            <option value="terbaru">Terbaru</option>
-            <option value="terbanyak">Terbanyak Rekrut</option>
-          </select>
         </div>
-      </div>
-      <div className="px-[40px] py-[10px]">
-        <DataTable columns={columns} data={data} customStyles={customStyles} />
-      </div>
+      )}
     </div>
   );
 };
