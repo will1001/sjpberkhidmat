@@ -35,6 +35,7 @@ const gender = {
 function Admin({ router }) {
   const kabupaten = useFetch("get", "user/kabupaten");
   const pekerjaan = useFetch("get", "user/jobs");
+  const popUpDashType = useSelector((state) => state.panel.popUpDashType);
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
@@ -86,23 +87,40 @@ function Admin({ router }) {
   };
 
   const register = async () => {
-    if (formData.password === confirmPassword) {
-      await axiosFetch("post", `user/register`, formData)
-        .then(() => {
-          alert("Pendaftaran Berhasil");
-          dispatch(showOrHidePopUpDash({ type: null }));
-        })
-        .catch((error) => {
-          // setHandelError(true);
-          // setErrorMessage(error.response.data.message);
-        });
+    if (popUpDashType === "Relawan") {
+      if (formData.password === confirmPassword) {
+        await axiosFetch("post", `user/register`, formData)
+          .then(() => {
+            alert("Pendaftaran Berhasil");
+            dispatch(showOrHidePopUpDash({ type: null }));
+          })
+          .catch((error) => {
+            // setHandelError(true);
+            // setErrorMessage(error.response.data.message);
+          });
+      } else {
+        alert("Password Tidak Sama");
+      }
     } else {
-      alert("Password Tidak Sama");
+      let formDataSimpatisan = formData;
+      delete formDataSimpatisan.role;
+      delete formDataSimpatisan.password;
+      console.log(formDataSimpatisan);
+      await axiosFetch("post", `user/simpatisan`, formDataSimpatisan)
+        .then((res) => {
+          console.log(res, "berhasil daftar");
+          alert("Pendaftaran Berhasil");
+
+          dispatch(showOrHidePopUpDash({ type: null }));
+          // setHandelSuccess(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          // setHandelError(true);
+          // setErrorMessage(err.response.data.message);
+        });
     }
   };
-
-  const popUpDashType = useSelector((state) => state.panel.popUpDashType);
-  console.log(popUpDashType);
 
   const dispatch = useDispatch();
   return (
@@ -147,7 +165,7 @@ function Admin({ router }) {
                 }
               />
               <FormInputItem
-                label={"No Hp Relawan"}
+                label={"No Hp"}
                 type="text"
                 onChange={(e) =>
                   setFormData({ ...formData, phone: e.target.value })

@@ -15,7 +15,7 @@ const customStyles = {
 };
 
 const SimpatisanDash = () => {
-  const simpatisan = useFetch("get", "user/simpatisan?page=1");
+  const simpatisan = useFetch("get", "user/simpatisan?page=1&limit=100");
   const dispatch = useDispatch();
 
   const columns = [
@@ -37,7 +37,7 @@ const SimpatisanDash = () => {
     },
     {
       name: "Jenis Kelamin",
-      selector: (row) => row.simpatisan.gender,
+      selector: (row) => (row.gender === "L" ? "Laki-Laki" : "Perempuan"),
     },
     // {
     //   name: "Aksi",
@@ -56,7 +56,7 @@ const SimpatisanDash = () => {
         <ButtonPrimary
           title={"Tambah Simpatisan"}
           action={() => {
-            dispatch(showPopUpDashsimpatisan({}));
+            dispatch(showOrHidePopUpDash({ type: "Simpatisan" }));
           }}
         />
       </div>
