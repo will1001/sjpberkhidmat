@@ -50,7 +50,7 @@ const ListPartai = ({ title, logo, id, nomor, setPopup, popUp }) => {
       await axiosFetch("put", `user/real_count/partai/${id}`, a)
         .then((res) => {
           console.log(res);
-          setPopup(!false);
+          setPopup(!popUp);
           // console.log(a);
         })
         .catch((error) => {
