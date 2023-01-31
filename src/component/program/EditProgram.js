@@ -1,19 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { DeletIcon } from "../../utility/icon/icon";
 import Logo from "../../utility/Logo";
 import NewButton from "../NewButton";
-import selectIcon from "../../utility/icon/SelectIcon.png";
-import center from "../../utility/icon/centerIcon.png";
-import left from "../../utility/icon/left.png";
-import justify from "../../utility/icon/align.png";
-import right from "../../utility/icon/right.png";
 import useFetch from "../../API/useFetch";
-import ImageUploading from "react-images-uploading";
 import uploadFile from "../../utility/icon/uploadIcon.png";
 import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import axiosFetch from "../../API/axiosFetch";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import ReactPlayer from "react-player";
 
 const DynamicHeader = dynamic(() => import("./TextEditor"), {
   ssr: false,
@@ -47,8 +41,6 @@ const EditProgram = ({ close, data }) => {
     color: "#374151",
   };
 
-  const [format, setFormat] = useState();
-  const refTextArea = useRef(format);
   const [switchButton, setSwitchButton] = useState(false);
 
   const kabupaten = useFetch("get", "user/kabupaten");
@@ -86,16 +78,6 @@ const EditProgram = ({ close, data }) => {
   ];
 
   const [selectCategory, setSelecCategory] = useState();
-  //   console.log(selectCategory);
-
-  const [images, setImages] = useState([]);
-  const maxNumber = 69;
-  const onChangeImage = (imageList, addUpdateIndex) => {
-    // data for submit
-    // console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
-
   const router = useRouter();
 
   const [formProgram, setFormProgram] = useState({
@@ -122,7 +104,6 @@ const EditProgram = ({ close, data }) => {
           //   console.log(res);
           console.log(dataEdit);
           close();
-          window.location.reload(false);
         })
         .catch((error) => {
           console.log(error);
@@ -131,7 +112,36 @@ const EditProgram = ({ close, data }) => {
   };
   const [dataEdit, setDataEdit] = useState(data);
 
-  // console.log(dataEdit, "ini data edit");
+  const callTextEditor = (setFormProgram, value, formProgram) => {
+    return <DynamicHeader value={value} setFormProgram={setFormProgram} formProgram={formProgram} />;
+  };
+
+  const [imagePreview, setImagePreview] = useState();
+  const [videoPreview, setVideoPreview] = useState();
+  const [videoEdit, setVideoEdit] = useState();
+  const [fileName, setFileName] = useState();
+  const [videoPlay, setVideoPlay] = useState();
+  useEffect(() => {
+    if (dataEdit?.image?.type === "video/mp4") {
+      setVideoEdit(URL.createObjectURL(dataEdit?.image));
+      setVideoPreview();
+    } else {
+      setVideoPreview(data?.image);
+      setVideoEdit();
+    }
+  }, [dataEdit?.image]);
+
+  useEffect(() => {
+    if (videoPreview === undefined) {
+      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${videoEdit}`} />);
+    } else if (videoEdit === undefined) {
+      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + videoPreview}`} />);
+    } else {
+      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + videoPreview}`} />);
+    }
+  }, [videoPreview, videoEdit, data]);
+
+  console.log(videoEdit);
 
   return (
     <>
@@ -189,41 +199,7 @@ const EditProgram = ({ close, data }) => {
             <label id="title" className="text-[#6B7280] text-[16px] font-serif pt-[60px]">
               detail Program
             </label>
-            <div className="flex h-[72px] bg-[#6B7280] border rounde-sm items-center px-[16px] text-[#374151] font-serif gap-6">
-              <div className="bg-white h-[48px] rounded-md border w-[183px] flex">
-                <label id="heading"></label>
-                <select
-                  style={{
-                    WebkitAppearance: "none",
-                    backgroundImage: `url(${selectIcon.src})`,
-                  }}
-                  id="heading"
-                  className="outline-0 cursor-pointer font-medium mx-[14px] w-full bg-right bg-no-repeat"
-                >
-                  <option value="1">Heading 1</option>
-                  <option value="2">Heading 2</option>
-                </select>
-              </div>
-              <div className="flex gap-2">
-                <div className="flex bg-white h-[48px] w-[48px] font-semibold items-center justify-center border rounded-md cursor-pointer">B</div>
-                <div className="flex bg-white h-[48px] w-[48px] italic items-center justify-center border rounded-md cursor-pointer">I</div>
-                <div className="flex bg-white h-[48px] w-[48px] underline items-center justify-center border rounded-md cursor-pointer">U</div>
-              </div>
-              <div className="flex gap-2">
-                <div style={{ backgroundImage: `url(${center.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
-                <div style={{ backgroundImage: `url(${left.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
-                <div style={{ backgroundImage: `url(${justify.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
-                <div style={{ backgroundImage: `url(${right.src})` }} className="w-[48px] h-[48px] bg-white bg-no-repeat bg-center border rounded-md cursor-pointer" />
-              </div>
-            </div>
-            <textarea
-              onChange={(e) => setDataEdit({ ...dataEdit, description: e.target.value })}
-              ref={refTextArea}
-              id="description_program"
-              name="description_program"
-              value={dataEdit?.description}
-              className={`h-[592px] outline-0 border  border-[#D1D5DB] p-[14px]`}
-            />
+            <div className="w-[790px]">{callTextEditor(setDataEdit, dataEdit.description, dataEdit)}</div>
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
@@ -305,6 +281,35 @@ const EditProgram = ({ close, data }) => {
               );
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
+            <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
+              <div className={`${dataEdit.image && "visible"}`}>
+                <div> {videoPlay === undefined ? <p>Loading....</p> : videoPlay}</div>
+                <div className={`${imagePreview === undefined ? "hidden" : "visible"}`}>
+                  <img src={imagePreview} alt="preview" />
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center pt-4">
+                <img src={uploadFile.src} alt="upload here" />
+                <p className="text-[12px] text-[#000000] font-semibold">
+                  <span className="text-[#FF5001]">Upload a file </span>of drag and drop{" "}
+                </p>
+                <p className="text-[12px] font-normal">PNG, JPG, MP4 upto 32MB</p>
+              </div>
+              <input
+                onChange={(e) => {
+                  console.log(e.target.files);
+                  setDataEdit({
+                    ...dataEdit,
+                    image: e.target.files[0],
+                  });
+                }}
+                id="file_upload"
+                type="file"
+                class="hidden"
+              />
+            </label>
+            {/* <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
 
             <ImageUploading
               multiple
@@ -330,7 +335,7 @@ const EditProgram = ({ close, data }) => {
                   </div>
                 </div>
               )}
-            </ImageUploading>
+            </ImageUploading> */}
           </div>
         </div>
       </div>
