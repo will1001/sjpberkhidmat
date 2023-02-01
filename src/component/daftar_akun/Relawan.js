@@ -84,7 +84,6 @@ const Relawan = () => {
     }
   };
 
-
   return (
     <>
       <DaftarRelawanBerhasil props={popUp} />
@@ -292,7 +291,7 @@ const Relawan = () => {
                 sebagai Relawan tanpa tekanan dari pihak manapun.
               </p>
               <div className={`${surat === false ? "hidden" : "visible"}`}>
-                <SuratPernyataan close={() => setSurat(false)} nama={formData.name} alamat={formData.alamat} tanggalLahir={formData.date_birth} tempat={formData.place_birth} phone={formData.phone} />
+                <SuratPernyataan close={() => setSurat(false)} nama={formData.name} alamat={formData.address} tanggalLahir={formData.date_birth} tempat={formData.place_birth} phone={formData.phone} />
               </div>
             </div>
             <div className="flex mt-[40px] justify-end pr-[140px] gap-3">

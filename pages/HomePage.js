@@ -1,79 +1,109 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ButtonLogin, DropDownIcon, FacebookIcon, InstagramIcon, LinkedInIcon, SearchIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../src/utility/icon/icon";
 import Logo from "../src/utility/Logo";
 import Slideshow from "../src/component/homepage/SlideShow";
 import CountDown from "../src/component/homepage/CountDown";
 import KabarTerbaru from "../src/component/homepage/KabarTerbaru";
 import DaftarSimpatisanButton from "../src/component/homepage/DaftarSimpatisanButton";
-import bgImage from "../src/utility/img/sliderBg.png";
 import Publikasi from "../src/component/homepage/Publikasi";
 import bgImage2 from "../src/utility/img/gantiBg.png";
 import KabarSjpBerkhidmat from "../src/component/homepage/KabarSjpBerkhidmat";
 import KategoriKabar from "../src/component/homepage/KategoriKabar";
-import imageKosong from "../src/utility/img/gambarKosong.png";
 import DropDownPublikasi from "../src/component/homepage/DropDownPublikasi";
 import Router, { withRouter } from "next/router";
-import cariProgramIcon from "../src/utility/icon/searchIcon.png";
 import prevIcon from "../src/utility/icon/previous.png";
 import nextIcon from "../src/utility/icon/next.png";
-
 import detailProgramImg from "../src/utility/img/detailProgram.png";
-import { useDispatch } from "react-redux";
 import useFetch from "../src/API/useFetch";
 
 const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
-  const handlePublikasi = () => setDropDownPublikasi(!dropDownPublikasi);
-  const kabupaten = useFetch("get", "user/kabupaten");
+
+  const [selectProgram, setSelectProgram] = useState(false);
   const banner = useFetch("get", "user/slider?type=banner");
-
-  const dispatch = useDispatch();
-  const [search, setSearch] = useState();
   const getArtikel = useFetch("get", "user/articles?page=1&limit=8&type=program");
-
   const getSlider = useFetch("get", "user/slider?type=slider");
   const getBackground = useFetch("get", "user/slider?type=background");
+  const refProgram = useRef();
+  const refPublikasi = useRef();
+  const refPendaftaran = useRef();
+  const refAspirasi = useRef();
 
-  console.log(getBackground.data);
+  const goto = (ref) => {
+    window.scrollTo({
+      top: ref.offsetTop,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
 
+  useEffect(() => {
+    if (router.query.page === "publikasi") {
+      goto(refPublikasi.current);
+    } else if (router.query.page === "program") {
+      goto(refProgram.current);
+    } else if (router.query.page === "aspirasi") {
+      goto(refAspirasi.current);
+    } else if (router.query.page === "pendaftaran") {
+      goto(refPendaftaran.current);
+    }
+  });
+
+  console.log(router.query.page);
   return (
     <>
-      <div onClick={handlePublikasi} className={`${dropDownPublikasi === false ? "hidden" : "visible"} absolute w-[1350px] h-[4750px] mt-[650px] z-10 bg-opacity-50 bg-slate-600 `}></div>
       <div className="w-[1350px] ">
-        <div className="flex bg-white w-full h-[72px] px-20 justify-between z-20">
-          <Logo />
-          <div className="flex items-center gap-4 text-[16px] font-medium text-[#374151]">
-            <p className="cursor-pointer">Beranda</p>
-            <p className="cursor-pointer">Pemilu 2024</p>
-            <p onClick={handlePublikasi} className={`flex cursor-pointer ${dropDownPublikasi === false ? "stroke-[#374151]" : "stroke-[#FF5001] "} `}>
-              <span className={dropDownPublikasi === false ? "" : "text-[#FF5001] "}>Publikasi</span> <DropDownIcon />
-            </p>
-            <p
-              onClick={() => {
-                router.push({
-                  pathname: "Daftar",
-                  query: { type: "simpatisan" },
-                });
-              }}
-              className="flex cursor-pointer stroke-[#374151] "
-            >
-              Pendaftaran Anggota <DropDownIcon />
-            </p>
-            <div onClick={() => router.push("Aspirasi")} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
-              Rumah Aspirasi
+        <div className="fixed top-0 w-screen border-b-2 z-50 shadow-md">
+          <div className="flex bg-white w-full h-[72px] px-20 justify-between z-20">
+            <div>
+              <Logo />
             </div>
-            <button
-              onClick={() => {
-                router.push({ pathname: "Login" });
-              }}
-            >
-              <ButtonLogin />
-            </button>
+
+            <div className="flex items-center gap-4 text-[16px] font-medium text-[#374151]">
+              <p
+                onClick={() => {
+                  router.push("/");
+                  setSelectProgram(false);
+                }}
+                className={`cursor-pointer text-[#FF5001]`}
+              >
+                Beranda
+              </p>
+              <p onClick={() => router.push("Profil")} className="cursor-pointer">
+                Profil
+              </p>
+              <p
+                onClick={() => {
+                  goto(refProgram.current);
+                }}
+                className="cursor-pointer"
+              >
+                <span>Program</span>
+              </p>
+              <p onClick={() => goto(refPublikasi.current)} className={`flex cursor-pointer ${dropDownPublikasi === false ? "stroke-[#374151]" : "stroke-[#FF5001] "} `}>
+                <span>Publikasi</span>
+              </p>
+              <p onClick={() => goto(refPendaftaran.current)} className="flex cursor-pointer stroke-[#374151] ">
+                Pendaftaran Anggota
+              </p>
+              <div onClick={() => goto(refAspirasi.current)} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
+                Rumah Aspirasi
+              </div>
+              <button
+                onClick={() => {
+                  router.push({ pathname: "Login" });
+                }}
+              >
+                <ButtonLogin />
+              </button>
+            </div>
           </div>
         </div>
-        <div className={`${dropDownPublikasi === false ? "hidden" : "visible"} z-20`}>
+
+        <div className={`${dropDownPublikasi === false ? "hidden" : "visible"} mt-12 flex`}>
           <DropDownPublikasi />
         </div>
+
         {getBackground?.data === null ? (
           <p>Loading....</p>
         ) : (
@@ -81,13 +111,13 @@ const HomePage = ({ router }) => {
             style={{
               backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + getBackground?.data[0]?.image})`,
             }}
-            className="h-[350px] bg-no-repeat bg-cover"
+            className="h-[350px] w-screen bg-no-repeat bg-cover mt-16 -z-50"
           >
             <Slideshow data={getSlider?.data} />
           </div>
         )}
 
-        <div className="flex flex-col bg-[#ffece4] pb-[118px]">
+        <div className="flex flex-col bg-[#ffece4] pb-[118px] w-screen">
           <div className="flex items-center justify-center gap-6 px-12 rounded-xl mx-auto mt-[55px] h-[137px] bg-[#FF5001]">
             <img className="object-cover  h-[92px]  rounded-2xl" src="https://i.ibb.co/tpcPypN/Frame-2512.jpg" alt="gunakan-hak-pilih" />
             <p>
@@ -96,8 +126,10 @@ const HomePage = ({ router }) => {
               <span className="text-white text-[18px]">17 Agustus 2023 Pemilihan Umum DPR RI</span>
             </p>
             <CountDown />
+            <div className="" ref={refPublikasi}></div>
           </div>
-          <div className="flex px-[160px] gap-24 mt-[55px]">
+
+          <div className="flex px-[160px] gap-24 mt-[55px] w-screen">
             <Publikasi />
             <div className="flex flex-col gap-2 font-bold text-slate-700 text-[26px] pt-[40px] object-contain">
               <p className="mb-2">Kabar Terbaru</p>
@@ -107,8 +139,10 @@ const HomePage = ({ router }) => {
               <KabarTerbaru />
             </div>
           </div>
+          <div className="" ref={refPendaftaran}></div>
         </div>
-        <div className="flex pl-[690px] pb-[81px] gap-8 items-end h-[408px]  bg-cover bg-no-repeat" style={{ backgroundImage: `url(${bgImage2.src})` }}>
+
+        <div className="flex pb-[82px] gap-8 items-end h-[408px] w-screen bg-cover bg-no-repeat" style={{ backgroundImage: `url(${bgImage2.src})` }}>
           <div
             onClick={() => {
               router.push({
@@ -116,7 +150,7 @@ const HomePage = ({ router }) => {
                 query: { type: "simpatisan" },
               });
             }}
-            className="cursor-pointer"
+            className="cursor-pointer w-screen absolute left-[55%]"
           >
             <DaftarSimpatisanButton />
           </div>
@@ -132,8 +166,8 @@ const HomePage = ({ router }) => {
             <DaftarRelawanButton />
           </div> */}
         </div>
-        <div className="flex pt-[103px] pl-[70px] pr-[70px]">
-          <div>
+        <div className="flex pt-[103px] pl-[70px] pr-[70px] w-screen">
+          <div className="w-screen">
             <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kabar SJP Berkhidmat</p>
             <KabarSjpBerkhidmat />
             <KabarSjpBerkhidmat />
@@ -142,17 +176,18 @@ const HomePage = ({ router }) => {
             <KabarSjpBerkhidmat />
             <KabarSjpBerkhidmat />
           </div>
-          <div className="pl-[150px]">
+          <div className="pl-[150px] w-screen">
             <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kategori Kabar</p>
             <KategoriKabar />
-            {banner?.data?.map((res) => {
-              return <img className="mt-[47px] w-[350px] h-[300px] rounded-xl" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} alt="gambar  " />;
+            {banner?.data?.map((res, i) => {
+              return <img key={i} className="mt-[47px] w-[350px] h-[300px] rounded-xl" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} alt="gambar  " />;
             })}
           </div>
         </div>
         {/* program / artikel */}
+        <div className="pt-12" ref={refProgram}></div>
 
-        <div className="bg-[#4B5563] h-[1684px] pt-[67px] px-[120px] flex flex-col items-center">
+        <div className="bg-[#4B5563] h-[1684px] pt-[67px] px-[120px] flex flex-col items-center w-screen">
           <div className="flex items-center  justify-center mb-[60px]">
             <p className="text-[39px] font-bold text-white">Program SJP Berkhidmat</p>
           </div>
@@ -164,9 +199,9 @@ const HomePage = ({ router }) => {
                   <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
                     <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
                     <p className="text-white text-[21px] font-bold">{res?.title}</p>
-                    <p className="text-white text-[16px] h-[32px] flex">
-                      <td dangerouslySetInnerHTML={{ __html: res?.description }} />
-                    </p>
+                    <div className="text-white text-[16px] h-[32px] flex">
+                      <div className="text-white text-[16px] h-[32px] flex" dangerouslySetInnerHTML={{ __html: res?.description }} />
+                    </div>
                   </div>
                   <div
                     onClick={() => {
@@ -207,8 +242,9 @@ const HomePage = ({ router }) => {
               <img src={nextIcon.src} alt="next.png" />
             </div>
           </div>
+          <div ref={refAspirasi} />
         </div>
-        <div className="flex h-[248px] bg-[#FF5001] pt-[65px]">
+        <div className="flex h-[248px] bg-[#FF5001] pt-[65px] w-screen">
           <p className="text-white text-[26px] font-bold pl-[180px] w-full">
             Kami membuka pintu komunikasi yang <br /> kondusif dan terbuka untuk menerima <br /> pesan dan aspirasi dari masyarakat.
           </p>
@@ -219,7 +255,7 @@ const HomePage = ({ router }) => {
             </button>
           </div>
         </div>
-        <div style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.02)" }} className="flex h-[240px] justify-between pr-[120px]">
+        <div style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.02)" }} className="flex w-screen h-[240px] justify-between pr-[120px]">
           <div className="flex flex-col justify-center pl-[70px]">
             <div className="flex justify-center w-[560px]">
               <Logo />

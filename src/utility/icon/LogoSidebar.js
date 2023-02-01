@@ -39,7 +39,7 @@ export const logoSidebar = [
   },
   { name: "Logistic", path: "/logistic", icon: <Logistic />, role: "relawan" },
   { name: "Publikasi", path: "/publikasi", icon: <PublikasiIcon />, component: <Publikasi /> },
-  { name: "Daftar Akun", path: "/daftar-akun", icon: <DaftarAkunIcon /> },
+
   {
     name: "Relawan",
     path: "Relawan",

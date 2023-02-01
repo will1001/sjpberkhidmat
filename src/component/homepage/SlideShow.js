@@ -14,7 +14,7 @@ const Slideshow = ({ data }) => {
   //   }
   // }, []);
 
-  console.log(data);
+  // console.log(data);
   if (data === null) {
     return <p>Loading....</p>;
   } else {

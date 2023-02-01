@@ -79,9 +79,10 @@ const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone, tempat }) =
           <div className="flex justify-end items-center mt-[38px]">
             {namaHari[date.getDay()]} / {date.getDate()} / {monthNames[date.getMonth()]} / {date.getFullYear()}
           </div>
-          <div className="flex justify-end items-center mt-[38px] pr-[20px]">
-            <p className="border-b-[1px] border-[#374151]">TTD {nama}</p>
+          <div className="flex justify-end items-center mt-[38px] pr-[110px] mb-1">
+            <p className="">TTD</p>
           </div>
+          <p className="flex ml-[410px] border-t-[1px] border-[#374151]">{nama}</p>
         </div>
       </div>
     </div>
