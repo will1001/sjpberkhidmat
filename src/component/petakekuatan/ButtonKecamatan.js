@@ -1,13 +1,15 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Logistic, ProgramIcon, RelawanIcon, SimpatisanIcon } from "../../utility/icon/icon";
 import JumlahPenduduk from "../JumlahPenduduk";
 
-const ButtonKecamatan = ({ data }) => {
+const ButtonKecamatan = ({ data, nama, setHover }) => {
+  const router = useRouter();
   const [active, setActive] = useState();
   const [icon, setIcon] = useState();
   const [dataKecamatan, setDataKecamatan] = useState();
-  const [nama, setNama] = useState("");
+
   const idKecamatan = data?.toString();
 
   const handleButton = (button) => {
@@ -26,7 +28,7 @@ const ButtonKecamatan = ({ data }) => {
     } else {
       setIcon();
     }
-  }, [handleButton]);
+  }, [active]);
 
   useEffect(() => {
     if (idKecamatan === undefined) {
@@ -36,11 +38,17 @@ const ButtonKecamatan = ({ data }) => {
         .get(`https://api.sjpberkhidmat.id/user//kelurahan/${idKecamatan}`)
         .then((res) => {
           setDataKecamatan(res.data.data);
-          nama;
         })
         .catch((err) => console.log(err));
     }
   }, [idKecamatan]);
+
+  const detail = (nama) => {
+    router.push({
+      pathname: "/peta_kekuatan/DetailDesa",
+      query: { desa: nama },
+    });
+  };
 
   console.log(nama);
   return (
@@ -62,72 +70,115 @@ const ButtonKecamatan = ({ data }) => {
           <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
       </div>
-      <div>
+      {/* kec. mataram */}
+      <div className={`${nama?.toLowerCase() === "mataram" ? "visible" : "hidden"}`}>
         {/* div popup */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] h-[45px] w-[349px] border-[#FFCFB9] border bg-white absolute z-50 left-[700px] top-[69px] rounded-md ">
-          <div className="flex justify-start items-center gap-2">
-            <p className={` text-[#374151] text-[21px] font-medium`}>{active === undefined ? <>Peta Kekuatan:</> : <>{active}:</>}</p>
-            <p className={`text-[21px] text-[#374151] font-bold`}>Kec. Mataram</p>
-          </div>
+        <div className="flex bg-white py-2 px-[14px] fixed gap-2 left-[700px] rounded-full top-[20px] border border-[#374151] text-[#374151] font-medium">
+          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>} <span className="text-[#374151] font-bold">Kec. Mataram</span>
         </div>
         {/* pejanggik */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[920px] top-[290px] rounded-md ">
+        <div
+          onClick={() => detail("Pejanggik")}
+          onMouseOutCapture={() => setHover("pejanggik")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[800px] cursor-pointer top-[70px] rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pejanggik</p>
           </div>
         </div>
         {/* mataram timur */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[830px] top-[400px] rounded-md ">
+        <div
+          onClick={() => detail("Mataram Timur")}
+          onMouseOutCapture={() => setHover("mataram timur")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[860px] top-[160px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Mataram Timur</p>
           </div>
         </div>
         {/* pagesangan barat */}
-        <div className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[510px] top-[550px] rounded-md ">
+        <div
+          onClick={() => detail("Pagesangan Barat")}
+          onMouseOutCapture={() => setHover("pagesangan barat")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[580px]  top-[280px] rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagesangan Barat</p>
           </div>
         </div>
         {/* punia */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[600px] top-[420px] rounded-md ">
+        <div
+          onClick={() => detail("Punia")}
+          onMouseOutCapture={() => setHover("punia")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[680px] top-[160px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Punia</p>
           </div>
         </div>
         {/* pagesangan */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[790px] top-[590px] rounded-md ">
+        <div
+          onClick={() => detail("Pagesangan")}
+          onMouseOutCapture={() => setHover("pagesangan")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[820px] top-[300px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagesangan</p>
           </div>
         </div>
         {/* pagesangan timur */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[900px] top-[520px] rounded-md ">
+        <div
+          onClick={() => detail("Pagesangan Timur")}
+          onMouseOutCapture={() => setHover("pagesangan timur")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[980px] top-[250px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagesangan Timur</p>
           </div>
         </div>
         {/* pagutan timur */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[900px] top-[720px] rounded-md ">
+        <div
+          onClick={() => detail("Pagutan Timur")}
+          onMouseOutCapture={() => setHover("pagutan timur")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[390px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagutan Timur</p>
           </div>
         </div>
         {/* pagutan barat */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[630px] top-[690px] rounded-md ">
+        <div
+          onClick={() => detail("Pagutan Barat")}
+          onMouseOutCapture={() => setHover("pagutan barat")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[360px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagutan Barat</p>
           </div>
         </div>
         {/* pagutan  */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[730px] top-[800px] rounded-md ">
+        <div
+          onClick={() => detail("Pagutan")}
+          onMouseOutCapture={() => setHover("pagutan")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[730px] top-[450px] cursor-pointer rounded-md "
+        >
           <div>
             <p className={`${icon === undefined ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagutan </p>

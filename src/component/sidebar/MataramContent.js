@@ -6,7 +6,7 @@ import ProgressBar from "../../utility/ProgresBar";
 import ButtonPopUpInfo from "../ButtonPopUpInfo";
 import { useRouter } from "next/router";
 
-const MataramContent = ({ data }) => {
+const MataramContent = ({ data, setHover }) => {
   const persentase = (10 / 20) * 100;
   const [nama, setNama] = useState();
   const router = useRouter();
@@ -15,7 +15,7 @@ const MataramContent = ({ data }) => {
   console.log(id_kabupaten);
 
   const namaKabupaten = () => {
-    if (id_kabupaten === "5271") {
+    if (id_kabupaten === "mataram") {
       setNama("Kota Mataram");
     } else if (id_kabupaten === "5203") {
       setNama("Kab. Lombok Timur");
@@ -39,10 +39,10 @@ const MataramContent = ({ data }) => {
           <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
         </div>
 
-        <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />
+        {/* <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} /> */}
       </div>
       <h1 className="text-[32px] font-bold text-slate-700">{nama}</h1>
-      <ButtonPopUpInfo data={id_kabupaten} />
+      <ButtonPopUpInfo data={id_kabupaten} setHover={setHover} />
       <p className="text-[18px] text-slate-700 font-bold mt-2">Real Count</p>
       <ProgressBar progress={persentase.toFixed()} bgcolor={"#FF5001"} height={"24px"} />
       <div className="mt-4 border-t-2">

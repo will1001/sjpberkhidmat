@@ -6,15 +6,17 @@ import ProgressBar from "../../utility/ProgresBar";
 import ContacRelawan from "../ContacRelawan";
 import ButtonPopUpInfo from "../ButtonPopUpInfo";
 import ButtonKecamatan from "../petakekuatan/ButtonKecamatan";
+import { useRouter } from "next/router";
 
-const DetailDesaContent = ({ data }) => {
+const DetailDesaContent = ({ data, nama, setHover }) => {
+  const router = useRouter();
   const [active, setActive] = useState("hidden");
   const handleActive = () => {
     active === "hidden" ? setActive("visible") : setActive("hidden");
   };
   const persentase = (10 / 20) * 100;
 
-  console.log(data);
+  // console.log(nama);
 
   return (
     <>
@@ -24,8 +26,8 @@ const DetailDesaContent = ({ data }) => {
             <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
           </div>
         </div>
-        <h1 className="text-[32px] font-bold text-slate-700">Kec. {data?.nama}</h1>
-        <ButtonKecamatan data={data?.id} />
+        <h1 className="text-[32px] font-bold text-slate-700">Kec. {nama}</h1>
+        <ButtonKecamatan data={data?.id} nama={nama} setHover={setHover} />
         <p className="text-[18px] text-slate-700 font-bold mt-2">Real Count</p>
         <ProgressBar progress={persentase.toFixed()} bgcolor={"#FF5001"} height={"24px"} />
         <div className="mt-4 border-t-2">
@@ -51,20 +53,20 @@ const DetailDesaContent = ({ data }) => {
           </p>
         </div>
         <div className=" mt-4">
-          <p className="flex ">
-            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Relawan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+          <p className="flex justify-between">
+            <span className="font-normal w-[100px] text-slate-700 text-[18px]">Relawan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
             <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
           </p>
-          <p className="flex ">
-            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Simpatisan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+          <p className="flex justify-between">
+            <span className="font-normal w-[100px] text-slate-700 text-[18px]">Simpatisan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
             <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
           </p>
-          <p className="flex  ">
-            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Logistik </span> <span className="w-[100px] font-semibold text-[18px] text-[#FF5001]">123.123</span>
+          <p className="flex  justify-between">
+            <span className="font-normal w-[100px] text-slate-700 text-[18px]">Logistik </span> <span className="w-[100px] font-semibold text-[18px] text-[#FF5001]">123.123</span>
             <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
           </p>
-          <p className="flex ">
-            <span className="font-normal w-[180px] text-slate-700 text-[18px]">Program </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+          <p className="flex justify-between">
+            <span className="font-normal w-[100px] text-slate-700 text-[18px]">Program </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
             <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
           </p>
         </div>

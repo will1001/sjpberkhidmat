@@ -10,7 +10,7 @@ import useFetch from "../API/useFetch";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const ButtonPopUpInfo = ({ type, data }) => {
+const ButtonPopUpInfo = ({ type, data, setHover }) => {
   const router = useRouter();
   const [active, setActive] = useState();
   const [icon, setIcon] = useState(kotaIcon);
@@ -55,6 +55,14 @@ const ButtonPopUpInfo = ({ type, data }) => {
     // console.log(res);
   };
 
+  const detailKota = (nama) => {
+    router.push({
+      pathname: "/peta_kekuatan/DetailKota",
+      query: { kota: nama },
+    });
+    // console.log(res);
+  };
+
   console.log(namaKecamatan);
 
   return (
@@ -78,9 +86,16 @@ const ButtonPopUpInfo = ({ type, data }) => {
 
       {/* semua kab / kota */}
       <div className={`${type === "kab_kota" ? "visible" : "hidden"}`}>
+        <div className="flex py-2 px-[14px] fixed gap-2 bg-white left-[700px] rounded-full top-[20px] border border-[#374151] text-[#374151] font-medium">
+          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>} <span className="text-[#374151] font-bold">Semua Kab / Kota</span>
+        </div>
         {/* div popup */}
         {/* lombok utara */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[110px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("lombok utara")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center cursor-pointer items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[650px] top-[130px] rounded-md "
+        >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -88,7 +103,12 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* kota mataram */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[600px] top-[250px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("kota mataram")}
+          onMouseLeave={() => setHover()}
+          onClick={active === undefined ? () => detailKota("mataram") : () => console.log("first")}
+          className="flex justify-center items-center gap-2 cursor-pointer  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[320px] rounded-md "
+        >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -96,7 +116,11 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* lombok barat */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[550px] top-[430px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("lombok barat")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2 cursor-pointer py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[420px] top-[480px] rounded-md "
+        >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -104,7 +128,12 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* lombok tengah */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[890px] top-[350px] rounded-md ">
+
+        <div
+          onMouseOver={() => setHover("lombok tengah")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2 py-2 cursor-pointer px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[790px] top-[400px] rounded-md "
+        >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -112,7 +141,11 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* lombok timur */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[1000px] top-[230px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("lombok timur")}
+          onMouseLeave={() => setHover()}
+          className="flex justify-center items-center gap-2 cursor-pointer  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[1000px] top-[230px] rounded-md "
+        >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -122,10 +155,17 @@ const ButtonPopUpInfo = ({ type, data }) => {
       </div>
 
       {/* detail mataram */}
-      <div className={`${data === "5271" ? "visible" : "hidden"}`}>
+      <div className={`${data === "mataram" ? "visible" : "hidden"}`}>
+        <div className="flex py-2 bg-white px-[14px] fixed gap-2 left-[700px] rounded-full top-[20px] border border-[#374151] text-[#374151] font-medium">
+          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>} <span className="text-[#374151] font-bold">Kota Mataram</span>
+        </div>
         {/* div popup */}
         {/* ampenan */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[780px] top-[310px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("ampenan")}
+          onMouseLeave={() => setHover()}
+          className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[230px] rounded-md "
+        >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -133,7 +173,11 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* sekarbela */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[500px] top-[590px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("sekarbela")}
+          onMouseLeave={() => setHover()}
+          className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[490px] top-[420px] rounded-md "
+        >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -141,7 +185,12 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* mataram */}
-        <div onClick={() => DetailKecamatan("5271020", "Mataram")} className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[780px] top-[630px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("mataram")}
+          onMouseLeave={() => setHover()}
+          onClick={() => DetailKecamatan("5271020", "Mataram")}
+          className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[650px] top-[390px] rounded-md "
+        >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -149,7 +198,11 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* selaparang */}
-        <div className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[490px] top-[350px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("selaparang")}
+          onMouseLeave={() => setHover()}
+          className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[780px] top-[220px] rounded-md "
+        >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -157,7 +210,11 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* cakranegara */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[900px] top-[430px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("cakranegara")}
+          onMouseLeave={() => setHover()}
+          className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[880px] top-[320px] rounded-md "
+        >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
@@ -165,7 +222,11 @@ const ButtonPopUpInfo = ({ type, data }) => {
           </div>
         </div>
         {/* sandubaya */}
-        <div className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white absolute z-50 left-[1000px] top-[560px] rounded-md ">
+        <div
+          onMouseOver={() => setHover("sandubaya")}
+          onMouseLeave={() => setHover()}
+          className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[400px] rounded-md "
+        >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
