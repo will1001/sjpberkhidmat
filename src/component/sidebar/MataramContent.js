@@ -12,7 +12,7 @@ const MataramContent = ({ data, setHover }) => {
   const router = useRouter();
 
   const id_kabupaten = data?.toString();
-  console.log(id_kabupaten);
+  // console.log(id_kabupaten);
 
   const namaKabupaten = () => {
     if (id_kabupaten === "mataram") {
@@ -68,20 +68,20 @@ const MataramContent = ({ data, setHover }) => {
         </p>
       </div>
       <div className=" mt-4">
-        <p className="flex ">
-          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Relawan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+        <p className="flex justify-between">
+          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Relawan </span> <span className="w-[85px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
           <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
         </p>
-        <p className="flex ">
-          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Simpatisan </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+        <p className="flex justify-between">
+          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Simpatisan </span> <span className="w-[85px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
           <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
         </p>
-        <p className="flex  ">
-          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Logistik </span> <span className="w-[100px] font-semibold text-[18px] text-[#FF5001]">123.123</span>
+        <p className="flex justify-between ">
+          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Logistik </span> <span className="w-[85px] font-semibold text-[18px] text-[#FF5001]">123.123</span>
           <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
         </p>
-        <p className="flex ">
-          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Program </span> <span className="w-[100px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
+        <p className="flex justify-between">
+          <span className="font-normal w-[180px] text-slate-700 text-[18px]">Program </span> <span className="w-[85px] font-semibold  text-[18px] text-[#FF5001]">123.123</span>
           <span className="text-[16px] text-[#FF5001] underline cursor-pointer">Lihat Detail</span>
         </p>
       </div>

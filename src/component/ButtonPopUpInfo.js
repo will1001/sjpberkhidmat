@@ -41,7 +41,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
       console.log("loading");
     } else if (id_kabupaten !== undefined) {
       const kecamatan = axios
-        .get(`https://api.sjpberkhidmat.id/user//kecamatan/${id_kabupaten}`)
+        .get(`https://api.sjpberkhidmat.id/user/kecamatan/5271`)
         .then((res) => setNamaKecamatan(res.data.data))
         .catch((err) => console.log(err));
     }
@@ -63,7 +63,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
     // console.log(res);
   };
 
-  console.log(namaKecamatan);
+  console.log(namaKecamatan, "asds");
 
   return (
     <>
@@ -164,6 +164,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         <div
           onMouseOver={() => setHover("ampenan")}
           onMouseLeave={() => setHover()}
+          onClick={() => DetailKecamatan("5271010", "Ampenan")}
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[230px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -176,6 +177,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         <div
           onMouseOver={() => setHover("sekarbela")}
           onMouseLeave={() => setHover()}
+          onClick={() => DetailKecamatan("5271011", "Sekarbela")}
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[490px] top-[420px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -201,6 +203,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         <div
           onMouseOver={() => setHover("selaparang")}
           onMouseLeave={() => setHover()}
+          onClick={() => DetailKecamatan("5271021", "Selaparang")}
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[780px] top-[220px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -213,6 +216,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         <div
           onMouseOver={() => setHover("cakranegara")}
           onMouseLeave={() => setHover()}
+          onClick={() => DetailKecamatan("5271030", "Cakranegara")}
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[880px] top-[320px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -225,6 +229,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         <div
           onMouseOver={() => setHover("sandubaya")}
           onMouseLeave={() => setHover()}
+          onClick={() => DetailKecamatan("5271031", "Sandubaya")}
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[400px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />

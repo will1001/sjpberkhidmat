@@ -31,9 +31,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
   }, [active]);
 
   useEffect(() => {
-    if (idKecamatan === undefined) {
-      console.log("loading");
-    } else if (idKecamatan !== undefined) {
+    if (idKecamatan) {
       const kecamatan = axios
         .get(`https://api.sjpberkhidmat.id/user//kelurahan/${idKecamatan}`)
         .then((res) => {
@@ -41,16 +39,16 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         })
         .catch((err) => console.log(err));
     }
-  }, [idKecamatan]);
+  }, [nama]);
 
-  const detail = (nama) => {
+  const detail = (nama, id) => {
     router.push({
       pathname: "/peta_kekuatan/DetailDesa",
-      query: { desa: nama },
+      query: { desa: nama, id: id },
     });
   };
 
-  console.log(nama);
+  // console.log(dataKecamatan);
   return (
     <>
       {" "}
@@ -78,7 +76,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pejanggik */}
         <div
-          onClick={() => detail("Pejanggik")}
+          onClick={() => detail("Pejanggik", "5271020005")}
           onMouseOutCapture={() => setHover("pejanggik")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[800px] cursor-pointer top-[70px] rounded-md "
@@ -90,7 +88,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* mataram timur */}
         <div
-          onClick={() => detail("Mataram Timur")}
+          onClick={() => detail("Mataram Timur", "5271020002")}
           onMouseOutCapture={() => setHover("mataram timur")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[860px] top-[160px] cursor-pointer rounded-md "
@@ -102,7 +100,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pagesangan barat */}
         <div
-          onClick={() => detail("Pagesangan Barat")}
+          onClick={() => detail("Pagesangan Barat", "5271020003")}
           onMouseOutCapture={() => setHover("pagesangan barat")}
           onMouseLeave={() => setHover()}
           className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[580px]  top-[280px] rounded-md "
@@ -114,7 +112,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* punia */}
         <div
-          onClick={() => detail("Punia")}
+          onClick={() => detail("Punia", "5271020006")}
           onMouseOutCapture={() => setHover("punia")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[680px] top-[160px] cursor-pointer rounded-md "
@@ -126,7 +124,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pagesangan */}
         <div
-          onClick={() => detail("Pagesangan")}
+          onClick={() => detail("Pagesangan", "5271020001")}
           onMouseOutCapture={() => setHover("pagesangan")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[820px] top-[300px] cursor-pointer rounded-md "
@@ -138,7 +136,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pagesangan timur */}
         <div
-          onClick={() => detail("Pagesangan Timur")}
+          onClick={() => detail("Pagesangan Timur", "5271020004")}
           onMouseOutCapture={() => setHover("pagesangan timur")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[980px] top-[250px] cursor-pointer rounded-md "
@@ -150,7 +148,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pagutan timur */}
         <div
-          onClick={() => detail("Pagutan Timur")}
+          onClick={() => detail("Pagutan Timur", "5271020009")}
           onMouseOutCapture={() => setHover("pagutan timur")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[390px] cursor-pointer rounded-md "
@@ -162,7 +160,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pagutan barat */}
         <div
-          onClick={() => detail("Pagutan Barat")}
+          onClick={() => detail("Pagutan Barat", "5271020008")}
           onMouseOutCapture={() => setHover("pagutan barat")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[360px] cursor-pointer rounded-md "
@@ -174,7 +172,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </div>
         {/* pagutan  */}
         <div
-          onClick={() => detail("Pagutan")}
+          onClick={() => detail("Pagutan", "5271020007")}
           onMouseOutCapture={() => setHover("pagutan")}
           onMouseLeave={() => setHover()}
           className="flex justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[730px] top-[450px] cursor-pointer rounded-md "

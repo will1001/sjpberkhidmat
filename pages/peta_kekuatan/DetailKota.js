@@ -9,13 +9,13 @@ import mataram from "../../src/utility/peta/peta_mataram.png";
 
 const DetailKota = ({ router }) => {
   const id_kabupaten = router?.query.kota?.toString();
-  console.log(id_kabupaten);
+  // console.log(id_kabupaten);
   const [hover, setHover] = useState(false);
-  console.log(hover);
+  console.log(id_kabupaten);
 
   return (
     <div className="flex">
-      <div className="basis-3/12 z-50 bg-white pb-[100px]">{<SideBar content={<MataramContent data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
+      <div className="basis-4/12 z-50 bg-white pb-[100px]">{<SideBar content={<MataramContent data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
 
       <div className="basis-9/12">
         {
