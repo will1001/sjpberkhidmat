@@ -59,7 +59,7 @@ const Publikasi = () => {
   };
 
   useEffect(() => {
-    const res = axiosFetch("get", `user/articles?page=1&type=program`)
+    const res = axiosFetch("get", `user/articles?page=1&type=artikel`)
       .then((res) => {
         setProgram(res.data);
         // console.log(res.data.metadata.totalPage);
@@ -147,6 +147,14 @@ const Publikasi = () => {
                 </div>
               );
             })} */}
+            <div className="flex">
+              <p>Judul</p>
+              <p>Jenis</p>
+              <p>Kategori</p>
+              <p>Tgl Dibuat</p>
+              <p>Status</p>
+              <p>Aksi</p>
+            </div>
           </div>
         </>
       )}

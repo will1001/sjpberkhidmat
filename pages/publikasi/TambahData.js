@@ -5,6 +5,7 @@ import { DeletIcon } from "../../src/utility/icon/icon";
 import Logo from "../../src/utility/Logo";
 import uploadFile from "../../src/utility/icon/uploadIcon.png";
 import PopupBerhasil from "../../src/component/publikasi/PopupBerhasil";
+import axiosFetch from "../../src/API/axiosFetch";
 const DynamicHeader = dynamic(() => import("../../src/component/program/TextEditor"), {
   ssr: false,
 });
@@ -62,16 +63,62 @@ const TambahData = () => {
     category: "",
     image: "",
     publication: true,
+    kabupaten: "test",
   });
   //   text editor variabel
   const callTextEditor = (setFormProgram, value, formProgram) => {
     return <DynamicHeader value={value} setFormProgram={setFormProgram} formProgram={formProgram} />;
   };
 
+  const postArtikel = async () => {
+    const a = new FormData();
+    a.append("title", formProgram.title);
+    a.append("description", formProgram.description);
+    a.append("category", formProgram.category);
+    a.append("image", formProgram.image);
+    a.append("type", "artikel");
+    a.append("publication", true);
+    a.append("id_kabupaten", formProgram.kabupaten);
+
+    {
+      await axiosFetch("post", `user/articles`, a)
+        .then((res) => {
+          console.log(res);
+          setBerhasil(true);
+        })
+        .catch((error) => {
+          alert(error?.response?.data?.message);
+        });
+    }
+  };
+  const postDraftArtikel = async () => {
+    const a = new FormData();
+    a.append("title", formProgram.title);
+    a.append("description", formProgram.description);
+    a.append("category", formProgram.category);
+    a.append("image", formProgram.image);
+    a.append("type", "artikel");
+    a.append("publication", false);
+    a.append("id_kabupaten", formProgram.kabupaten);
+
+    {
+      await axiosFetch("post", `user/articles`, a)
+        .then((res) => {
+          console.log(res);
+          setBerhasil(true);
+          setFormProgram({ title: "", description: "", category: "", image: "", publication: true, kabupaten: "test" });
+          alert("tersimpan sebagai draft");
+        })
+        .catch((error) => {
+          alert(error?.response?.data?.message);
+        });
+    }
+  };
+
   console.log(formProgram);
   return (
     <>
-      <PopupBerhasil popUp={popUp} setPopUp={setPopUp} berhasil={berhasil} setBerhasil={setBerhasil} />
+      <PopupBerhasil popUp={popUp} setPopUp={setPopUp} berhasil={berhasil} setBerhasil={setBerhasil} post={postArtikel} />
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <div className="flex justify-between w-full pr-[40px]">
           <Logo />
@@ -81,7 +128,7 @@ const TambahData = () => {
               <NewButton title={"Publikasikan"} style={publikasiStyle} />
             </div>
             {/* tombol simpan draft */}
-            <div onClick={() => setFormProgram({ ...formProgram, publication: false })} className="flex cursor-pointer py-[7px] px-4 items-center border border-[#374151] rounded-md text-[#374151] text-[18px] font-semibold">
+            <div onClick={postDraftArtikel} className="flex cursor-pointer py-[7px] px-4 items-center border border-[#374151] rounded-md text-[#374151] text-[18px] font-semibold">
               Simpan Draft
             </div>
             {/* <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
@@ -133,12 +180,7 @@ const TambahData = () => {
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Thumbnail Artikel</p>
             <label htmlFor="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              {/* <div className={`${formProgram.image && "visible"}`}>
-                <div className={`${videoPreview === undefined ? "hidden" : "visible"}`}> {videoPlay === undefined ? <p>Loading....</p> : videoPlay}</div>
-                <div className={`${imagePreview === undefined ? "hidden" : "visible"}`}>
-                  <img src={imagePreview} alt="preview" />
-                </div>
-              </div> */}
+              <div className={`${formProgram?.image === undefined ? "hidden" : "visible"}`}>{formProgram?.image && <img src={URL.createObjectURL(formProgram?.image)} alt="preview" />}</div>
 
               <div className="flex flex-col items-center pt-4">
                 <img src={uploadFile.src} alt="upload here" />
@@ -148,13 +190,13 @@ const TambahData = () => {
                 <p className="text-[12px] font-normal">PNG, JPG, JPEG upto 5MB</p>
               </div>
               <input
-                // onChange={(e) => {
-                //   console.log(e.target.files);
-                //   setFormProgram({
-                //     ...formProgram,
-                //     image: e.target.files[0],
-                //   });
-                // }}
+                onChange={(e) => {
+                  console.log(e.target.files);
+                  setFormProgram({
+                    ...formProgram,
+                    image: e.target.files[0],
+                  });
+                }}
                 id="file_upload"
                 type="file"
                 className="hidden"

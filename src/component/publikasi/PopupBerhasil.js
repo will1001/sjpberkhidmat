@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import berhasilImg from "../../utility/img/berhasiPost.png";
 
-const PopupBerhasil = ({ popUp, setPopUp, berhasil, setBerhasil }) => {
+const PopupBerhasil = ({ popUp, setPopUp, berhasil, setBerhasil, post }) => {
   return (
     <>
       {" "}
@@ -20,15 +20,12 @@ const PopupBerhasil = ({ popUp, setPopUp, berhasil, setBerhasil }) => {
                 <div onClick={() => setPopUp(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
                   <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
                 </div>
-                <div
-                  // onClick={postArtikel}
-                  className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center"
-                >
+                <div onClick={post} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
                   <p className="text-[18px] text-[#fff] font-semibold">Publikasikan</p>
                 </div>
               </>
             ) : (
-              <div onClick={() => console.log("test post")} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+              <div onClick={() => setPopUp(false)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
                 <p className="text-[18px] text-[#fff] font-semibold">OK</p>
               </div>
             )}
