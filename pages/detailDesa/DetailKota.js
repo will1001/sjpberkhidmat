@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BackIcon } from "../../src/utility/icon/icon";
 import PetaLombok from "../../src/utility/PetaLombok";
-import DetailDesa from "../../src/component/sidebar/DetailKotaContent";
+import DetailDesa from "../../src/component/sidebar/DetailDesaContent";
 import SideBar from "../../src/component/sidebar/SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDataWilayah } from "../../src/features/API/dataWilayahSlice";

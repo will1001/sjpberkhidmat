@@ -1,8 +1,6 @@
 import { withRouter } from "next/router";
 import React, { useState } from "react";
-import MataramContent from "../../src/component/sidebar/MataramContent";
 import SideBar from "../../src/component/sidebar/SideBar";
-import kecMataram from "../../src/utility/peta/kec_mataram.png";
 import DetailDesaContent from "../../src/component/sidebar/DetailKecamatanContent";
 import KecMataramMap from "../../src/utility/peta/KecMataramMap";
 import AmpenanMap from "../../src/utility/peta/AmpenanMap";
