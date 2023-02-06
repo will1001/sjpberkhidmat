@@ -244,11 +244,11 @@ const HomePage = ({ router }) => {
           </div>
           <div ref={refAspirasi} />
         </div>
-        <div className="flex h-[248px] bg-[#FF5001] pt-[65px] w-screen">
-          <p className="text-white text-[26px] font-bold pl-[180px] w-full">
+        <div className="flex h-[248px] bg-[#FF5001] py-[65px] w-screen px-[50px]">
+          <p className="text-white text-[26px] flex font-bold basis-1/2">
             Kami membuka pintu komunikasi yang <br /> kondusif dan terbuka untuk menerima <br /> pesan dan aspirasi dari masyarakat.
           </p>
-          <div className="pr-[144px] w-full ml-[39px]">
+          <div className="basis-1/2">
             <p className="text-[18px]  text-white">Kami menantikan dukungan dan masukan Anda. Ayo bersama-sama kita wujudkan perubahan yang diinginkan!</p>
             <button onClick={() => Router.push("Aspirasi")} className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">
               Sampaikan Aspirasi
