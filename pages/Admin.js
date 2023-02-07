@@ -36,6 +36,8 @@ function Admin({ router }) {
   const kabupaten = useFetch("get", "user/kabupaten");
   const pekerjaan = useFetch("get", "user/jobs");
   const popUpDashType = useSelector((state) => state.panel.popUpDashType);
+  const idPeriode = useSelector((state) => state.panel.idPeriode);
+  const dispatch = useDispatch();
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
@@ -46,6 +48,7 @@ function Admin({ router }) {
 
   const [formData, setFormData] = useState({
     name: "",
+    id_periode: idPeriode,
     nik: "",
     email: "",
     role: "relawan",
@@ -122,7 +125,6 @@ function Admin({ router }) {
     }
   };
 
-  const dispatch = useDispatch();
   return (
     <>
       <div className="flex ">
