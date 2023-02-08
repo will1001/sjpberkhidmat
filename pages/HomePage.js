@@ -208,10 +208,10 @@ const HomePage = ({ router }) => {
                       router.push({
                         pathname: "artikel/DetailProgram",
                         query: {
-                          title: res.title,
-                          description: res.description,
-                          image: res.image,
-                          kabupaten: res.kabupaten.name,
+                          title: res?.title,
+                          description: res?.description,
+                          image: res?.image,
+                          kabupaten: res?.kabupaten?.name,
                         },
                       });
                     }}

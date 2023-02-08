@@ -6,6 +6,8 @@ import Logo from "../../src/utility/Logo";
 import uploadFile from "../../src/utility/icon/uploadIcon.png";
 import PopupBerhasil from "../../src/component/publikasi/PopupBerhasil";
 import axiosFetch from "../../src/API/axiosFetch";
+import Router from "next/router";
+import { useSelector } from "react-redux";
 const DynamicHeader = dynamic(() => import("../../src/component/program/TextEditor"), {
   ssr: false,
 });
@@ -57,6 +59,8 @@ const TambahData = () => {
   const [selectCategory, setSelecCategory] = useState();
   const [popUp, setPopUp] = useState(false);
   const [berhasil, setBerhasil] = useState(false);
+  const getToken = useSelector((state) => state.user.token);
+  const [token, setToken] = useState(getToken);
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -78,15 +82,20 @@ const TambahData = () => {
     a.append("image", formProgram.image);
     a.append("type", "artikel");
     a.append("publication", true);
-    a.append("id_kabupaten", formProgram.kabupaten);
+    a.append("id_kabupaten", "kabupaten");
+    a.append("id_kecamatan", "kecamatan");
+    a.append("id_kelurahan", "kelurahan");
+    a.append("id_periode", "periode");
 
     {
-      await axiosFetch("post", `user/articles`, a)
+      await axiosFetch("post", `user/articles?type=artikel`, a, token)
         .then((res) => {
           console.log(res);
+          setFormProgram({ title: "", description: "", category: "", image: "", publication: true, kabupaten: "test" });
           setBerhasil(true);
         })
         .catch((error) => {
+          console.log(error);
           alert(error?.response?.data?.message);
         });
     }
@@ -96,13 +105,15 @@ const TambahData = () => {
     a.append("title", formProgram.title);
     a.append("description", formProgram.description);
     a.append("category", formProgram.category);
-    a.append("image", formProgram.image);
+    {
+      ["png", "jpeg", "jpg"].includes(formProgram?.image?.name?.split(".").pop().toLowerCase()) && a.append("image", formProgram.image);
+    }
     a.append("type", "artikel");
     a.append("publication", false);
     a.append("id_kabupaten", formProgram.kabupaten);
 
     {
-      await axiosFetch("post", `user/articles`, a)
+      await axiosFetch("post", `user/articles?type=artikel`, a)
         .then((res) => {
           console.log(res);
           setBerhasil(true);
@@ -115,7 +126,7 @@ const TambahData = () => {
     }
   };
 
-  console.log(formProgram);
+  console.log(token);
   return (
     <>
       <PopupBerhasil popUp={popUp} setPopUp={setPopUp} berhasil={berhasil} setBerhasil={setBerhasil} post={postArtikel} />
@@ -131,9 +142,9 @@ const TambahData = () => {
             <div onClick={postDraftArtikel} className="flex cursor-pointer py-[7px] px-4 items-center border border-[#374151] rounded-md text-[#374151] text-[18px] font-semibold">
               Simpan Draft
             </div>
-            {/* <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
-              <DeletIcon />
-            </div> */}
+            <div onClick={() => Router.back()} className="flex border cursor-pointer border-[#B91C1C] text-[#B91C1C] text-[18px] font-semibold px-4 rounded-md  h-[42px] justify-center items-center">
+              Batal
+            </div>
           </div>
         </div>
       </div>
@@ -156,7 +167,7 @@ const TambahData = () => {
             <label id="title" className="text-[#6B7280] text-[16px] font-serif pt-[60px]">
               detail Program
             </label>
-            <div className="w-[790px]">{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
+            <div className="w-full">{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
@@ -180,7 +191,13 @@ const TambahData = () => {
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Thumbnail Artikel</p>
             <label htmlFor="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              <div className={`${formProgram?.image === undefined ? "hidden" : "visible"}`}>{formProgram?.image && <img src={URL.createObjectURL(formProgram?.image)} alt="preview" />}</div>
+              <div className={`${formProgram?.image?.name === undefined ? "hidden" : "visible"}`}>
+                {["png", "jpeg", "jpg"].includes(formProgram?.image?.name?.split(".").pop().toLowerCase()) ? (
+                  <img src={URL.createObjectURL(formProgram?.image)} alt="preview" />
+                ) : (
+                  <p className="text-[18px] text-red-500 font-bold bg-slate-200 px-4 py-12 flex justify-center">Type File Harus "JPG, JPEG, PNG"</p>
+                )}
+              </div>
 
               <div className="flex flex-col items-center pt-4">
                 <img src={uploadFile.src} alt="upload here" />

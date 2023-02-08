@@ -35,6 +35,7 @@ const Login = ({ router }) => {
   };
   const dispatch = useDispatch();
   const roles = useSelector((state) => state.user.roles);
+  const token = useSelector((state) => state.user.token);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -71,7 +72,7 @@ const Login = ({ router }) => {
 
   const [passType, setPasType] = useState("password");
   const [page, setPage] = useState("login");
-  console.log(roles);
+  console.log(token);
 
   useEffect(() => {
     if (roles === "admin") {
