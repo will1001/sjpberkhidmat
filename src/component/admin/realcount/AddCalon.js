@@ -8,15 +8,18 @@ import ReactImageUploading from "react-images-uploading";
 import axiosFetch from "../../../API/axiosFetch";
 import useFetch from "../../../API/useFetch";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const AddCalon = ({ nama, logo, partai, nomor }) => {
   const [detailForm, setDetailForm] = useState();
   const router = useRouter();
+  const idPeriode = useSelector((state) => state.panel.idPeriode);
 
   const [formPartai, setFormPartai] = useState({
     logo: "",
     name: "",
     id_partai: "",
+    id_periode: "",
   });
   const [formEdit, setFormEdit] = useState({
     logo: logo,
@@ -36,6 +39,7 @@ const AddCalon = ({ nama, logo, partai, nomor }) => {
   const postPartai = async () => {
     const a = new FormData();
     a.append("name", formPartai.name);
+    a.append("id_periode", idPeriode);
     a.append("logo", formPartai.logo[0].file);
     a.append("id_partai", formPartai.id_partai);
 
