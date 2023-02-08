@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import publikasiProgram from "../../utility/img/publikasiProgram.png";
 import berhasilImg from "../../utility/img/berhasiPost.png";
+import { useRouter } from "next/router";
 
 const PopupBerhasil = ({ popUp, setPopUp, berhasil, setBerhasil, post }) => {
+  const router = useRouter();
   return (
     <>
       {" "}
@@ -25,7 +27,15 @@ const PopupBerhasil = ({ popUp, setPopUp, berhasil, setBerhasil, post }) => {
                 </div>
               </>
             ) : (
-              <div onClick={() => setPopUp(false)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+              <div
+                onClick={() =>
+                  router.push({
+                    pathname: "../Admin",
+                    query: { component: "/publikasi" },
+                  })
+                }
+                className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center"
+              >
                 <p className="text-[18px] text-[#fff] font-semibold">OK</p>
               </div>
             )}

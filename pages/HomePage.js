@@ -15,6 +15,7 @@ import prevIcon from "../src/utility/icon/previous.png";
 import nextIcon from "../src/utility/icon/next.png";
 import detailProgramImg from "../src/utility/img/detailProgram.png";
 import useFetch from "../src/API/useFetch";
+import playIcon from "../src/utility/icon/playIcon.png";
 
 const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
@@ -24,6 +25,7 @@ const HomePage = ({ router }) => {
   const getArtikel = useFetch("get", "user/articles?page=1&limit=8&type=program");
   const getSlider = useFetch("get", "user/slider?type=slider");
   const getBackground = useFetch("get", "user/slider?type=background");
+  const getPublikasi = useFetch("get", "user/articles?page=1&limit=10&type=artikel");
   const refProgram = useRef();
   const refPublikasi = useRef();
   const refPendaftaran = useRef();
@@ -49,7 +51,7 @@ const HomePage = ({ router }) => {
     }
   });
 
-  console.log(router.query.page);
+  console.log(getPublikasi);
   return (
     <>
       <div className="w-[1350px] ">
@@ -165,6 +167,29 @@ const HomePage = ({ router }) => {
           >
             <DaftarRelawanButton />
           </div> */}
+        </div>
+        <div className=" pt-[50px] pl-[70px] pr-[70px] w-screen mb-[50px]">
+          <p className="text-[26px] flex justify-between text-slate-700 font-bold">
+            Publikasi Video <span className="text-[16px] font-normal underline cursor-pointer">Lihat Semua</span>
+          </p>
+          <div className="flex gap-3 ">
+            {getPublikasi?.data
+              ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
+              .map((res) => (
+                <div className="w-[300px] h-[200px]" key={res._id}>
+                  <div className="">
+                    <img className="relative top-[115px] left-[45%]" src={playIcon.src} />
+                    <video className="cursor-pointer">
+                      <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <p className="text-[18px] text-[#FF5001] font-semibold">{res?.category}</p>
+                  <p className="text-[#374151] text-[18px] font-semibold">{res?.title}</p>
+                  <p className="text-[#374151] text-[14px]">{res?.createdAt.split("T").shift().split("-").reverse().join("/")}</p>
+                </div>
+              ))}
+          </div>
         </div>
         <div className="flex pt-[103px] pl-[70px] pr-[70px] w-screen">
           <div className="w-screen">
