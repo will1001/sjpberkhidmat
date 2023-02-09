@@ -124,7 +124,13 @@ const Publikasi = () => {
                     onClick={() =>
                       router.push({
                         pathname: "/publikasi/EditData",
-                        query: { id: res?._id },
+                        query: {
+                          id: res._id,
+                          file: res.image,
+                          title: res.title,
+                          description: res.description,
+                          category: res.category,
+                        },
                       })
                     }
                     className="cursor-pointer "

@@ -62,7 +62,7 @@ const EditData = () => {
   const getToken = useSelector((state) => state.user.token);
   const [token, setToken] = useState(getToken);
   const [changeImage, setChangeImage] = useState();
-  const [editProgram, setEditProgram] = useState();
+  const [title, setTitle] = useState();
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -78,20 +78,25 @@ const EditData = () => {
 
   const postArtikel = async () => {
     const a = new FormData();
-    a.append("title", formProgram.title);
-    a.append("description", formProgram.description);
-    a.append("category", formProgram.category);
-    if (changeImage !== undefined) {
-      a.append("image", changeImage);
+    if (["mp4", "mkv"].includes(Router?.query?.file?.split(".").pop())) {
+      a.append("title", formProgram.title);
+      a.append("description", "description publikasi video");
+      a.append("category", formProgram.category);
+      a.append("id_kabupaten", "asdasd");
+      if (changeImage !== undefined) {
+        a.append("image", changeImage);
+      }
+      a.append("publication", true);
     } else {
-      a.append("image", formProgram.image);
+      a.append("title", formProgram.title);
+      a.append("description", formProgram.description);
+      a.append("category", formProgram.category);
+      a.append("id_kabupaten", "asdasd");
+      if (changeImage !== undefined) {
+        a.append("image", changeImage);
+      }
+      a.append("publication", true);
     }
-    // a.append("type", "artikel");
-    a.append("publication", true);
-    a.append("id_kabupaten", "kabupaten");
-    // a.append("id_kecamatan", "kecamatan");
-    // a.append("id_kelurahan", "kelurahan");
-    // a.append("id_periode", "periode");
 
     {
       await axiosFetch("put", `user/articles/${Router.query.id}`, a, token)
@@ -107,20 +112,25 @@ const EditData = () => {
   };
   const postDraftArtikel = async () => {
     const a = new FormData();
-    a.append("title", formProgram.title);
-    a.append("description", formProgram.description);
-    a.append("category", formProgram.category);
-    // if (changeImage !== undefined) {
-    //   ["png", "jpeg", "jpg"].includes(changeImage.name?.split(".").pop().toLowerCase()) && a.append("image", changeImage);
-    // } else {
-    // a.append("image", formProgram.image);
-    // }
-    // a.append("type", "artikel");
-    a.append("publication", false);
-    a.append("id_kabupaten", "kabupaten");
-    // a.append("id_kecamatan", "kecamatan");
-    // a.append("id_kelurahan", "kelurahan");
-    // a.append("id_periode", "periode");
+    if (["mp4", "mkv"].includes(Router?.query?.file?.split(".").pop())) {
+      a.append("title", formProgram.title);
+      a.append("description", "description publikasi video");
+      a.append("category", formProgram.category);
+      a.append("id_kabupaten", "asdasd");
+      if (changeImage !== undefined) {
+        a.append("image", changeImage);
+      }
+      a.append("publication", false);
+    } else {
+      a.append("title", formProgram.title);
+      a.append("description", formProgram.description);
+      a.append("category", formProgram.category);
+      a.append("id_kabupaten", "asdasd");
+      if (changeImage !== undefined) {
+        a.append("image", changeImage);
+      }
+      a.append("publication", false);
+    }
 
     {
       await axiosFetch("put", `user/articles/${Router.query.id}`, a, token)
@@ -136,17 +146,25 @@ const EditData = () => {
   };
 
   useEffect(() => {
-    if (Router.query.id !== undefined) {
-      axiosFetch("get", `user/articles/${Router?.query?.id}`, {}, token)
-        .then((res) => {
-          setEditProgram(res);
-          setFormProgram({ ...formProgram, title: res.data.data.title, category: res.data.data.category, image: res.data.data.image, description: res.data.data.description });
-        })
-        .catch((err) => console.log(err));
+    if (["mp4", "mkv"].includes(Router.query.file.split(".").pop().toLowerCase())) {
+      setFormProgram({
+        ...formProgram,
+        title: Router.query.title,
+        image: Router.query.file,
+        category: Router.query.category,
+      });
+    } else {
+      setFormProgram({
+        ...formProgram,
+        title: Router.query.title,
+        image: Router.query.file,
+        category: Router.query.category,
+        description: Router.query.description,
+      });
     }
   }, [Router.query.id]);
 
-  console.log(changeImage);
+  console.log(Router.query.file);
   return (
     <>
       <PopupBerhasil popUp={popUp} setPopUp={setPopUp} berhasil={berhasil} setBerhasil={setBerhasil} post={postArtikel} />
@@ -175,10 +193,11 @@ const EditData = () => {
             <label id="title" className="text-[#6B7280] text-[16px] font-serif">
               Judul Program
             </label>
+
             <input
               onChange={(e) => setFormProgram({ ...formProgram, title: e.target.value })}
               className="border border-[#D1D5DB] h-[48px] outline-0 rounded-md p-[12px] text-[#374151] font-medium"
-              value={formProgram.title}
+              value={formProgram?.title}
               type={"text"}
               id="title"
             />
@@ -188,20 +207,20 @@ const EditData = () => {
               detail Program
             </label>
             <div className="flex gap-3 text-[#6B7280] text-[16px]">
-              {["jpg", "jpeg", "png"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? (
+              {["jpg", "jpeg", "png"].includes(formProgram?.image?.split(".").pop().toLowerCase()) ? (
                 <p className={`p-2 ${"switchPage" === "artikel" && "text-white bg-[#E44700] rounded-md font-medium"} cursor-pointer`}>Publikasi Artikel</p>
               ) : (
                 <p className={`p-2 ${"switchPage" === "video" && "text-[white] font-medium bg-[#E44700] rounded-md"} cursor-pointer`}>Publikasi Video</p>
               )}
             </div>
-            <div className={`w-full ${["jpg", "jpeg", "png"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? "visible" : "hidden"}`}>{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
-            <div className={`${["mp4", "mkv"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? "visible" : "hidden"}`}>
+            <div className={`w-full ${["jpg", "jpeg", "png"].includes(formProgram?.image?.split(".").pop().toLowerCase()) ? "visible" : "hidden"}`}>{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
+            <div className={`${["mp4", "mkv"].includes(formProgram?.image?.split(".").pop().toLowerCase()) ? "visible" : "hidden"}`}>
               <label htmlFor="video_desctiprion" className=" border border-[#D1D5DB] cursor-pointer">
                 {changeImage === undefined ? (
                   <div className="shadow-xl border bg-black rounded-md">
-                    {editProgram?.data?.data?.image !== undefined && (
+                    {formProgram.image !== "" && (
                       <video className="my-[20px]" controls>
-                        <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + editProgram?.data?.data?.image} type="video/mp4" />
+                        <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formProgram.image} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
                     )}
@@ -235,47 +254,6 @@ const EditData = () => {
                 />
               </label>
             </div>
-            {/* {["jpg", "jpeg", "png"].includes(formProgram?.image.split(".").pop().toLowerCase()) ? (
-              <div className="w-full">{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
-            ) : (
-              <div>
-                <label htmlFor="video_desctiprion" className=" border border-[#D1D5DB] cursor-pointer">
-                  <div className="shadow-xl border bg-black rounded-md">
-                    {changeImage === undefined ? (
-                      <>
-                        <video className="my-[20px]" controls>
-                          <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formProgram?.image} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                      </>
-                    ) : (
-                      <>
-                        <video className="my-[20px]" controls>
-                          <source src={URL.createObjectURL(changeImage)} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                      </>
-                    )}
-                  </div>
-                  <div className="flex flex-col items-center pt-4">
-                    <img src={uploadFile.src} alt="upload here" />
-                    <p className="text-[12px] text-[#000000] font-semibold">
-                      <span className="text-[#FF5001]">Upload a file </span>of drag and drop
-                    </p>
-                    <p className="text-[12px] font-normal">{"switchPage" === "artikel" ? <>PNG, JPG, JPEG upto 5MB</> : <>MP4, MKV upto 50MB</>}</p>
-                  </div>
-                  <input
-                    onChange={(e) => {
-                      console.log(e.target.files);
-                      setChangeImage(e.target.files[0]);
-                    }}
-                    id="video_desctiprion"
-                    type="file"
-                    className="hidden"
-                  />
-                </label>
-              </div>
-            )} */}
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
@@ -297,39 +275,41 @@ const EditData = () => {
                 </div>
               );
             })}
-            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Thumbnail Artikel</p>
 
-            <label htmlFor="file_upload" className={`${["mp4", "mkv"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? "hidden" : "visible"} h-[112px] border border-[#D1D5DB] cursor-pointer`}>
-              <div className={`${changeImage === undefined ? "visible" : "visible"}`}>
-                {/* ["png", "jpeg", "jpg"].includes(formProgram?.image?.split(".").pop().toLowerCase()) */}
-                {changeImage === undefined ? (
-                  <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formProgram?.image} alt="preview" />
-                ) : (
-                  <div>
-                    {changeImage && <img src={URL.createObjectURL(changeImage)} />}
+            <div className={`${["mp4", "mkv"].includes(formProgram?.image?.split(".").pop().toLowerCase()) ? "hidden" : "visible"} h-[112px] border border-[#D1D5DB] cursor-pointer`}>
+              <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Thumbnail Artikel</p>
+              <label htmlFor="file_upload">
+                <div className={`${changeImage === undefined ? "visible" : "visible"}`}>
+                  {/* ["png", "jpeg", "jpg"].includes(formProgram?.image?.split(".").pop().toLowerCase()) */}
+                  {changeImage === undefined ? (
+                    <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + formProgram?.image} alt="preview" />
+                  ) : (
+                    <div>
+                      {changeImage && <img src={URL.createObjectURL(changeImage)} />}
 
-                    {/* <p className="text-[18px] text-red-500 font-bold bg-slate-200 px-4 py-12 flex justify-center">Type File Harus "JPG, JPEG, PNG"</p> */}
-                  </div>
-                )}
-              </div>
+                      {/* <p className="text-[18px] text-red-500 font-bold bg-slate-200 px-4 py-12 flex justify-center">Type File Harus "JPG, JPEG, PNG"</p> */}
+                    </div>
+                  )}
+                </div>
 
-              <div className="flex flex-col items-center pt-4">
-                <img src={uploadFile.src} alt="upload here" />
-                <p className="text-[12px] text-[#000000] font-semibold">
-                  <span className="text-[#FF5001]">Upload a file </span>of drag and drop{" "}
-                </p>
-                <p className="text-[12px] font-normal">PNG, JPG, JPEG upto 5MB</p>
-              </div>
-              <input
-                onChange={(e) => {
-                  console.log(e.target.files);
-                  setChangeImage(e.target.files[0]);
-                }}
-                id="file_upload"
-                type="file"
-                className="hidden"
-              />
-            </label>
+                <div className="flex flex-col items-center pt-4">
+                  <img src={uploadFile.src} alt="upload here" />
+                  <p className="text-[12px] text-[#000000] font-semibold">
+                    <span className="text-[#FF5001]">Upload a file </span>of drag and drop{" "}
+                  </p>
+                  <p className="text-[12px] font-normal">PNG, JPG, JPEG upto 5MB</p>
+                </div>
+                <input
+                  onChange={(e) => {
+                    console.log(e.target.files);
+                    setChangeImage(e.target.files[0]);
+                  }}
+                  id="file_upload"
+                  type="file"
+                  className="hidden"
+                />
+              </label>
+            </div>
           </div>
         </div>
       </div>

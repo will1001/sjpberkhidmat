@@ -25,7 +25,7 @@ const HomePage = ({ router }) => {
   const getArtikel = useFetch("get", "user/articles?page=1&limit=8&type=program");
   const getSlider = useFetch("get", "user/slider?type=slider");
   const getBackground = useFetch("get", "user/slider?type=background");
-  const getPublikasi = useFetch("get", "user/articles?page=1&limit=10&type=artikel");
+  const getPublikasi = useFetch("get", "user/articles?page=1&limit=5&type=artikel");
   const refProgram = useRef();
   const refPublikasi = useRef();
   const refPendaftaran = useRef();
@@ -50,6 +50,8 @@ const HomePage = ({ router }) => {
       goto(refPendaftaran.current);
     }
   });
+
+  const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
 
   console.log(getSlider);
   return (
@@ -88,7 +90,7 @@ const HomePage = ({ router }) => {
               <p onClick={() => goto(refPendaftaran.current)} className="flex cursor-pointer stroke-[#374151] ">
                 Pendaftaran Anggota
               </p>
-              <div onClick={() => goto(refAspirasi.current)} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
+              <div onClick={() => router.push("Aspirasi")} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
                 Rumah Aspirasi
               </div>
               <button
@@ -172,21 +174,36 @@ const HomePage = ({ router }) => {
           <p className="text-[26px] flex justify-between text-slate-700 font-bold">
             Publikasi Video <span className="text-[16px] font-normal underline cursor-pointer">Lihat Semua</span>
           </p>
-          <div className="flex gap-3 ">
+          <div className="flex gap-3 pb-[80px]">
             {getPublikasi?.data
               ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
               .map((res) => (
                 <div className="w-[300px] h-[200px]" key={res._id}>
-                  <div className="">
-                    <img className="relative top-[115px] left-[45%]" src={playIcon.src} />
-                    <video className="cursor-pointer">
-                      <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
+                  <img className="h-[60px] w-[60px] relative top-[125px] left-[120px]" src={playIcon.src} />
+                  <video
+                    onClick={() =>
+                      router.push({
+                        pathname: "/publikasi/DetailPublikasi",
+                        query: {
+                          title: res.title,
+                          image: res.image,
+                          creat: res.createdAt,
+                          category: res.category,
+                          creat: res?.createdAt?.split("T").shift().split("-").reverse().join("/"),
+                        },
+                      })
+                    }
+                    className=" w-[300px] h-[200px] cursor-pointer"
+                  >
+                    <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+
                   <p className="text-[18px] text-[#FF5001] font-semibold">{res?.category}</p>
                   <p className="text-[#374151] text-[18px] font-semibold">{res?.title}</p>
-                  <p className="text-[#374151] text-[14px]">{res?.createdAt.split("T").shift().split("-").reverse().join("/")}</p>
+                  <p className="text-[#374151] text-[14px]">
+                    {res?.createdAt.split("T").shift().split("-")[2]} {monthNames[new Date(res?.createdAt.split("T").shift().split("-")[1]).getMonth()]} {res?.createdAt.split("T").shift().split("-")[0]}
+                  </p>
                 </div>
               ))}
           </div>
