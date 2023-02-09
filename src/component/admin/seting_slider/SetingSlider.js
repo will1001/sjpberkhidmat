@@ -5,6 +5,7 @@ import uploadIcon from "../../../utility/icon/upload_putih.png";
 import deleteIcon from "../../../utility/icon/delet_icon.png";
 import instruksi from "../../../utility/img/intruksi.png";
 import instruksiSidebar from "../../../utility/img/sidebar_poster.png";
+import { useSelector } from "react-redux";
 
 const SetingSlider = () => {
   const [popup, setPopup] = useState(false);
@@ -17,6 +18,7 @@ const SetingSlider = () => {
   const maxNumber = 30;
   const [image, setImage] = useState([]);
   const [imageEdit, setImageEdit] = useState();
+  const token = useSelector((state) => state.user.token);
 
   //   const getSlider = useFetch("get", "user/slider");
   const onChange = (imageList, addUpdateIndex) => {
@@ -30,7 +32,7 @@ const SetingSlider = () => {
     a.append("type", type);
 
     {
-      await axiosFetch("post", `user/slider`, a)
+      await axiosFetch("post", `user/slider`, a, token)
         .then((res) => {
           console.log(res);
           setPopup(false);
@@ -44,7 +46,7 @@ const SetingSlider = () => {
   };
 
   const deleteSlider = (id) => {
-    const res = axiosFetch("delete", `user/slider/${id}`)
+    const res = axiosFetch("delete", `user/slider/${id}`, {}, token)
       .then((res) => setPopup(false))
       .catch((err) => console.log(err));
   };
@@ -54,7 +56,7 @@ const SetingSlider = () => {
     a.append("image", image[0].file);
 
     {
-      await axiosFetch("put", `user/slider/${id}`, a)
+      await axiosFetch("put", `user/slider/${id}`, a, token)
         .then((res) => {
           console.log(res);
           setPopup(false);
@@ -68,13 +70,13 @@ const SetingSlider = () => {
   };
 
   useEffect(() => {
-    axiosFetch("get", "user/slider?type=slider")
+    axiosFetch("get", "user/slider?type=slider", {}, token)
       .then((res) => setSlider(res.data))
       .catch((err) => console.log(err));
-    axiosFetch("get", "user/slider?type=background")
+    axiosFetch("get", "user/slider?type=background", {}, token)
       .then((res) => setBackground(res.data))
       .catch((err) => console.log(err));
-    axiosFetch("get", "user/slider?type=banner")
+    axiosFetch("get", "user/slider?type=banner", {}, token)
       .then((res) => setBanner(res.data))
       .catch((err) => console.log(err));
   }, [popup]);

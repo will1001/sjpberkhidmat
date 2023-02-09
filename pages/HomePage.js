@@ -51,7 +51,7 @@ const HomePage = ({ router }) => {
     }
   });
 
-  console.log(getPublikasi);
+  console.log(getSlider);
   return (
     <>
       <div className="w-[1350px] ">

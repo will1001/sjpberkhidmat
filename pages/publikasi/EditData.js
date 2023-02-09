@@ -62,6 +62,7 @@ const EditData = () => {
   const getToken = useSelector((state) => state.user.token);
   const [token, setToken] = useState(getToken);
   const [changeImage, setChangeImage] = useState();
+  const [editProgram, setEditProgram] = useState();
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -80,11 +81,11 @@ const EditData = () => {
     a.append("title", formProgram.title);
     a.append("description", formProgram.description);
     a.append("category", formProgram.category);
-    // if (changeImage !== undefined) {
-    //   ["png", "jpeg", "jpg"].includes(changeImage.name?.split(".").pop().toLowerCase()) && a.append("image", changeImage);
-    // } else {
-    // a.append("image", formProgram.image);
-    // }
+    if (changeImage !== undefined) {
+      a.append("image", changeImage);
+    } else {
+      a.append("image", formProgram.image);
+    }
     // a.append("type", "artikel");
     a.append("publication", true);
     a.append("id_kabupaten", "kabupaten");
@@ -135,10 +136,15 @@ const EditData = () => {
   };
 
   useEffect(() => {
-    const data = axiosFetch("get", `user/articles/${Router?.query?.id}`, {}, token)
-      .then((res) => setFormProgram({ ...formProgram, title: res?.data?.data?.title, category: res?.data?.data?.category, description: res?.data?.data?.description, image: res?.data?.data?.image }))
-      .catch((err) => console.log(err));
-  }, []);
+    if (Router.query.id !== undefined) {
+      axiosFetch("get", `user/articles/${Router?.query?.id}`, {}, token)
+        .then((res) => {
+          setEditProgram(res);
+          setFormProgram({ ...formProgram, title: res.data.data.title, category: res.data.data.category, image: res.data.data.image, description: res.data.data.description });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [Router.query.id]);
 
   console.log(changeImage);
   return (
@@ -182,13 +188,54 @@ const EditData = () => {
               detail Program
             </label>
             <div className="flex gap-3 text-[#6B7280] text-[16px]">
-              {["jpg", "jpeg", "png"].includes(formProgram?.image?.split(".").pop().toLowerCase()) ? (
+              {["jpg", "jpeg", "png"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? (
                 <p className={`p-2 ${"switchPage" === "artikel" && "text-white bg-[#E44700] rounded-md font-medium"} cursor-pointer`}>Publikasi Artikel</p>
               ) : (
                 <p className={`p-2 ${"switchPage" === "video" && "text-[white] font-medium bg-[#E44700] rounded-md"} cursor-pointer`}>Publikasi Video</p>
               )}
             </div>
-            {["jpg", "jpeg", "png"].includes(formProgram?.image.split(".").pop().toLowerCase()) ? (
+            <div className={`w-full ${["jpg", "jpeg", "png"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? "visible" : "hidden"}`}>{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
+            <div className={`${["mp4", "mkv"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? "visible" : "hidden"}`}>
+              <label htmlFor="video_desctiprion" className=" border border-[#D1D5DB] cursor-pointer">
+                {changeImage === undefined ? (
+                  <div className="shadow-xl border bg-black rounded-md">
+                    {editProgram?.data?.data?.image !== undefined && (
+                      <video className="my-[20px]" controls>
+                        <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + editProgram?.data?.data?.image} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    {changeImage !== undefined && (
+                      <video className="my-[20px]" controls>
+                        <source src={URL.createObjectURL(changeImage)} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  </>
+                )}
+
+                <div className="flex flex-col items-center pt-4">
+                  <img src={uploadFile.src} alt="upload here" />
+                  <p className="text-[12px] text-[#000000] font-semibold">
+                    <span className="text-[#FF5001]">Upload a file </span>of drag and drop
+                  </p>
+                  <p className="text-[12px] font-normal">{"switchPage" === "artikel" ? <>PNG, JPG, JPEG upto 5MB</> : <>MP4, MKV upto 50MB</>}</p>
+                </div>
+                <input
+                  onChange={(e) => {
+                    console.log(e.target.files);
+                    setChangeImage(e.target.files[0]);
+                  }}
+                  id="video_desctiprion"
+                  type="file"
+                  className="hidden"
+                />
+              </label>
+            </div>
+            {/* {["jpg", "jpeg", "png"].includes(formProgram?.image.split(".").pop().toLowerCase()) ? (
               <div className="w-full">{callTextEditor(setFormProgram, formProgram.description, formProgram)}</div>
             ) : (
               <div>
@@ -228,7 +275,7 @@ const EditData = () => {
                   />
                 </label>
               </div>
-            )}
+            )} */}
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
@@ -251,7 +298,8 @@ const EditData = () => {
               );
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Thumbnail Artikel</p>
-            <label htmlFor="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
+
+            <label htmlFor="file_upload" className={`${["mp4", "mkv"].includes(editProgram?.data?.data?.image?.split(".").pop().toLowerCase()) ? "hidden" : "visible"} h-[112px] border border-[#D1D5DB] cursor-pointer`}>
               <div className={`${changeImage === undefined ? "visible" : "visible"}`}>
                 {/* ["png", "jpeg", "jpg"].includes(formProgram?.image?.split(".").pop().toLowerCase()) */}
                 {changeImage === undefined ? (
