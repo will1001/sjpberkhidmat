@@ -1,15 +1,40 @@
+import { useRouter } from "next/router";
 import React from "react";
 import Image from "../../utility/img/kabarSjpBerkhidmat.png";
 
-const KabarSjpBerkhidmat = () => {
+const KabarSjpBerkhidmat = ({ data }) => {
+  const router = useRouter();
+  const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
+  console.log(data);
   return (
-    <div className="flex w-[744px] mb-[39px] items-center">
-      <div className="pt-2">
-        <p className="text-[#FF5001] text-[18px] font-semibold">Et lorem</p>
-        <p className="text-[21px] text-slate-700 font-bold">Aliquam pulvinar sit tellus morbi condimentum tincidunt nulla porttitor risus id morbi</p>
-        <p className="text-slate-700 text-[16px] pt-2">16 Agustus 2022</p>
+    <div className="flex justify-between  mb-[39px]">
+      <div className="pt-2 flex flex-col justify-between w-[400px]">
+        <div>
+          <p className="text-[#FF5001] text-[18px] font-semibold">{data?.category}</p>
+          <p className="text-[21px] text-slate-700 font-bold">{data?.title}</p>
+        </div>
+
+        <p className="text-slate-700 text-[16px] pt-2">
+          {data?.createdAt.split("T").shift().split("-")[2]} {monthNames[new Date(data?.createdAt.split("T").shift().split("-")[1]).getMonth()]} {data?.createdAt.split("T").shift().split("-")[0]}
+        </p>
       </div>
-      <img className="w-[327px] h-[150px]" src={Image.src} alt="image1  " />
+      <div
+        onClick={() =>
+          router.push({
+            pathname: "../../../publikasi/DetailArtikel",
+            query: {
+              title: data?.title,
+              description: data?.description,
+              category: data?.category,
+              creat: data?.createdAt,
+              image: data?.image,
+            },
+          })
+        }
+        className="w-[327px] h-[150px] cursor-pointer"
+      >
+        <img className="h-full w-full rounded-sm" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + data?.image} alt="image1  " />
+      </div>
     </div>
   );
 };

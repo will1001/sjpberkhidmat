@@ -26,6 +26,7 @@ const HomePage = ({ router }) => {
   const getSlider = useFetch("get", "user/slider?type=slider");
   const getBackground = useFetch("get", "user/slider?type=background");
   const getPublikasi = useFetch("get", "user/articles?page=1&limit=4&type=artikel");
+  const getPublikasiArt = useFetch("get", "user/articles?page=1&limit=6&type=artikel");
   const refProgram = useRef();
   const refPublikasi = useRef();
   const refPendaftaran = useRef();
@@ -164,30 +165,18 @@ const HomePage = ({ router }) => {
           >
             <DaftarSimpatisanButton />
           </div>
-          {/* <div
-            onClick={() => {
-              router.push({
-                pathname: "Daftar",
-                query: { type: "relawan" },
-              });
-            }}
-            className="cursor-pointer"
-          >
-            <DaftarRelawanButton />
-          </div> */}
         </div>
 
-        <div className="flex pt-[103px] pl-[70px] pr-[70px] w-screen">
+        <div className="flex pt-[103px] pl-[70px] pr-[70px] w-screen justify-between gap-[80px]">
           <div className="w-screen">
             <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kabar SJP Berkhidmat</p>
-            <KabarSjpBerkhidmat />
-            <KabarSjpBerkhidmat />
-            <KabarSjpBerkhidmat />
-            <KabarSjpBerkhidmat />
-            <KabarSjpBerkhidmat />
-            <KabarSjpBerkhidmat />
+            {getPublikasiArt?.data
+              ?.filter((data) => ["jpg", "jpeg", "png"].includes(data?.image?.split(".").pop().toLowerCase()))
+              .map((res) => (
+                <KabarSjpBerkhidmat data={res} key={res?._id} />
+              ))}
           </div>
-          <div className="pl-[150px] w-screen">
+          <div className="">
             <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kategori Kabar</p>
             <KategoriKabar />
             {banner?.data?.map((res, i) => {
