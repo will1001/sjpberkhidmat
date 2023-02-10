@@ -25,7 +25,7 @@ const HomePage = ({ router }) => {
   const getArtikel = useFetch("get", "user/articles?page=1&limit=8&type=program");
   const getSlider = useFetch("get", "user/slider?type=slider");
   const getBackground = useFetch("get", "user/slider?type=background");
-  const getPublikasi = useFetch("get", "user/articles?page=1&limit=5&type=artikel");
+  const getPublikasi = useFetch("get", "user/articles?page=1&limit=4&type=artikel");
   const refProgram = useRef();
   const refPublikasi = useRef();
   const refPendaftaran = useRef();
@@ -172,7 +172,10 @@ const HomePage = ({ router }) => {
         </div>
         <div className=" pt-[50px] pl-[70px] pr-[70px] w-screen mb-[50px]">
           <p className="text-[26px] flex justify-between text-slate-700 font-bold">
-            Publikasi Video <span className="text-[16px] font-normal underline cursor-pointer">Lihat Semua</span>
+            Publikasi Video{" "}
+            <span onClick={() => router.push("/publikasi/SemuaPublikasi")} className="text-[16px] font-normal underline cursor-pointer">
+              Lihat Semua
+            </span>
           </p>
           <div className="flex gap-3 pb-[80px]">
             {getPublikasi?.data
