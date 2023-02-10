@@ -146,7 +146,7 @@ const EditData = () => {
   };
 
   useEffect(() => {
-    if (["mp4", "mkv"].includes(Router.query.file.split(".").pop().toLowerCase())) {
+    if (["mp4", "mkv"].includes(Router?.query?.file?.split(".").pop().toLowerCase())) {
       setFormProgram({
         ...formProgram,
         title: Router.query.title,
