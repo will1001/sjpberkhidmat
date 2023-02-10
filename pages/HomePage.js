@@ -53,7 +53,7 @@ const HomePage = ({ router }) => {
 
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
 
-  console.log(getSlider);
+  // console.log(getSlider);
   return (
     <>
       <div className="w-[1350px] ">
@@ -133,14 +133,20 @@ const HomePage = ({ router }) => {
             <div className="" ref={refPublikasi}></div>
           </div>
 
-          <div className="flex px-[160px] gap-24 mt-[55px] w-screen">
-            <Publikasi />
-            <div className="flex flex-col gap-2 font-bold text-slate-700 text-[26px] pt-[40px] object-contain">
-              <p className="mb-2">Kabar Terbaru</p>
-              <KabarTerbaru />
-              <KabarTerbaru />
-              <KabarTerbaru />
-              <KabarTerbaru />
+          <div className="flex px-[50px] justify-between mt-[55px] w-screen">
+            <Publikasi data={getPublikasi?.data?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))[0]} />
+            <div className="flex flex-col gap-2 font-bold text-slate-700 text-[26px] object-contain">
+              <p className="mb-2 flex items-center justify-between">
+                Video Lainnya
+                <span onClick={() => router.push("/publikasi/SemuaPublikasi")} className="text-[16px] text-[#FF5001] font-normal underline cursor-pointer">
+                  Lihat Semua
+                </span>
+              </p>
+              {getPublikasi?.data
+                ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
+                .map((res) => (
+                  <KabarTerbaru data={res} key={res?._id} />
+                ))}
             </div>
           </div>
           <div className="" ref={refPendaftaran}></div>
@@ -170,47 +176,7 @@ const HomePage = ({ router }) => {
             <DaftarRelawanButton />
           </div> */}
         </div>
-        <div className=" pt-[50px] pl-[70px] pr-[70px] w-screen mb-[50px]">
-          <p className="text-[26px] flex justify-between text-slate-700 font-bold">
-            Publikasi Video{" "}
-            <span onClick={() => router.push("/publikasi/SemuaPublikasi")} className="text-[16px] font-normal underline cursor-pointer">
-              Lihat Semua
-            </span>
-          </p>
-          <div className="flex gap-3 pb-[80px]">
-            {getPublikasi?.data
-              ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
-              .map((res) => (
-                <div className="w-[300px] h-[200px]" key={res._id}>
-                  <img className="h-[60px] w-[60px] relative top-[125px] left-[120px]" src={playIcon.src} />
-                  <video
-                    onClick={() =>
-                      router.push({
-                        pathname: "/publikasi/DetailPublikasi",
-                        query: {
-                          title: res.title,
-                          image: res.image,
-                          creat: res.createdAt,
-                          category: res.category,
-                          creat: res?.createdAt?.split("T").shift().split("-").reverse().join("/"),
-                        },
-                      })
-                    }
-                    className=" w-[300px] h-[200px] cursor-pointer"
-                  >
-                    <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
 
-                  <p className="text-[18px] text-[#FF5001] font-semibold">{res?.category}</p>
-                  <p className="text-[#374151] text-[18px] font-semibold">{res?.title}</p>
-                  <p className="text-[#374151] text-[14px]">
-                    {res?.createdAt.split("T").shift().split("-")[2]} {monthNames[new Date(res?.createdAt.split("T").shift().split("-")[1]).getMonth()]} {res?.createdAt.split("T").shift().split("-")[0]}
-                  </p>
-                </div>
-              ))}
-          </div>
-        </div>
         <div className="flex pt-[103px] pl-[70px] pr-[70px] w-screen">
           <div className="w-screen">
             <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kabar SJP Berkhidmat</p>

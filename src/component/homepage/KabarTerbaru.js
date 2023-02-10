@@ -1,12 +1,45 @@
+import { useRouter } from "next/router";
 import React from "react";
+import playIcon from "../../utility/icon/playIcon.png";
 
-const KabarTerbaru = () => {
+const KabarTerbaru = ({ data }) => {
+  const router = useRouter();
+  const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
+  // console.log(data, "ini data");
   return (
-    <div className="flex justify-between  w-[382px]">
-      <img className="object-cover" src="https://i.ibb.co/kypZz82/Rectangle-214.png" alt="Rectangle-214" border="0"></img>
+    <div className="flex justify-between gap-2 w-[382px]">
+      <div className="flex justify-center w-[175px] h-[116.67px]">
+        <img
+          onClick={() =>
+            router.push({
+              pathname: "../../publikasi/DetailPublikasi",
+              query: {
+                title: data?.title,
+                image: data?.image,
+                category: data?.category,
+                creat: data?.createdAt?.split("T").shift().split("-").reverse().join("/"),
+              },
+            })
+          }
+          className="h-[30px] w-[30px] absolute mt-[40px] cursor-pointer z-20"
+          src={playIcon.src}
+        />
+        <video className=" rounded-xl object-fill">
+          <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + data?.image} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
       <div className="flex flex-col justify-between w-[239px]">
-        <p className="font-semibold text-[18px] text-slate-700">PKS Setuju Mantan Koruptor Tak Boleh Jadi Caleg</p>
-        <p className="font-semibold text-[14px] text-[#E44700]">21 Dec 2022 - 09:56 WIB</p>
+        <div>
+          <p className="font-semibold text-[14px] text-[#E44700]">{data?.category}</p>
+          <p className="font-semibold text-[14px] text-slate-700">{data?.title}</p>
+        </div>
+
+        <p className="font-semibold text-[14px] text-[#E44700]">
+          {" "}
+          {data?.createdAt?.split("T").shift().split("-")[2]} {monthNames[new Date(data?.createdAt?.split("T").shift().split("-")[1]).getMonth()]} {data?.createdAt?.split("T").shift().split("-")[0]}
+        </p>
       </div>
     </div>
   );
