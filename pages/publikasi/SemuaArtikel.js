@@ -1,32 +1,22 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { useRef } from "react";
 import useFetch from "../../src/API/useFetch";
 import { ButtonLogin, FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../../src/utility/icon/icon";
 import Logo from "../../src/utility/Logo";
-import playIcon from "../../src/utility/icon/playIcon.png";
 
-const DetailPublikasi = () => {
+const SemuaArtikel = () => {
   const router = useRouter();
-  const refProgram = useRef();
-  const refPublikasi = useRef();
-  const refPendaftaran = useRef();
-  const refAspirasi = useRef();
-  const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
-  const getArtikel = useFetch("get", "user/articles?page=1&type=artikel");
-
-  const goto = (ref) => {
-    window.scrollTo({
-      top: ref.offsetTop,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
+  const getPublikasi = useFetch("get", "user/articles?page=1&type=artikel");
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
-  //   const date = new Date(router?.query?.creat.split("T").shift().split("-"));
-  //   const a = monthNames[date.getMonth()];
-  //   console.log(getArtikel, "asdasd");
+  const [filter, setFilter] = useState();
+
+  useEffect(() => {
+    setFilter(router.query.category);
+  }, [router.query]);
+
+  console.log(filter);
   return (
     <>
       <div className="fixed top-0 w-screen border-b-2 z-50 shadow-md">
@@ -39,9 +29,8 @@ const DetailPublikasi = () => {
             <p
               onClick={() => {
                 router.push("/");
-                setSelectProgram(false);
               }}
-              className={`cursor-pointer `}
+              className={`cursor-pointer`}
             >
               Beranda
             </p>
@@ -49,24 +38,24 @@ const DetailPublikasi = () => {
               Profil
             </p>
             <p
-              onClick={() =>
+              onClick={() => {
                 router.push({
                   pathname: "/",
                   query: { page: "program" },
-                })
-              }
+                });
+              }}
               className="cursor-pointer"
             >
               <span>Program</span>
             </p>
             <p
-              onClick={() =>
+              onClick={() => {
                 router.push({
                   pathname: "/",
                   query: { page: "publikasi" },
-                })
-              }
-              className={`flex cursor-pointer text-[#FF5001] ${dropDownPublikasi === false ? "stroke-[#374151]" : "stroke-[#FF5001] "} `}
+                });
+              }}
+              className={`flex cursor-pointer  text-[#FF5001] `}
             >
               <span>Publikasi</span>
             </p>
@@ -81,7 +70,7 @@ const DetailPublikasi = () => {
             >
               Pendaftaran Anggota
             </p>
-            <div onClick={() => router.push("Aspirasi")} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
+            <div onClick={() => router.push("../Aspirasi")} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
               Rumah Aspirasi
             </div>
             <button
@@ -94,73 +83,73 @@ const DetailPublikasi = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#FF5001] mt-[70px] flex justify-center py-6 text-[32px] text-white font-bold">Publikasi Video</div>
-      <div className="flex pb-[150px] mt-[63px]">
-        <div className="w-[800px] h-[500px]  bg-black rounded-md mx-[70px] ">
-          {router.query.image !== undefined && (
-            <video className="w-[800px] h-[500px] rounded-md" controls>
-              <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router?.query?.image} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
-
-          <div className="flex items-center  gap-8 mt-4">
-            <p className="text-[#FF5001] h-[35px] flex items-center text-[18px] font-medium">{router.query.category}</p>
-            <p className="text-[#374151] h-[35px] flex items-center text-[16px] font-medium">
-              {router?.query?.creat?.split("/")[0]} {monthNames[new Date(router?.query?.creat?.split("/")[1]).getMonth()]} {router?.query?.creat?.split("/")[2]}
-            </p>
-          </div>
-          <p className="text-[#374151] text-[26px] font-semibold">{router.query.title}</p>
-        </div>
-        <div>
-          <p className="text-[#374151] text-[21px] font-bold mb-4">Video Lainnya</p>
-          {getArtikel?.data
-            ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
-            .map((res, index) => (
-              <>
-                {index <= 3 && (
-                  <div className="flex gap-3 h-[116px] items-center" key={res._id}>
-                    <div className="w-[175px] h-[116.67px]">
-                      <div className="">
-                        <video className="rounded-sm w-[175px] h-[116.67px] ">
-                          <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-
-                      <img
-                        onClick={() =>
-                          router
-                            .push({
-                              pathname: "./DetailPublikasi",
-                              query: {
-                                title: res.title,
-                                image: res.image,
-                                creat: res.createdAt,
-                                category: res.category,
-                                creat: res?.createdAt?.split("T").shift().split("-").reverse().join("/"),
-                              },
-                            })
-                            .then(() => window.location.reload(false))
-                        }
-                        className="relative h-[30px] w-[30px] top-[-70px] left-[75px] cursor-pointer "
-                        src={playIcon.src}
-                      />
-                    </div>
-                    <div className="w-[200px] pt-[4px] pb-[20px]">
-                      <p className="text-[12px] font-medium text-[#FF5001]">{res?.category}</p>
-                      <p className="text-[12px] font-semibold text-[#374151] break-words h-[52px] overflow-y-clip">{res?.title}</p>
-                      <p className="text-[#374151] text-[12px]">{`${res?.createdAt.split("T").shift().split("-")[2]} ${monthNames[new Date(res?.createdAt.split("T").shift().split("-")[1]).getMonth()]} ${
-                        res?.createdAt.split("T").shift().split("-")[0]
-                      }`}</p>
-                    </div>
-                  </div>
-                )}
-              </>
-            ))}
+      <div className="flex justify-between mx-[70px] mt-[100px] mb-4">
+        <p className=" mb-2 text-[#374151] text-[26px] font-bold">Publikasi Artikel</p>
+        <div className="flex gap-3 items-center">
+          Pilih Kategori
+          <select onChange={(e) => router.push({ pathname: "./SemuaArtikel", query: { category: e.target.value } })} className="w-[200px] py-2 px-4 border rounded-md outline-0">
+            <option className="font-medium" value={filter}>
+              {filter}
+            </option>
+            <option className={`${filter === "Semua" && "hidden"}`} value={"Semua"}>
+              Semua
+            </option>
+            <option className={`${filter === "Bantuan Sosial" && "hidden"}`} value={"Bantuan Sosial"}>
+              Bantuan Sosial
+            </option>
+            <option className={`${filter === "Infrastruktur" && "hidden"}`} value={"Infrastruktur"}>
+              Infrastruktur
+            </option>
+            <option className={`${filter === "Pendidikan" && "hidden"}`} value={"Pendidikan"}>
+              Pendidikan
+            </option>
+            <option className={`${filter === "Lapangan Kerja" && "hidden"}`} value={"Lapangan Kerja"}>
+              Lapangan Kerja
+            </option>
+            <option className={`${filter === "Peraturan Daerah" && "hidden"}`} value={"Peraturan Daerah"}>
+              Peraturan Daerah
+            </option>
+            <option className={`${filter === "Ormas & Keagamaan" && "hidden"}`} value={"Ormas & Keagamaan"}>
+              Ormas & Keagamaan
+            </option>
+            <option className={`${filter === "Kesehatan" && "hidden"}`} value={"Kesehatan"}>
+              Kesehatan
+            </option>
+            <option className={`${filter === "Politik & Pemerintahan" && "hidden"}`} value={"Politik & Pemerintahan"}>
+              Politik & Pemerintahan
+            </option>
+          </select>
         </div>
       </div>
-      <div className="flex h-[248px] bg-[#FF5001] py-[65px] mt-[50px] w-screen px-[50px]">
+
+      <div className="grid grid-cols-4  gap-4 mr-2 ml-[70px] pb-[50px]">
+        {getPublikasi?.data
+          ?.filter((data) => ["jpg", "jpeg", "png"].includes(data.image.split(".").pop().toLowerCase()))
+          .filter((data) => (filter === "Semua" ? true : filter.includes(data.category)))
+          .map((res) => (
+            <div key={res._id} className="w-[300px]">
+              <div className="flex justify-center w-[300px] h-[200px]">
+                <img
+                  onClick={() =>
+                    router.push({
+                      pathname: "./DetailArtikel",
+                      query: { title: res?.title, description: res?.description, category: res?.category, creat: res?.createdAt, image: res?.image },
+                    })
+                  }
+                  className="w-full h-full rounded-md cursor-pointer"
+                  src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image}
+                  alt={res.title}
+                />
+              </div>
+              <p className="text-[#FF5001] text-[18px] font-semibold mt-2">{res.category}</p>
+              <p className="text-[#374151] font-semibold">{res.title}</p>
+              <p className="mt-3 text-[#374151] text-[16px]">
+                {res?.createdAt.split("T").shift().split("-")[2]} {monthNames[new Date(res?.createdAt.split("T").shift().split("-")[1]).getMonth()]} {res?.createdAt.split("T").shift().split("-")[0]}
+              </p>
+            </div>
+          ))}
+      </div>
+      <div className="flex h-[248px] bg-[#FF5001] py-[65px] w-screen px-[50px]">
         <p className="text-white text-[26px] flex font-bold basis-1/2">
           Kami membuka pintu komunikasi yang <br /> kondusif dan terbuka untuk menerima <br /> pesan dan aspirasi dari masyarakat.
         </p>
@@ -224,4 +213,4 @@ const DetailPublikasi = () => {
   );
 };
 
-export default DetailPublikasi;
+export default SemuaArtikel;

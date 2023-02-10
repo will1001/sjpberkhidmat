@@ -5,9 +5,9 @@ import Image from "../../utility/img/kabarSjpBerkhidmat.png";
 const KabarSjpBerkhidmat = ({ data }) => {
   const router = useRouter();
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
-  console.log(data);
+  // console.log(data);
   return (
-    <div className="flex justify-between  mb-[39px]">
+    <div className="flex justify-between mb-4">
       <div className="pt-2 flex flex-col justify-between w-[400px]">
         <div>
           <p className="text-[#FF5001] text-[18px] font-semibold">{data?.category}</p>
@@ -31,7 +31,7 @@ const KabarSjpBerkhidmat = ({ data }) => {
             },
           })
         }
-        className="w-[327px] h-[150px] cursor-pointer"
+        className="w-[327px] h-[140px] cursor-pointer"
       >
         <img className="h-full w-full rounded-sm" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + data?.image} alt="image1  " />
       </div>

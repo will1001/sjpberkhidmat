@@ -25,8 +25,8 @@ const HomePage = ({ router }) => {
   const getArtikel = useFetch("get", "user/articles?page=1&limit=8&type=program");
   const getSlider = useFetch("get", "user/slider?type=slider");
   const getBackground = useFetch("get", "user/slider?type=background");
-  const getPublikasi = useFetch("get", "user/articles?page=1&limit=4&type=artikel");
-  const getPublikasiArt = useFetch("get", "user/articles?page=1&limit=6&type=artikel");
+  const getPublikasi = useFetch("get", "user/articles?page=1&type=artikel");
+  const getPublikasiArt = useFetch("get", "user/articles?page=1&type=artikel");
   const refProgram = useRef();
   const refPublikasi = useRef();
   const refPendaftaran = useRef();
@@ -54,7 +54,7 @@ const HomePage = ({ router }) => {
 
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
 
-  // console.log(getSlider);
+  console.log(getPublikasi.data, "ini get publikasi");
   return (
     <>
       <div className="w-[1350px] ">
@@ -136,6 +136,7 @@ const HomePage = ({ router }) => {
 
           <div className="flex px-[50px] justify-between mt-[55px] w-screen">
             <Publikasi data={getPublikasi?.data?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))[0]} />
+
             <div className="flex flex-col gap-2 font-bold text-slate-700 text-[26px] object-contain">
               <p className="mb-2 flex items-center justify-between">
                 Video Lainnya
@@ -145,8 +146,8 @@ const HomePage = ({ router }) => {
               </p>
               {getPublikasi?.data
                 ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
-                .map((res) => (
-                  <KabarTerbaru data={res} key={res?._id} />
+                .map((res, index) => (
+                  <div key={res?._id}>{index <= 3 && <KabarTerbaru data={res} />}</div>
                 ))}
             </div>
           </div>
@@ -172,8 +173,8 @@ const HomePage = ({ router }) => {
             <p className="text-[26px] text-slate-700 font-bold pb-[40px]">Kabar SJP Berkhidmat</p>
             {getPublikasiArt?.data
               ?.filter((data) => ["jpg", "jpeg", "png"].includes(data?.image?.split(".").pop().toLowerCase()))
-              .map((res) => (
-                <KabarSjpBerkhidmat data={res} key={res?._id} />
+              .map((res, index) => (
+                <div key={res?._id}>{index <= 5 && <KabarSjpBerkhidmat data={res} />}</div>
               ))}
           </div>
           <div className="">

@@ -6,9 +6,9 @@ const Publikasi = ({ data }) => {
   return (
     <div className="font-bold text-[32px] text-slate-700">
       {/* {data?.image && <img className="w-[540px] h-[420px] rounded-xl object-cover" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + data?.image} alt="Frame-2519" border="0"></img>} */}
-      <div className=" mt-8">
+      <div className="flex mt-8">
         {data?.image && (
-          <video className="w-[828px] h-[552.18px] rounded-xl object-fill" controls>
+          <video className="w-[828.27px] h-[552.18px] rounded-xl object-fill" controls>
             <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + data?.image} type="video/mp4" />
             Your browser does not support the video tag.
           </video>

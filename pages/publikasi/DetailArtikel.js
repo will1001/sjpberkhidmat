@@ -7,7 +7,7 @@ import Logo from "../../src/utility/Logo";
 const DetailArtikel = () => {
   const router = useRouter();
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
-  const getArtikel = useFetch("get", "user/articles?page=1&limit=4&type=artikel");
+  const getArtikel = useFetch("get", "user/articles?page=1&type=artikel");
   //   console.log(router.query.description);
   return (
     <>
@@ -88,24 +88,27 @@ const DetailArtikel = () => {
           <p className="text-[26px] mb-3 mt-3 font-bold">KabarTerbaru</p>
           {getArtikel?.data
             ?.filter((data) => ["jpg", "jpeg", "png"].includes(data?.image?.split(".").pop().toLowerCase()))
-            .map((res) => (
-              <div
-                onClick={() =>
-                  router.push({
-                    pathname: "./DetailArtikel",
-                    query: { title: res?.title, description: res?.description, category: res?.category, creat: res?.createdAt, image: res?.image },
-                  })
-                }
-                className="mb-3 flex gap-2 cursor-pointer"
-                key={res._id}
-              >
-                <div className="w-[122px] h-[96px]">
-                  <img className="w-full h-full rounded-md" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} />
-                </div>
-                <div className="w-[250px] flex flex-col justify-between">
-                  <p className="font-semibold break-words">{res.title}</p>
-                  <p className="font-medium text-[14px] text-[#E44700]">{res?.createdAt}</p>
-                </div>
+            .map((res, index) => (
+              <div key={res._id}>
+                {index <= 3 && (
+                  <div
+                    onClick={() =>
+                      router.push({
+                        pathname: "./DetailArtikel",
+                        query: { title: res?.title, description: res?.description, category: res?.category, creat: res?.createdAt, image: res?.image },
+                      })
+                    }
+                    className="mb-3 flex gap-2 cursor-pointer"
+                  >
+                    <div className="w-[122px] h-[96px]">
+                      <img className="w-full h-full rounded-md" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} />
+                    </div>
+                    <div className="w-[250px] flex flex-col justify-between">
+                      <p className="font-semibold break-words">{res.title}</p>
+                      <p className="font-medium text-[14px] text-[#E44700]">{res?.createdAt}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           <div className="mt-12">
