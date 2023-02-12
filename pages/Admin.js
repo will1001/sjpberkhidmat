@@ -37,6 +37,7 @@ function Admin({ router }) {
   const pekerjaan = useFetch("get", "user/jobs");
   const popUpDashType = useSelector((state) => state.panel.popUpDashType);
   const idPeriode = useSelector((state) => state.panel.idPeriode);
+  const editData = useSelector((state) => state.panel.editData);
   const dispatch = useDispatch();
 
   const [kecamatan, setKecamatan] = useState([]);
@@ -104,6 +105,27 @@ function Admin({ router }) {
       } else {
         alert("Password Tidak Sama");
       }
+    } else if (popUpDashType === "Akun Tim") {
+      let formDataSimpatisan = formData;
+      formDataSimpatisan.role = "koordinator";
+      delete formDataSimpatisan.phone;
+      delete formDataSimpatisan.pekerjaan;
+      delete formDataSimpatisan.target_desa;
+      formDataSimpatisan.id_kecamatan = "5201010";
+
+      if (formData.password === confirmPassword) {
+        await axiosFetch("post", `user/register`, formDataSimpatisan)
+          .then(() => {
+            alert("Pendaftaran Berhasil");
+            dispatch(showOrHidePopUpDash({ type: null }));
+          })
+          .catch((error) => {
+            // setHandelError(true);
+            // setErrorMessage(error.response.data.message);
+          });
+      } else {
+        alert("Password Tidak Sama");
+      }
     } else {
       let formDataSimpatisan = formData;
       delete formDataSimpatisan.role;
@@ -139,7 +161,9 @@ function Admin({ router }) {
             }
           })}
         </div>
-        {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan") && (
+        {(popUpDashType === "Relawan" ||
+          popUpDashType === "Simpatisan" ||
+          popUpDashType === "Akun Tim") && (
           <div className="w-full h-[200vh] absolute top-0">
             <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
             <div className="bg-white h-[1100px] w-[700px] absolute top-[5%] left-[33%] p-5">
@@ -196,14 +220,17 @@ function Admin({ router }) {
                   setFormData({ ...formData, date_birth: e.target.value })
                 }
               />
-              <FormSelect
-                label={"Pekerjaan"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, pekerjaan: e.target.value })
-                }
-                options={pekerjaan}
-              />
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  label={"Pekerjaan"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, pekerjaan: e.target.value })
+                  }
+                  options={pekerjaan}
+                />
+              )}
+
               <h1>ALAMAT {popUpDashType.toUpperCase()}</h1>
               <FormSelect
                 label={"Kabupaten Kota"}
@@ -211,20 +238,25 @@ function Admin({ router }) {
                 onChange={(e) => changeKabupaten(e.target.value)}
                 options={kabupaten}
               />
-              <FormSelect
-                label={"Kecamatan"}
-                type="text"
-                onChange={(e) => changeKecamatan(e.target.value)}
-                options={kecamatan}
-              />
-              <FormSelect
-                label={"Target Desa"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, target_desa: e.target.value })
-                }
-                options={kelurahan}
-              />
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  label={"Kecamatan"}
+                  type="text"
+                  onChange={(e) => changeKecamatan(e.target.value)}
+                  options={kecamatan}
+                />
+              )}
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  label={"Target Desa"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, target_desa: e.target.value })
+                  }
+                  options={kelurahan}
+                />
+              )}
+
               <FormInputItem
                 label={"Alamat"}
                 type="text"
@@ -234,43 +266,46 @@ function Admin({ router }) {
               />
               <div className="border-b-2 my-[30px]" />
 
-              {popUpDashType === "Relawan" && (
-                <>
-                  {" "}
-                  <div className="flex justify-start items-center">
-                    <div className="w-[20%] mr-[50px]">Set Password</div>
-                    <div
-                      onClick={() => {
-                        generatePassword();
-                      }}
-                      className="flex items-center border-2 rounded-md p-3 cursor-pointer"
-                    >
-                      <img src={KeyIcon.src} />{" "}
-                      <span className="font-bold ml-3">Generate Password</span>
+              {popUpDashType === "Relawan" ||
+                (popUpDashType === "Akun Tim" && (
+                  <>
+                    {" "}
+                    <div className="flex justify-start items-center">
+                      <div className="w-[20%] mr-[50px]">Set Password</div>
+                      <div
+                        onClick={() => {
+                          generatePassword();
+                        }}
+                        className="flex items-center border-2 rounded-md p-3 cursor-pointer"
+                      >
+                        <img src={KeyIcon.src} />{" "}
+                        <span className="font-bold ml-3">
+                          Generate Password
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <FormInputPassword
-                    label={""}
-                    value={formData.password}
-                    type={passwordType}
-                    onclickShow={() => setPasswordType("text")}
-                    onClickHide={() => setPasswordType("password")}
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
-                    }
-                  />
-                  <FormInputPassword
-                    label={"Tulis Ulang Password"}
-                    value={confirmPassword}
-                    type={passwordType2}
-                    onclickShow={() => setPasswordType2("text")}
-                    onClickHide={() => setPasswordType2("password")}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                    }}
-                  />
-                </>
-              )}
+                    <FormInputPassword
+                      label={""}
+                      value={formData.password}
+                      type={passwordType}
+                      onclickShow={() => setPasswordType("text")}
+                      onClickHide={() => setPasswordType("password")}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                    />
+                    <FormInputPassword
+                      label={"Tulis Ulang Password"}
+                      value={confirmPassword}
+                      type={passwordType2}
+                      onclickShow={() => setPasswordType2("text")}
+                      onClickHide={() => setPasswordType2("password")}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                      }}
+                    />
+                  </>
+                ))}
 
               <div className="flex mt-[40px] justify-end">
                 <div

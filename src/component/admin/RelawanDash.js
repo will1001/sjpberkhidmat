@@ -8,8 +8,8 @@ import useFetch from "../../API/useFetch";
 import ButtonPrimary from "../ButtonPrimary";
 import axiosFetch from "../../API/axiosFetch";
 import RoundedBorderButton from "../RoundedBorderButton";
-import { useDispatch } from "react-redux";
-import { showOrHidePopUpDash } from "../../redux/panelReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 import ListTargetDesa from "../ListTargetDesa";
 
 const RelawanDash = () => {
@@ -26,12 +26,28 @@ const RelawanDash = () => {
   const [keyword, setKeyword] = useState(null);
   const [relawan, setRelawan] = useState([]);
   const [relawanSub, setRelawanSub] = useState("relawan");
+  const token = useSelector((state) => state.user.token);
 
-  const editRelawan = () => {
-    console.log("Edit Relawan");
+  const editRelawan = (data) => {
+    delete data.aksi;
+    if (data) {
+      dispatch(setEditData({ editData: JSON.stringify(data) }));
+      dispatch(showOrHidePopUpDash({ type: "Relawan" }));
+    }
   };
-  const hapusRelawan = () => {
-    console.log("Hpaus Relawan");
+  const hapusRelawan = (email) => {
+    if (confirm("Hapus Relawan ?")) {
+      axiosFetch("delete", "user/users", { email }, token);
+      // Save it!
+      // console.log('Thing was saved to the database.');
+      setTimeout(function () {
+        //your code to be executed after 1 second
+        location.reload();
+      }, 1);
+    } else {
+      // Do nothing!
+      // console.log('Thing was not saved to the database.');
+    }
   };
 
   useEffect(() => {
@@ -88,13 +104,13 @@ const RelawanDash = () => {
         <div className="flex justify-between w-[55px] cursor-pointer">
           <img
             onClick={() => {
-              editRelawan();
+              editRelawan(res);
             }}
             src={EditIcon.src}
           />
           <div
             onClick={() => {
-              hapusRelawan();
+              hapusRelawan(res.email);
             }}
           >
             <DeletIcon />
@@ -192,12 +208,7 @@ const RelawanDash = () => {
       ) : (
         <div className="px-[40px] py-[10px]">
           {kabupaten.data?.map((res, i) => {
-            return (
-              <ListTargetDesa
-                label={res.name}
-                id_kab={res.id}
-              />
-            );
+            return <ListTargetDesa label={res.name} id_kab={res.id} />;
           })}
         </div>
       )}
