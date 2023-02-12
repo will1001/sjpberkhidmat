@@ -18,6 +18,21 @@ const AkunTimSjp = () => {
   const [akunTim, setAkunTim] = useState([]);
   const token = useSelector((state) => state.user.token);
 
+  const hapusAkunTim = (email) => {
+    if (confirm("Hapus Akun Tim ?")) {
+      axiosFetch("delete", "user/users", { email }, token);
+      // Save it!
+      // console.log('Thing was saved to the database.');
+      setTimeout(function () {
+        //your code to be executed after 1 second
+        location.reload();
+      }, 1);
+    } else {
+      // Do nothing!
+      // console.log('Thing was not saved to the database.');
+    }
+  };
+
   useEffect(() => {
     axiosFetch("get", `user/akunTim?page=${1}`, {}, token)
       .then((res) => setAkunTim(res.data))
@@ -38,7 +53,7 @@ const AkunTimSjp = () => {
           />
           <div
             onClick={() => {
-              // hapusRelawan();
+              hapusAkunTim(res.email);
             }}
           >
             <DeletIcon />
