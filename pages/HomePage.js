@@ -195,35 +195,35 @@ const HomePage = ({ router }) => {
 
           {getArtikel?.data?.map((res) => {
             console.log(res, "ini res");
-            // if (res.publication === true) {
-            //   return (
-            //     <div key={res._id} className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">
-            //       <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
-            //         <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
-            //         <p className="text-white text-[21px] font-bold">{res?.title}</p>
-            //         <div className="text-white text-[16px] h-[32px] flex">
-            //           <div className="text-white text-[16px] h-[32px] flex" dangerouslySetInnerHTML={{ __html: res?.description }} />
-            //         </div>
-            //       </div>
-            //       <div
-            //         onClick={() => {
-            //           router.push({
-            //             pathname: "artikel/DetailProgram",
-            //             query: {
-            //               title: res?.title,
-            //               description: res?.description,
-            //               image: res?.image,
-            //               kabupaten: res?.kabupaten?.name,
-            //             },
-            //           });
-            //         }}
-            //         className="border-l-[1px] border-[#6B7280] cursor-pointer flex items-center"
-            //       >
-            //         <img className="" src={detailProgramImg.src} alt="lihatDetail.png" />
-            //       </div>
-            //     </div>
-            //   );
-            // }
+            if (res.publication === true) {
+              return (
+                <div key={res._id} className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">
+                  <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
+                    <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
+                    <p className="text-white text-[21px] font-bold">{res?.title}</p>
+                    <div className="text-white text-[16px] h-[32px] flex">
+                      <div className="text-white text-[16px] h-[32px] flex" dangerouslySetInnerHTML={{ __html: res?.description }} />
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => {
+                      router.push({
+                        pathname: "artikel/DetailProgram",
+                        query: {
+                          title: res?.title,
+                          description: res?.description,
+                          image: res?.image,
+                          kabupaten: res?.kabupaten?.name,
+                        },
+                      });
+                    }}
+                    className="border-l-[1px] border-[#6B7280] cursor-pointer flex items-center"
+                  >
+                    <img className="" src={detailProgramImg.src} alt="lihatDetail.png" />
+                  </div>
+                </div>
+              );
+            }
           })}
           <div className="flex justify-between w-full items-center mt-[21px]">
             <div className="flex items-center gap-4">
