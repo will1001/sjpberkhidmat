@@ -40,7 +40,7 @@ const RelawanDash = () => {
       axiosFetch("delete", "user/users", { email }, token);
       // Save it!
       // console.log('Thing was saved to the database.');
-      setTimeout(function () {
+      setTimeout(function() {
         //your code to be executed after 1 second
         location.reload();
       }, 1);

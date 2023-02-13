@@ -145,6 +145,7 @@ function Admin({ router }) {
           // setErrorMessage(err.response.data.message);
         });
     }
+    location.reload();
   };
 
   return (
