@@ -2,6 +2,7 @@ import axios from "axios";
 
 const axiosFetch = (method, url, data = {}, token) => {
   const base_url = "https://api.sjpberkhidmat.id/";
+  console.log(token);
   const headers = {
     authorization: "Bearer " + token,
   };
