@@ -5,9 +5,13 @@ import axiosFetch from "../src/API/axiosFetch";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "../src/utility/icon/edit2.png";
 import ProgressBar from "../src/utility/ProgresBar";
-import { showOrHidePopUpDash } from "../src/redux/panelReducer";
 import CloseIcon from "../src/utility/icon/close.png";
 import ButtonPrimary from "../src/component/ButtonPrimary";
+import Button from "../src/component/Button";
+
+import { KembaliIcon } from "../src/utility/icon/icon";
+import { useRouter } from "next/router";
+import { setTabPanelRelawanDash } from "../src/redux/panelReducer";
 
 function DetailTargetDesa() {
   const customStyles = {
@@ -15,13 +19,16 @@ function DetailTargetDesa() {
       style: { backgroundColor: "#374151", color: "white" },
     },
   };
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+
   const [popUp, setPopUp] = useState(false);
   const [detailTarget, setDetailTarget] = useState([]);
   const [dataTarget, setDataTarget] = useState(null);
   const [inputTarget, setInputTarget] = useState(null);
 
   const token = useSelector((state) => state.user.token);
-  const dispatch = useDispatch();
 
   const editTarget = (data) => {
     setDataTarget(data);
@@ -123,9 +130,25 @@ function DetailTargetDesa() {
           Detail Target Simpatisan Per Desa
         </span>
       </div>
-      {/* <div className="">
-        Kembali
-      </div> */}
+      <hr />
+      <div
+        className="px-[40px] py-[10px]"
+        onClick={() => {
+          router.back();
+          dispatch(
+            setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" })
+          );
+        }}
+      >
+        <Button
+          title={"Kembali"}
+          icon={<KembaliIcon />}
+          text={"white"}
+          w={"149px"}
+          h={"53px"}
+          bgColor={"rgb(51, 65, 85)"}
+        />
+      </div>
       <div className="px-[40px] py-[10px]">
         <DataTable columns={columns} data={data} customStyles={customStyles} />
       </div>

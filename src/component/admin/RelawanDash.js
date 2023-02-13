@@ -9,7 +9,11 @@ import ButtonPrimary from "../ButtonPrimary";
 import axiosFetch from "../../API/axiosFetch";
 import RoundedBorderButton from "../RoundedBorderButton";
 import { useDispatch, useSelector } from "react-redux";
-import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
+import {
+  setEditData,
+  setTabPanelRelawanDash,
+  showOrHidePopUpDash,
+} from "../../redux/panelReducer";
 import ListTargetDesa from "../ListTargetDesa";
 
 const RelawanDash = () => {
@@ -25,8 +29,11 @@ const RelawanDash = () => {
   const [sorting, setSorting] = useState(null);
   const [keyword, setKeyword] = useState(null);
   const [relawan, setRelawan] = useState([]);
-  const [relawanSub, setRelawanSub] = useState("relawan");
   const token = useSelector((state) => state.user.token);
+  const tabPanelRelawanDash = useSelector(
+    (state) => state.panel.tabPanelRelawanDash
+  );
+  const [relawanSub, setRelawanSub] = useState(tabPanelRelawanDash);
 
   const editRelawan = (data) => {
     delete data.aksi;
@@ -40,7 +47,7 @@ const RelawanDash = () => {
       axiosFetch("delete", "user/users", { email }, token);
       // Save it!
       // console.log('Thing was saved to the database.');
-      setTimeout(function() {
+      setTimeout(function () {
         //your code to be executed after 1 second
         location.reload();
       }, 1);
@@ -51,6 +58,7 @@ const RelawanDash = () => {
   };
 
   useEffect(() => {
+    dispatch(setTabPanelRelawanDash({ tabPanelRelawanDash: "relawan" }));
     axiosFetch(
       "get",
       `user/relawan?page=${1}&limit=100${
