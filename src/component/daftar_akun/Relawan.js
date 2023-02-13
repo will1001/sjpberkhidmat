@@ -11,6 +11,7 @@ import show from "../../utility/icon/show_password.png";
 import detailSuratImg from "../../utility/icon/detail_surat.png";
 import homeIcn from "../../utility/icon/home_icon.png";
 import SuratPernyataan from "./SuratPernyataan";
+import { useSelector } from "react-redux";
 
 const Relawan = () => {
   const router = new useRouter();
@@ -29,9 +30,11 @@ const Relawan = () => {
   const [handleError, setHandelError] = useState(false);
   const [surat, setSurat] = useState(false);
   const [agreement, setAgreement] = useState(false);
+  const idPeriode = useSelector((state) => state.panel.idPeriode);
 
   const [formData, setFormData] = useState({
     name: "",
+    id_periode: idPeriode,
     nik: "",
     email: "",
     role: "relawan",
@@ -88,54 +91,114 @@ const Relawan = () => {
     <>
       <DaftarRelawanBerhasil props={popUp} />
       {/* popup daftar failed */}
-      <div style={handleError === false ? { visibility: "hidden" } : { background: "rgba(55, 65, 81, 0.32)", visibility: "visible" }} className="fixed w-screen h-screen top-0 left-0">
+      <div
+        style={
+          handleError === false
+            ? { visibility: "hidden" }
+            : { background: "rgba(55, 65, 81, 0.32)", visibility: "visible" }
+        }
+        className="fixed w-screen h-screen top-0 left-0"
+      >
         <div className="absolute bg-white w-[609px] h-[455px] mt-[120px] ml-[416px]">
-          <div onClick={() => setHandelError(false)} className="absolute cursor-pointer right-0 top-0 w-[24px] h-[24px] text-[24px] font-semibold text-[#9CA3AF]">
+          <div
+            onClick={() => setHandelError(false)}
+            className="absolute cursor-pointer right-0 top-0 w-[24px] h-[24px] text-[24px] font-semibold text-[#9CA3AF]"
+          >
             X
           </div>
-          <DaftarFailed error={errorMessage} popUp={handleError} title={"Daftar Relawan Gagal !!!"} />
+          <DaftarFailed
+            error={errorMessage}
+            popUp={handleError}
+            title={"Daftar Relawan Gagal !!!"}
+          />
         </div>
       </div>
       <div>
         <form>
           <div className="pl-[67px] pb-[100px]">
             <div className="flex flex-col gap-3">
-              <p className="text-[#374151] text-[32px] font-bold mb-[27px] ">Tambah Akun Relawan</p>
-              <p className="text-[#D1D5DB] font-medium mb-3">IDENTITAS PRIBADI</p>
+              <p className="text-[#374151] text-[32px] font-bold mb-[27px] ">
+                Tambah Akun Relawan
+              </p>
+              <p className="text-[#D1D5DB] font-medium mb-3">
+                IDENTITAS PRIBADI
+              </p>
               {/* nama */}
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="nama_akun" className="text-[14px] text-[#374151] ">
+                <label
+                  htmlFor="nama_akun"
+                  className="text-[14px] text-[#374151] "
+                >
                   Nama Akun
                 </label>
-                <input onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="nama_akun" />
+                <input
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                  type={"text"}
+                  id="nama_akun"
+                />
               </div>
               {/* email */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="email" className="text-[14px] text-[#374151] ">
                   Email
                 </label>
-                <input onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"email"} id="email" />
+                <input
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                  type={"email"}
+                  id="email"
+                />
               </div>
               {/* contact */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="noHp" className="text-[14px] text-[#374151] ">
                   No Hp Relawan
                 </label>
-                <PatternFormat onChange={(e) => setFormData({ ...formData, phone: e.target.value })} id="noHp" format="### ### ### ###" allowEmptyFormatting className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]" />
+                <PatternFormat
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  id="noHp"
+                  format="### ### ### ###"
+                  allowEmptyFormatting
+                  className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
+                />
               </div>
               {/* NIK */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="NIK" className="text-[14px] text-[#374151] ">
                   NIK
                 </label>
-                <PatternFormat onChange={(e) => setFormData({ ...formData, nik: e.target.value })} id="NIK" format="#### #### #### ###" allowEmptyFormatting className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]" />
+                <PatternFormat
+                  onChange={(e) =>
+                    setFormData({ ...formData, nik: e.target.value })
+                  }
+                  id="NIK"
+                  format="#### #### #### ###"
+                  allowEmptyFormatting
+                  className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
+                />
               </div>
               {/* gender */}
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
+                <label
+                  htmlFor="pekerjaan"
+                  className="text-[14px] text-[#374151] pr-[72px]"
+                >
                   Jenis Kelamin
                 </label>
-                <select onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151]">
+                <select
+                  onChange={(e) =>
+                    setFormData({ ...formData, gender: e.target.value })
+                  }
+                  id="gender"
+                  className="h-[40px] w-[363px] border text-[#374151]"
+                >
                   <option value="" disabled selected>
                     Pilih Jenis Kelamin
                   </option>
@@ -145,20 +208,49 @@ const Relawan = () => {
               </div>
               {/* tgl lahir */}
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="tanggal lahir" className="text-[14px] text-[#374151] ">
+                <label
+                  htmlFor="tanggal lahir"
+                  className="text-[14px] text-[#374151] "
+                >
                   Tempat & Tgl Lahir
                 </label>
                 <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
-                  <input onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
-                  <input onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })} className=" outline-0" type="date" id="tanggal lahir" name="trip-start" defaultValue="" min="1945-01-01" max="2024-12-31"></input>
+                  <input
+                    onChange={(e) =>
+                      setFormData({ ...formData, place_birth: e.target.value })
+                    }
+                    className="px-2 outline-0"
+                    type={"text"}
+                  />
+                  <input
+                    onChange={(e) =>
+                      setFormData({ ...formData, date_birth: e.target.value })
+                    }
+                    className=" outline-0"
+                    type="date"
+                    id="tanggal lahir"
+                    name="trip-start"
+                    defaultValue=""
+                    min="1945-01-01"
+                    max="2024-12-31"
+                  ></input>
                 </div>
               </div>
               {/* pekerjaan */}
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
+                <label
+                  htmlFor="pekerjaan"
+                  className="text-[14px] text-[#374151] pr-[72px]"
+                >
                   Pekerjaan
                 </label>
-                <select onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]">
+                <select
+                  onChange={(e) =>
+                    setFormData({ ...formData, pekerjaan: e.target.value })
+                  }
+                  id="pekerjaan"
+                  className="h-[40px] w-[363px] border text-[#374151]"
+                >
                   <option value="" disabled selected>
                     Pilih Pekerjaan
                   </option>
@@ -174,7 +266,10 @@ const Relawan = () => {
               {/* target desa */}
               <p className="text-[#D1D5DB] font-medium my-3">ALAMAT RELAWAN</p>
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="kabupaten" className="text-[14px] text-[#374151] pr-[72px]">
+                <label
+                  htmlFor="kabupaten"
+                  className="text-[14px] text-[#374151] pr-[72px]"
+                >
                   Kabupaten Kota
                 </label>
                 <select
@@ -196,10 +291,17 @@ const Relawan = () => {
                 </select>
               </div>
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="kecamatan" className="text-[14px] text-[#374151] pr-[72px]">
+                <label
+                  htmlFor="kecamatan"
+                  className="text-[14px] text-[#374151] pr-[72px]"
+                >
                   Kecamatan
                 </label>
-                <select onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+                <select
+                  onChange={(e) => changeKecamatan(e.target.value)}
+                  id="kecamatan"
+                  className="h-[40px] w-[363px] border text-[#374151]"
+                >
                   <option value="" disabled selected>
                     Pilih Kecamatan
                   </option>
@@ -213,10 +315,19 @@ const Relawan = () => {
                 </select>
               </div>
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="target_desa" className="text-[14px] text-[#374151] pr-[72px]">
+                <label
+                  htmlFor="target_desa"
+                  className="text-[14px] text-[#374151] pr-[72px]"
+                >
                   Target Desa
                 </label>
-                <select onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} id="target_desa" className="h-[40px] w-[363px] border outline-0 text-[#374151]">
+                <select
+                  onChange={(e) =>
+                    setFormData({ ...formData, target_desa: e.target.value })
+                  }
+                  id="target_desa"
+                  className="h-[40px] w-[363px] border outline-0 text-[#374151]"
+                >
                   <option value="" disabled selected>
                     Pilih Desa
                   </option>
@@ -231,7 +342,14 @@ const Relawan = () => {
               </div>
               <div className="flex justify-between items-center pr-[140px]">
                 <label className="text-[14px] text-[#374151]">Alamat</label>
-                <input onChange={(e) => setFormData({ ...formData, address: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="text" />
+                <input
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                  className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                  type={"text"}
+                  id="text"
+                />
               </div>
             </div>
             <div className="border-b-2 my-[30px]" />
@@ -239,42 +357,91 @@ const Relawan = () => {
             {/* password */}
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="password" className="text-[14px] text-[#374151] ">
+                <label
+                  htmlFor="password"
+                  className="text-[14px] text-[#374151] "
+                >
                   Set Password
                 </label>
-                <div className={`flex items-center pr-2 h-[40px] w-[363px] border ${passwordMatch === false && "border-[#DC2626]"}`}>
-                  <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="w-full text-[#374151] px-2 outline-0" type={passwordType} id="password" />
+                <div
+                  className={`flex items-center pr-2 h-[40px] w-[363px] border ${
+                    passwordMatch === false && "border-[#DC2626]"
+                  }`}
+                >
+                  <input
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className="w-full text-[#374151] px-2 outline-0"
+                    type={passwordType}
+                    id="password"
+                  />
                   {passwordType === "password" ? (
-                    <img className="cursor-pointer" onClick={() => setPasswordType("text")} src={hide.src} alt="hide.png" />
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => setPasswordType("text")}
+                      src={hide.src}
+                      alt="hide.png"
+                    />
                   ) : (
-                    <img onClick={() => setPasswordType("password")} className="cursor-pointer" src={show.src} alt="show.png" />
+                    <img
+                      onClick={() => setPasswordType("password")}
+                      className="cursor-pointer"
+                      src={show.src}
+                      alt="show.png"
+                    />
                   )}
                 </div>
               </div>
               {passwordMatch === false && (
                 <div className="flex justify-center">
-                  <p className="text-[14px] italic text-[#DC2626]">*Password Harus Sama</p>
+                  <p className="text-[14px] italic text-[#DC2626]">
+                    *Password Harus Sama
+                  </p>
                 </div>
               )}
               <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="password" className="text-[14px] text-[#374151] ">
+                <label
+                  htmlFor="password"
+                  className="text-[14px] text-[#374151] "
+                >
                   Tulis Ulang Password
                 </label>
                 <div className="flex items-center pr-2 h-[40px] w-[363px] border">
-                  <input onChange={(e) => verifikasiPass(e.target.value)} className="w-full text-[#374151] px-2 outline-0" type={passwordType2} id="password" />
+                  <input
+                    onChange={(e) => verifikasiPass(e.target.value)}
+                    className="w-full text-[#374151] px-2 outline-0"
+                    type={passwordType2}
+                    id="password"
+                  />
                   {passwordType2 === "password" ? (
-                    <img className="cursor-pointer" onClick={() => setPasswordType2("text")} src={hide.src} alt="hide.png" />
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => setPasswordType2("text")}
+                      src={hide.src}
+                      alt="hide.png"
+                    />
                   ) : (
-                    <img onClick={() => setPasswordType2("password")} className="cursor-pointer" src={show.src} alt="show.png" />
+                    <img
+                      onClick={() => setPasswordType2("password")}
+                      className="cursor-pointer"
+                      src={show.src}
+                      alt="show.png"
+                    />
                   )}
                 </div>
               </div>
             </div>
             <div className="border-t-2 mt-8 pt-4 flex items-center gap-[80px]">
               <p>Detail Surat Pernyataan</p>
-              <div onClick={() => setSurat(true)} className="flex border gap-2 cursor-pointer border-[#E44700] px-4 rounded-md h-[41px] items-center">
+              <div
+                onClick={() => setSurat(true)}
+                className="flex border gap-2 cursor-pointer border-[#E44700] px-4 rounded-md h-[41px] items-center"
+              >
                 <img src={detailSuratImg.src} alt="detail surat" />
-                <p className="text-[#E44700] font-semibold ">Baca Detail Surat</p>
+                <p className="text-[#E44700] font-semibold ">
+                  Baca Detail Surat
+                </p>
               </div>
             </div>
             <div className="flex gap-3 mt-[40px]  ">
@@ -286,16 +453,28 @@ const Relawan = () => {
                 type={"checkbox"}
               />
               <p className="text-[#374151]">
-                Dengan ini saya menyatakan telah membaca dan menyetujui “Surat Pernyataan”
-                <br /> bergabung menjadi Relawan SJP Berkhidmat, dan BENAR mengajukan diri <br />
+                Dengan ini saya menyatakan telah membaca dan menyetujui “Surat
+                Pernyataan”
+                <br /> bergabung menjadi Relawan SJP Berkhidmat, dan BENAR
+                mengajukan diri <br />
                 sebagai Relawan tanpa tekanan dari pihak manapun.
               </p>
               <div className={`${surat === false ? "hidden" : "visible"}`}>
-                <SuratPernyataan close={() => setSurat(false)} nama={formData.name} alamat={formData.address} tanggalLahir={formData.date_birth} tempat={formData.place_birth} phone={formData.phone} />
+                <SuratPernyataan
+                  close={() => setSurat(false)}
+                  nama={formData.name}
+                  alamat={formData.address}
+                  tanggalLahir={formData.date_birth}
+                  tempat={formData.place_birth}
+                  phone={formData.phone}
+                />
               </div>
             </div>
             <div className="flex mt-[40px] justify-end pr-[140px] gap-3">
-              <div onClick={() => router.push("HomePage")} className="h-[42px] px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md">
+              <div
+                onClick={() => router.push("HomePage")}
+                className="h-[42px] px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
+              >
                 <img src={homeIcn.src} />
                 <p className="text-[18px] font-semibold">Kembali Ke Home </p>
               </div>
