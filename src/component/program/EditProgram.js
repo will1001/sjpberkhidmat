@@ -97,12 +97,14 @@ const EditProgram = ({ close, data }) => {
     a.append("title", dataEdit.title);
     a.append("description", dataEdit.description);
     a.append("category", dataEdit.category);
-    a.append("image", dataEdit.image);
+    if (imagePreview !== undefined) {
+      a.append("image", imagePreview);
+    }
     a.append("publication", dataEdit.publication);
     a.append("id_kabupaten", dataEdit.id_kabupaten);
-    // a.append("id_kecamatan", dataEdit.id_kecamatan);
-    // a.append("id_kelurahan", dataEdit.desa);
-    // a.append("id_periode", "test");
+    a.append("id_kecamatan", dataEdit.id_kecamatan);
+    a.append("id_kelurahan", dataEdit.desa);
+    a.append("id_periode", "test");
 
     {
       await axiosFetch("put", `user/articles/${id}`, a, token)
@@ -161,7 +163,7 @@ const EditProgram = ({ close, data }) => {
     setKelurahan(res.data);
   };
 
-  console.log(imagePreview);
+  console.log(dataEdit);
 
   return (
     <>
@@ -219,7 +221,7 @@ const EditProgram = ({ close, data }) => {
             <label id="title" className="text-[#6B7280] text-[16px] font-serif pt-[60px]">
               detail Program
             </label>
-            <div className="w-[790px]">{callTextEditor(setDataEdit, dataEdit.description, dataEdit)}</div>
+            <div className="w-[790px]">{callTextEditor(setDataEdit, dataEdit?.description, dataEdit)}</div>
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
@@ -239,7 +241,7 @@ const EditProgram = ({ close, data }) => {
               Kabupaten / Kota
             </label>
             <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
-              <option value="" disabled selected>
+              <option value={dataEdit?.id_kabupaten} disabled selected>
                 Pilih Kabupaten
               </option>
               {kabupaten.data?.map((res, i) => {
@@ -318,32 +320,32 @@ const EditProgram = ({ close, data }) => {
                   value={dataEdit?.category?.toLowerCase()}
                   className="flex items-center gap-4"
                 >
-                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${dataEdit?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
-                  <p className={`text-[16px] font-medium ${dataEdit?.category?.toLowerCase() === res.title.toLocaleLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
+                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${dataEdit?.category?.toLowerCase() === res.name.toLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
+                  <p className={`text-[16px] font-medium ${dataEdit?.category?.toLowerCase() === res.name.toLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
                 </div>
               );
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              <div className={`${imagePreview === undefined ? "visible" : "hidden"}`}>
+              <div className="">
                 {imagePreview === undefined ? (
                   <>
                     {["mp4", "mkv"].includes(dataEdit.image.split(".").pop()) ? (
-                      <video>
+                      <video className="h-[200px] bg-black w-full" controls>
                         <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} type="video/mp4" />
                       </video>
                     ) : (
-                      <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} />
+                      <img className="h-[200px] bg-black w-full" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} />
                     )}
                   </>
                 ) : (
                   <div>
                     {["mp4", "mkv"].includes(imagePreview?.name?.split(".").pop()) ? (
-                      <video>
+                      <video className="h-[200px] bg-black w-full" controls>
                         <source src={URL.createObjectURL(imagePreview)} />
                       </video>
                     ) : (
-                      <img src={URL.createObjectURL(imagePreview)} />
+                      <img className="h-[200px] bg-black w-full" src={URL.createObjectURL(imagePreview)} />
                     )}
                   </div>
                 )}
@@ -366,33 +368,6 @@ const EditProgram = ({ close, data }) => {
                 class="hidden"
               />
             </label>
-            {/* <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
-
-            <ImageUploading
-              multiple
-              value={formProgram?.image}
-              onChange={(e) => {
-                console.log(e[0].file);
-                setDataEdit({ ...dataEdit, image: e[0].file });
-              }}
-              maxNumber={maxNumber}
-              dataURLKey="data_url"
-            >
-              {({ onImageUpload, isDragging, dragProps }) => (
-                // write your building UI
-                <div className="h-[112px] border border-[#D1D5DB]" style={isDragging ? { background: "#FF5001" } : undefined}>
-                  <div className="flex justify-center items-center">
-                    <button className="flex flex-col items-center pt-4" onClick={onImageUpload} {...dragProps}>
-                      <img src={uploadFile.src} alt="upload here" />
-                      <p className="text-[12px] text-[#000000] font-semibold">
-                        <span className="text-[#FF5001]">Upload a file </span>of drag and drop{" "}
-                      </p>
-                      <p className="text-[12px] font-normal">PNG, JPG, MP4 upto 32MB</p>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </ImageUploading> */}
           </div>
         </div>
       </div>

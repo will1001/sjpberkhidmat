@@ -200,8 +200,8 @@ const HomePage = ({ router }) => {
                 <div key={res._id} className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">
                   <div style={{ overflow: "hidden" }} className="py-[10px] pl-[32px] w-full pr-[30px] flex-col gap-1 flex ">
                     <p className="text-[#FF5001] text-[18px] font-semibold">{res?.category}</p>
-                    <p className="text-white text-[21px] font-bold">{res?.title}</p>
-                    <div className="text-white text-[16px] h-[32px] flex">
+                    <p className="text-white h-[30px] overflow-y-clip text-[21px] font-bold">{res?.title}</p>
+                    <div className="text-white text-[16px]  overflow-y-clip h-[35px] flex">
                       <div className="text-white text-[16px] h-[32px] flex" dangerouslySetInnerHTML={{ __html: res?.description }} />
                     </div>
                   </div>

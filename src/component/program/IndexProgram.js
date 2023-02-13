@@ -92,11 +92,11 @@ const indexProgram = () => {
             </div>
             {program?.data?.map((res) => {
               return (
-                <div key={res._id} className="h-[72px] flex items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
+                <div key={res._id} className="flex py-2 items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
                   <div>
                     <img src={icon.src} alt="icon.png" />
                   </div>
-                  <p className={`text-[18px] font-medium pl-2  w-full `}>{res.title}</p>
+                  <p className={`text-[18px] font-medium pl-2 break-words w-full`}>{res.title}</p>
                   <div className={`h-[36px] w-[108px]  rounded-sm flex items-center justify-center ${res?.publication === true ? "text-[#FF5001] bg-[#FFECE4]" : "text-[#374151] bg-[#D1D5DB]"}`}>
                     <p className={`text-[14px] px-2 font-semibold `}>{res?.publication === true ? "Published" : "Unpublished"}</p>
                   </div>

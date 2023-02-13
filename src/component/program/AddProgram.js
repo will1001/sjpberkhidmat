@@ -385,7 +385,7 @@ const AddProgram = () => {
                 }}
                 id="file_upload"
                 type="file"
-                class="hidden"
+                className="hidden"
               />
             </label>
           </div>
