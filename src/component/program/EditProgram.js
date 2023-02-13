@@ -8,6 +8,7 @@ import axiosFetch from "../../API/axiosFetch";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import ReactPlayer from "react-player";
+import { useSelector } from "react-redux";
 
 const DynamicHeader = dynamic(() => import("./TextEditor"), {
   ssr: false,
@@ -44,6 +45,7 @@ const EditProgram = ({ close, data }) => {
   const [switchButton, setSwitchButton] = useState(false);
 
   const kabupaten = useFetch("get", "user/kabupaten");
+  const token = useSelector((state) => state.user.token);
 
   const categoryProgram = [
     {
@@ -95,11 +97,15 @@ const EditProgram = ({ close, data }) => {
     a.append("title", dataEdit.title);
     a.append("description", dataEdit.description);
     a.append("category", dataEdit.category);
+    a.append("image", dataEdit.image);
     a.append("publication", dataEdit.publication);
     a.append("id_kabupaten", dataEdit.id_kabupaten);
-    console.log(a);
+    // a.append("id_kecamatan", dataEdit.id_kecamatan);
+    // a.append("id_kelurahan", dataEdit.desa);
+    // a.append("id_periode", "test");
+
     {
-      await axiosFetch("put", `user/articles/${id}`, a)
+      await axiosFetch("put", `user/articles/${id}`, a, token)
         .then((res) => {
           //   console.log(res);
           console.log(dataEdit);
@@ -121,6 +127,8 @@ const EditProgram = ({ close, data }) => {
   const [videoEdit, setVideoEdit] = useState();
   const [fileName, setFileName] = useState();
   const [videoPlay, setVideoPlay] = useState();
+  const [kecamatan, setKecamatan] = useState([]);
+  const [kelurahan, setKelurahan] = useState([]);
   useEffect(() => {
     if (dataEdit?.image?.type === "video/mp4") {
       setVideoEdit(URL.createObjectURL(dataEdit?.image));
@@ -141,7 +149,19 @@ const EditProgram = ({ close, data }) => {
     }
   }, [videoPreview, videoEdit, data]);
 
-  console.log(videoEdit);
+  const changeKabupaten = async (idKabupaten) => {
+    setDataEdit({ ...dataEdit, id_kabupaten: idKabupaten });
+    const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
+    setKecamatan(res.data);
+  };
+
+  const changeKecamatan = async (idKecamatan) => {
+    setDataEdit({ ...dataEdit, id_kecamatan: idKecamatan });
+    const res = await axiosFetch("get", `user/kelurahan/${idKecamatan}`);
+    setKelurahan(res.data);
+  };
+
+  console.log(imagePreview);
 
   return (
     <>
@@ -149,7 +169,7 @@ const EditProgram = ({ close, data }) => {
         <img src={formProgram?.image} alt="" />
       </div> */}
 
-      <div className={`bg-slate-400 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${switchButton === true ? "visible" : "hidden"}`}>
+      <div className={`bg-slate-400 z-50 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${switchButton === true ? "visible" : "hidden"}`}>
         <div className="h-[410px] w-[620px] ml-[416px] mt-[120px] bg-white absolute">
           <div onClick={() => setSwitchButton(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
             X
@@ -218,18 +238,41 @@ const EditProgram = ({ close, data }) => {
             <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               Kabupaten / Kota
             </label>
-            {/* <input
-              onChange={(e) => setDataEdit({ ...dataEdit, id_kabupaten: e.target.value })}
-              className="h-[40px] outline-0 border border-[#FF5001] rounded-md p-2 text-[#374151] text-[14px]"
-              value={dataEdit?.id_kabupaten}
-              type={"text"}
-              id="kota"
-            /> */}
-            <select onChange={(e) => setFormProgram({ ...formProgram, id_kabupaten: e.target.value })} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+            <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
               <option value="" disabled selected>
                 Pilih Kabupaten
               </option>
               {kabupaten.data?.map((res, i) => {
+                return (
+                  <option key={i} value={res._id}>
+                    {res.name}
+                  </option>
+                );
+              })}
+            </select>
+            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+              kecamatan
+            </label>
+            <select onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+              <option value="" disabled selected>
+                Pilih Kecamatan
+              </option>
+              {kecamatan.data?.map((res, i) => {
+                return (
+                  <option key={i} value={res._id}>
+                    {res.name}
+                  </option>
+                );
+              })}
+            </select>
+            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+              Kel / Desa
+            </label>
+            <select onChange={(e) => setDataEdit({ ...dataEdit, desa: e.target.value })} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+              <option value="" disabled selected>
+                Pilih Kecamatan
+              </option>
+              {kelurahan.data?.map((res, i) => {
                 return (
                   <option key={i} value={res._id}>
                     {res.name}
@@ -282,11 +325,28 @@ const EditProgram = ({ close, data }) => {
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              <div className={`${dataEdit.image && "visible"}`}>
-                <div> {videoPlay === undefined ? <p>Loading....</p> : videoPlay}</div>
-                <div className={`${imagePreview === undefined ? "hidden" : "visible"}`}>
-                  <img src={imagePreview} alt="preview" />
-                </div>
+              <div className={`${imagePreview === undefined ? "visible" : "hidden"}`}>
+                {imagePreview === undefined ? (
+                  <>
+                    {["mp4", "mkv"].includes(dataEdit.image.split(".").pop()) ? (
+                      <video>
+                        <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} />
+                    )}
+                  </>
+                ) : (
+                  <div>
+                    {["mp4", "mkv"].includes(imagePreview?.name?.split(".").pop()) ? (
+                      <video>
+                        <source src={URL.createObjectURL(imagePreview)} />
+                      </video>
+                    ) : (
+                      <img src={URL.createObjectURL(imagePreview)} />
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col items-center pt-4">
@@ -299,10 +359,7 @@ const EditProgram = ({ close, data }) => {
               <input
                 onChange={(e) => {
                   console.log(e.target.files);
-                  setDataEdit({
-                    ...dataEdit,
-                    image: e.target.files[0],
-                  });
+                  setImagePreview(e.target.files[0]);
                 }}
                 id="file_upload"
                 type="file"

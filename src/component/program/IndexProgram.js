@@ -8,6 +8,7 @@ import delet from "../../utility/icon/delet_icon.png";
 import hapusImg from "../../utility/img/hapusData.png";
 import axiosFetch from "../../API/axiosFetch";
 import EditProgram from "./EditProgram";
+import { useSelector } from "react-redux";
 
 const indexProgram = () => {
   const router = useRouter();
@@ -32,14 +33,17 @@ const indexProgram = () => {
   const [editData, setEditData] = useState();
   const [alertHapus, setAlertHapus] = useState(false);
   const [editActive, setEditActive] = useState(false);
+  const token = useSelector((state) => state.user.token);
   const editFalse = () => setEditActive(false);
   const [program, setProgram] = useState();
   const [idArtikel, setIdArtikel] = useState();
+  const [kecamatan, setKecamatan] = useState([]);
+  const [kelurahan, setKelurahan] = useState([]);
   // const getProgram = useFetch("get", "user/articles?page=1&type=program");
   const [page, setPage] = useState("1");
 
   const editHandler = (id) => {
-    const res = axiosFetch("get", `user/articles/${id}`).then((res) => {
+    const res = axiosFetch("get", `user/articles/${id}`, {}, token).then((res) => {
       setEditData(res?.data?.data);
       setEditActive(true);
       //   console.log(res.data.data);
@@ -51,7 +55,7 @@ const indexProgram = () => {
   const handleDelet = async (id) => {
     console.log(id);
 
-    const res = axiosFetch("delete", `user/articles/${id}`)
+    const res = axiosFetch("delete", `user/articles/${id}`, {}, token)
       .then((res) => {
         console.log(res);
         setAlertHapus(false);
@@ -60,7 +64,7 @@ const indexProgram = () => {
   };
 
   useEffect(() => {
-    const res = axiosFetch("get", `user/articles?page=1&type=program`)
+    const res = axiosFetch("get", `user/articles?page=1&type=program`, {}, token)
       .then((res) => {
         setProgram(res.data);
         // console.log(res.data.metadata.totalPage);

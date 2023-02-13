@@ -10,6 +10,8 @@ import berhasilImg from "../../utility/img/berhasiPost.png";
 import axiosFetch from "../../API/axiosFetch";
 import dynamic from "next/dynamic";
 import ReactPlayer from "react-player";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const DynamicHeader = dynamic(() => import("./TextEditor"), {
   ssr: false,
@@ -34,9 +36,10 @@ const AddProgram = () => {
   //     setFormat(e.target.value);
 
   //   };
-
+  const router = useRouter();
   const [switchButton, setSwitchButton] = useState(false);
   const [popUp, setPopUp] = useState(false);
+  const token = useSelector((state) => state.user.token);
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -47,6 +50,8 @@ const AddProgram = () => {
   });
   const kabupaten = useFetch("get", "user/kabupaten");
   const artikel = useFetch("get", "user/articles?page=1&type=program");
+  const [kecamatan, setKecamatan] = useState([]);
+  const [kelurahan, setKelurahan] = useState([]);
 
   const categoryProgram = [
     {
@@ -99,12 +104,19 @@ const AddProgram = () => {
     a.append("type", "program");
     a.append("publication", formProgram.publication);
     a.append("id_kabupaten", formProgram.id_kabupaten);
+    a.append("id_kecamatan", formProgram.id_kecamatan);
+    a.append("id_kelurahan", formProgram.desa);
+    a.append("id_periode", "test");
+
     console.log(e);
     {
-      await axiosFetch("post", `user/articles`, a)
+      await axiosFetch("post", `user/articles`, a, token)
         .then((res) => {
           console.log(res);
           setBerhasil(true);
+          setFormProgram({ title: "", description: "", wilayah: "", category: "", image: "", publication: false });
+          kecamatan();
+          kelurahan();
         })
         .catch((error) => {
           console.log(error);
@@ -135,18 +147,18 @@ const AddProgram = () => {
   const [videoPreview, setVideoPreview] = useState();
   const [videoPlay, setVideoPlay] = useState();
   useEffect(() => {
-    if (formProgram.image) {
+    if (formProgram?.image) {
       {
-        if (formProgram.image.type === "video/mp4") {
+        if (formProgram?.image?.type === "video/mp4") {
           setVideoPreview(URL.createObjectURL(formProgram.image));
           setImagePreview();
-        } else if (formProgram.image.type === "image/jpeg") {
+        } else if (formProgram?.image?.type === "image/jpeg") {
           setImagePreview(URL.createObjectURL(formProgram.image));
           setVideoPreview();
-        } else if (formProgram.image.type === "image/jpg") {
+        } else if (formProgram?.image?.type === "image/jpg") {
           setImagePreview(URL.createObjectURL(formProgram.image));
           setVideoPreview();
-        } else if (formProgram.image.type === "image/png") {
+        } else if (formProgram?.image?.type === "image/png") {
           setImagePreview(URL.createObjectURL(formProgram.image));
           setVideoPreview();
         } else {
@@ -154,7 +166,7 @@ const AddProgram = () => {
         }
       }
     }
-  }, [formProgram.image]);
+  }, [formProgram?.image]);
 
   useEffect(() => {
     if (formProgram?.image?.type === "video/mp4") {
@@ -164,7 +176,19 @@ const AddProgram = () => {
     }
   }, [videoPreview]);
 
-  // console.log(formProgram.image);
+  const changeKabupaten = async (idKabupaten) => {
+    setFormProgram({ ...formProgram, id_kabupaten: idKabupaten });
+    const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
+    setKecamatan(res.data);
+  };
+
+  const changeKecamatan = async (idKecamatan) => {
+    setFormProgram({ ...formProgram, id_kecamatan: idKecamatan });
+    const res = await axiosFetch("get", `user/kelurahan/${idKecamatan}`);
+    setKelurahan(res.data);
+  };
+
+  console.log(formProgram);
 
   return (
     <>
@@ -203,8 +227,8 @@ const AddProgram = () => {
             <div onClick={() => setPopUp(!popUp)}>
               <NewButton title={"Publikasikan"} style={publikasiStyle} />
             </div>
-            <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
-              <DeletIcon />
+            <div onClick={() => router.back()} className="flex border cursor-pointer px-4 text-[#B91C1C] font-medium border-[#B91C1C] rounded-md  h-[42px] justify-center items-center">
+              <p className="">Batal</p>
             </div>
           </div>
         </div>
@@ -219,7 +243,7 @@ const AddProgram = () => {
             <input
               onChange={(e) => setFormProgram({ ...formProgram, title: e.target.value })}
               className="border border-[#D1D5DB] h-[48px] outline-0 rounded-md p-[12px] text-[#374151] font-medium"
-              value={formProgram.title}
+              value={formProgram?.title}
               type={"text"}
               id="title"
             />
@@ -250,7 +274,7 @@ const AddProgram = () => {
             <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               Kabupaten / Kota
             </label>
-            <select onChange={(e) => setFormProgram({ ...formProgram, id_kabupaten: e.target.value })} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+            <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
               <option value="" disabled selected>
                 Pilih Kabupaten
               </option>
@@ -262,7 +286,37 @@ const AddProgram = () => {
                 );
               })}
             </select>
-            <div className="flex items-center gap-2">
+            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+              kecamatan
+            </label>
+            <select onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+              <option value="" disabled selected>
+                Pilih Kecamatan
+              </option>
+              {kecamatan.data?.map((res, i) => {
+                return (
+                  <option key={i} value={res._id}>
+                    {res.name}
+                  </option>
+                );
+              })}
+            </select>
+            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+              Kel / Desa
+            </label>
+            <select onChange={(e) => setFormProgram({ ...formProgram, desa: e.target.value })} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+              <option value="" disabled selected>
+                Pilih Kecamatan
+              </option>
+              {kelurahan.data?.map((res, i) => {
+                return (
+                  <option key={i} value={res._id}>
+                    {res.name}
+                  </option>
+                );
+              })}
+            </select>
+            {/* <div className="flex items-center gap-2">
               {kabupaten?.data
                 ?.filter((item, i) => {
                   const search = formProgram?.wilayah?.toLowerCase();
@@ -287,7 +341,7 @@ const AddProgram = () => {
                     </div>
                   );
                 })}
-            </div>
+            </div> */}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">category Program</p>
             {categoryProgram.map((res) => {
               return (
@@ -307,7 +361,7 @@ const AddProgram = () => {
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
             <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              <div className={`${formProgram.image && "visible"}`}>
+              <div className={`${formProgram?.image && "visible"}`}>
                 <div className={`${videoPreview === undefined ? "hidden" : "visible"}`}> {videoPlay === undefined ? <p>Loading....</p> : videoPlay}</div>
                 <div className={`${imagePreview === undefined ? "hidden" : "visible"}`}>
                   <img src={imagePreview} alt="preview" />
