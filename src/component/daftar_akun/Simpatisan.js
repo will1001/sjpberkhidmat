@@ -6,6 +6,7 @@ import DaftarSuccess from "./DaftarSuccess";
 import DaftarFailed from "./DaftarFailed";
 import homeIcn from "../../utility/icon/home_icon.png";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const Simpatisan = () => {
   const router = useRouter();
@@ -17,20 +18,23 @@ const Simpatisan = () => {
   const [handleSuccess, setHandelSuccess] = useState(false);
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
+  const idPeriode = useSelector((state) => state.panel.idPeriode);
 
   const [formData, setFormData] = useState({
     name: "",
     id_relawan: null,
+    id_periode: idPeriode,
     nik: "",
     email: "",
+    place_birth: "",
     date_birth: "",
     gender: "",
     phone: "",
-
     id_kabupaten: "",
     id_kecamatan: "",
-    id_desa: "",
+    pekerjaan: "",
     address: "",
+    target_desa: "",
   });
 
   const changeKabupaten = async (idKabupaten) => {
@@ -46,6 +50,7 @@ const Simpatisan = () => {
   };
 
   const register = async () => {
+    console.log(formData);
     {
       await axiosFetch("post", `user/simpatisan`, formData)
         .then((res) => {
@@ -66,12 +71,26 @@ const Simpatisan = () => {
     <>
       <DaftarSuccess props={handleSuccess} />
       {/* popup daftar failed */}
-      <div style={handleError === false ? { visibility: "hidden" } : { background: "rgba(55, 65, 81, 0.32)", visibility: "visible" }} className="fixed w-screen h-screen top-0 left-0">
+      <div
+        style={
+          handleError === false
+            ? { visibility: "hidden" }
+            : { background: "rgba(55, 65, 81, 0.32)", visibility: "visible" }
+        }
+        className="fixed w-screen h-screen top-0 left-0"
+      >
         <div className="absolute bg-white w-[609px] h-[455px] mt-[120px] ml-[416px]">
-          <div onClick={() => setHandelError(false)} className="absolute cursor-pointer right-0 top-0 w-[24px] h-[24px] text-[24px] font-semibold text-[#9CA3AF]">
+          <div
+            onClick={() => setHandelError(false)}
+            className="absolute cursor-pointer right-0 top-0 w-[24px] h-[24px] text-[24px] font-semibold text-[#9CA3AF]"
+          >
             X
           </div>
-          <DaftarFailed error={errorMessage} popUp={handleError} title={"Daftar Simpatisan Gagal !!!"} />
+          <DaftarFailed
+            error={errorMessage}
+            popUp={handleError}
+            title={"Daftar Simpatisan Gagal !!!"}
+          />
         </div>
       </div>
       <form>
@@ -79,10 +98,19 @@ const Simpatisan = () => {
           <div>
             <p className="text-[#D1D5DB] font-medium ">RELAWAN</p>
             <div className="flex items-center">
-              <label htmlFor="pengjak" className="text-[14px] text-[#374151] pr-[72px]">
+              <label
+                htmlFor="pengjak"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
                 Relawan Pengajak (Opsional)
               </label>
-              <select onChange={(e) => setFormData({ ...formData, id_relawan: e.target.value })} id="pengajak" className="h-[40px] w-[363px] border text-[#374151]">
+              <select
+                onChange={(e) =>
+                  setFormData({ ...formData, id_relawan: e.target.value })
+                }
+                id="pengajak"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
                 <option value="" disabled selected>
                   Pilih Relawan
                 </option>
@@ -104,25 +132,53 @@ const Simpatisan = () => {
               <label htmlFor="nama" className="text-[14px] text-[#374151] ">
                 Nama
               </label>
-              <input onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="nama" />
+              <input
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                type={"text"}
+                id="nama"
+              />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="NIK" className="text-[14px] text-[#374151] ">
                 NIK
               </label>
-              <PatternFormat onChange={(e) => setFormData({ ...formData, nik: e.target.value })} id="NIK" format="#### #### #### ###" allowEmptyFormatting className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]" />
+              <PatternFormat
+                onChange={(e) =>
+                  setFormData({ ...formData, nik: e.target.value })
+                }
+                id="NIK"
+                format="#### #### #### ###"
+                allowEmptyFormatting
+                className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
+              />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="email" className="text-[14px] text-[#374151] ">
                 Email
               </label>
-              <input onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"email"} id="email" />
+              <input
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                type={"email"}
+                id="email"
+              />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="gender" className="text-[14px] text-[#374151] ">
                 Jenis Kelamin
               </label>
-              <select onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151] outline-0">
+              <select
+                onChange={(e) =>
+                  setFormData({ ...formData, gender: e.target.value })
+                }
+                id="gender"
+                className="h-[40px] w-[363px] border text-[#374151] outline-0"
+              >
                 <option value="" selected disabled>
                   Pilih Jenis Kelamin
                 </option>
@@ -131,31 +187,63 @@ const Simpatisan = () => {
               </select>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label htmlFor="tanggal lahir" className="text-[14px] text-[#374151] ">
-                Tgl Lahir
+              <label
+                htmlFor="tanggal lahir"
+                className="text-[14px] text-[#374151] "
+              >
+                Tempat & Tgl Lahir
               </label>
-              <input
-                onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
-                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
-                type="date"
-                id="tanggal lahir"
-                name="trip-start"
-                defaultValue=""
-                min="1945-01-01"
-                max="2024-12-31"
-              ></input>
+              <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
+                <input
+                  onChange={(e) =>
+                    setFormData({ ...formData, place_birth: e.target.value })
+                  }
+                  className="px-2 outline-0"
+                  type={"text"}
+                />
+                <input
+                  onChange={(e) =>
+                    setFormData({ ...formData, date_birth: e.target.value })
+                  }
+                  className=" outline-0"
+                  type="date"
+                  id="tanggal lahir"
+                  name="trip-start"
+                  defaultValue=""
+                  min="1945-01-01"
+                  max="2024-12-31"
+                ></input>
+              </div>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="noHP" className="text-[14px] text-[#374151] ">
                 NO HP
               </label>
-              <PatternFormat onChange={(e) => setFormData({ ...formData, phone: e.target.value })} id="noHp" format="###-###-###-###" allowEmptyFormatting mask={""} className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]" />
+              <PatternFormat
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                id="noHp"
+                format="###-###-###-###"
+                allowEmptyFormatting
+                mask={""}
+                className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
+              />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
+              <label
+                htmlFor="pekerjaan"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
                 Pekerjaan
               </label>
-              <select id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]">
+              <select
+                id="pekerjaan"
+                className="h-[40px] w-[363px] border text-[#374151]"
+                onChange={(e) =>
+                  setFormData({ ...formData, pekerjaan: e.target.value })
+                }
+              >
                 <option value="" disabled selected>
                   Pilih Pekerjaan
                 </option>
@@ -176,10 +264,17 @@ const Simpatisan = () => {
             <p className="text-[#D1D5DB] font-medium ">ALAMAT SIMPATISAN</p>
             <div className="flex justify-between items-center pr-[140px]"></div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label htmlFor="kabupaten" className="text-[14px] text-[#374151] pr-[72px]">
+              <label
+                htmlFor="kabupaten"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
                 Kabupaten Kota
               </label>
-              <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+              <select
+                onChange={(e) => changeKabupaten(e.target.value)}
+                id="kabupaten"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
                 <option value="" disabled selected>
                   Pilih Kabupaten
                 </option>
@@ -193,10 +288,17 @@ const Simpatisan = () => {
               </select>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label htmlFor="kecamatan" className="text-[14px] text-[#374151] pr-[72px]">
+              <label
+                htmlFor="kecamatan"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
                 Kecamatan
               </label>
-              <select onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+              <select
+                onChange={(e) => changeKecamatan(e.target.value)}
+                id="kecamatan"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
                 <option value="" disabled selected>
                   Pilih Kecamatan
                 </option>
@@ -210,10 +312,19 @@ const Simpatisan = () => {
               </select>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label htmlFor="desa" className="text-[14px] text-[#374151] pr-[72px]">
+              <label
+                htmlFor="desa"
+                className="text-[14px] text-[#374151] pr-[72px]"
+              >
                 Desa
               </label>
-              <select onChange={(e) => setFormData({ ...formData, id_desa: e.target.value })} id="desa" className="h-[40px] w-[363px] border text-[#374151]">
+              <select
+                onChange={(e) =>
+                  setFormData({ ...formData, target_desa: e.target.value })
+                }
+                id="desa"
+                className="h-[40px] w-[363px] border text-[#374151]"
+              >
                 <option value="" disabled selected>
                   Pilih Desa
                 </option>
@@ -230,12 +341,22 @@ const Simpatisan = () => {
               <label htmlFor="alamat" className="text-[14px] text-[#374151] ">
                 Alamat
               </label>
-              <input onChange={(e) => setFormData({ ...formData, address: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="alamat" />
+              <input
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
+                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                type={"text"}
+                id="alamat"
+              />
             </div>
           </div>
           <div className="flex justify-end mr-[140px] gap-3">
             <div className=" bg-white rounded-md mt-[27px] cursor-pointer  text-[18px] text-[#374151] font-semibold items-center justify-center flex">
-              <div onClick={() => router.push("HomePage")} className="h-[42px] px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] rounded-md">
+              <div
+                onClick={() => router.push("HomePage")}
+                className="h-[42px] px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] rounded-md"
+              >
                 <img src={homeIcn.src} />
                 <p>Kembali Ke Home </p>
               </div>
