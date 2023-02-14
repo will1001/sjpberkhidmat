@@ -40,6 +40,7 @@ const AddProgram = () => {
   const [switchButton, setSwitchButton] = useState(false);
   const [popUp, setPopUp] = useState(false);
   const token = useSelector((state) => state.user.token);
+  const periode = useSelector((state) => state.panel.idPeriode);
   const [formProgram, setFormProgram] = useState({
     title: "",
     description: "",
@@ -106,7 +107,7 @@ const AddProgram = () => {
     a.append("id_kabupaten", formProgram.id_kabupaten);
     a.append("id_kecamatan", formProgram.id_kecamatan);
     a.append("id_kelurahan", formProgram.desa);
-    a.append("id_periode", "test");
+    a.append("id_periode", periode);
 
     console.log(e);
     {

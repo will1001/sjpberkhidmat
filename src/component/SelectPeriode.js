@@ -73,8 +73,10 @@ const SelectPeriode = () => {
             onClick={() => {
               setPopup(false);
             }}
-            className="top-0 right-0 absolute"
-          ></button>
+            className="top-0 right-0 absolute pr-2 font-medium text-[21px]"
+          >
+            X
+          </button>
 
           <div className="flex flex-col items-start pt-6 pl-12">
             <p className="font-bold text-[32px] text-slate-700 mb-3">Pilih Periode</p>

@@ -46,6 +46,7 @@ const EditProgram = ({ close, data }) => {
 
   const kabupaten = useFetch("get", "user/kabupaten");
   const token = useSelector((state) => state.user.token);
+  const periode = useSelector((state) => state.panel.idPeriode);
 
   const categoryProgram = [
     {
@@ -104,7 +105,7 @@ const EditProgram = ({ close, data }) => {
     a.append("id_kabupaten", dataEdit.id_kabupaten);
     a.append("id_kecamatan", dataEdit.id_kecamatan);
     a.append("id_kelurahan", dataEdit.desa);
-    a.append("id_periode", "test");
+    a.append("id_periode", periode);
 
     {
       await axiosFetch("put", `user/articles/${id}`, a, token)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Logistic, ProgramIcon, RelawanIcon, SimpatisanIcon, TpsIcon } from "../utility/icon/icon";
+import { DPTDPSIcon, Logistic, ProgramIcon, RelawanIcon, SimpatisanIcon, SuaraPeriodeLalu, TargetSuara, TpsIcon } from "../utility/icon/icon";
 import JumlahPenduduk from "./JumlahPenduduk";
 import kotaIcon from "../utility/peta/kota_icon.png";
 import relawan from "../utility/peta/relawan.png";
@@ -9,11 +9,15 @@ import program from "../utility/peta/program.png";
 import useFetch from "../API/useFetch";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const ButtonPopUpInfo = ({ type, data, setHover }) => {
   const router = useRouter();
   const [active, setActive] = useState();
   const [icon, setIcon] = useState(kotaIcon);
+  const getProgram = useFetch("get", "user/articles?page=1&type=program");
+  const [listProgram, setListProgram] = useState();
+  const periode = useSelector((state) => state.panel.idPeriode);
 
   const handleButton = (button) => {
     active !== button ? setActive(button) : setActive();
@@ -63,24 +67,34 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
     // console.log(res);
   };
 
-  console.log(namaKecamatan, "asds");
+  console.log(getProgram, "asds");
 
   return (
     <>
-      <div className="flex mt-8 gap-2">
-        <span id="1" onClick={() => handleButton("Relawan")}>
-          <JumlahPenduduk active={active} title={"Relawan"} icon={<RelawanIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+      <div className="flex flex-col gap-2 mt-6">
+        <span id="1" onClick={() => handleButton("Target Suara")}>
+          <JumlahPenduduk active={active} title={"Target Suara"} icon={<TargetSuara />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+        </span>
+        <span onClick={() => handleButton("Suara Periode Lalu")}>
+          <JumlahPenduduk active={active} title={"Suara Periode Lalu"} icon={<SuaraPeriodeLalu />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+        </span>
+        <span onClick={() => handleButton("Jumlah TPS")}>
+          <JumlahPenduduk active={active} title={"Jumlah TPS"} icon={<TpsIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+        </span>
+        <span onClick={() => handleButton("Jumlah DPT/DPS")}>
+          <JumlahPenduduk active={active} title={"Jumlah DPT/DPS"} icon={<DPTDPSIcon />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+        </span>
+        <span onClick={() => handleButton("Jumlah Relawan")}>
+          <JumlahPenduduk active={active} title={"Jumlah Relawan"} icon={<RelawanIcon />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+        </span>
+        <span onClick={() => handleButton("Jumlah Simpatisan")}>
+          <JumlahPenduduk active={active} title={"Jumlah Simpatisan"} icon={<SimpatisanIcon />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
         <span onClick={() => handleButton("Logistik")}>
-          <JumlahPenduduk active={active} title={"Logistik"} icon={<Logistic />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
-        </span>
-      </div>
-      <div className="flex gap-2 mt-4">
-        <span onClick={() => handleButton("Simpatisan")}>
-          <JumlahPenduduk active={active} title={"Simpatisan"} icon={<SimpatisanIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+          <JumlahPenduduk active={active} title={"Logistik"} icon={<Logistic />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
         <span onClick={() => handleButton("Program")}>
-          <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+          <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
       </div>
 

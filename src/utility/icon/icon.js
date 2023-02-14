@@ -542,6 +542,26 @@ export function RelawanIcon() {
     </svg>
   );
 }
+export function TargetSuara() {
+  return (
+    <svg width="28" height="17" viewBox="0 0 28 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.3333 1.83337H26M26 1.83337V12.5M26 1.83337L15.3333 12.5L10 7.16671L2 15.1667" stroke="curent" strokeWidth="2.59048" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+export function SuaraPeriodeLalu() {
+  return (
+    <svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8.66667 13.8334V12.5M14 13.8334V9.83337M19.3333 13.8334V7.16671M8.66667 24.5L14 19.1667L19.3333 24.5M2 1.83337H26M3.33333 1.83337H24.6667V17.8334C24.6667 18.5698 24.0697 19.1667 23.3333 19.1667H4.66667C3.93029 19.1667 3.33333 18.5698 3.33333 17.8334V1.83337Z"
+        stroke="curent"
+        strokeWidth="2.59048"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 export function DeletIcon() {
   return (
     <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
