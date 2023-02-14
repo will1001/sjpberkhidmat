@@ -68,12 +68,17 @@ function Admin({ router }) {
     address: "",
   });
   useEffect(() => {
+    console.log(editData);
     if (editData && !clear && !stopEditData) {
       setFormData({
         name: editData.name,
         email: editData.email,
+        nik: editData.nik,
         phone: editData.phone,
-        pekerjaan: editData.pekerjaan,
+        pekerjaan:
+          popUpDashType === "Relawan"
+            ? editData.pekerjaan
+            : editData.pekerjaan._id,
         id_kabupaten: editData.id_kabupaten,
         id_kecamatan: editData.id_kecamatan,
         target_desa: editData.target_desa,
@@ -116,7 +121,8 @@ function Admin({ router }) {
   const register = async () => {
     if (popUpDashType === "Relawan") {
       if (editData) {
-        // delete formData;
+        console.log(formData);
+
         await axiosFetch("put", `user/users`, formData, token)
           .then(() => {
             alert("Edit Berhasil");
@@ -163,24 +169,37 @@ function Admin({ router }) {
         alert("Password Tidak Sama");
       }
     } else {
-      let formDataSimpatisan = formData;
-      delete formDataSimpatisan.role;
-      delete formDataSimpatisan.password;
-      await axiosFetch("post", `user/simpatisan`, formDataSimpatisan)
-        .then((res) => {
-          console.log(res, "berhasil daftar");
-          alert("Pendaftaran Berhasil");
+      if (editData) {
+        console.log(formData);
+        await axiosFetch("put", `user/users`, formData, token)
+          .then(() => {
+            alert("Edit Berhasil");
+            dispatch(showOrHidePopUpDash({ type: null }));
+          })
+          .catch((error) => {
+            // setHandelError(true);
+            // setErrorMessage(error.response.data.message);
+          });
+      } else {
+        let formDataSimpatisan = formData;
+        delete formDataSimpatisan.role;
+        delete formDataSimpatisan.password;
+        await axiosFetch("post", `user/simpatisan`, formDataSimpatisan)
+          .then((res) => {
+            console.log(res, "berhasil daftar");
+            alert("Pendaftaran Berhasil");
 
-          dispatch(showOrHidePopUpDash({ type: null }));
-          // setHandelSuccess(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          // setHandelError(true);
-          // setErrorMessage(err.response.data.message);
-        });
+            dispatch(showOrHidePopUpDash({ type: null }));
+            // setHandelSuccess(true);
+          })
+          .catch((err) => {
+            console.log(err);
+            // setHandelError(true);
+            // setErrorMessage(err.response.data.message);
+          });
+      }
     }
-    location.reload();
+    // location.reload();
   };
 
   return (
@@ -247,6 +266,7 @@ function Admin({ router }) {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 value={formData.email}
+                disabled={editData && true}
               />
               <FormInputItem
                 label={"No Hp"}
@@ -263,6 +283,7 @@ function Admin({ router }) {
                   setFormData({ ...formData, nik: e.target.value })
                 }
                 value={formData.nik}
+                disabled={editData && true}
               />
               <FormSelect
                 label={"Jenis Kelamin"}
@@ -291,7 +312,7 @@ function Admin({ router }) {
                     setFormData({ ...formData, pekerjaan: e.target.value })
                   }
                   options={pekerjaan}
-                  value={formData.pekerjaan}
+                  value={formData.pekerjaan._id}
                 />
               )}
 

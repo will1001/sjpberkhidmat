@@ -7,7 +7,7 @@ import SearchInput from "../SearchInput";
 import ButtonPrimary from "../ButtonPrimary";
 import EditIcon from "../../utility/icon/edit2.png";
 
-import { showOrHidePopUpDash } from "../../redux/panelReducer";
+import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 import { useDispatch } from "react-redux";
 const customStyles = {
   headCells: {
