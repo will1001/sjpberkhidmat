@@ -12,7 +12,10 @@ const DetailKecamatan = ({ router }) => {
   return (
     <div className="flex">
       <div className="basis-4/12 bg-white z-50">{<SideBar content={<DetailDesaContent setHover={setHover} data={router?.query?.kecamatan} nama={router?.query?.nama} />} />}</div>
-      {router?.query?.nama?.toLowerCase() === "mataram" && (
+      <div>
+        <p>Desa / Kelurahan Kec.{router?.query?.nama}</p>
+      </div>
+      {/* {router?.query?.nama?.toLowerCase() === "mataram" && (
         <div className="fixed left-[-2500px] top-[-2000px] ">
           <KecMataramMap hover={hover} nama={router?.query?.nama} />
         </div>
@@ -21,7 +24,7 @@ const DetailKecamatan = ({ router }) => {
         <div className="fixed left-[-3800px] top-[-2600px] ">
           <AmpenanMap hover={hover} nama={router?.query?.nama} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

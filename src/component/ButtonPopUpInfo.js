@@ -6,15 +6,20 @@ import relawan from "../utility/peta/relawan.png";
 import logistik from "../utility/peta/logistik.png";
 import simpatisan from "../utility/peta/simpatisan.png";
 import program from "../utility/peta/program.png";
+import targetSuara from "../utility/peta/target_suara.png";
+import suaraPeriodeLalu from "../utility/peta/suara_periode_lalu.png";
+import TPS from "../utility/peta/TPS.png";
+import DPTDPS from "../utility/peta/DPT_DPS.png";
 import useFetch from "../API/useFetch";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
-const ButtonPopUpInfo = ({ type, data, setHover }) => {
+const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
   const router = useRouter();
   const [active, setActive] = useState();
   const [icon, setIcon] = useState(kotaIcon);
+  const [total, setTotal] = useState();
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
   const [listProgram, setListProgram] = useState();
   const periode = useSelector((state) => state.panel.idPeriode);
@@ -24,18 +29,29 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
   };
 
   useEffect(() => {
-    if (active === "Relawan") {
+    if (active === "Jumlah Relawan") {
       setIcon(relawan);
-    } else if (active === "Simpatisan") {
+    } else if (active === "Jumlah Simpatisan") {
       setIcon(simpatisan);
     } else if (active === "Logistik") {
       setIcon(logistik);
     } else if (active === "Program") {
       setIcon(program);
+      setTotal("program");
+    } else if (active === "Target Suara") {
+      setIcon(targetSuara);
+      setTotal("target");
+    } else if (active === "Suara Periode Lalu") {
+      setIcon(suaraPeriodeLalu);
+    } else if (active === "Jumlah TPS") {
+      setIcon(TPS);
+    } else if (active === "Jumlah DPT/DPS") {
+      setIcon(DPTDPS);
     } else {
       setIcon(kotaIcon);
+      setTotal();
     }
-  }, [handleButton]);
+  }, [handleButton, targetKab]);
 
   const id_kabupaten = data?.toString();
   const [namaKecamatan, setNamaKecamatan] = useState();
@@ -67,13 +83,22 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
     // console.log(res);
   };
 
-  console.log(getProgram, "asds");
+  console.log(programData, "asds");
 
   return (
     <>
       <div className="flex flex-col gap-2 mt-6">
         <span id="1" onClick={() => handleButton("Target Suara")}>
-          <JumlahPenduduk active={active} title={"Target Suara"} icon={<TargetSuara />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+          <JumlahPenduduk
+            active={active}
+            title={"Target Suara"}
+            icon={<TargetSuara />}
+            total={targetKab !== undefined && (targetKab[0] + targetKab[1] + targetKab[2] + targetKab[3] + targetKab[4]).toLocaleString()}
+            h={"55px"}
+            w={"150px"}
+            totalSize={"21px"}
+            titleSize={"18px"}
+          />
         </span>
         <span onClick={() => handleButton("Suara Periode Lalu")}>
           <JumlahPenduduk active={active} title={"Suara Periode Lalu"} icon={<SuaraPeriodeLalu />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
@@ -94,7 +119,7 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
           <JumlahPenduduk active={active} title={"Logistik"} icon={<Logistic />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
         <span onClick={() => handleButton("Program")}>
-          <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+          <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total={programData?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
       </div>
 
@@ -112,7 +137,10 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+              {total === "target" && targetKab[3]?.toLocaleString()}
+              {total === "program" && programData?.filter((data) => ["5208"].includes(data.id_kabupaten)).length?.toLocaleString()}
+            </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Utara</p>
           </div>
         </div>
@@ -125,7 +153,10 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+              {total === "target" && targetKab[4]?.toLocaleString()}
+              {total === "program" && programData?.filter((data) => ["5271"].includes(data.id_kabupaten)).length?.toLocaleString()}
+            </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kota Mataram</p>
           </div>
         </div>
@@ -137,7 +168,10 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+              {total === "target" && targetKab[0]?.toLocaleString()}
+              {total === "program" && programData?.filter((data) => ["5201"].includes(data.id_kabupaten)).length?.toLocaleString()}
+            </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Barat</p>
           </div>
         </div>
@@ -150,7 +184,10 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+              {total === "target" && targetKab[1]?.toLocaleString()}
+              {total === "program" && programData?.filter((data) => ["5202"].includes(data.id_kabupaten)).length?.toLocaleString()}
+            </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Tengah</p>
           </div>
         </div>
@@ -162,7 +199,10 @@ const ButtonPopUpInfo = ({ type, data, setHover }) => {
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+              {total === "target" && targetKab[2]?.toLocaleString()}
+              {total === "program" && programData?.filter((data) => ["5203"].includes(data.id_kabupaten)).length?.toLocaleString()}
+            </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Timur</p>
           </div>
         </div>

@@ -4,12 +4,10 @@ import { KembaliIcon, TpsIcon } from "../../utility/icon/icon";
 import Button from "../Button";
 import ButtonPopUpInfo from "../ButtonPopUpInfo";
 
-function PetaKekuatanContent({ toParent, dataKabupaten, setHover }) {
-  toParent(dataKabupaten.data);
-
+function PetaKekuatanContent({ dataKabupaten, setHover, targetKab, program }) {
   const kabupaten = dataKabupaten?.data;
   const router = useRouter();
-  console.log(kabupaten);
+  // console.log(targetKab, "asdasd");
 
   return (
     <div className="mt-4 ">
@@ -17,15 +15,16 @@ function PetaKekuatanContent({ toParent, dataKabupaten, setHover }) {
         <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       </div>
 
-      <ButtonPopUpInfo type={"kab_kota"} setHover={setHover} data={kabupaten} />
-      <hr className="w-full h-1 bg-gray-100 border-0 rounded  mt-8" />
-      {/* <p className="text-[32px] font-bold text-slate-700 mt-4">Kabupaten / Kota</p>
-      <div className="mt-6 text-[21px] font-medium flex flex-col gap-3 text-slate-700"> */}
-      {/* {kabupaten?.map((res) => (
-          <p onClick={() => detailKota(res._id)} className="cursor-pointer" key={res?._id}>
-            {res?.name}
-          </p>
-        ))} */}
+      <ButtonPopUpInfo type={"kab_kota"} targetKab={targetKab} setHover={setHover} programData={program} data={kabupaten} />
+      {/* realcount progress */}
+      <div className="border-b-2 mt-6" />
+      <p className="mt-3 text-[18px] text-[#374151] font-bold">Suara Real Count</p>
+      <div className="flex gap-2 items-center ">
+        <div className="w-full bg-[#FFECE4] h-[31px] flex items-center">
+          <div className="w-[50%] bg-[#FF5001] flex items-center  h-[27px]"></div>
+        </div>
+        <p className="relative right-0 text-[#FF5001] text-[26px] font-bold">50%</p>
+      </div>
     </div>
     // </div>
   );

@@ -69,12 +69,12 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
         </span>
       </div>
       {/* kec. mataram */}
-      <div className={`${nama?.toLowerCase() === "mataram" ? "visible" : "hidden"}`}>
-        {/* div popup */}
+      {/* <div className={`${nama?.toLowerCase() === "mataram" ? "visible" : "hidden"}`}>
+        div popup
         <div className="flex bg-white py-2 px-[14px] fixed gap-2 left-[700px] rounded-full top-[20px] border border-[#374151] text-[#374151] font-medium">
           {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>} <span className="text-[#374151] font-bold">Kec. Mataram</span>
         </div>
-        {/* pejanggik */}
+        pejanggik
         <div
           onClick={() => detail("Pejanggik", "5271020005")}
           onMouseOutCapture={() => setHover("pejanggik")}
@@ -86,7 +86,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pejanggik</p>
           </div>
         </div>
-        {/* mataram timur */}
+        mataram timur
         <div
           onClick={() => detail("Mataram Timur", "5271020002")}
           onMouseOutCapture={() => setHover("mataram timur")}
@@ -98,7 +98,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Mataram Timur</p>
           </div>
         </div>
-        {/* pagesangan barat */}
+        pagesangan barat
         <div
           onClick={() => detail("Pagesangan Barat", "5271020003")}
           onMouseOutCapture={() => setHover("pagesangan barat")}
@@ -110,7 +110,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagesangan Barat</p>
           </div>
         </div>
-        {/* punia */}
+        punia
         <div
           onClick={() => detail("Punia", "5271020006")}
           onMouseOutCapture={() => setHover("punia")}
@@ -122,7 +122,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Punia</p>
           </div>
         </div>
-        {/* pagesangan */}
+        pagesangan
         <div
           onClick={() => detail("Pagesangan", "5271020001")}
           onMouseOutCapture={() => setHover("pagesangan")}
@@ -134,7 +134,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagesangan</p>
           </div>
         </div>
-        {/* pagesangan timur */}
+        pagesangan timur
         <div
           onClick={() => detail("Pagesangan Timur", "5271020004")}
           onMouseOutCapture={() => setHover("pagesangan timur")}
@@ -146,7 +146,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagesangan Timur</p>
           </div>
         </div>
-        {/* pagutan timur */}
+        pagutan timur
         <div
           onClick={() => detail("Pagutan Timur", "5271020009")}
           onMouseOutCapture={() => setHover("pagutan timur")}
@@ -158,7 +158,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagutan Timur</p>
           </div>
         </div>
-        {/* pagutan barat */}
+        pagutan barat
         <div
           onClick={() => detail("Pagutan Barat", "5271020008")}
           onMouseOutCapture={() => setHover("pagutan barat")}
@@ -170,7 +170,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagutan Barat</p>
           </div>
         </div>
-        {/* pagutan  */}
+        pagutan 
         <div
           onClick={() => detail("Pagutan", "5271020007")}
           onMouseOutCapture={() => setHover("pagutan")}
@@ -182,7 +182,7 @@ const ButtonKecamatan = ({ data, nama, setHover }) => {
             <p className={`${icon === undefined ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Pagutan </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
