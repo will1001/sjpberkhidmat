@@ -72,7 +72,7 @@ const RelawanDash = () => {
   }, [pekerjaanFilter, sorting, keyword, relawanSub]);
 
   const pekerjaan = useFetch("get", "user/jobs");
-  const kabupaten = useFetch("get", "user/kabupaten");
+  const kabupaten = useFetch("get", "user/target/details/kabupaten");
 
   const columns = [
     {
@@ -216,7 +216,14 @@ const RelawanDash = () => {
       ) : (
         <div className="px-[40px] py-[10px]">
           {kabupaten.data?.map((res, i) => {
-            return <ListTargetDesa label={res.name} id_kab={res.id} />;
+            return (
+              <ListTargetDesa
+                label={res.name}
+                simpatisan={res.jumlah_simpatisans}
+                target={res.total_target}
+                id_kabupaten={res._id}
+              />
+            );
           })}
         </div>
       )}

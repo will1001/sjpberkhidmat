@@ -1,6 +1,6 @@
 import React from "react";
 
-function FormSelect({ label, onChange, options }) {
+function FormSelect({ label, onChange, options, value }) {
   return (
     <div className="flex justify-start items-center my-3">
       <label className="text-[14px] w-[20%] text-[#374151] mr-[50px]">
@@ -9,6 +9,7 @@ function FormSelect({ label, onChange, options }) {
       <select
         onChange={onChange}
         className="h-[40px] w-[70%] border text-[#374151]"
+        value={value}
       >
         <option value="" disabled selected>
           Pilih {label}

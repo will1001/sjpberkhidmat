@@ -8,7 +8,7 @@ import KeyIcon from "../src/utility/icon/key.png";
 import homeIcn from "../src/utility/icon/home_icon.png";
 import { useDispatch, useSelector } from "react-redux";
 import FormInputItem from "../src/component/FormInputItem";
-import { showOrHidePopUpDash } from "../src/redux/panelReducer";
+import { setEditData, showOrHidePopUpDash } from "../src/redux/panelReducer";
 import FormSelect from "../src/component/FormSelect";
 import FormDatePlaceBirth from "../src/component/admin/FormDatePlaceBirth";
 import useFetch from "../src/API/useFetch";
@@ -39,9 +39,12 @@ function Admin({ router }) {
   const idPeriode = useSelector((state) => state.panel.idPeriode);
   const editData = useSelector((state) => state.panel.editData);
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
 
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
+  const [clear, setClear] = useState(false);
+  const [stopEditData, setStopEditData] = useState(false);
 
   const [passwordType, setPasswordType] = useState("password");
   const [passwordType2, setPasswordType2] = useState("password");
@@ -64,7 +67,27 @@ function Admin({ router }) {
     gender: "",
     address: "",
   });
-  useEffect(() => {}, [formData]);
+  useEffect(() => {
+    if (editData && !clear && !stopEditData) {
+      setFormData({
+        name: editData.name,
+        email: editData.email,
+        phone: editData.phone,
+        pekerjaan: editData.pekerjaan,
+        id_kabupaten: editData.id_kabupaten,
+        id_kecamatan: editData.id_kecamatan,
+        target_desa: editData.target_desa,
+        date_birth: editData.date_birth,
+        place_birth: editData.place_birth,
+        gender: editData.gender,
+        address: editData.address,
+      });
+      setTimeout(() => {
+        setStopEditData(true);
+      }, 1000);
+    }
+    console.log(editData);
+  }, [formData, editData]);
 
   const generatePassword = () => {
     // setFormData({ ...formData, password: e.target.value });
@@ -92,10 +115,11 @@ function Admin({ router }) {
 
   const register = async () => {
     if (popUpDashType === "Relawan") {
-      if (formData.password === confirmPassword) {
-        await axiosFetch("post", `user/register`, formData)
+      if (editData) {
+        // delete formData;
+        await axiosFetch("put", `user/users`, formData, token)
           .then(() => {
-            alert("Pendaftaran Berhasil");
+            alert("Edit Berhasil");
             dispatch(showOrHidePopUpDash({ type: null }));
           })
           .catch((error) => {
@@ -103,7 +127,19 @@ function Admin({ router }) {
             // setErrorMessage(error.response.data.message);
           });
       } else {
-        alert("Password Tidak Sama");
+        if (formData.password === confirmPassword) {
+          await axiosFetch("post", `user/register`, formData)
+            .then(() => {
+              alert("Pendaftaran Berhasil");
+              dispatch(showOrHidePopUpDash({ type: null }));
+            })
+            .catch((error) => {
+              // setHandelError(true);
+              // setErrorMessage(error.response.data.message);
+            });
+        } else {
+          alert("Password Tidak Sama");
+        }
       }
     } else if (popUpDashType === "Akun Tim") {
       let formDataSimpatisan = formData;
@@ -130,7 +166,6 @@ function Admin({ router }) {
       let formDataSimpatisan = formData;
       delete formDataSimpatisan.role;
       delete formDataSimpatisan.password;
-      console.log(formDataSimpatisan);
       await axiosFetch("post", `user/simpatisan`, formDataSimpatisan)
         .then((res) => {
           console.log(res, "berhasil daftar");
@@ -172,6 +207,26 @@ function Admin({ router }) {
                 <img
                   onClick={() => {
                     dispatch(showOrHidePopUpDash({ type: null }));
+                    dispatch(setEditData({ editData: null }));
+                    setClear(false);
+                    setStopEditData(false);
+                    setFormData({
+                      name: "",
+                      id_periode: idPeriode,
+                      nik: "",
+                      email: "",
+                      role: "relawan",
+                      phone: "",
+                      pekerjaan: "",
+                      id_kabupaten: "",
+                      id_kecamatan: "",
+                      target_desa: "",
+                      password: "",
+                      date_birth: "",
+                      place_birth: "",
+                      gender: "",
+                      address: "",
+                    });
                   }}
                   src={CloseIcon.src}
                 />
@@ -183,6 +238,7 @@ function Admin({ router }) {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
+                value={formData.name}
               />
               <FormInputItem
                 label={"Email"}
@@ -190,6 +246,7 @@ function Admin({ router }) {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
+                value={formData.email}
               />
               <FormInputItem
                 label={"No Hp"}
@@ -197,6 +254,7 @@ function Admin({ router }) {
                 onChange={(e) =>
                   setFormData({ ...formData, phone: e.target.value })
                 }
+                value={formData.phone}
               />
               <FormInputItem
                 label={"NIK"}
@@ -204,6 +262,7 @@ function Admin({ router }) {
                 onChange={(e) =>
                   setFormData({ ...formData, nik: e.target.value })
                 }
+                value={formData.nik}
               />
               <FormSelect
                 label={"Jenis Kelamin"}
@@ -212,14 +271,17 @@ function Admin({ router }) {
                   setFormData({ ...formData, gender: e.target.value })
                 }
                 options={gender}
+                value={formData.gender}
               />
               <FormDatePlaceBirth
                 onChangePlace={(e) =>
                   setFormData({ ...formData, place_birth: e.target.value })
                 }
+                valuePlace={formData.place_birth}
                 onChangeDate={(e) =>
                   setFormData({ ...formData, date_birth: e.target.value })
                 }
+                valueDate={formData.date_birth}
               />
               {popUpDashType !== "Akun Tim" && (
                 <FormSelect
@@ -229,6 +291,7 @@ function Admin({ router }) {
                     setFormData({ ...formData, pekerjaan: e.target.value })
                   }
                   options={pekerjaan}
+                  value={formData.pekerjaan}
                 />
               )}
 
@@ -238,6 +301,7 @@ function Admin({ router }) {
                 type="text"
                 onChange={(e) => changeKabupaten(e.target.value)}
                 options={kabupaten}
+                value={formData.id_kabupaten}
               />
               {popUpDashType !== "Akun Tim" && (
                 <FormSelect
@@ -245,6 +309,7 @@ function Admin({ router }) {
                   type="text"
                   onChange={(e) => changeKecamatan(e.target.value)}
                   options={kecamatan}
+                  value={formData.id_kecamatan}
                 />
               )}
               {popUpDashType !== "Akun Tim" && (
@@ -255,6 +320,7 @@ function Admin({ router }) {
                     setFormData({ ...formData, target_desa: e.target.value })
                   }
                   options={kelurahan}
+                  value={formData.target_desa}
                 />
               )}
 
@@ -264,11 +330,11 @@ function Admin({ router }) {
                 onChange={(e) =>
                   setFormData({ ...formData, address: e.target.value })
                 }
+                value={formData.address}
               />
               <div className="border-b-2 my-[30px]" />
-
-              {popUpDashType === "Relawan" ||
-                (popUpDashType === "Akun Tim" && (
+              {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") &&
+                editData === null && (
                   <>
                     {" "}
                     <div className="flex justify-start items-center">
@@ -306,11 +372,30 @@ function Admin({ router }) {
                       }}
                     />
                   </>
-                ))}
+                )}
 
               <div className="flex mt-[40px] justify-end">
                 <div
-                  onClick={() => router.push("HomePage")}
+                  onClick={() => {
+                    setClear(true);
+                    setFormData({
+                      name: "",
+                      id_periode: idPeriode,
+                      nik: "",
+                      email: "",
+                      role: "relawan",
+                      phone: "",
+                      pekerjaan: "",
+                      id_kabupaten: "",
+                      id_kecamatan: "",
+                      target_desa: "",
+                      password: "",
+                      date_birth: "",
+                      place_birth: "",
+                      gender: "",
+                      address: "",
+                    });
+                  }}
                   className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
                 >
                   {/* <img src={homeIcn.src} /> */}
