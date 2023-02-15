@@ -118,7 +118,7 @@ export function AspirasiIcon() {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15"
-        stroke="#374151"
+        stroke="curent"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -401,6 +401,19 @@ export function SearchIcon() {
         d="M11.25 11.25L7.75 7.75M8.91667 4.83333C8.91667 7.0885 7.0885 8.91667 4.83333 8.91667C2.57817 8.91667 0.75 7.0885 0.75 4.83333C0.75 2.57817 2.57817 0.75 4.83333 0.75C7.0885 0.75 8.91667 2.57817 8.91667 4.83333Z"
         stroke="curent"
         strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+export function SubmitIcon() {
+  return (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M7 10.8108L9 12.8108L13 8.81079M19 10.8108C19 15.7814 14.9706 19.8108 10 19.8108C5.02944 19.8108 1 15.7814 1 10.8108C1 5.84023 5.02944 1.81079 10 1.81079C14.9706 1.81079 19 5.84023 19 10.8108Z"
+        stroke="curent"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

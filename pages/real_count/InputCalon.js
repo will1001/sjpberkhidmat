@@ -5,6 +5,7 @@ import nextImg from "../../src/utility/icon/next.png";
 import AddCalon from "../../src/component/admin/realcount/AddCalon";
 import useFetch from "../../src/API/useFetch";
 import { useRouter } from "next/router";
+import TambahCalon from "../../src/component/admin/realcount/TambahCalon";
 
 const InputCalon = () => {
   const containerStyle = {
@@ -21,7 +22,6 @@ const InputCalon = () => {
   //   console.log(getCalon);
   return (
     <div style={containerStyle} className="mx-[80px] mt-[55px]">
-      <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + "user/real_count/partai"} />
       <p className="flex justify-center text-[32px] text-[#374151] font-bold pt-[42px]">Input Calon & Partai</p>
       <p className="flex justify-center text-[#374151] pt-[10px]">Periode 2024 - 2029</p>
       <div className="flex justify-center pt-[40px]">
@@ -32,13 +32,13 @@ const InputCalon = () => {
           <p>Loading.........</p>
         ) : (
           <div key={res._id} className={`mx-[110px] mt-[12px]`}>
-            <AddCalon nama={res.name} nomor={index + 1} logo={res.logo} partai={res.id_partai} />
+            <AddCalon nama={res.name} nomor={index + 1} logo={res.logo} partai={res.id_partai} id={res._id} />
           </div>
         )
       )}
 
       <div className={`mx-[110px] mt-[12px] ${popUp === false ? "hidden" : "visible"}`}>
-        <AddCalon nomor={undefined} nama={undefined} logo={undefined} partai={undefined} />
+        <TambahCalon />
       </div>
 
       <div onClick={() => setPopUp(true)} className="h-[72px] mx-[110px] border border-[#D1D5DB] cursor-pointer rounded-md bg-white items-center flex justify-center mt-[72px]">

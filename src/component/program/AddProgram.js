@@ -361,7 +361,7 @@ const AddProgram = () => {
               );
             })}
             <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
-            <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
+            <label htmlfor="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
               <div className={`${formProgram?.image && "visible"}`}>
                 <div className={`${videoPreview === undefined ? "hidden" : "visible"}`}> {videoPlay === undefined ? <p>Loading....</p> : videoPlay}</div>
                 <div className={`${imagePreview === undefined ? "hidden" : "visible"}`}>

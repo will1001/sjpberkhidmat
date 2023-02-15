@@ -50,12 +50,6 @@ const Login = ({ router }) => {
         } else {
           return <p>Loading.....</p>;
         }
-        if (roles === "admin") {
-          router.push({ pathname: "Admin", query: { component: "Dashboard" } });
-        }
-        if (roles === "relawan") {
-          router.push({ pathname: "Admin", query: { component: "RealCount" } });
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -72,13 +66,12 @@ const Login = ({ router }) => {
 
   const [passType, setPasType] = useState("password");
   const [page, setPage] = useState("login");
-  console.log(token);
 
   useEffect(() => {
     if (roles === "admin") {
       router.push({ pathname: "Admin", query: { component: "Dashboard" } });
     } else if (roles === "relawan") {
-      router.push({ pathname: "Admin", query: { component: "RealCount" } });
+      router.push({ pathname: "relawan/Relawan" });
     }
   }, [roles]);
 

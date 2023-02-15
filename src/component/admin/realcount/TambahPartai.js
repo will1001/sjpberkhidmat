@@ -7,6 +7,7 @@ import useFetch from "../../../API/useFetch";
 import ListPartai from "./ListPartai";
 import { useRouter } from "next/router";
 import axiosFetch from "../../../API/axiosFetch";
+import { useSelector } from "react-redux";
 
 const TambahPartai = () => {
   const containerStyle = {
@@ -19,16 +20,18 @@ const TambahPartai = () => {
 
   const [popUp, setPopUp] = useState(false);
   const [getPartai, setGetPartai] = useState();
+  const token = useSelector((state) => state.user.token);
+  const periode = useSelector((state) => state.panel.idPeriode);
 
   useEffect(() => {
-    const res = axiosFetch("get", "user/real_count/partai")
+    const res = axiosFetch("get", "user/real_count/partai", {}, token)
       .then((data) => {
         setGetPartai(data.data);
       })
       .catch((err) => console.log(err));
   }, [popUp]);
 
-  console.log(getPartai);
+  // console.log(periode);
   const router = useRouter();
 
   return (
@@ -37,7 +40,7 @@ const TambahPartai = () => {
       <div style={containerStyle} className="mx-[80px] mt-[55px]">
         {/* <img src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + "user/real_count/partai"} /> */}
         <p className="flex justify-center text-[32px] text-[#374151] font-bold pt-[42px]">Input Calon & Partai</p>
-        <p className="flex justify-center text-[#374151] pt-[10px]">Periode 2024 - 2029</p>
+        <p className="flex justify-center text-[#374151] pt-[10px]">Periode {periode}</p>
         <div className="flex justify-center pt-[40px]">
           <img src={inputImg.src} alt="proses_input.png" />
         </div>
@@ -61,7 +64,9 @@ const TambahPartai = () => {
             <div>
               <img src={batalImg.src} alt="batal.png" />
             </div>
-            <p className="text-[26px] text-[#374151]">Batal Input</p>
+            <p onClick={() => router.back()} className="text-[26px] text-[#374151]">
+              Batal Input
+            </p>
           </div>
           {getPartai?.data?.length === 0 ? (
             <div className="h-[55px] opacity-30 bg-[#E44700] rounded-md flex items-center pl-[24px] pr-[32px]">

@@ -37,6 +37,7 @@ function Admin({ router }) {
   const pekerjaan = useFetch("get", "user/jobs");
   const popUpDashType = useSelector((state) => state.panel.popUpDashType);
   const idPeriode = useSelector((state) => state.panel.idPeriode);
+  const role = useSelector((state) => state.user.roles);
   const editData = useSelector((state) => state.panel.editData);
   const dispatch = useDispatch();
 
@@ -147,7 +148,7 @@ function Admin({ router }) {
     }
     location.reload();
   };
-
+  console.log(role);
   return (
     <>
       <div className="flex ">
@@ -162,9 +163,7 @@ function Admin({ router }) {
             }
           })}
         </div>
-        {(popUpDashType === "Relawan" ||
-          popUpDashType === "Simpatisan" ||
-          popUpDashType === "Akun Tim") && (
+        {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
           <div className="w-full h-[200vh] absolute top-0">
             <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
             <div className="bg-white h-[1100px] w-[700px] absolute top-[5%] left-[33%] p-5">
@@ -177,94 +176,20 @@ function Admin({ router }) {
                 />
               </div>
               <div className="font-bold text-4xl">Tambah {popUpDashType}</div>
-              <FormInputItem
-                label={"Nama Akun"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
-              <FormInputItem
-                label={"Email"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-              <FormInputItem
-                label={"No Hp"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-              />
-              <FormInputItem
-                label={"NIK"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, nik: e.target.value })
-                }
-              />
-              <FormSelect
-                label={"Jenis Kelamin"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, gender: e.target.value })
-                }
-                options={gender}
-              />
-              <FormDatePlaceBirth
-                onChangePlace={(e) =>
-                  setFormData({ ...formData, place_birth: e.target.value })
-                }
-                onChangeDate={(e) =>
-                  setFormData({ ...formData, date_birth: e.target.value })
-                }
-              />
-              {popUpDashType !== "Akun Tim" && (
-                <FormSelect
-                  label={"Pekerjaan"}
-                  type="text"
-                  onChange={(e) =>
-                    setFormData({ ...formData, pekerjaan: e.target.value })
-                  }
-                  options={pekerjaan}
-                />
-              )}
+              <FormInputItem label={"Nama Akun"} type="text" onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+              <FormInputItem label={"Email"} type="text" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+              <FormInputItem label={"No Hp"} type="text" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+              <FormInputItem label={"NIK"} type="text" onChange={(e) => setFormData({ ...formData, nik: e.target.value })} />
+              <FormSelect label={"Jenis Kelamin"} type="text" onChange={(e) => setFormData({ ...formData, gender: e.target.value })} options={gender} />
+              <FormDatePlaceBirth onChangePlace={(e) => setFormData({ ...formData, place_birth: e.target.value })} onChangeDate={(e) => setFormData({ ...formData, date_birth: e.target.value })} />
+              {popUpDashType !== "Akun Tim" && <FormSelect label={"Pekerjaan"} type="text" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} options={pekerjaan} />}
 
               <h1>ALAMAT {popUpDashType.toUpperCase()}</h1>
-              <FormSelect
-                label={"Kabupaten Kota"}
-                type="text"
-                onChange={(e) => changeKabupaten(e.target.value)}
-                options={kabupaten}
-              />
-              {popUpDashType !== "Akun Tim" && (
-                <FormSelect
-                  label={"Kecamatan"}
-                  type="text"
-                  onChange={(e) => changeKecamatan(e.target.value)}
-                  options={kecamatan}
-                />
-              )}
-              {popUpDashType !== "Akun Tim" && (
-                <FormSelect
-                  label={"Target Desa"}
-                  type="text"
-                  onChange={(e) =>
-                    setFormData({ ...formData, target_desa: e.target.value })
-                  }
-                  options={kelurahan}
-                />
-              )}
+              <FormSelect label={"Kabupaten Kota"} type="text" onChange={(e) => changeKabupaten(e.target.value)} options={kabupaten} />
+              {popUpDashType !== "Akun Tim" && <FormSelect label={"Kecamatan"} type="text" onChange={(e) => changeKecamatan(e.target.value)} options={kecamatan} />}
+              {popUpDashType !== "Akun Tim" && <FormSelect label={"Target Desa"} type="text" onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} options={kelurahan} />}
 
-              <FormInputItem
-                label={"Alamat"}
-                type="text"
-                onChange={(e) =>
-                  setFormData({ ...formData, address: e.target.value })
-                }
-              />
+              <FormInputItem label={"Alamat"} type="text" onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
               <div className="border-b-2 my-[30px]" />
 
               {popUpDashType === "Relawan" ||
@@ -279,10 +204,7 @@ function Admin({ router }) {
                         }}
                         className="flex items-center border-2 rounded-md p-3 cursor-pointer"
                       >
-                        <img src={KeyIcon.src} />{" "}
-                        <span className="font-bold ml-3">
-                          Generate Password
-                        </span>
+                        <img src={KeyIcon.src} /> <span className="font-bold ml-3">Generate Password</span>
                       </div>
                     </div>
                     <FormInputPassword
@@ -291,9 +213,7 @@ function Admin({ router }) {
                       type={passwordType}
                       onclickShow={() => setPasswordType("text")}
                       onClickHide={() => setPasswordType("password")}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
                     <FormInputPassword
                       label={"Tulis Ulang Password"}
@@ -309,10 +229,7 @@ function Admin({ router }) {
                 ))}
 
               <div className="flex mt-[40px] justify-end">
-                <div
-                  onClick={() => router.push("HomePage")}
-                  className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
-                >
+                <div onClick={() => router.push("HomePage")} className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md">
                   {/* <img src={homeIcn.src} /> */}
                   <p className="text-[18px] font-semibold">Bersihkan </p>
                 </div>
