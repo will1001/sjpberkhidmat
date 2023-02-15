@@ -78,7 +78,7 @@ function Admin({ router }) {
         pekerjaan:
           popUpDashType === "Relawan"
             ? editData.pekerjaan
-            : editData.pekerjaan._id,
+            : editData.pekerjaan?._id,
         id_kabupaten: editData.id_kabupaten,
         id_kecamatan: editData.id_kecamatan,
         target_desa: editData.target_desa,
@@ -312,7 +312,7 @@ function Admin({ router }) {
                     setFormData({ ...formData, pekerjaan: e.target.value })
                   }
                   options={pekerjaan}
-                  value={formData.pekerjaan._id}
+                  value={formData.pekerjaan?._id}
                 />
               )}
 
