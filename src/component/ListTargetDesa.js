@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-function ListTargetDesa({ label, simpatisan, target }) {
+function ListTargetDesa({ label, simpatisan, target, id_kabupaten }) {
   const router = useRouter();
   return (
     <div className="flex items-center justify-between shadow-md p-[20px] w-[1000px]">
@@ -15,10 +15,10 @@ function ListTargetDesa({ label, simpatisan, target }) {
           onClick={() => {
             router.push({
               pathname: "/DetailTargetDesa",
-              query: {},
+              query: { id_kabupaten },
             });
           }}
-          className="underline text-orange-600"
+          className="underline text-orange-600 cursor-pointer"
         >
           lihat detail
         </span>

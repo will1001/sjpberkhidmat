@@ -10,10 +10,10 @@ import ButtonPrimary from "../src/component/ButtonPrimary";
 import Button from "../src/component/Button";
 
 import { KembaliIcon } from "../src/utility/icon/icon";
-import { useRouter } from "next/router";
+import { useRouter, withRouter } from "next/router";
 import { setTabPanelRelawanDash } from "../src/redux/panelReducer";
 
-function DetailTargetDesa() {
+function DetailTargetDesa({ routes }) {
   const customStyles = {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
@@ -62,7 +62,14 @@ function DetailTargetDesa() {
   };
 
   useEffect(() => {
-    axiosFetch("get", `user/target/details?page=${1}&limit=50`, {}, token)
+    axiosFetch(
+      "get",
+      `user/target/details?page=${1}&limit=50&id_kabupaten=${
+        router.query.id_kabupaten
+      }`,
+      {},
+      token
+    )
       .then((res) => setDetailTarget(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -202,4 +209,4 @@ function DetailTargetDesa() {
   );
 }
 
-export default DetailTargetDesa;
+export default withRouter(DetailTargetDesa);
