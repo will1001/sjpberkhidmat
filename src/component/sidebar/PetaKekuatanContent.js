@@ -15,7 +15,7 @@ function PetaKekuatanContent({ dataKabupaten, setHover, targetKab, program }) {
         <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       </div>
 
-      <ButtonPopUpInfo type={"kab_kota"} targetKab={targetKab} setHover={setHover} programData={program} data={kabupaten} />
+      <ButtonPopUpInfo type={"kab_kota"} targetKab={targetKab} setHover={setHover} programData={program} data={undefined} />
       {/* realcount progress */}
       <div className="border-b-2 mt-6" />
       <p className="mt-3 text-[18px] text-[#374151] font-bold">Suara Real Count</p>

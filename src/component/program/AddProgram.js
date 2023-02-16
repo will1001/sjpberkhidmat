@@ -46,7 +46,7 @@ const AddProgram = () => {
     description: "",
     wilayah: "",
     category: "",
-    image: "",
+    image: undefined,
     publication: false,
   });
   const kabupaten = useFetch("get", "user/kabupaten");
@@ -120,7 +120,7 @@ const AddProgram = () => {
           kelurahan();
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.data);
         });
     }
   };
@@ -189,7 +189,7 @@ const AddProgram = () => {
     setKelurahan(res.data);
   };
 
-  console.log(formProgram);
+  console.log(formProgram.image);
 
   return (
     <>

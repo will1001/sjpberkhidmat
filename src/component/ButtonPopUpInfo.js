@@ -14,18 +14,23 @@ import useFetch from "../API/useFetch";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import axiosFetch from "../API/axiosFetch";
 
-const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
+const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programData, gantiIcon }) => {
   const router = useRouter();
   const [active, setActive] = useState();
   const [icon, setIcon] = useState(kotaIcon);
   const [total, setTotal] = useState();
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
-  const [listProgram, setListProgram] = useState();
+  const [detailTarget, setDetailTarget] = useState();
+  const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
 
   const handleButton = (button) => {
     active !== button ? setActive(button) : setActive();
+    if (gantiIcon !== undefined) {
+      active !== button ? gantiIcon(button) : gantiIcon();
+    }
   };
 
   useEffect(() => {
@@ -67,6 +72,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
     }
   }, [id_kabupaten]);
 
+  useEffect(() => {
+    axiosFetch("get", "user/target/details?page=1&limit=1000&id_kabupaten=5271", {}, token)
+      .then((res) => setDetailTarget(res?.data?.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   const DetailKecamatan = (id, nama) => {
     router.push({
       pathname: "/peta_kekuatan/DetailKecamatan",
@@ -83,7 +94,15 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
     // console.log(res);
   };
 
-  console.log(programData, "asds");
+  if (detailTarget !== undefined) {
+    const totalTarget = detailTarget
+      .filter((data) => ["mataram"].includes(data.kecamatan.name.toLowerCase()))
+      .reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.jumlah_simpatisans;
+      }, 0);
+    // console.log(detailTarget.filter((data) => ["mataram"].includes(data.kecamatan.name.toLowerCase())));
+    // console.log(totalTarget);
+  }
 
   return (
     <>
@@ -93,14 +112,19 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
             active={active}
             title={"Target Suara"}
             icon={<TargetSuara />}
-            total={targetKab !== undefined && (targetKab[0] + targetKab[1] + targetKab[2] + targetKab[3] + targetKab[4]).toLocaleString()}
+            total={(targetKab !== undefined && (targetKab[0] + targetKab[1] + targetKab[2] + targetKab[3] + targetKab[4]).toLocaleString()) || (data !== undefined && data)}
             h={"55px"}
             w={"150px"}
             totalSize={"21px"}
             titleSize={"18px"}
           />
         </span>
-        <span onClick={() => handleButton("Suara Periode Lalu")}>
+        <span
+          onClick={() => {
+            handleButton("Suara Periode Lalu");
+            setIcon("Suara Periode Lalu");
+          }}
+        >
           <JumlahPenduduk active={active} title={"Suara Periode Lalu"} icon={<SuaraPeriodeLalu />} total="123.123" h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
         <span onClick={() => handleButton("Jumlah TPS")}>
@@ -119,7 +143,7 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
           <JumlahPenduduk active={active} title={"Logistik"} icon={<Logistic />} total={getProgram?.data?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
         <span onClick={() => handleButton("Program")}>
-          <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total={programData?.length} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
+          <JumlahPenduduk active={active} title={"Program"} icon={<ProgramIcon />} total={programData !== undefined ? programData?.length : "123"} h={"55px"} w={"150px"} totalSize={"21px"} titleSize={"18px"} />
         </span>
       </div>
 
@@ -133,13 +157,18 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
         <div
           onMouseOver={() => setHover("lombok utara")}
           onMouseLeave={() => setHover()}
+          onClick={active === undefined ? () => detailKota("lombok utara") : () => alert("belum update")}
           className="flex justify-center cursor-pointer items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[650px] top-[130px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
-              {total === "target" && targetKab[3]?.toLocaleString()}
-              {total === "program" && programData?.filter((data) => ["5208"].includes(data.id_kabupaten)).length?.toLocaleString()}
+              {targetKab !== undefined && (
+                <>
+                  {total === "target" && targetKab[3]?.toLocaleString()}
+                  {total === "program" && programData?.filter((data) => ["5208"].includes(data.id_kabupaten)).length?.toLocaleString()}
+                </>
+              )}
             </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Utara</p>
           </div>
@@ -148,14 +177,18 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
         <div
           onMouseOver={() => setHover("kota mataram")}
           onMouseLeave={() => setHover()}
-          onClick={active === undefined ? () => detailKota("mataram") : () => console.log("first")}
+          onClick={active === undefined ? () => detailKota("mataram") : () => alert("belum update")}
           className="flex justify-center items-center gap-2 cursor-pointer  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[320px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
-              {total === "target" && targetKab[4]?.toLocaleString()}
-              {total === "program" && programData?.filter((data) => ["5271"].includes(data.id_kabupaten)).length?.toLocaleString()}
+              {targetKab !== undefined && (
+                <>
+                  {total === "target" && targetKab[4]?.toLocaleString()}
+                  {total === "program" && programData?.filter((data) => ["5271"].includes(data.id_kabupaten)).length?.toLocaleString()}
+                </>
+              )}
             </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kota Mataram</p>
           </div>
@@ -164,13 +197,18 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
         <div
           onMouseOver={() => setHover("lombok barat")}
           onMouseLeave={() => setHover()}
+          onClick={active === undefined ? () => detailKota("lombok barat") : () => alert("belum update")}
           className="flex justify-center items-center gap-2 cursor-pointer py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[420px] top-[480px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
-              {total === "target" && targetKab[0]?.toLocaleString()}
-              {total === "program" && programData?.filter((data) => ["5201"].includes(data.id_kabupaten)).length?.toLocaleString()}
+              {targetKab !== undefined && (
+                <>
+                  {total === "target" && targetKab[0]?.toLocaleString()}
+                  {total === "program" && programData?.filter((data) => ["5201"].includes(data.id_kabupaten)).length?.toLocaleString()}
+                </>
+              )}
             </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Barat</p>
           </div>
@@ -180,13 +218,18 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
         <div
           onMouseOver={() => setHover("lombok tengah")}
           onMouseLeave={() => setHover()}
+          onClick={active === undefined ? () => detailKota("lombok tengah") : () => alert("belum update")}
           className="flex justify-center items-center gap-2 py-2 cursor-pointer px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[790px] top-[400px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
-              {total === "target" && targetKab[1]?.toLocaleString()}
-              {total === "program" && programData?.filter((data) => ["5202"].includes(data.id_kabupaten)).length?.toLocaleString()}
+              {targetKab !== undefined && (
+                <>
+                  {total === "target" && targetKab[1]?.toLocaleString()}
+                  {total === "program" && programData?.filter((data) => ["5202"].includes(data.id_kabupaten)).length?.toLocaleString()}
+                </>
+              )}
             </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Tengah</p>
           </div>
@@ -195,13 +238,18 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
         <div
           onMouseOver={() => setHover("lombok timur")}
           onMouseLeave={() => setHover()}
+          onClick={active === undefined ? () => detailKota("lombok timur") : () => alert("belum update")}
           className="flex justify-center items-center gap-2 cursor-pointer  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[1000px] top-[230px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
             <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
-              {total === "target" && targetKab[2]?.toLocaleString()}
-              {total === "program" && programData?.filter((data) => ["5203"].includes(data.id_kabupaten)).length?.toLocaleString()}
+              {targetKab !== undefined && (
+                <>
+                  {total === "target" && targetKab[2]?.toLocaleString()}
+                  {total === "program" && programData?.filter((data) => ["5203"].includes(data.id_kabupaten)).length?.toLocaleString()}
+                </>
+              )}
             </p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Timur</p>
           </div>
@@ -223,7 +271,7 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, programData }) => {
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>123.123</p>
+            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>{total === "target" && "cok"}</p>
             <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Ampenan</p>
           </div>
         </div>

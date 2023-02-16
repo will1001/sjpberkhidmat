@@ -17,14 +17,23 @@ const History = () => {
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
   const router = useRouter();
-  const getPlano = useFetch("get", "user/real_count/plano?page=1");
+  // const getPlano = useFetch("get", "user/real_count/plano?page=1");
   const [planao, setPlano] = useState();
+  const [alert, setalert] = useState(false);
 
   useEffect(() => {
     axiosFetch("get", "user/real_count/plano?page=1", {}, token)
-      .then((res) => setPlano(res.data))
+      .then((res) => setPlano(res))
       .catch((err) => console.log(err));
   }, []);
+
+  const hapusPlano = (id) =>
+    axiosFetch("delete", `user/real_count/plano/${id}`, {}, token)
+      .then((res) => {
+        console.log(res);
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
   console.log(planao);
   return (
     <>
@@ -58,14 +67,14 @@ const History = () => {
           <p className="w-[150px]">Status</p>
           <p className="w-[120px]">Aksi</p>
         </div>
-        {getPlano?.data?.map((res, i) => (
+        {planao?.data?.data?.map((res, i) => (
           <div style={(i + 1) % 2 !== 0 ? { background: "#F9FAFB" } : { background: "white" }} className="flex py-[20px] items-center gap-3" key={res._id}>
-            <div className="w-[100px] justify-center flex">{res.image && <img className="w-[80px] h-[80px]" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} />}</div>
+            <div className="w-[100px] justify-center flex">{res.image !== undefined && <img className="w-[80px] h-[80px]" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} />}</div>
             <p className="w-[570px]">{res.image}</p>
             <p className="w-[200px]">
               {res?.createdAt?.split("T").pop().split(".").shift().split(":")[0]}:{res?.createdAt?.split("T").pop().split(".").shift().split(":")[1]} | {res?.createdAt?.split("T").shift().split("-").reverse().join("-")}
             </p>
-            <p className="w-[200px]">{res.id_relawan}</p>
+            <p className="w-[200px]">{res.relawan.name}</p>
             <p className="w-[150px]">{res.status}</p>
             <div className="w-[120px] flex gap-2 items-center">
               <img
@@ -78,7 +87,16 @@ const History = () => {
                 className="cursor-pointer"
                 src={editIcon.src}
               />
-              <img className="cursor-pointer" src={deleteIcon.src} />
+              {alert === false ? (
+                <img onClick={() => setalert(true)} className="cursor-pointer" src={deleteIcon.src} />
+              ) : (
+                <div className="flex gap-3 font-medium">
+                  <div className="cursor-pointer" onClick={() => setalert(false)}>
+                    Batal
+                  </div>
+                  <div className="text-red-700 cursor-pointer">Hapus</div>
+                </div>
+              )}
             </div>
           </div>
         ))}

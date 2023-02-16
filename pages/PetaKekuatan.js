@@ -13,14 +13,18 @@ function PetaKekuatan() {
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
   const [targetKab, setTargetKab] = useState([]);
   const [hover, setHover] = useState();
+  const [dataMataram, setDataMataram] = useState();
   useEffect(() => {
     axiosFetch("get", `user/target/details/kabupaten`, {}, token)
-      .then((res) => setTargetKab(res.data))
+      .then((res) => {
+        setTargetKab(res.data);
+        setDataMataram(res?.data?.data[4]);
+      })
       .catch((err) => console.log(err));
   }, []);
 
   // const dataChill = (data) => console.log(data);
-  console.log(kabupaten?.data, "target");
+  // console.log(kabupaten, "target");
 
   return (
     <div className="w-[1350px]">

@@ -34,6 +34,7 @@ const RealCount = ({ user }) => {
       await axiosFetch("post", `user/real_count/plano`, a, token)
         .then((res) => {
           console.log(res);
+          setPlano();
           setPopup(false);
         })
         .catch((error) => {
