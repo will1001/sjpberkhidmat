@@ -28,9 +28,9 @@ const DetailKota = ({ router }) => {
 
   return (
     <div className="flex">
-      <div className="basis-4/12 z-50 bg-white pb-[100px]">{<SideBar content={<MataramContent setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
+      <div className="basis-4/12 z-50 bg-white pb-[100px] max-h-screen overflow-y-scroll ">{<SideBar content={<MataramContent setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
 
-      <div className="basis-9/12">
+      <div className="basis-9/12 h-screen max-h-screen overflow-y-scroll ">
         {router.query.kota === "mataram" && (
           <div className="fixed left-[-900px] top-[-700px]">
             <MataramMap hover={hover} />
@@ -40,7 +40,7 @@ const DetailKota = ({ router }) => {
           <div className="">
             <div className="flex gap-3">
               <div className="">
-                <div>
+                <div className="">
                   <ListKecamatan icon={icon} id={"5201"} />
                 </div>
               </div>
