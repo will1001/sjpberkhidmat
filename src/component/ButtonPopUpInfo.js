@@ -293,7 +293,7 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           onMouseOver={() => setHover("mataram")}
           onMouseLeave={() => setHover()}
           onClick={() => DetailKecamatan("5271020", "Mataram")}
-          className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[650px] top-[390px] rounded-md "
+          className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[390px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
           <div>

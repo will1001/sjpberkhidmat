@@ -41,7 +41,7 @@ const MataramContent = ({ data, setHover, targetKab, setIcon }) => {
           <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
         </div>
 
-        {/* <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} /> */}
+        <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />
       </div>
       <h1 className="text-[32px] font-bold text-slate-700">{nama}</h1>
       <ButtonPopUpInfo gantiIcon={setIcon} data={id_kabupaten} setHover={setHover} targetKec={targetKab} />
