@@ -42,6 +42,8 @@ const Login = ({ router }) => {
     password: "",
   });
 
+  const [email, setEmail] = useState();
+
   const login = async () => {
     const res = await axiosFetch("post", `user/login`, formData)
       .then((res) => {
@@ -74,6 +76,8 @@ const Login = ({ router }) => {
       router.push({ pathname: "relawan/Relawan" });
     }
   }, [roles]);
+
+  console.log(formData);
 
   if (page === "login") {
     return (
@@ -152,9 +156,9 @@ const Login = ({ router }) => {
       </div>
     );
   } else if (page === "lupa password") {
-    return <ForgotPass pageForgot={setPageForgot} pagePeriv={setPageverif} />;
+    return <ForgotPass email={email} setEmail={setEmail} pageForgot={setPageForgot} pagePeriv={setPageverif} />;
   } else if (page === "perivikasi") {
-    return <Periv kePageLogin={setPageForgot} />;
+    return <Periv email={email} kePageLogin={setPageForgot} />;
   }
 };
 

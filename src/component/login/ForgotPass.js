@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import axiosFetch from "../../API/axiosFetch";
 
-const ForgotPass = ({ pageForgot, pagePeriv }) => {
+const ForgotPass = ({ pageForgot, pagePeriv, email, setEmail }) => {
   const router = useRouter();
   const containerStyle = {
     position: "absolute",
@@ -28,8 +28,6 @@ const ForgotPass = ({ pageForgot, pagePeriv }) => {
     top: "57px",
   };
 
-  const [email, setEmail] = useState();
-
   //   a.append("id", email);
   const reqReset = async () => {
     const a = new FormData();
@@ -40,7 +38,7 @@ const ForgotPass = ({ pageForgot, pagePeriv }) => {
       .catch((err) => console.log(err));
   };
 
-  //   console.log(page);
+  // console.log(email);
   return (
     <div style={containerStyle}>
       <div style={containWrap}>
