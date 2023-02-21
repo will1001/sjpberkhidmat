@@ -158,7 +158,7 @@ const Login = ({ router }) => {
   } else if (page === "lupa password") {
     return <ForgotPass email={email} setEmail={setEmail} pageForgot={setPageForgot} pagePeriv={setPageverif} />;
   } else if (page === "perivikasi") {
-    return <Periv email={email} kePageLogin={setPageForgot} />;
+    return <Periv email={email} setPage={setPage} kePageLogin={setPageForgot} />;
   }
 };
 
