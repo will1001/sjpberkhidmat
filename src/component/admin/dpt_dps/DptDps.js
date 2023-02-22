@@ -15,34 +15,63 @@ import {
 import { useRouter } from "next/router";
 import EksportDataDpt from "./EksportData";
 import RealCount from "../RealCount";
+import { useDispatch, useSelector } from "react-redux";
+import axiosFetch from "../../../API/axiosFetch";
+import EditIcon from "../../../utility/icon/edit2.png";
+import { DeletIcon } from "../../../utility/icon/icon";
+import { showOrHidePopUpDptDps } from "../../../redux/panelReducer";
 
 const DptDps = () => {
   const router = useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
+  const token = useSelector((state) => state.user.token);
   const [kabupaten, setKabupaten] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
   // const [kelurahan, setKelurahan] = useState([]);
+  const [dptdps, setDptdps] = useState([]);
+  const dispatch = useDispatch();
 
+  const idPeriode = useSelector((state) => state.panel.idPeriode);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    role: "relawan",
-    phone: "",
-    pekerjaan: "",
-    id_kabupaten: "",
-    id_kecamatan: "",
-    target_desa: "",
-    password: "",
+    file: "",
+    id_periode: idPeriode,
   });
 
   useEffect(() => {
     axios
       .get(base_url + "user/kabupaten")
       .then((res) => setKabupaten(res.data));
-  }, [kabupaten, kecamatan]);
+    axiosFetch("get", `user/dpt_dps?page=${1}`, {}, token)
+      .then((res) => setDptdps(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  let data = dptdps.data ? dptdps.data : [];
+  let i = 0;
+  if (data) {
+    for (const res of data) {
+      data[i++].aksi = (
+        <div className="flex justify-between w-[55px] cursor-pointer">
+          <img
+            onClick={() => {
+              // editRelawan(res);
+            }}
+            src={EditIcon.src}
+          />
+          <div
+            onClick={() => {
+              // hapusRelawan(res.email);
+            }}
+          >
+            <DeletIcon />
+          </div>
+        </div>
+      );
+    }
+  }
 
   const changeKabupaten = (idKabupaten) => {
-    setFormData({ ...formData, id_kabupaten: idKabupaten });
+    // setFormData({ ...formData, id_kabupaten: idKabupaten });
     axios.get(base_url + `user/kecamatan/${idKabupaten}`).then((res) => {
       setKecamatan(res.data);
     });
@@ -82,36 +111,36 @@ const DptDps = () => {
       selector: (row) => row.name,
       width: "160px ",
     },
-    {
-      name: "Tempat Lahir",
-      selector: (row) => row.temaptLahir,
-      width: "110px ",
-    },
-    {
-      name: "Tanggal Lahir",
-      selector: (row) => row.birthDay,
-      width: "90px ",
-    },
+    // {
+    //   name: "Tempat Lahir",
+    //   selector: (row) => row.place_of_birth,
+    //   width: "110px ",
+    // },
+    // {
+    //   name: "Tanggal Lahir",
+    //   selector: (row) => row.birthDay,
+    //   width: "90px ",
+    // },
     {
       name: "Kabupaten",
-      selector: (row) => row.kabupaten,
+      selector: (row) => row.kabupaten?.name,
       width: "120px ",
     },
     {
       name: "Kecamatan",
-      selector: (row) => row.kecamatan,
+      selector: (row) => row.kecamatan?.name,
       width: "100px ",
     },
     {
       name: "Desa / Kel",
-      selector: (row) => row.desa,
+      selector: (row) => row.kelurahan?.name,
       width: "90px ",
     },
-    {
-      name: "Status Perkawinan",
-      selector: (row) => row.status,
-      width: "120px ",
-    },
+    // {
+    //   name: "Status Perkawinan",
+    //   selector: (row) => row.status,
+    //   width: "120px ",
+    // },
     {
       name: "Jenis Kelamin",
       selector: (row) => row.gender,
@@ -119,40 +148,44 @@ const DptDps = () => {
     },
     {
       name: "Alamat",
-      selector: (row) => row.alamat,
+      selector: (row) => row.address,
       width: "220px ",
     },
+    // {
+    //   name: "Aksi",
+    //   selector: (row) => row.aksi,
+    // },
   ];
 
   //   const data = simpatisan.data;
-  const data = [
-    {
-      id: 1,
-      nik: "5444 4540 0608 2434",
-      name: "1988",
-      temaptLahir: "1988",
-      birthDay: "1988",
-      kabupaten: "1988",
-      kecamatan: "1988",
-      desa: "1988",
-      status: "1988",
-      gender: "1988",
-      alamat: "1988",
-    },
-    {
-      id: 2,
-      nik: "Beetlejuice",
-      name: "1988",
-      temaptLahir: "1988",
-      birthDay: "1988",
-      kabupaten: "1988",
-      kecamatan: "1988",
-      desa: "1988",
-      status: "1988",
-      gender: "1988",
-      alamat: "1988",
-    },
-  ];
+  // const data = [
+  //   {
+  //     id: 1,
+  //     nik: "5444 4540 0608 2434",
+  //     name: "1988",
+  //     temaptLahir: "1988",
+  //     birthDay: "1988",
+  //     kabupaten: "1988",
+  //     kecamatan: "1988",
+  //     desa: "1988",
+  //     status: "1988",
+  //     gender: "1988",
+  //     alamat: "1988",
+  //   },
+  //   {
+  //     id: 2,
+  //     nik: "Beetlejuice",
+  //     name: "1988",
+  //     temaptLahir: "1988",
+  //     birthDay: "1988",
+  //     kabupaten: "1988",
+  //     kecamatan: "1988",
+  //     desa: "1988",
+  //     status: "1988",
+  //     gender: "1988",
+  //     alamat: "1988",
+  //   },
+  // ];
 
   return (
     <div className="pl-[40px] pt-[45px] ">
@@ -165,12 +198,17 @@ const DptDps = () => {
         </div>
       </div>
       <div className="flex gap-3 mt-2">
-        <div className="w-[209px] h-[42px] bg-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
+        {/* <div className="w-[209px] h-[42px] bg-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
           <p className="font-semibold text-white text-[18px]">
             Tambah DPT / DPS
           </p>
-        </div>
-        <div className="w-[255px] h-[42px] bg-white border border-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
+        </div> */}
+        <div
+          onClick={() => {
+            dispatch(showOrHidePopUpDptDps({ type: "input_penduduk" }));
+          }}
+          className="w-[255px] h-[42px] bg-white border border-[#E44700] rounded-md items-center flex justify-center cursor-pointer"
+        >
           <p className="font-semibold text-[#E44700] text-[18px]">
             Input Jumlah Penduduk
           </p>
@@ -237,7 +275,30 @@ const DptDps = () => {
           </select>
         </form>
         <div className="ml-[60px] flex gap-3">
-          <NewButton style={ImportButton} title={"Impor"} icon={Icon2} />
+          {/* <label
+            className="flex items-center justify-center gap-2 cursor-pointer"
+            htmlFor="file_upload"
+            style={ImportButton}
+          >
+            Impor
+            <img src={Icon2.src} alt={`Impor`} />
+            <input
+              onChange={(e) => {
+                importDPT(e.target.files[0]);
+              }}
+              id="file_upload"
+              type="file"
+              className="hidden"
+            />
+          </label> */}
+          <NewButton
+            style={ImportButton}
+            title={"Impor"}
+            icon={Icon2}
+            action={() => {
+              dispatch(showOrHidePopUpDptDps({ type: "import" }));
+            }}
+          />
           <NewButton
             action={() => {
               router.push({
@@ -257,7 +318,7 @@ const DptDps = () => {
           customStyles={customStyles}
           conditionalRowStyles={conditionalRowStyles}
         />
-        <div className="w-[88px]">
+        {/* <div className="w-[88px]">
           <p className="h-[51px] flex items-center justify-center bg-[#374151] text-white">
             {" "}
             Aksi
@@ -268,7 +329,7 @@ const DptDps = () => {
               <img className="cursor-pointer" src={deletIcon.src} alt="edit" />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
