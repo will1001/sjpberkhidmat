@@ -7,7 +7,7 @@ import show from "../../utility/icon/show_password.png";
 import hide from "../../utility/icon/hide_password.png";
 import { useEffect } from "react";
 
-const Periv = ({ kePageLogin, email }) => {
+const Periv = ({ setPage, email }) => {
   const router = useRouter();
   const containerStyle = {
     position: "absolute",
@@ -39,11 +39,18 @@ const Periv = ({ kePageLogin, email }) => {
 
   const reqReset = async () => {
     const a = new FormData();
+    a.append("email", email);
     a.append("otp", otp);
     a.append("new_password", newPassword);
-    await axiosFetch("put", "user/forget_password/verify", a)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    await axiosFetch("put", "user/reset_password/verify", a)
+      .then((res) => {
+        console.log(res);
+        setPage("login");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.response.data.message);
+      });
   };
 
   const reqOtp = async () => {

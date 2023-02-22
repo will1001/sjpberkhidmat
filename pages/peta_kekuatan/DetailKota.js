@@ -27,6 +27,8 @@ const DetailKota = ({ router }) => {
       .catch((err) => console.log(err));
   }, [router.query.kota]);
 
+  console.log(targetKab);
+
   return (
     <div className="flex">
       <div className="basis-4/12 z-50 bg-white pb-[100px]  ">{<SideBar content={<MataramContent setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
