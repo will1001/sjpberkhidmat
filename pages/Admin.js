@@ -4,11 +4,20 @@ import AdminContent from "../src/component/sidebar/AdminContent";
 import { withRouter } from "next/router";
 import { logoSidebar } from "../src/utility/icon/LogoSidebar";
 import CloseIcon from "../src/utility/icon/close.png";
+import DownloadIcon from "../src/utility/icon/download.png";
 import KeyIcon from "../src/utility/icon/key.png";
 import homeIcn from "../src/utility/icon/home_icon.png";
+import uploadFile from "../src/utility/icon/uploadIcon.png";
+import peopleOrangeIcon from "../src/utility/icon/people-orange.png";
+import lockOrangeIcon from "../src/utility/icon/lock-orange.png";
+
 import { useDispatch, useSelector } from "react-redux";
 import FormInputItem from "../src/component/FormInputItem";
-import { setEditData, showOrHidePopUpDash } from "../src/redux/panelReducer";
+import {
+  setEditData,
+  showOrHidePopUpDash,
+  showOrHidePopUpDptDps,
+} from "../src/redux/panelReducer";
 import FormSelect from "../src/component/FormSelect";
 import FormDatePlaceBirth from "../src/component/admin/FormDatePlaceBirth";
 import useFetch from "../src/API/useFetch";
@@ -35,7 +44,9 @@ const gender = {
 function Admin({ router }) {
   const kabupaten = useFetch("get", "user/kabupaten");
   const pekerjaan = useFetch("get", "user/jobs");
+  const dataDptDps = useFetch("get", "user/dpt_dps/statistik");
   const popUpDashType = useSelector((state) => state.panel.popUpDashType);
+  const popUpDptDpsType = useSelector((state) => state.panel.popUpDptDpsType);
   const idPeriode = useSelector((state) => state.panel.idPeriode);
   const role = useSelector((state) => state.user.roles);
   const editData = useSelector((state) => state.panel.editData);
@@ -50,6 +61,8 @@ function Admin({ router }) {
   const [passwordType, setPasswordType] = useState("password");
   const [passwordType2, setPasswordType2] = useState("password");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [jmlPenduduk, setJmlPenduduk] = useState(null);
+  const [jmlTps, setJmlTps] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -68,15 +81,24 @@ function Admin({ router }) {
     gender: "",
     address: "",
   });
+
+  const [formDataDPtDps, setFormDataDPtDps] = useState({
+    file: "",
+    id_periode: idPeriode,
+  });
   useEffect(() => {
-    console.log(editData);
+    setJmlPenduduk(dataDptDps.data?.jml_penduduk);
+    setJmlTps(dataDptDps.data?.jml_tps);
     if (editData && !clear && !stopEditData) {
       setFormData({
         name: editData.name,
         email: editData.email,
         nik: editData.nik,
         phone: editData.phone,
-        pekerjaan: popUpDashType === "Relawan" ? editData.pekerjaan : editData.pekerjaan?._id,
+        pekerjaan:
+          popUpDashType === "Relawan"
+            ? editData.pekerjaan
+            : editData.pekerjaan?._id,
         id_kabupaten: editData.id_kabupaten,
         id_kecamatan: editData.id_kecamatan,
         target_desa: editData.target_desa,
@@ -90,7 +112,7 @@ function Admin({ router }) {
       }, 1000);
     }
     console.log(editData);
-  }, [formData, editData]);
+  }, [formData, editData, formDataDPtDps]);
 
   const generatePassword = () => {
     // setFormData({ ...formData, password: e.target.value });
@@ -114,6 +136,41 @@ function Admin({ router }) {
     setFormData({ ...formData, id_kecamatan: idKecamatan });
     const res = await axiosFetch("get", `user/kelurahan/${idKecamatan}`);
     setKelurahan(res.data);
+  };
+
+  const importDPT = async () => {
+    const a = new FormData();
+    a.append("file", formDataDPtDps.file);
+    a.append("id_periode", idPeriode);
+    dispatch(showOrHidePopUpDptDps({ type: null }));
+
+    {
+      await axiosFetch("post", `user/dpt_dps/import`, a, token)
+        .then((res) => {
+          window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    location.reload();
+  };
+  const postDataDptDps = async () => {
+    const a = new FormData();
+    a.append("jml_penduduk", jmlPenduduk);
+    a.append("jml_tps", jmlTps);
+    dispatch(showOrHidePopUpDptDps({ type: null }));
+
+    {
+      await axiosFetch("post", `user/dpt_dps/statistik`, a, token)
+        .then((res) => {
+          // window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    location.reload();
   };
 
   const register = async () => {
@@ -197,7 +254,7 @@ function Admin({ router }) {
           });
       }
     }
-    // location.reload();
+    location.reload();
   };
   console.log(role);
   return (
@@ -214,7 +271,9 @@ function Admin({ router }) {
             }
           })}
         </div>
-        {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
+        {(popUpDashType === "Relawan" ||
+          popUpDashType === "Simpatisan" ||
+          popUpDashType === "Akun Tim") && (
           <div className="w-full h-[200vh] absolute top-0">
             <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
             <div className="bg-white h-[1100px] w-[700px] absolute top-[5%] left-[33%] p-5">
@@ -247,60 +306,149 @@ function Admin({ router }) {
                 />
               </div>
               <div className="font-bold text-4xl">Tambah {popUpDashType}</div>
-              <FormInputItem label={"Nama Akun"} type="text" onChange={(e) => setFormData({ ...formData, name: e.target.value })} value={formData.name} />
-              <FormInputItem label={"Email"} type="text" onChange={(e) => setFormData({ ...formData, email: e.target.value })} value={formData.email} disabled={editData && true} />
-              <FormInputItem label={"No Hp"} type="text" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} value={formData.phone} />
-              <FormInputItem label={"NIK"} type="text" onChange={(e) => setFormData({ ...formData, nik: e.target.value })} value={formData.nik} disabled={editData && true} />
-              <FormSelect label={"Jenis Kelamin"} type="text" onChange={(e) => setFormData({ ...formData, gender: e.target.value })} options={gender} value={formData.gender} />
+              <FormInputItem
+                label={"Nama Akun"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                value={formData.name}
+              />
+              <FormInputItem
+                label={"Email"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                value={formData.email}
+                disabled={editData && true}
+              />
+              <FormInputItem
+                label={"No Hp"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                value={formData.phone}
+              />
+              <FormInputItem
+                label={"NIK"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, nik: e.target.value })
+                }
+                value={formData.nik}
+                disabled={editData && true}
+              />
+              <FormSelect
+                label={"Jenis Kelamin"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, gender: e.target.value })
+                }
+                options={gender}
+                value={formData.gender}
+              />
               <FormDatePlaceBirth
-                onChangePlace={(e) => setFormData({ ...formData, place_birth: e.target.value })}
+                onChangePlace={(e) =>
+                  setFormData({ ...formData, place_birth: e.target.value })
+                }
                 valuePlace={formData.place_birth}
-                onChangeDate={(e) => setFormData({ ...formData, date_birth: e.target.value })}
+                onChangeDate={(e) =>
+                  setFormData({ ...formData, date_birth: e.target.value })
+                }
                 valueDate={formData.date_birth}
               />
-              {popUpDashType !== "Akun Tim" && <FormSelect label={"Pekerjaan"} type="text" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} options={pekerjaan} value={formData.pekerjaan?._id} />}
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  label={"Pekerjaan"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, pekerjaan: e.target.value })
+                  }
+                  options={pekerjaan}
+                  value={formData.pekerjaan?._id}
+                />
+              )}
 
               <h1>ALAMAT {popUpDashType.toUpperCase()}</h1>
-              <FormSelect label={"Kabupaten Kota"} type="text" onChange={(e) => changeKabupaten(e.target.value)} options={kabupaten} value={formData.id_kabupaten} />
-              {popUpDashType !== "Akun Tim" && <FormSelect label={"Kecamatan"} type="text" onChange={(e) => changeKecamatan(e.target.value)} options={kecamatan} value={formData.id_kecamatan} />}
-              {popUpDashType !== "Akun Tim" && <FormSelect label={"Target Desa"} type="text" onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} options={kelurahan} value={formData.target_desa} />}
-
-              <FormInputItem label={"Alamat"} type="text" onChange={(e) => setFormData({ ...formData, address: e.target.value })} value={formData.address} />
-              <div className="border-b-2 my-[30px]" />
-              {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") && editData === null && (
-                <>
-                  {" "}
-                  <div className="flex justify-start items-center">
-                    <div className="w-[20%] mr-[50px]">Set Password</div>
-                    <div
-                      onClick={() => {
-                        generatePassword();
-                      }}
-                      className="flex items-center border-2 rounded-md p-3 cursor-pointer"
-                    >
-                      <img src={KeyIcon.src} /> <span className="font-bold ml-3">Generate Password</span>
-                    </div>
-                  </div>
-                  <FormInputPassword
-                    label={""}
-                    value={formData.password}
-                    type={passwordType}
-                    onclickShow={() => setPasswordType("text")}
-                    onClickHide={() => setPasswordType("password")}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  />
-                  <FormInputPassword
-                    label={"Tulis Ulang Password"}
-                    value={confirmPassword}
-                    type={passwordType2}
-                    onclickShow={() => setPasswordType2("text")}
-                    onClickHide={() => setPasswordType2("password")}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                    }}
-                  />
-                </>
+              <FormSelect
+                label={"Kabupaten Kota"}
+                type="text"
+                onChange={(e) => changeKabupaten(e.target.value)}
+                options={kabupaten}
+                value={formData.id_kabupaten}
+              />
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  label={"Kecamatan"}
+                  type="text"
+                  onChange={(e) => changeKecamatan(e.target.value)}
+                  options={kecamatan}
+                  value={formData.id_kecamatan}
+                />
               )}
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  label={"Target Desa"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, target_desa: e.target.value })
+                  }
+                  options={kelurahan}
+                  value={formData.target_desa}
+                />
+              )}
+
+              <FormInputItem
+                label={"Alamat"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
+                value={formData.address}
+              />
+              <div className="border-b-2 my-[30px]" />
+              {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") &&
+                editData === null && (
+                  <>
+                    {" "}
+                    <div className="flex justify-start items-center">
+                      <div className="w-[20%] mr-[50px]">Set Password</div>
+                      <div
+                        onClick={() => {
+                          generatePassword();
+                        }}
+                        className="flex items-center border-2 rounded-md p-3 cursor-pointer"
+                      >
+                        <img src={KeyIcon.src} />{" "}
+                        <span className="font-bold ml-3">
+                          Generate Password
+                        </span>
+                      </div>
+                    </div>
+                    <FormInputPassword
+                      label={""}
+                      value={formData.password}
+                      type={passwordType}
+                      onclickShow={() => setPasswordType("text")}
+                      onClickHide={() => setPasswordType("password")}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                    />
+                    <FormInputPassword
+                      label={"Tulis Ulang Password"}
+                      value={confirmPassword}
+                      type={passwordType2}
+                      onclickShow={() => setPasswordType2("text")}
+                      onClickHide={() => setPasswordType2("password")}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                      }}
+                    />
+                  </>
+                )}
 
               <div className="flex mt-[40px] justify-end">
                 <div
@@ -340,6 +488,134 @@ function Admin({ router }) {
               </div>
             </div>
           </div>
+        )}
+        {popUpDptDpsType === "import" && (
+          <>
+            <div className="w-full h-[200vh] absolute top-0">
+              <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
+              <div className="bg-white h-[400px] w-[400px] absolute top-[5%] left-[37%] p-5">
+                <div className="flex justify-end cursor-pointer">
+                  <img
+                    onClick={() => {
+                      dispatch(showOrHidePopUpDptDps({ type: null }));
+                    }}
+                    src={CloseIcon.src}
+                  />
+                </div>
+                <h1>Impor Data DPT / DPS</h1>
+                <div className="flex justify-between m-3">
+                  <span>Contoh File</span>
+                  <div className="flex items-center rounded-lg border-orange-500 border p-2">
+                    <span className="mr-2 text-orange-500 font-bold">
+                      Download
+                    </span>
+                    <img src={DownloadIcon.src} />
+                  </div>
+                </div>
+                <div className="flex justify-between m-3">
+                  <span>Upload file Import</span>
+                  <label
+                    htmlfor="file_upload"
+                    className="h-[112px] border border-[#D1D5DB] cursor-pointer p-2"
+                  >
+                    <div></div>
+
+                    <div className="flex flex-col items-center pt-4">
+                      <img src={uploadFile.src} alt="upload here" />
+                      <p className="text-[12px] text-[#000000] font-semibold">
+                        <span className="text-[#FF5001]">Upload a file </span>of
+                        drag and drop{" "}
+                      </p>
+                      <p className="text-[12px] font-normal">.xls max 2MB</p>
+                    </div>
+                    <input
+                      onChange={(e) => {
+                        console.log(e.target.files);
+                        setFormDataDPtDps({
+                          ...formDataDPtDps,
+                          file: e.target.files[0],
+                        });
+                      }}
+                      id="file_upload"
+                      type="file"
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                <div>
+                  <div
+                    onClick={() => {
+                      importDPT();
+                    }}
+                    className="h-[42px] w-[240px] bg-[#E44700] rounded-md  cursor-pointer  text-[18px] text-white font-semibold items-center justify-center gap-2 flex"
+                  >
+                    Impor Sekarang
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        {popUpDptDpsType === "input_penduduk" && (
+          <>
+            <div className="w-full h-[200vh] absolute top-0">
+              <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
+              <div className="bg-white h-[450px] w-[400px] absolute top-[5%] left-[37%] p-5">
+                <div className="flex justify-end cursor-pointer">
+                  <img
+                    onClick={() => {
+                      dispatch(showOrHidePopUpDptDps({ type: null }));
+                    }}
+                    src={CloseIcon.src}
+                  />
+                </div>
+                <h1>Jumlah Penduduk & TPS</h1>
+                <br />
+
+                <div className="flex bg-orange-100 rounded-lg p-3">
+                  <img className="mr-3" src={peopleOrangeIcon.src} alt="" />
+                  <span className="mr-3">{dataDptDps.data?.jml_penduduk}</span>
+                  <span>Jumlah Penduduk</span>
+                </div>
+                <div className="flex bg-orange-100 rounded-lg p-3 mt-2">
+                  <img className="mr-3" src={lockOrangeIcon.src} alt="" />
+                  <span className="mr-3">{dataDptDps.data?.jml_tps}</span>
+                  <span>Jumlah TPS</span>
+                </div>
+                <div className="flex items-center justify-start w-[400px] mt-[20px]">
+                  <span className="mr-[20px]">Jumlah Penduduk</span>
+                  <input
+                    className="h-[40px] w-[50%] border text-[#374151] px-2 outline-0"
+                    type="number"
+                    onChange={(e) => {
+                      setJmlPenduduk(e.target.value);
+                    }}
+                    // value={jmlPenduduk}
+                  />
+                </div>
+                <div className="flex items-center justify-start w-[400px] mt-[20px]">
+                  <span className="mr-[65px]">Jumlah TPS</span>
+                  <input
+                    className="h-[40px] w-[50%] border text-[#374151] px-2 outline-0"
+                    type="number"
+                    onChange={(e) => {
+                      setJmlTps(e.target.value);
+                    }}
+                    // value={jmlTps}
+                  />
+                </div>
+                <br />
+                <div
+                  onClick={() => {
+                    postDataDptDps();
+                  }}
+                  className="h-[42px] w-[240px] bg-[#E44700] rounded-md  cursor-pointer  text-[18px] text-white font-semibold items-center justify-center gap-2 flex"
+                >
+                  Simpan Data
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </>

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   popUpDashType: null,
+  popUpDptDpsType: null,
   idPeriode: "6cea57ca-725e-4bbb-84b5-7ccc88f0cd51",
   editData: null,
   formType: null,
@@ -14,6 +15,9 @@ export const panelSlice = createSlice({
   reducers: {
     showOrHidePopUpDash: (state, action) => {
       state.popUpDashType = action.payload.type;
+    },
+    showOrHidePopUpDptDps: (state, action) => {
+      state.popUpDptDpsType = action.payload.type;
     },
     setIdPeriode: (state, action) => {
       state.idPeriode = action.payload.idPeriode;
@@ -33,6 +37,7 @@ export const panelSlice = createSlice({
 
 export const {
   showOrHidePopUpDash,
+  showOrHidePopUpDptDps,
   setIdPeriode,
   setEditData,
   setFormType,
