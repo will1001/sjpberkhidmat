@@ -433,6 +433,39 @@ export function HakPilihIcon() {
     </svg>
   );
 }
+export function FilterIcon() {
+  return (
+    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1.05469 2.5C1.05469 1.94772 1.5024 1.5 2.05469 1.5H18.0547C18.607 1.5 19.0547 1.94772 19.0547 2.5V5.08579C19.0547 5.351 18.9493 5.60536 18.7618 5.79289L12.3476 12.2071C12.16 12.3946 12.0547 12.649 12.0547 12.9142V15.5L8.05469 19.5V12.9142C8.05469 12.649 7.94933 12.3946 7.76179 12.2071L1.34758 5.79289C1.16004 5.60536 1.05469 5.351 1.05469 5.08579V2.5Z"
+        stroke="current"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+export function DetailIcon() {
+  return (
+    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M14.0007 8C14.0007 9.65685 12.6576 11 11.0007 11C9.34388 11 8.00073 9.65685 8.00073 8C8.00073 6.34315 9.34388 5 11.0007 5C12.6576 5 14.0007 6.34315 14.0007 8Z"
+        stroke="#374151"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M1.45898 7.99997C2.73326 3.94288 6.52354 1 11.0012 1C15.4788 1 19.2691 3.94291 20.5434 8.00004C19.2691 12.0571 15.4788 15 11.0012 15C6.52354 15 2.73324 12.0571 1.45898 7.99997Z"
+        stroke="#374151"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 // icon kategori Kabar
 

@@ -148,34 +148,6 @@ const Relawan = () => {
             <div className="flex flex-col gap-3">
               <p className="text-[#374151] text-[32px] font-bold mb-[27px] ">Tambah Akun Relawan</p>
               <p className="text-[#D1D5DB] font-medium mb-3">IDENTITAS PRIBADI</p>
-              {/* nama */}
-              <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="nama_akun" className="text-[14px] text-[#374151] ">
-                  Nama Akun
-                </label>
-                <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="nama_akun" />
-              </div>
-              {/* email */}
-              <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="email" className="text-[14px] text-[#374151] ">
-                  Email
-                </label>
-                <input value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"email"} id="email" />
-              </div>
-              {/* contact */}
-              <div className="flex justify-between items-center pr-[140px]">
-                <label htmlFor="noHp" className="text-[14px] text-[#374151] ">
-                  No Hp Relawan
-                </label>
-                <PatternFormat
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  id="noHp"
-                  format="### ### ### ###"
-                  allowEmptyFormatting
-                  className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
-                />
-              </div>
               {/* NIK */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="NIK" className="text-[14px] text-[#374151] ">
@@ -196,12 +168,56 @@ const Relawan = () => {
                   </div>
                 </div>
               </div>
+              {/* nama */}
+              <div className="flex justify-between items-center pr-[140px]">
+                <label htmlFor="nama_akun" className="text-[14px] text-[#374151] ">
+                  Nama Akun
+                </label>
+                <input
+                  disabled={nikRes === undefined ? true : false}
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                  type={"text"}
+                  id="nama_akun"
+                />
+              </div>
+              {/* email */}
+              <div className="flex justify-between items-center pr-[140px]">
+                <label htmlFor="email" className="text-[14px] text-[#374151] ">
+                  Email
+                </label>
+                <input
+                  disabled={nikRes === undefined ? true : false}
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                  type={"email"}
+                  id="email"
+                />
+              </div>
+              {/* contact */}
+              <div className="flex justify-between items-center pr-[140px]">
+                <label htmlFor="noHp" className="text-[14px] text-[#374151] ">
+                  No Hp Relawan
+                </label>
+                <PatternFormat
+                  disabled={nikRes === undefined ? true : false}
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  id="noHp"
+                  format="### ### ### ###"
+                  allowEmptyFormatting
+                  className="h-[40px] w-[363px] px-2 outline-0 border text-[#374151]"
+                />
+              </div>
+
               {/* gender */}
               <div className="flex justify-between items-center pr-[140px]">
                 <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
                   Jenis Kelamin
                 </label>
-                <select value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151]">
+                <select disabled={nikRes === undefined ? true : false} value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151]">
                   <option value="" disabled selected hidden>
                     Pilih Jenis Kelamin
                   </option>
@@ -215,8 +231,9 @@ const Relawan = () => {
                   Tempat & Tgl Lahir
                 </label>
                 <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
-                  <input value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
+                  <input disabled={nikRes === undefined ? true : false} value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
                   <input
+                    disabled={nikRes === undefined ? true : false}
                     value={formData.date_birth}
                     onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
                     className=" outline-0"
@@ -234,7 +251,7 @@ const Relawan = () => {
                 <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
                   Pekerjaan
                 </label>
-                <select value={formData.pekerjaan} onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]">
+                <select disabled={nikRes === undefined ? true : false} value={formData.pekerjaan} onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]">
                   <option value="" disabled selected hidden>
                     Pilih Pekerjaan
                   </option>
@@ -254,6 +271,7 @@ const Relawan = () => {
                   Kabupaten Kota
                 </label>
                 <select
+                  disabled={nikRes === undefined ? true : false}
                   value={formData.id_kabupaten}
                   onChange={(e) => {
                     changeKabupaten(e.target.value);
@@ -276,7 +294,7 @@ const Relawan = () => {
                 <label htmlFor="kecamatan" className="text-[14px] text-[#374151] pr-[72px]">
                   Kecamatan
                 </label>
-                <select value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+                <select disabled={nikRes === undefined ? true : false} value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
                   <option value="" disabled selected hidden>
                     Pilih Kecamatan
                   </option>
@@ -293,7 +311,13 @@ const Relawan = () => {
                 <label htmlFor="target_desa" className="text-[14px] text-[#374151] pr-[72px]">
                   Target Desa
                 </label>
-                <select value={formData.target_desa} onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} id="target_desa" className="h-[40px] w-[363px] border outline-0 text-[#374151]">
+                <select
+                  disabled={nikRes === undefined ? true : false}
+                  value={formData.target_desa}
+                  onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })}
+                  id="target_desa"
+                  className="h-[40px] w-[363px] border outline-0 text-[#374151]"
+                >
                   <option value="" disabled selected hidden>
                     Pilih Desa
                   </option>
@@ -308,7 +332,14 @@ const Relawan = () => {
               </div>
               <div className="flex justify-between items-center pr-[140px]">
                 <label className="text-[14px] text-[#374151]">Alamat</label>
-                <input value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="text" />
+                <input
+                  disabled={nikRes === undefined ? true : false}
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                  type={"text"}
+                  id="text"
+                />
               </div>
             </div>
             <div className="border-b-2 my-[30px]" />
@@ -320,7 +351,7 @@ const Relawan = () => {
                   Set Password
                 </label>
                 <div className={`flex items-center pr-2 h-[40px] w-[363px] border ${passwordMatch === false && "border-[#DC2626]"}`}>
-                  <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="w-full text-[#374151] px-2 outline-0" type={passwordType} id="password" />
+                  <input disabled={nikRes === undefined ? true : false} onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="w-full text-[#374151] px-2 outline-0" type={passwordType} id="password" />
                   {passwordType === "password" ? (
                     <img className="cursor-pointer" onClick={() => setPasswordType("text")} src={hide.src} alt="hide.png" />
                   ) : (
@@ -338,7 +369,7 @@ const Relawan = () => {
                   Tulis Ulang Password
                 </label>
                 <div className="flex items-center pr-2 h-[40px] w-[363px] border">
-                  <input onChange={(e) => verifikasiPass(e.target.value)} className="w-full text-[#374151] px-2 outline-0" type={passwordType2} id="password" />
+                  <input disabled={nikRes === undefined ? true : false} onChange={(e) => verifikasiPass(e.target.value)} className="w-full text-[#374151] px-2 outline-0" type={passwordType2} id="password" />
                   {passwordType2 === "password" ? (
                     <img className="cursor-pointer" onClick={() => setPasswordType2("text")} src={hide.src} alt="hide.png" />
                   ) : (
@@ -356,6 +387,7 @@ const Relawan = () => {
             </div>
             <div className="flex gap-3 mt-[40px]  ">
               <input
+                disabled={nikRes === undefined ? true : false}
                 onClick={(e) => {
                   setAgreement(!agreement);
                 }}

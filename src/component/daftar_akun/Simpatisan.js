@@ -109,7 +109,7 @@ const Simpatisan = () => {
       });
   }, [nikRes]);
 
-  console.log(nikRes);
+  console.log(nikRes, "sdasdsad");
   console.log(kelurahan);
 
   return (
@@ -151,12 +151,6 @@ const Simpatisan = () => {
           <div className="flex flex-col gap-3">
             <p className="text-[#D1D5DB] font-medium ">IDENTITAS PRIBADI</p>
             <div className="flex justify-between items-center pr-[140px]">
-              <label htmlFor="nama" className="text-[14px] text-[#374151] ">
-                Nama
-              </label>
-              <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="nama" />
-            </div>
-            <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="NIK" className="text-[14px] text-[#374151] ">
                 NIK
               </label>
@@ -176,16 +170,37 @@ const Simpatisan = () => {
               </div>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
+              <label htmlFor="nama" className="text-[14px] text-[#374151] ">
+                Nama
+              </label>
+              <input
+                disabled={nikRes === undefined ? true : false}
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                type={"text"}
+                id="nama"
+              />
+            </div>
+
+            <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="email" className="text-[14px] text-[#374151] ">
                 Email
               </label>
-              <input value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"email"} id="email" />
+              <input
+                disabled={nikRes === undefined ? true : false}
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                type={"email"}
+                id="email"
+              />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
               <label htmlFor="gender" className="text-[14px] text-[#374151] ">
                 Jenis Kelamin
               </label>
-              <select value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151] outline-0">
+              <select disabled={nikRes === undefined ? true : false} value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151] outline-0">
                 <option value="" selected disabled>
                   Pilih Jenis Kelamin
                 </option>
@@ -198,8 +213,9 @@ const Simpatisan = () => {
                 Tempat & Tgl Lahir
               </label>
               <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
-                <input value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
+                <input disabled={nikRes === undefined ? true : false} value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
                 <input
+                  disabled={nikRes === undefined ? true : false}
                   value={formData.date_birth}
                   onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
                   className=" outline-0"
@@ -217,6 +233,7 @@ const Simpatisan = () => {
                 NO HP
               </label>
               <PatternFormat
+                disabled={nikRes === undefined ? true : false}
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 id="noHp"
@@ -230,7 +247,7 @@ const Simpatisan = () => {
               <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
                 Pekerjaan
               </label>
-              <select value={formData.pekerjaan} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })}>
+              <select disabled={nikRes === undefined ? true : false} value={formData.pekerjaan} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })}>
                 <option value="" disabled selected>
                   Pilih Pekerjaan
                 </option>
@@ -254,7 +271,7 @@ const Simpatisan = () => {
               <label htmlFor="kabupaten" className="text-[14px] text-[#374151] pr-[72px]">
                 Kabupaten Kota
               </label>
-              <select value={formData.id_kabupaten} onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+              <select disabled={nikRes === undefined ? true : false} value={formData.id_kabupaten} onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected hidden>
                   Pilih Kabupaten
                 </option>
@@ -271,7 +288,7 @@ const Simpatisan = () => {
               <label htmlFor="kecamatan" className="text-[14px] text-[#374151] pr-[72px]">
                 Kecamatan
               </label>
-              <select value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+              <select disabled={nikRes === undefined ? true : false} value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected hidden>
                   Pilih Kecamatan
                 </option>
@@ -288,7 +305,7 @@ const Simpatisan = () => {
               <label htmlFor="desa" className="text-[14px] text-[#374151] pr-[72px]">
                 Desa
               </label>
-              <select value={formData.target_desa} onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} id="desa" className="h-[40px] w-[363px] border text-[#374151]">
+              <select disabled={nikRes === undefined ? true : false} value={formData.target_desa} onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} id="desa" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected hidden>
                   Pilih Desa
                 </option>
@@ -305,7 +322,14 @@ const Simpatisan = () => {
               <label htmlFor="alamat" className="text-[14px] text-[#374151] ">
                 Alamat
               </label>
-              <input value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0" type={"text"} id="alamat" />
+              <input
+                disabled={nikRes === undefined ? true : false}
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
+                type={"text"}
+                id="alamat"
+              />
             </div>
           </div>
           <div className="flex justify-end mr-[140px] gap-3">
