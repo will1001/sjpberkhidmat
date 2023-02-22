@@ -505,12 +505,15 @@ function Admin({ router }) {
                 <h1>Impor Data DPT / DPS</h1>
                 <div className="flex justify-between m-3">
                   <span>Contoh File</span>
-                  <div className="flex items-center rounded-lg border-orange-500 border p-2">
+                  <a
+                    href="http://file.sjpberkhidmat.id/format dpt_dps.xlsx"
+                    className="flex items-center rounded-lg border-orange-500 border p-2 cursor-pointer"
+                  >
                     <span className="mr-2 text-orange-500 font-bold">
                       Download
                     </span>
                     <img src={DownloadIcon.src} />
-                  </div>
+                  </a>
                 </div>
                 <div className="flex justify-between m-3">
                   <span>Upload file Import</span>
