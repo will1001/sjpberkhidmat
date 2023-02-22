@@ -506,7 +506,7 @@ function Admin({ router }) {
                 <div className="flex justify-between m-3">
                   <span>Contoh File</span>
                   <a
-                    href="http://file.sjpberkhidmat.id/format dpt_dps.xlsx"
+                    href="http://file.sjpberkhidmat.id/format_dpt_dps.xlsx"
                     className="flex items-center rounded-lg border-orange-500 border p-2 cursor-pointer"
                   >
                     <span className="mr-2 text-orange-500 font-bold">
