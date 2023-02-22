@@ -17,14 +17,14 @@ const MataramContent = ({ data, setHover, targetKab, setIcon }) => {
   const namaKabupaten = () => {
     if (id_kabupaten === "mataram") {
       setNama("Kota Mataram");
-    } else if (id_kabupaten === "5203") {
+    } else if (id_kabupaten === "lombok timur") {
       setNama("Kab. Lombok Timur");
     } else if (id_kabupaten === "lombok barat") {
       setNama("Kab. Lombok Barat");
-    } else if (id_kabupaten === "5202") {
+    } else if (id_kabupaten === "lombok tengah") {
       setNama("Kab. Lombok Tengah");
-    } else if (id_kabupaten === "5208") {
-      setNama("Kab. Lombok Timur");
+    } else if (id_kabupaten === "lombok utara") {
+      setNama("Kab. Lombok Utara");
     }
   };
 
@@ -40,8 +40,15 @@ const MataramContent = ({ data, setHover, targetKab, setIcon }) => {
         <div onClick={() => router.back()}>
           <Button title={"Kembali"} text={"white"} icon={<KembaliIcon />} bgColor={"rgb(51, 65, 85)"} w={"149px"} h={"53px"} />
         </div>
-
-        <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />
+        <div
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+            })
+          }
+        >
+          <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />
+        </div>
       </div>
       <h1 className="text-[32px] font-bold text-slate-700">{nama}</h1>
       <ButtonPopUpInfo gantiIcon={setIcon} data={id_kabupaten} setHover={setHover} targetKec={targetKab} />
