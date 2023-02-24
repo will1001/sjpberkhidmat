@@ -123,8 +123,8 @@ function DetailProgram({ router }) {
             alt=""
           />
         )}
-        {router.query.video !== null && (
-          <div >
+        {router.query.video !== "" && (
+          <div>
             {/* <video className="my-[20px]" controls>
               <source
                 src={
