@@ -162,7 +162,7 @@ const Relawan = () => {
                     allowEmptyFormatting
                     className="h-[40px] w-[235px]  px-2 outline-0 border text-[#374151]"
                   />
-                  <div onClick={() => cekNik(formData.nik} className="flex cursor-pointer justify-center gap-2 items-center w-[116px] border border-[#E44700] rounded-sm" type={"text"}>
+                  <div onClick={() => cekNik()} className="flex cursor-pointer justify-center gap-2 items-center w-[116px] border border-[#E44700] rounded-sm" type={"text"}>
                     <img src={cekNikIcon.src} />
                     <p className="text-[16px] text-[#E44700] font-semibold">Cek NIK</p>
                   </div>
