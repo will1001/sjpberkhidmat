@@ -11,6 +11,7 @@ function PetaKekuatan() {
   const periode = useSelector((state) => state.panel.idPeriode);
   const kabupaten = useFetch("get", "user/kabupaten");
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
+  const getStatistic = useFetch("get", "user/dashboard/statistik/kabupaten");
   const [targetKab, setTargetKab] = useState([]);
   const [hover, setHover] = useState();
   const [dataMataram, setDataMataram] = useState();
@@ -24,14 +25,22 @@ function PetaKekuatan() {
   }, []);
 
   // const dataChill = (data) => console.log(data);
-  // console.log(kabupaten, "target");
+  // console.log(getStatistic);
 
   return (
     <div className="w-[1350px]">
       <div className="flex w-full">
         <div className="flex flex-col basis-3/12 ">
           <SideBar
-            content={<PetaKekuatanContent program={getProgram?.data?.filter((data) => [periode].includes(data.id_periode))} targetKab={targetKab?.data?.map((res) => res.total_target)} setHover={setHover} dataKabupaten={kabupaten} />}
+            content={
+              <PetaKekuatanContent
+                statistic={getStatistic?.data}
+                program={getProgram?.data?.filter((data) => [periode].includes(data.id_periode))}
+                targetKab={targetKab?.data?.map((res) => res.total_target)}
+                setHover={setHover}
+                dataKabupaten={kabupaten}
+              />
+            }
           />
         </div>
         <div className="basis-9/12 bg-white h-screen w-full">

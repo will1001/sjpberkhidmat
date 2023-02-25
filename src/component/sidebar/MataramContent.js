@@ -6,24 +6,33 @@ import ProgressBar from "../../utility/ProgresBar";
 import ButtonPopUpInfo from "../ButtonPopUpInfo";
 import { useRouter } from "next/router";
 
-const MataramContent = ({ data, setHover, targetKab, setIcon }) => {
-  const persentase = (10 / 20) * 100;
+const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec }) => {
+  const jumlahSimpatisan =
+    statisticKec !== undefined &&
+    statisticKec?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.jumlah_simpatisans;
+    }, 0);
+  const targetSuara =
+    statisticKec !== undefined &&
+    statisticKec?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.target_suara;
+    }, 0);
+  const persentase = (jumlahSimpatisan / targetSuara) * 100;
   const [nama, setNama] = useState();
   const router = useRouter();
 
   const id_kabupaten = data?.toString();
-  console.log(id_kabupaten);
 
   const namaKabupaten = () => {
-    if (id_kabupaten === "mataram") {
+    if (id_kabupaten === "5271") {
       setNama("Kota Mataram");
-    } else if (id_kabupaten === "lombok timur") {
+    } else if (id_kabupaten === "5203") {
       setNama("Kab. Lombok Timur");
-    } else if (id_kabupaten === "lombok barat") {
+    } else if (id_kabupaten === "5201") {
       setNama("Kab. Lombok Barat");
-    } else if (id_kabupaten === "lombok tengah") {
+    } else if (id_kabupaten === "5202") {
       setNama("Kab. Lombok Tengah");
-    } else if (id_kabupaten === "lombok utara") {
+    } else if (id_kabupaten === "5208") {
       setNama("Kab. Lombok Utara");
     }
   };
@@ -32,7 +41,7 @@ const MataramContent = ({ data, setHover, targetKab, setIcon }) => {
     namaKabupaten();
   }, []);
 
-  // console.log(targetKab, "asdasd");
+  // console.log(statisticKec !== undefined && statisticKec, "asdasd");
 
   return (
     <div>
@@ -51,14 +60,14 @@ const MataramContent = ({ data, setHover, targetKab, setIcon }) => {
         </div>
       </div>
       <h1 className="text-[32px] font-bold text-slate-700">{nama}</h1>
-      <ButtonPopUpInfo gantiIcon={setIcon} data={id_kabupaten} setHover={setHover} targetKec={targetKab} />
+      <ButtonPopUpInfo gantiIcon={setIcon} statisticKec={statisticKec} data={id_kabupaten} setHover={setHover} targetKec={targetKab} />
 
       <div className="mt-4 ">
         <div className="flex justify-between text[18px] text-[#374151] font-bold">
           <p className="w-[180px]">Target Simpatisan</p>
           <div className="flex gap-2">
-            <p className="text-[#6B7280]">100.000 /</p>
-            <p>200.000</p>
+            <p className="text-[#6B7280]">{jumlahSimpatisan?.toLocaleString()} /</p>
+            <p>{targetSuara?.toLocaleString()}</p>
           </div>
         </div>
         <ProgressBar progress={persentase.toFixed()} bgcolor={"#FF5001"} height={"11px"} />

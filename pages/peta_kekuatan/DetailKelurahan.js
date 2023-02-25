@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import axiosFetch from "../../src/API/axiosFetch";
 import useFetch from "../../src/API/useFetch";
@@ -9,14 +9,28 @@ const DetailKelurahan = () => {
   const getKabupaten = useFetch("get", "user/kabupaten");
   const router = useRouter();
   const [kecamatan, setKecamatan] = useState();
+  const [filterKab, setFilterKab] = useState();
   const [filterKecamatan, setFilterKecamatan] = useState();
   const [popupFilter, setPopupFilter] = useState(false);
+  const detailDesa = useFetch("get", `user/dashboard/statistik/kelurahan/5208010?page=1&limit=10`);
 
-  const changeKecamatan = async (idKabupaten) => {
+  useEffect(() => {
+    if (router.query.id_kabupaten !== undefined) {
+      setFilterKab(router.query.id_kabupaten);
+      const res = axiosFetch("get", `user/kecamatan/${router.query.id_kabupaten}`).then((res) => setKecamatan(res.data));
+      if (router.query.id_kecamatan !== undefined) {
+        setFilterKecamatan(router.query.id_kecamatan);
+      }
+    }
+  }, [router.query.id_kabupaten]);
+
+  const changeKabupaten = async (idKabupaten) => {
+    setFilterKab(idKabupaten);
     const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
     setKecamatan(res.data);
   };
-  console.log(filterKecamatan);
+
+  console.log(kecamatan);
   return (
     <>
       <div style={popupFilter === true ? { visibility: "visible" } : { visibility: "hidden" }} className="fixed top-0 left-0 w-screen h-screen bg-[#37415152] z-50">
@@ -66,7 +80,7 @@ const DetailKelurahan = () => {
         <div className="flex mt-[24px] pr-[228px] justify-between">
           <div>
             <p className="text-[#9CA3AF] font-medium">NAMA KABUPATEN / KOTA</p>
-            <select onChange={(e) => changeKecamatan(e.target.value)} className="border border-[#9CA3AF] text-[18px] font-semibold mt-[16px] outline-0 cursor-pointer w-full px-2 py-2 rounded-md">
+            <select value={filterKab} onChange={(e) => changeKabupaten(e.target.value)} className="border border-[#9CA3AF] text-[18px] font-semibold mt-[16px] outline-0 cursor-pointer w-full px-2 py-2 rounded-md">
               <option value={""} disabled>
                 Pilih Kabupaten
               </option>
@@ -79,12 +93,12 @@ const DetailKelurahan = () => {
           </div>
           <div>
             <p className="text-[#9CA3AF] font-medium">DAFTAR KECAMATAN</p>
-            <select onChange={(e) => setFilterKecamatan(e.target.value)} className="border border-[#9CA3AF] text-[18px] font-semibold mt-[16px] outline-0 cursor-pointer w-full px-2 py-2 rounded-md">
+            <select value={filterKecamatan} onChange={(e) => setFilterKecamatan(e.target.value)} className="border border-[#9CA3AF] text-[18px] font-semibold mt-[16px] outline-0 cursor-pointer w-full px-2 py-2 rounded-md">
               <option value={""} disabled>
                 Pilih Kecamatan
               </option>
               {kecamatan?.data?.map((res) => (
-                <option key={res._id} value={res.name}>
+                <option key={res._id} value={res._id}>
                   {res.name}
                 </option>
               ))}

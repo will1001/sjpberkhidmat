@@ -3,6 +3,7 @@ import { withRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axiosFetch from "../../src/API/axiosFetch";
+import useFetch from "../../src/API/useFetch";
 import ListKecamatan from "../../src/component/petakekuatan/ListKecamatan";
 import MataramContent from "../../src/component/sidebar/MataramContent";
 import SideBar from "../../src/component/sidebar/SideBar";
@@ -20,6 +21,7 @@ const DetailKota = ({ router }) => {
   const token = useSelector((state) => state.user.token);
   const [targetKab, setTargetKab] = useState();
   const [icon, setIcon] = useState();
+  const statisticKec = useFetch("get", `user/dashboard/statistik/kecamatan/${router.query.kota}`);
 
   useEffect(() => {
     axiosFetch("get", "user/target/details/kabupaten", {}, token)
@@ -27,39 +29,39 @@ const DetailKota = ({ router }) => {
       .catch((err) => console.log(err));
   }, [router.query.kota]);
 
-  console.log(targetKab);
+  // console.log(statisticKec.data);
 
   return (
     <div className="flex">
-      <div className="basis-4/12 z-50 bg-white pb-[100px]  ">{<SideBar content={<MataramContent setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
+      <div className="basis-4/12 z-50 bg-white pb-[100px]  ">{<SideBar content={<MataramContent statisticKec={statisticKec?.data} setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
 
       <div className="basis-9/12 ">
-        {router.query.kota === "mataram" && (
+        {router.query.kota === "5271" && (
           <div className="fixed left-[-900px] top-[-700px]">
             <MataramMap hover={hover} />
           </div>
         )}
-        {router.query.kota === "lombok barat" && (
+        {router.query.kota === "5201" && (
           <div className="fixed left-[550px] top-[]">
-            <ListKecamatan kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
             <PetaLombokBarat hover={hover} />
           </div>
         )}
-        {router.query.kota === "lombok utara" && (
+        {router.query.kota === "5208" && (
           <div>
-            <ListKecamatan kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
             <PetaLombokUtara hover={hover} />
           </div>
         )}
-        {router.query.kota === "lombok tengah" && (
+        {router.query.kota === "5202" && (
           <div>
-            <ListKecamatan kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
             <PetaLombokTengah hover={hover} />
           </div>
         )}
-        {router.query.kota === "lombok timur" && (
+        {router.query.kota === "5203" && (
           <div>
-            <ListKecamatan kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
             <PetaLombokTimur hover={hover} />
           </div>
         )}
