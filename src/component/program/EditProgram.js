@@ -41,8 +41,12 @@ const EditProgram = ({ close, data }) => {
     textAlign: "center",
     color: "#374151",
   };
+  const [imageFile, setImageFile] = useState();
 
   const [switchButton, setSwitchButton] = useState(false);
+  const [dataEdit, setDataEdit] = useState(data);
+
+  const [fileUpload, setFileUpload] = useState(data.image ? "image" : "video");
 
   const kabupaten = useFetch("get", "user/kabupaten");
   const token = useSelector((state) => state.user.token);
@@ -89,6 +93,7 @@ const EditProgram = ({ close, data }) => {
     wilayah: "",
     category: "",
     image: "",
+    video: "",
     publication: false,
   });
 
@@ -98,8 +103,11 @@ const EditProgram = ({ close, data }) => {
     a.append("title", dataEdit.title);
     a.append("description", dataEdit.description);
     a.append("category", dataEdit.category);
-    if (imagePreview !== undefined) {
-      a.append("image", imagePreview);
+
+    if (fileUpload === "image") {
+      a.append("image", imageFile);
+    } else {
+      a.append("video", dataEdit.video);
     }
     a.append("publication", dataEdit.publication);
     a.append("id_kabupaten", dataEdit.id_kabupaten);
@@ -119,10 +127,15 @@ const EditProgram = ({ close, data }) => {
         });
     }
   };
-  const [dataEdit, setDataEdit] = useState(data);
 
   const callTextEditor = (setFormProgram, value, formProgram) => {
-    return <DynamicHeader value={value} setFormProgram={setFormProgram} formProgram={formProgram} />;
+    return (
+      <DynamicHeader
+        value={value}
+        setFormProgram={setFormProgram}
+        formProgram={formProgram}
+      />
+    );
   };
 
   const [imagePreview, setImagePreview] = useState();
@@ -144,11 +157,38 @@ const EditProgram = ({ close, data }) => {
 
   useEffect(() => {
     if (videoPreview === undefined) {
-      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${videoEdit}`} />);
+      setVideoPlay(
+        <ReactPlayer
+          height={200}
+          width={400}
+          playing={false}
+          controls={true}
+          volume={1}
+          url={`${videoEdit}`}
+        />
+      );
     } else if (videoEdit === undefined) {
-      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + videoPreview}`} />);
+      setVideoPlay(
+        <ReactPlayer
+          height={200}
+          width={400}
+          playing={false}
+          controls={true}
+          volume={1}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + videoPreview}`}
+        />
+      );
     } else {
-      setVideoPlay(<ReactPlayer height={200} width={400} playing={false} controls={true} volume={1} url={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + videoPreview}`} />);
+      setVideoPlay(
+        <ReactPlayer
+          height={200}
+          width={400}
+          playing={false}
+          controls={true}
+          volume={1}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + videoPreview}`}
+        />
+      );
     }
   }, [videoPreview, videoEdit, data]);
 
@@ -172,21 +212,38 @@ const EditProgram = ({ close, data }) => {
         <img src={formProgram?.image} alt="" />
       </div> */}
 
-      <div className={`bg-slate-400 z-50 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${switchButton === true ? "visible" : "hidden"}`}>
+      <div
+        className={`bg-slate-400 z-50 bg-opacity-50 absolute w-screen top-0 h-[1100px] ${
+          switchButton === true ? "visible" : "hidden"
+        }`}
+      >
         <div className="h-[410px] w-[620px] ml-[416px] mt-[120px] bg-white absolute">
-          <div onClick={() => setSwitchButton(false)} className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer">
+          <div
+            onClick={() => setSwitchButton(false)}
+            className="h-[24px] w-[24] pr-2  absolute top-0 right-0 text-[24px] font-semibold text-[#9CA3AF] cursor-pointer"
+          >
             X
           </div>
           <div className="flex justify-center mt-[30px]">
             <img src={publikasiProgram.src} alt="publikasi_program.png" />
           </div>
-          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">Simpan Program?</p>
-          <p className="text-[#374151] flex justify-center pb-[32px]">anda akan merubah data program</p>
+          <p className="text-[32px] text-[#374151] font-bold flex justify-center pt-[32px] pb-[16px]">
+            Simpan Program?
+          </p>
+          <p className="text-[#374151] flex justify-center pb-[32px]">
+            anda akan merubah data program
+          </p>
           <div className="flex justify-center items-center gap-8">
-            <div onClick={() => setSwitchButton(false)} className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center">
+            <div
+              onClick={() => setSwitchButton(false)}
+              className="cursor-pointer w-[184px] h-[49px] border border-[#9CA3AF] rounded-sm flex items-center justify-center"
+            >
               <p className="text-[18px] text-[#374151] font-semibold">Batal</p>
             </div>
-            <div onClick={() => postArtikel(dataEdit?._id)} className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center">
+            <div
+              onClick={() => postArtikel(dataEdit?._id)}
+              className="cursor-pointer w-[184px] h-[49px] bg-[#FF5001] rounded-sm flex items-center justify-center"
+            >
               <p className="text-[18px] text-[#fff] font-semibold">Simpan</p>
             </div>
           </div>
@@ -194,7 +251,9 @@ const EditProgram = ({ close, data }) => {
       </div>
       <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
         <Logo />
-        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[400px]">Edit Program</p>
+        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[400px]">
+          Edit Program
+        </p>
         <div onClick={() => setSwitchButton(true)}>
           <NewButton title={"Simpan"} style={publikasiStyle} />
         </div>
@@ -211,7 +270,9 @@ const EditProgram = ({ close, data }) => {
               Judul Program
             </label>
             <input
-              onChange={(e) => setDataEdit({ ...dataEdit, title: e.target.value })}
+              onChange={(e) =>
+                setDataEdit({ ...dataEdit, title: e.target.value })
+              }
               value={dataEdit?.title}
               className="border border-[#D1D5DB] h-[48px] outline-0 rounded-md p-[12px] text-[#374151] font-medium"
               type={"text"}
@@ -219,29 +280,52 @@ const EditProgram = ({ close, data }) => {
             />
 
             {/* description  */}
-            <label id="title" className="text-[#6B7280] text-[16px] font-serif pt-[60px]">
+            <label
+              id="title"
+              className="text-[#6B7280] text-[16px] font-serif pt-[60px]"
+            >
               detail Program
             </label>
-            <div className="w-[790px]">{callTextEditor(setDataEdit, dataEdit?.description, dataEdit)}</div>
+            <div className="w-[790px]">
+              {callTextEditor(setDataEdit, dataEdit?.description, dataEdit)}
+            </div>
           </div>
         </div>
         <div className="basis-4/12  pt-[34px] pl-[50px] pr-[41px] border-l-2">
-          <p className="font-bold text-[#374151] text-[18px] mb-[16px]">Publikasi di Website</p>
+          <p className="font-bold text-[#374151] text-[18px] mb-[16px]">
+            Publikasi di Website
+          </p>
           <div className="flex items-center gap-4">
             <div
-              onClick={() => setDataEdit({ ...dataEdit, publication: !dataEdit.publication })}
-              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${dataEdit?.publication === true ? ` bg-[#FF5001]  justify-end` : "bg-[#6B7280]"}`}
+              onClick={() =>
+                setDataEdit({ ...dataEdit, publication: !dataEdit.publication })
+              }
+              className={`w-[56px] h-[30px] cursor-pointer flex items-center px-[2px] rounded-full ${
+                dataEdit?.publication === true
+                  ? ` bg-[#FF5001]  justify-end`
+                  : "bg-[#6B7280]"
+              }`}
             >
               <div className={`bg-white w-[26px] h-[26px] rounded-full`}></div>
             </div>
             <p className="font-medium text-[#374151]">Publikasikan</p>
           </div>
-          <p className="text-[18px] text-[#374151] font-bold pt-[38px] pb-[24px]">Wilayah Tujuan Program</p>
+          <p className="text-[18px] text-[#374151] font-bold pt-[38px] pb-[24px]">
+            Wilayah Tujuan Program
+          </p>
           <div className="flex flex-col gap-2">
-            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+            <label
+              id="kota"
+              value="kota"
+              className="text-[12px] text-[#374151]"
+            >
               Kabupaten / Kota
             </label>
-            <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+            <select
+              onChange={(e) => changeKabupaten(e.target.value)}
+              id="kabupaten"
+              className="h-[40px] w-[363px] border text-[#374151]"
+            >
               <option value={dataEdit?.id_kabupaten} disabled selected>
                 Pilih Kabupaten
               </option>
@@ -253,10 +337,18 @@ const EditProgram = ({ close, data }) => {
                 );
               })}
             </select>
-            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+            <label
+              id="kota"
+              value="kota"
+              className="text-[12px] text-[#374151]"
+            >
               kecamatan
             </label>
-            <select onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+            <select
+              onChange={(e) => changeKecamatan(e.target.value)}
+              id="kecamatan"
+              className="h-[40px] w-[363px] border text-[#374151]"
+            >
               <option value="" disabled selected>
                 Pilih Kecamatan
               </option>
@@ -268,10 +360,20 @@ const EditProgram = ({ close, data }) => {
                 );
               })}
             </select>
-            <label id="kota" value="kota" className="text-[12px] text-[#374151]">
+            <label
+              id="kota"
+              value="kota"
+              className="text-[12px] text-[#374151]"
+            >
               Kel / Desa
             </label>
-            <select onChange={(e) => setDataEdit({ ...dataEdit, desa: e.target.value })} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+            <select
+              onChange={(e) =>
+                setDataEdit({ ...dataEdit, desa: e.target.value })
+              }
+              id="kecamatan"
+              className="h-[40px] w-[363px] border text-[#374151]"
+            >
               <option value="" disabled selected>
                 Pilih Kecamatan
               </option>
@@ -309,7 +411,9 @@ const EditProgram = ({ close, data }) => {
                   );
                 })}
             </div>
-            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">category Program</p>
+            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">
+              category Program
+            </p>
             {categoryProgram.map((res) => {
               return (
                 <div
@@ -321,54 +425,123 @@ const EditProgram = ({ close, data }) => {
                   value={dataEdit?.category?.toLowerCase()}
                   className="flex items-center gap-4"
                 >
-                  <div className={`h-[30px] w-[30px] rounded-full cursor-pointer ${dataEdit?.category?.toLowerCase() === res.name.toLowerCase() ? "bg-[#FF5001]" : "border-2 border-[#D1D5DB]"}  `} />
-                  <p className={`text-[16px] font-medium ${dataEdit?.category?.toLowerCase() === res.name.toLowerCase() ? "text-[#FF5001]" : "text-[#374151]"}`}>{res.name}</p>
+                  <div
+                    className={`h-[30px] w-[30px] rounded-full cursor-pointer ${
+                      dataEdit?.category?.toLowerCase() ===
+                      res.name.toLowerCase()
+                        ? "bg-[#FF5001]"
+                        : "border-2 border-[#D1D5DB]"
+                    }  `}
+                  />
+                  <p
+                    className={`text-[16px] font-medium ${
+                      dataEdit?.category?.toLowerCase() ===
+                      res.name.toLowerCase()
+                        ? "text-[#FF5001]"
+                        : "text-[#374151]"
+                    }`}
+                  >
+                    {res.name}
+                  </p>
                 </div>
               );
             })}
-            <p className="text-[18px] text-[#374151] font-bold pt-[30px]">Media File (Foto / Video)</p>
-            <label for="file_upload" className="h-[112px] border border-[#D1D5DB] cursor-pointer">
-              <div className="">
-                {imagePreview === undefined ? (
-                  <>
-                    {["mp4", "mkv"].includes(dataEdit.image.split(".").pop()) ? (
-                      <video className="h-[200px] bg-black w-full" controls>
-                        <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} type="video/mp4" />
-                      </video>
-                    ) : (
-                      <img className="h-[200px] bg-black w-full" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + dataEdit.image} />
-                    )}
-                  </>
-                ) : (
-                  <div>
-                    {["mp4", "mkv"].includes(imagePreview?.name?.split(".").pop()) ? (
-                      <video className="h-[200px] bg-black w-full" controls>
-                        <source src={URL.createObjectURL(imagePreview)} />
-                      </video>
-                    ) : (
-                      <img className="h-[200px] bg-black w-full" src={URL.createObjectURL(imagePreview)} />
-                    )}
-                  </div>
-                )}
+            <div className="">
+              {fileUpload === "image" ? (
+                <>
+                  <img
+                    className="h-[200px] bg-black w-full"
+                    src={
+                      imagePreview
+                        ? imagePreview
+                        : process.env.NEXT_PUBLIC_BASE_URL_IMAGE +
+                          dataEdit.image
+                    }
+                  />
+                </>
+              ) : (
+                <div>
+                  <iframe
+                    width="420"
+                    height="315"
+                    src={
+                      "https://www.youtube.com/embed/" +
+                      dataEdit.video.split("=").pop()
+                    }
+                  ></iframe>
+                </div>
+              )}
+            </div>
+            <div className="flex">
+              <div className="flex mr-3">
+                <span className="mr-1">Gambar</span>
+                <input
+                  type="radio"
+                  name="file"
+                  onChange={() => {
+                    setFileUpload("image");
+                  }}
+                  checked={fileUpload === "image" && true}
+                />
               </div>
-
-              <div className="flex flex-col items-center pt-4">
-                <img src={uploadFile.src} alt="upload here" />
-                <p className="text-[12px] text-[#000000] font-semibold">
-                  <span className="text-[#FF5001]">Upload a file </span>of drag and drop{" "}
+              <div className="flex">
+                <span className="mr-1">Video</span>
+                <input
+                  type="radio"
+                  name="file"
+                  onChange={() => {
+                    setFileUpload("video");
+                  }}
+                  checked={fileUpload === "video" && true}
+                />
+              </div>
+            </div>
+            {fileUpload === "image" ? (
+              <div>
+                <p className="text-[18px] text-[#374151] font-bold pt-[30px]">
+                  Media File (Foto)
                 </p>
-                <p className="text-[12px] font-normal">PNG, JPG, MP4 upto 32MB</p>
+                <label
+                  htmlfor="file_upload"
+                  className="h-[112px] border border-[#D1D5DB] cursor-pointer"
+                >
+                  <div className="flex flex-col items-center pt-4">
+                    <img src={uploadFile.src} alt="upload here" />
+                    <p className="text-[12px] text-[#000000] font-semibold">
+                      <span className="text-[#FF5001]">Upload a file </span>of
+                      drag and drop{" "}
+                    </p>
+                    <p className="text-[12px] font-normal">PNG, JPG, max 2MB</p>
+                  </div>
+                  <input
+                    onChange={(e) => {
+                      setDataEdit({ ...dataEdit, image: e.target.files[0] });
+                      setDataEdit({ ...dataEdit, video: null });
+                      setImageFile(e.target.files[0]);
+                      setImagePreview(URL.createObjectURL(e.target.files[0]));
+                    }}
+                    id="file_upload"
+                    type="file"
+                    className="hidden"
+                    // value={dataEdit?.image}
+                  />
+                </label>
               </div>
-              <input
-                onChange={(e) => {
-                  console.log(e.target.files);
-                  setImagePreview(e.target.files[0]);
-                }}
-                id="file_upload"
-                type="file"
-                class="hidden"
-              />
-            </label>
+            ) : (
+              <div>
+                <span className="mr-1">Link Video</span>
+                <input
+                  className="border border-[#D1D5DB]"
+                  type="text"
+                  onChange={(e) => {
+                    setDataEdit({ ...dataEdit, image: null });
+                    setDataEdit({ ...dataEdit, video: e.target.value });
+                    setVideoPreview(e.target.value);
+                  }}
+                  value={dataEdit?.video}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
