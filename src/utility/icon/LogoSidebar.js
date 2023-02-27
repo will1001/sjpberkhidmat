@@ -1,6 +1,7 @@
 import Dashboard from "../../component/admin/Dashboard";
 import DptDps from "../../component/admin/dpt_dps/DptDps";
 import EksportDataDpt from "../../component/admin/dpt_dps/EksportData";
+import Logistik from "../../component/admin/Logistik";
 import RealCount from "../../component/admin/RealCount";
 import Relawan from "../../component/admin/RelawanDash";
 import SetingSlider from "../../component/admin/seting_slider/SetingSlider";
@@ -37,7 +38,7 @@ export const logoSidebar = [
     icon: <ProgramIcon />,
     component: <Program />,
   },
-  { name: "Logistic", path: "/logistic", icon: <Logistic />, role: "relawan" },
+  { name: "Logistic", path: "/logistic", icon: <Logistic />, role: "relawan", component: <Logistik /> },
   { name: "Publikasi", path: "/publikasi", icon: <PublikasiIcon />, component: <Publikasi /> },
 
   {

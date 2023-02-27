@@ -59,6 +59,32 @@ export function RealCountIcon() {
     </svg>
   );
 }
+export function PrevIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.625 11.0456L1.66667 6.08724L6.625 1.12891" stroke="current" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+export function NextIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.375 1.13021L6.33333 6.08854L1.375 11.0469" stroke="current" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  );
+}
+export function ReadIcon() {
+  return (
+    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M13.0011 0.19693L13.5001 0.683704L8.1005 8.08796L5.91174 5.92631L6.83865 4.65441L8.1005 5.39035L13.0011 0.19693ZM8.61924 0.0878906L9.11821 0.574665L3.71864 7.97892L0 4.32146L0.83033 3.51143L3.71864 5.28132L8.61924 0.0878906Z"
+        fill="white"
+      />
+    </svg>
+  );
+}
 
 export function DPTDPSIcon() {
   return (
@@ -588,6 +614,19 @@ export function RelawanIcon() {
     </svg>
   );
 }
+export function ChatIcon() {
+  return (
+    <svg width="21" height="21" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M6 7.28906H6.01M10 7.28906H10.01M14 7.28906H14.01M7 13.2891H3C1.89543 13.2891 1 12.3936 1 11.2891V3.28906C1 2.18449 1.89543 1.28906 3 1.28906H17C18.1046 1.28906 19 2.18449 19 3.28906V11.2891C19 12.3936 18.1046 13.2891 17 13.2891H12L7 18.2891V13.2891Z"
+        stroke="#111827"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 export function TargetSuara() {
   return (
     <svg width="28" height="17" viewBox="0 0 28 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -610,7 +649,7 @@ export function SuaraPeriodeLalu() {
 }
 export function DeletIcon() {
   return (
-    <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="21" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M16 5.41016L15.1327 17.5527C15.0579 18.5993 14.187 19.4102 13.1378 19.4102H4.86224C3.81296 19.4102 2.94208 18.5993 2.86732 17.5527L2 5.41016M7 9.41016V15.4102M11 9.41016V15.4102M12 5.41016V2.41016C12 1.85787 11.5523 1.41016 11 1.41016H7C6.44772 1.41016 6 1.85787 6 2.41016V5.41016M1 5.41016H17"
         stroke="#DC2626"
