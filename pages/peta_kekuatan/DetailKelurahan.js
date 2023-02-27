@@ -15,6 +15,8 @@ const DetailKelurahan = () => {
   const [data, setData] = useState();
   const [totalData, setTotalData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [targetSuara, setTargetSuara] = useState();
+  const [jumlahSimpatisans, setJumlahSimpatisans] = useState();
 
   useEffect(() => {
     if (router.query.id_kabupaten !== undefined) {
@@ -22,9 +24,6 @@ const DetailKelurahan = () => {
       const res = axiosFetch("get", `user/kecamatan/${router.query.id_kabupaten}`).then((res) => setKecamatan(res.data));
       if (router.query.id_kecamatan !== undefined) {
         setFilterKecamatan(router.query.id_kecamatan);
-      }
-      if (filterKecamatan !== undefined) {
-        axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=1&limit=100`).then((res) => setTotalData(res.data));
       }
     }
   }, [router.query.id_kabupaten]);
@@ -36,23 +35,33 @@ const DetailKelurahan = () => {
   };
 
   useEffect(() => {
+    if (filterKecamatan !== undefined) {
+      axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=1&limit=100`).then((res) => setTotalData(res.data));
+    }
+  }, [filterKecamatan]);
+
+  useEffect(() => {
     filterKecamatan !== undefined &&
       axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=${currentPage}&limit=10`)
         .then((res) => setData(res.data))
         .catch((err) => console.log(err));
-  }, [filterKecamatan, currentPage]);
+  }, [filterKecamatan, currentPage, filterKab]);
 
-  const targetSuara =
+  useEffect(() => {
     totalData !== undefined &&
-    totalData?.data?.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue?.target_suara;
-    }, 0);
+      setTargetSuara(
+        totalData?.data?.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue?.target_suara;
+        }, 0)
+      );
 
-  const jumlahSimpatisans =
     totalData !== undefined &&
-    totalData?.data?.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue?.jumlah_simpatisans;
-    }, 0);
+      setJumlahSimpatisans(
+        totalData?.data?.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue?.jumlah_simpatisans;
+        }, 0)
+      );
+  }, [totalData]);
 
   let page = [];
   // const totalPage = data?.metadata?.totalPage !== undefined &&
@@ -63,8 +72,8 @@ const DetailKelurahan = () => {
     }
   }
 
-  console.log(page);
-  console.log(data);
+  console.log(jumlahSimpatisans);
+  console.log(totalData);
 
   return (
     <>
