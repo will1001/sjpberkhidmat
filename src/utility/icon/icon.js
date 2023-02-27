@@ -85,6 +85,32 @@ export function ReadIcon() {
     </svg>
   );
 }
+export function KirimIcon() {
+  return (
+    <svg width="21" height="19" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1.60352 7.63281H11.6035C16.0218 7.63281 19.6035 11.2145 19.6035 15.6328V17.6328M1.60352 7.63281L7.60352 13.6328M1.60352 7.63281L7.60352 1.63281"
+        stroke="#111827"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+export function ImportGambarIcon() {
+  return (
+    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1.39746 13.6328L5.98325 9.04703C6.7643 8.26598 8.03063 8.26598 8.81167 9.04703L13.3975 13.6328M11.3975 11.6328L12.9832 10.047C13.7643 9.26598 15.0306 9.26598 15.8117 10.047L17.3975 11.6328M11.3975 5.63281H11.4075M3.39746 17.6328H15.3975C16.502 17.6328 17.3975 16.7374 17.3975 15.6328V3.63281C17.3975 2.52824 16.502 1.63281 15.3975 1.63281H3.39746C2.29289 1.63281 1.39746 2.52824 1.39746 3.63281V15.6328C1.39746 16.7374 2.29289 17.6328 3.39746 17.6328Z"
+        stroke="#111827"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export function DPTDPSIcon() {
   return (

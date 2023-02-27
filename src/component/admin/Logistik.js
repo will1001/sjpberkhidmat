@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { BackIcon, ChatIcon, DeletIcon, DropDownIcon, NextIcon, PrevIcon, ReadIcon, RelawanIcon, SearchIcon } from "../../utility/icon/icon";
+import ChatInput from "../logistik/ChatInput";
 
 const Logistik = () => {
+  const [popup, setPopup] = useState(false);
+  const [chat, setChat] = useState();
+
   return (
     <>
       {/* popup chat */}
-      <div className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen">
+      <div style={{ visibility: popup === false ? "hidden" : "visible" }} className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen">
         <div className="absolute inset-y-0 scrollbar scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]  overflow-scroll  right-0 bg-white text-[#374151]">
-          <div className="absolute pl-2 text-[21px] text-[#9CA3AF] cursor-pointer font-medium">X</div>
+          <div onClick={() => setPopup(false)} className="absolute pl-2 text-[21px] text-[#9CA3AF] cursor-pointer font-medium">
+            X
+          </div>
           <div className="px-[50px] py-[30px]">
             <p className="text-[21px] font-bold">Logistik Kota Mataram</p>
             <div className="flex gap-4 mt-2">
@@ -36,11 +42,12 @@ const Logistik = () => {
             </div>
           </div>
           <div className="bg-[#F3F4F6] p-[20px] min-h-screen pr-8">
-            <div className="h-[1000px] overflow-y-auto">
+            {/* chat */}
+            <div className=" overflow-y-auto">
               <div className="flex justify-center mb-12">
                 <div className="bg-[#E5E7EB] text-[#6B7280] rounded-full px-2 py-1">12 Desember 2022</div>
               </div>
-              {/* chat */}
+
               <div className="flex">
                 <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
                   Ornare magna ultricies sed dapibus pharetra imperdiet nascetur viverra vitae.asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -53,8 +60,12 @@ const Logistik = () => {
                   <p className="text-[12px] font-normal flex gap-1 justify-end items-center">10.23 {<ReadIcon />}</p>
                 </p>
               </div>
-              {/*  */}
             </div>
+
+            <div className="fixed bottom-0 z-50 py-3 px-6 w-full flex  bg-[#E5E7EB] items-center">
+              <ChatInput onSendMessage={alert} />
+            </div>
+            {/*  */}
           </div>
         </div>
       </div>
@@ -120,7 +131,7 @@ const Logistik = () => {
                 </td>
                 <td className="w-[88px] px-2 py-3 border-l-2 border-white flex items-center justify-center ">
                   <div className="flex  justify-center gap-3">
-                    <div>
+                    <div onClick={() => setPopup(true)} className="cursor-pointer">
                       <ChatIcon />
                     </div>
 
