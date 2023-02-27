@@ -17,6 +17,8 @@ const DetailKelurahan = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [targetSuara, setTargetSuara] = useState();
   const [jumlahSimpatisans, setJumlahSimpatisans] = useState();
+  const [filterUrutan, setFilterUrutan] = useState("terkecil");
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     if (router.query.id_kabupaten !== undefined) {
@@ -41,11 +43,24 @@ const DetailKelurahan = () => {
   }, [filterKecamatan]);
 
   useEffect(() => {
-    filterKecamatan !== undefined &&
-      axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=${currentPage}&limit=10`)
-        .then((res) => setData(res.data))
+    if (keyword === "") {
+      filterKecamatan !== undefined &&
+        axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=${currentPage}&limit=10&sort=${filterUrutan}`)
+          .then((res) => {
+            setData([]);
+            setData(res.data);
+          })
+          .catch((err) => console.log(err));
+    }
+    if (keyword !== "" && keyword.length >= 3) {
+      axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=${currentPage}&limit=10&sort=${filterUrutan}&keyword=${keyword}`)
+        .then((res) => {
+          setData([]);
+          setData(res.data);
+        })
         .catch((err) => console.log(err));
-  }, [filterKecamatan, currentPage, filterKab]);
+    }
+  }, [filterKecamatan, currentPage, filterKab, filterUrutan, keyword]);
 
   useEffect(() => {
     totalData !== undefined &&
@@ -67,13 +82,13 @@ const DetailKelurahan = () => {
   // const totalPage = data?.metadata?.totalPage !== undefined &&
 
   if (data !== undefined) {
+    page = [];
     for (let i = 0; i < data.metadata.totalPage; i++) {
       page.push(i);
     }
   }
 
-  console.log(jumlahSimpatisans);
-  console.log(totalData);
+  console.log(keyword === "");
 
   return (
     <>
@@ -98,9 +113,9 @@ const DetailKelurahan = () => {
           </div>
           <div className="mt-[32px]">
             <p className="text-[#6B7280]">Urutkan</p>
-            <select className="border w-[400px] h-[48px] font-medium mt-2 rounded-sm outline-0">
-              <option value={"Jumlah Terendah"}>Jumlah Terendah</option>
-              <option value={"Jumlah Tertinggi"}>Jumlah Tertinggi</option>
+            <select onChange={(e) => setTerkecil(e.target.value)} className="border w-[400px] h-[48px] font-medium mt-2 rounded-sm outline-0">
+              <option>Jumlah Terendah</option>
+              <option>Jumlah Tertinggi</option>
             </select>
           </div>
           <div className="flex gap-3 justify-center mt-[32px]">
@@ -167,7 +182,7 @@ const DetailKelurahan = () => {
             <p className="text-[#9CA3AF] font-medium mb-2">DAFTAR DESA / KELURAHAN</p>
             <div className="flex justify-between">
               <div className="stroke-[#374151] w-[366px] px-2 flex items-center border rounded-sm h-[43px] justify-between">
-                <input placeholder="Cari Data" className="border-none outline-0 w-full" type={"text"} />
+                <input value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="Cari Data" className="border-none outline-0 w-full" type={"text"} />
                 <SearchIcon />
               </div>
               <div className="flex items-center gap-3">
