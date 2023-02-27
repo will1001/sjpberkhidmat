@@ -440,7 +440,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("ampenan")}
           onMouseLeave={() => setHover()}
-          onClick={() => DetailKecamatan("5271010", "Ampenan")}
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+              query: { id_kabupaten: "5271", id_kecamatan: "5271010" },
+            })
+          }
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[230px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -467,7 +472,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("sekarbela")}
           onMouseLeave={() => setHover()}
-          onClick={() => DetailKecamatan("5271011", "Sekarbela")}
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+              query: { id_kabupaten: "5271", id_kecamatan: "5271011" },
+            })
+          }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[490px] top-[420px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -494,7 +504,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("mataram")}
           onMouseLeave={() => setHover()}
-          onClick={() => DetailKecamatan("5271020", "Mataram")}
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+              query: { id_kabupaten: "5271", id_kecamatan: "5271020" },
+            })
+          }
           className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[390px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -521,7 +536,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("selaparang")}
           onMouseLeave={() => setHover()}
-          onClick={() => DetailKecamatan("5271021", "Selaparang")}
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+              query: { id_kabupaten: "5271", id_kecamatan: "5271021" },
+            })
+          }
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[780px] top-[220px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -548,7 +568,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("cakranegara")}
           onMouseLeave={() => setHover()}
-          onClick={() => DetailKecamatan("5271030", "Cakranegara")}
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+              query: { id_kabupaten: "5271", id_kecamatan: "5271030" },
+            })
+          }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[880px] top-[320px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
@@ -575,7 +600,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("sandubaya")}
           onMouseLeave={() => setHover()}
-          onClick={() => DetailKecamatan("5271031", "Sandubaya")}
+          onClick={() =>
+            router.push({
+              pathname: "./DetailKelurahan",
+              query: { id_kabupaten: "5271", id_kecamatan: "5271031" },
+            })
+          }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[400px] rounded-md "
         >
           <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />

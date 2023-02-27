@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axiosFetch from "../../src/API/axiosFetch";
 import useFetch from "../../src/API/useFetch";
-import { DetailIcon, FilterIcon, KembaliIcon, SearchIcon } from "../../src/utility/icon/icon";
+import { DetailIcon, DropDownIcon, FilterIcon, KembaliIcon, SearchIcon } from "../../src/utility/icon/icon";
 
 const DetailKelurahan = () => {
   const getKabupaten = useFetch("get", "user/kabupaten");
@@ -12,7 +12,9 @@ const DetailKelurahan = () => {
   const [filterKab, setFilterKab] = useState();
   const [filterKecamatan, setFilterKecamatan] = useState();
   const [popupFilter, setPopupFilter] = useState(false);
-  const detailDesa = useFetch("get", `user/dashboard/statistik/kelurahan/5208010?page=1&limit=10`);
+  const [data, setData] = useState();
+  const [totalData, setTotalData] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (router.query.id_kabupaten !== undefined) {
@@ -20,6 +22,9 @@ const DetailKelurahan = () => {
       const res = axiosFetch("get", `user/kecamatan/${router.query.id_kabupaten}`).then((res) => setKecamatan(res.data));
       if (router.query.id_kecamatan !== undefined) {
         setFilterKecamatan(router.query.id_kecamatan);
+      }
+      if (filterKecamatan !== undefined) {
+        axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=1&limit=100`).then((res) => setTotalData(res.data));
       }
     }
   }, [router.query.id_kabupaten]);
@@ -30,7 +35,37 @@ const DetailKelurahan = () => {
     setKecamatan(res.data);
   };
 
-  console.log(kecamatan);
+  useEffect(() => {
+    filterKecamatan !== undefined &&
+      axiosFetch("get", `user/dashboard/statistik/kelurahan/${filterKecamatan}?page=${currentPage}&limit=10`)
+        .then((res) => setData(res.data))
+        .catch((err) => console.log(err));
+  }, [filterKecamatan, currentPage]);
+
+  const targetSuara =
+    totalData !== undefined &&
+    totalData?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.target_suara;
+    }, 0);
+
+  const jumlahSimpatisans =
+    totalData !== undefined &&
+    totalData?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.jumlah_simpatisans;
+    }, 0);
+
+  let page = [];
+  // const totalPage = data?.metadata?.totalPage !== undefined &&
+
+  if (data !== undefined) {
+    for (let i = 0; i < data.metadata.totalPage; i++) {
+      page.push(i);
+    }
+  }
+
+  console.log(page);
+  console.log(data);
+
   return (
     <>
       <div style={popupFilter === true ? { visibility: "visible" } : { visibility: "hidden" }} className="fixed top-0 left-0 w-screen h-screen bg-[#37415152] z-50">
@@ -108,13 +143,13 @@ const DetailKelurahan = () => {
             <p className="text-[#9CA3AF] font-medium">DATA TARGET</p>
             <div className="flex gap-2">
               <p className="text-[18px] font-bold">Target Simpatisan</p>
-              <p className="text-[#6B7280] text-[18px]">122.1233</p>/<p className="font-semibold text-[18px]">123.123</p>
+              <p className="text-[#6B7280] text-[18px]">{jumlahSimpatisans?.toLocaleString()}</p>/<p className="font-semibold text-[18px]">{targetSuara?.toLocaleString()}</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-full bg-[#D1D5DB]">
-                <div className="bg-[#FF5001] h-[7px] text-[#FF5001] text-[1px] w-[95%]">a</div>
+                <div className={`bg-[#FF5001] h-[7px] text-[#FF5001] text-[1px] w-[${((jumlahSimpatisans / targetSuara) * 100).toFixed()}%]`}>a</div>
               </div>
-              <p className="text-[18px] font-semibold">95%</p>
+              <p className="text-[18px] font-semibold">{(jumlahSimpatisans / targetSuara) * 100}%</p>
             </div>
           </div>
         </div>
@@ -136,8 +171,8 @@ const DetailKelurahan = () => {
             </div>
           </div>
         </div>
-        <div className="mt-[24px] overflow-x-scroll">
-          <table className="w-[2000px] ">
+        <div className="mt-[24px] overflow-x-scroll scrollbar-thin scrollbar-thumb-[#374151] scrollbar-track-[#E5E7EB] ">
+          <table className="min-w-full overflow-auto mr-[100px]">
             <thead className="bg-[#374151]  ">
               <tr className="h-[51px] text-white">
                 <th scope="col" className="px-6  py-3 text-left text-xs font-medium ">
@@ -170,29 +205,47 @@ const DetailKelurahan = () => {
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium">
                   Program
                 </th>
-                <th scope="col" className="fixed right-0 mr-10 z-50 w-[100px] bg-[#374151] justify-center flex py-4 border-l-2 text-left text-xs font-medium">
+                <th scope="col" className="absolute right-0 mr-10 z-50 w-[100px] bg-[#374151] justify-center flex py-6 border-l-2 text-left text-xs font-medium">
                   Detail
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap">1</td>
-                <td className="px-6 py-4 whitespace-nowrap">qewewqeqwe</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="px-6 py-4 whitespace-nowrap">qweqwewewex</td>
-                <td className="fixed cursor-pointer right-0 mr-10 z-50 w-[100px] bg-white flex justify-center py-4 border-l-2 text-left text-xs font-medium">
-                  <DetailIcon />
-                </td>
-              </tr>
+            <tbody className="">
+              {data !== undefined &&
+                data?.data?.map((res, i) => (
+                  <tr key={i} className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"}`}>
+                    <td className="px-6 py-4 whitespace-nowrap">{i + 1}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.target_suara?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.suara_periode_lalu?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.jumlah_tps?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.jumlah_dpt_dps?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.jumlah_relawans?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.jumlah_simpatisans?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.jumlah_logistik?.toLocaleString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{res?.program?.toLocaleString()}</td>
+                    <td style={{ background: (i + 1) % 2 !== 0 ? "#F9FAFB" : "white" }} className="absolute cursor-pointer right-0 mr-10 z-50 w-[100px]  flex justify-center py-6 border-l-2 text-left text-xs font-medium">
+                      <DetailIcon />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex mt-[24px] items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex stroke-black border py-2 px-4 rounded-md">
+              10 <DropDownIcon />
+            </div>
+            <p>Showing 1 - 10 of {data?.metadata?.total}</p>
+          </div>
+          <div className="flex">
+            {page.map((res, i) => (
+              <div onClick={() => setCurrentPage(i + 1)} className={`py-1 px-3 rounded-md cursor-pointer mr-2 ${currentPage === i + 1 ? "text-white bg-[#FF5001]" : ""}`} key={i}>
+                {i + 1}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
