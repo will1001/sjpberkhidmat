@@ -5,6 +5,7 @@ import deletIcon from "../../utility/icon/delet_icon.png";
 import searchIcon from "../../utility/icon/searchIcon.png";
 import useFetch from "../../API/useFetch";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const RumahAspirasi = () => {
   const router = useRouter();
@@ -27,6 +28,8 @@ const RumahAspirasi = () => {
       .catch((err) => console.log(err));
     return res;
   };
+  const token = useSelector((state) => state.user.token);
+
   const changeKelurahan = async (id_kecamatan) => {
     const res = await axiosFetch("get", `user/kelurahan/${id_kecamatan}`)
       .then((res) => setKelurahan(res.data))
@@ -35,7 +38,12 @@ const RumahAspirasi = () => {
   };
 
   useEffect(() => {
-    const res = axiosFetch("get", `/user/aspirasi?page=${currentPage}`)
+    const res = axiosFetch(
+      "get",
+      `/user/aspirasi?page=${currentPage}`,
+      {},
+      token
+    )
       .then((res) => setPage(res.data))
       .catch((err) => console.log(err));
   }, [alertHapus, currentPage]);
@@ -70,7 +78,7 @@ const RumahAspirasi = () => {
     arr.push(obj);
   }
 
-  console.log(page);
+  // console.log(page);
   return (
     <>
       <div className="absolute pr-[50px] h-[1120px] bg-orange-100 bg-opacity-30">
@@ -78,7 +86,12 @@ const RumahAspirasi = () => {
           <p className="text-[#374151] text-[32px] font-bold">Rumah Aspirasi</p>
           <div className="flex gap-3 items-center mt-[23px] mb-[14px] text-[#374151]">
             <div className="h-[32px] bg-white border border-[#D1D5DB] rounded-sm px-2 flex items-center">
-              <input onChange={(e) => setTypeSearch(e.target.value)} className="outline-none" placeholder="Cari Data" type={"text"} />
+              <input
+                onChange={(e) => setTypeSearch(e.target.value)}
+                className="outline-none"
+                placeholder="Cari Data"
+                type={"text"}
+              />
               <img src={searchIcon.src} alt="search icon" />
             </div>
             <select
@@ -109,7 +122,10 @@ const RumahAspirasi = () => {
                 </option>
               ))}
             </select>
-            <select onChange={(e) => setFilterKelurahan(e.target.value)} className="outline-0 h-[32px] border border-[#D1D5DB] rounded-sm px-2">
+            <select
+              onChange={(e) => setFilterKelurahan(e.target.value)}
+              className="outline-0 h-[32px] border border-[#D1D5DB] rounded-sm px-2"
+            >
               <option>Pilih Desa / Kelurahan</option>
               {kelurahan?.data?.map((res) => (
                 <option key={res._id} value={res._id}>
@@ -160,20 +176,40 @@ const RumahAspirasi = () => {
                 })
                 .filter((res) => {
                   if (typeSearch) {
-                    const search = res.perihal.toLowerCase().includes(typeSearch.toLowerCase());
+                    const search = res.perihal
+                      .toLowerCase()
+                      .includes(typeSearch.toLowerCase());
                     return search;
                   } else {
                     return res;
                   }
                 })
                 .map((res, index) => (
-                  <tbody key={res._id} className="flex items-center" style={(index + 1) % 2 !== 0 ? { background: "#F9FAFB" } : { background: "white" }}>
+                  <tbody
+                    key={res._id}
+                    className="flex items-center"
+                    style={
+                      (index + 1) % 2 !== 0
+                        ? { background: "#F9FAFB" }
+                        : { background: "white" }
+                    }
+                  >
                     <tr className="px-4 py-2 flex gap-2 text-[#374151] h-[65px]">
-                      <td className="w-[178px] break-words overflow-hidden">{res.perihal}</td>
-                      <td className="w-[150px] break-words">{res.kabupaten.name}</td>
-                      <td className="w-[150px] break-words">{res.kecamatan.name}</td>
-                      <td className="w-[150px] break-words">{res.kelurahan.name}</td>
-                      <td className="w-[200px] break-words overflow-hidden">{res.detail}</td>
+                      <td className="w-[178px] break-words overflow-hidden">
+                        {res.perihal}
+                      </td>
+                      <td className="w-[150px] break-words">
+                        {res.kabupaten.name}
+                      </td>
+                      <td className="w-[150px] break-words">
+                        {res.kecamatan.name}
+                      </td>
+                      <td className="w-[150px] break-words">
+                        {res.kelurahan.name}
+                      </td>
+                      <td className="w-[200px] break-words overflow-hidden">
+                        {res.detail}
+                      </td>
                       <td className="w-[100px] flex gap-2 items-center justify-center">
                         <img
                           onClick={() => {
@@ -198,13 +234,24 @@ const RumahAspirasi = () => {
                           alt="edit icon"
                         />
                         {alertHapus === false ? (
-                          <img onClick={() => setAlertHapus(true)} className="h-[24px] w-[24px] cursor-pointer" src={deletIcon.src} alt="delet icon" />
+                          <img
+                            onClick={() => setAlertHapus(true)}
+                            className="h-[24px] w-[24px] cursor-pointer"
+                            src={deletIcon.src}
+                            alt="delet icon"
+                          />
                         ) : (
                           <div className="flex gap-2 font-medium">
-                            <p onClick={() => deleteAspirasi(res._id)} className="cursor-pointer text-red-500">
+                            <p
+                              onClick={() => deleteAspirasi(res._id)}
+                              className="cursor-pointer text-red-500"
+                            >
                               Hapus
                             </p>
-                            <p onClick={() => setAlertHapus(false)} className="cursor-pointer">
+                            <p
+                              onClick={() => setAlertHapus(false)}
+                              className="cursor-pointer"
+                            >
                               Batal
                             </p>
                           </div>
@@ -222,11 +269,21 @@ const RumahAspirasi = () => {
                 <option>10</option>
                 <option>10</option>
               </select>
-              <p className="text-[#828282] text-[14px]">Showing 1 - 10 of {total}</p>
+              <p className="text-[#828282] text-[14px]">
+                Showing 1 - 10 of {total}
+              </p>
             </div>
             <div className="flex items-center mt-4 gap-1">
               {arr?.map((res, i) => (
-                <p key={i} onClick={() => setCurrentPage(res.page)} className={`text-[14px] px-3 py-1 rounded-md flex cursor-pointer ${res.page === currentPage ? "text-white bg-[#FF5001]" : "text-[#111827]"}`}>
+                <p
+                  key={i}
+                  onClick={() => setCurrentPage(res.page)}
+                  className={`text-[14px] px-3 py-1 rounded-md flex cursor-pointer ${
+                    res.page === currentPage
+                      ? "text-white bg-[#FF5001]"
+                      : "text-[#111827]"
+                  }`}
+                >
                   {res.page}
                 </p>
               ))}
