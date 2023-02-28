@@ -9,15 +9,14 @@ import DropDown from "../utility/DropDown";
 import { DropDownIcon, PilihPeriodeIcon, TambahPeriodeIcon } from "../utility/icon/icon";
 
 const SelectPeriode = () => {
-  const [initialPeriode, setInitialPeriode] = useState("2019-2024");
+  const [initialPeriode, setInitialPeriode] = useState("2019 - 2024");
   const [active, setActive] = useState(false);
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
   const [popup, setPopup] = useState(false);
   const token = useSelector((state) => state.user.token);
-  const periode = useSelector((state) => state.panel.idPeriode);
+  // const periode = useSelector((state) => state.panel.idPeriode);
 
-  const ListPeriode = useFetch("get", "user/periode");
   const [dataPeriode, setDataPeriode] = useState();
 
   useEffect(() => {
@@ -28,28 +27,28 @@ const SelectPeriode = () => {
     setInitialPeriode !== periode && setInitialPeriode(periode);
   };
 
-  const postPeriode = async () => {
-    const a = new FormData();
-    a.append("from", from);
-    a.append("to", to);
-    {
-      await axiosFetch("post", `user/periode`, a, token)
-        .then((res) => {
-          console.log(res);
-          setFrom();
-          setTo();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  // const postPeriode = async () => {
+  //   const a = new FormData();
+  //   a.append("from", from);
+  //   a.append("to", to);
+  //   {
+  //     await axiosFetch("post", `user/periode`, a, token)
+  //       .then((res) => {
+  //         console.log(res);
+  //         setFrom();
+  //         setTo();
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
   const dispatch = useDispatch();
 
   // const test = dispatch(setIdPeriode({ idPeriode: initialPeriode }));
   // dispatch(setToken({ token: res.data.access_token, roles: res.data.roles }));
 
-  // console.log(dataPeriode);
+  console.log(initialPeriode);
 
   return (
     <>
@@ -59,7 +58,7 @@ const SelectPeriode = () => {
           setPopup(!false);
         }}
       >
-        <p className="font-medium text-white text-[16px]">Periode {periode}</p>
+        <p className="font-medium text-white text-[16px]">Periode {initialPeriode}</p>
       </button>
       <div
         className="top-0 left-0 bottom-0 w-screen h-[1000px] absolute z-50"
@@ -107,16 +106,16 @@ const SelectPeriode = () => {
               );
             })}
 
-            <p className="font-normal text-slate-700 text-[16px] mb-8 mt-4">Tambah Periode</p>
-            <div className="flex items-center gap-6 mb-4">
-              {/* onp */}
-              <input value={from} onChange={(e) => setFrom(e.target.value)} className="p-2 outline-0 border rounded-md w-[150px]" type={"number"} />
+            {/* <p className="font-normal text-slate-700 text-[16px] mb-8 mt-4">Tambah Periode</p>
+            <div className="flex items-center gap-6 mb-4"> */}
+            {/* onp */}
+            {/* <input value={from} onChange={(e) => setFrom(e.target.value)} className="p-2 outline-0 border rounded-md w-[150px]" type={"number"} />
               <p className="font-normal text-slate-700">Sampai</p>
               <input value={to} onChange={(e) => setTo(e.target.value)} className="p-2 outline-0 border rounded-md w-[150px]" type={"number"} />
               <button className="cursor-pointer" onClick={postPeriode}>
                 <TambahPeriodeIcon />
               </button>
-            </div>
+            </div> */}
             <button
               onClick={() => {
                 dispatch(setIdPeriode({ idPeriode: initialPeriode }));

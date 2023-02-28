@@ -20,6 +20,7 @@ const Simpatisan = () => {
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
   const [nikRes, setNikRes] = useState();
+  const [disableForm, setDisableForm] = useState(true);
   const idPeriode = useSelector((state) => state.panel.idPeriode);
   const token = useSelector((state) => state.user.token);
 
@@ -33,8 +34,8 @@ const Simpatisan = () => {
     date_birth: "",
     gender: "",
     phone: "",
-    id_kabupaten: "",
-    id_kecamatan: "",
+    id_kabupaten: undefined,
+    id_kecamatan: undefined,
     pekerjaan: "",
     address: "",
     target_desa: "",
@@ -55,10 +56,28 @@ const Simpatisan = () => {
   const cekNik = async (nik) => {
     const res = await axiosFetch("get", `user/check/nik?nik=${nik}`)
       .then((res) => {
-        setNikRes(res.data.data);
+        setDisableForm(false);
+        setFormData({
+          name: res.data.data.name !== undefined ? res?.data?.data?.name : "",
+          id_periode: idPeriode,
+          nik: res.data.data.nik !== undefined ? res?.data?.data?.nik : "",
+          email: res.data.data.email !== undefined ? res?.data?.data?.email : "",
+          role: res.data.data.role !== undefined ? res?.data?.data?.role : "",
+          phone: res.data.data.phone !== undefined ? res?.data?.data?.phone : "",
+          pekerjaan: res.data.data.pekerjaan !== undefined ? res?.data?.data?.pekerjaan : "",
+          id_kabupaten: res.data.data.id_kabupaten !== undefined ? res?.data?.data?.id_kabupaten : "",
+          id_kecamatan: res.data.data.id_kecamatan !== undefined ? res?.data?.data?.id_kecamatan : "",
+          target_desa: res.data.data.target_desa !== undefined ? res?.data?.data?.target_desa : "",
+          password: "",
+          date_birth: res.data.data.date_birth !== undefined ? res?.data?.data?.date_birth?.split("T").shift() : "",
+          place_birth: res.data.data.place_birth !== undefined ? res?.data?.data?.place_birth : "",
+          gender: res.data.data.gender !== undefined ? res?.data?.data?.gender : "",
+          address: res.data.data.address !== undefined ? res?.data?.data?.address : "",
+        });
       })
       .catch((err) => {
         console.log(err);
+        setDisableForm(false);
         alert(err.response.data.message);
       });
   };
@@ -80,68 +99,26 @@ const Simpatisan = () => {
   };
 
   useEffect(() => {
-    if (nikRes?.id_kabupaten !== undefined) {
-      axiosFetch("get", `user/kecamatan/${nikRes.id_kabupaten}`).then((res) =>
-        setKecamatan(res.data)
-      );
+    if (formData?.id_kabupaten !== undefined) {
+      axiosFetch("get", `user/kecamatan/${formData.id_kabupaten}`).then((res) => setKecamatan(res.data));
     }
-    if (nikRes?.id_kecamatan !== undefined) {
-      axiosFetch("get", `user/kelurahan/${nikRes.id_kecamatan}`).then((res) =>
-        setKelurahan(res.data)
-      );
+    if (formData?.id_kecamatan !== undefined) {
+      axiosFetch("get", `user/kelurahan/${formData.id_kecamatan}`).then((res) => setKelurahan(res.data));
     }
-  }, [nikRes?.id_kabupaten, nikRes?.id_kecamatan]);
+  }, [formData?.id_kabupaten, formData?.id_kecamatan]);
 
-  useEffect(() => {
-    nikRes !== undefined &&
-      setFormData({
-        ...formData,
-        name: nikRes.name !== undefined && nikRes.name,
-        id_relawan: null,
-        id_periode: idPeriode,
-        nik: nikRes.nik !== undefined && nikRes.nik,
-        email: nikRes.email !== undefined && nikRes.email,
-        place_birth: nikRes.place_birth !== undefined && nikRes.place_birth,
-        date_birth:
-          nikRes.date_birth !== undefined &&
-          nikRes.date_birth?.split("T").shift(),
-        gender: nikRes.gender !== undefined && nikRes.gender,
-        phone: nikRes.phone !== undefined && nikRes.phone,
-        id_kabupaten: nikRes.id_kabupaten !== undefined && nikRes.id_kabupaten,
-        id_kecamatan: nikRes.id_kecamatan !== undefined && nikRes.id_kecamatan,
-        pekerjaan: nikRes.pekerjaan !== undefined && nikRes.pekerjaan,
-        address: nikRes.address !== undefined && nikRes.address,
-        target_desa: nikRes.target_desa !== undefined && nikRes.target_desa,
-      });
-  }, [nikRes]);
-
-  console.log(nikRes, "sdasdsad");
-  console.log(kelurahan);
+  console.log(formData);
 
   return (
     <>
       <DaftarSuccess props={handleSuccess} />
       {/* popup daftar failed */}
-      <div
-        style={
-          handleError === false
-            ? { visibility: "hidden" }
-            : { background: "rgba(55, 65, 81, 0.32)", visibility: "visible" }
-        }
-        className="fixed w-screen h-screen top-0 left-0"
-      >
+      <div style={handleError === false ? { visibility: "hidden" } : { background: "rgba(55, 65, 81, 0.32)", visibility: "visible" }} className="fixed w-screen h-screen top-0 left-0">
         <div className="absolute bg-white w-[609px] h-[455px] mt-[120px] ml-[416px]">
-          <div
-            onClick={() => setHandelError(false)}
-            className="absolute cursor-pointer right-0 top-0 w-[24px] h-[24px] text-[24px] font-semibold text-[#9CA3AF]"
-          >
+          <div onClick={() => setHandelError(false)} className="absolute cursor-pointer right-0 top-0 w-[24px] h-[24px] text-[24px] font-semibold text-[#9CA3AF]">
             X
           </div>
-          <DaftarFailed
-            error={errorMessage}
-            popUp={handleError}
-            title={"Daftar Simpatisan Gagal !!!"}
-          />
+          <DaftarFailed error={errorMessage} popUp={handleError} title={"Daftar Simpatisan Gagal !!!"} />
         </div>
       </div>
       <form>
@@ -149,19 +126,10 @@ const Simpatisan = () => {
           <div>
             <p className="text-[#D1D5DB] font-medium ">RELAWAN</p>
             <div className="flex items-center">
-              <label
-                htmlFor="pengjak"
-                className="text-[14px] text-[#374151] pr-[72px]"
-              >
+              <label htmlFor="pengjak" className="text-[14px] text-[#374151] pr-[72px]">
                 Relawan Pengajak (Opsional)
               </label>
-              <select
-                onChange={(e) =>
-                  setFormData({ ...formData, id_relawan: e.target.value })
-                }
-                id="pengajak"
-                className="h-[40px] w-[363px] border text-[#374151]"
-              >
+              <select onChange={(e) => setFormData({ ...formData, id_relawan: e.target.value })} id="pengajak" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected>
                   Pilih Relawan
                 </option>
@@ -186,23 +154,15 @@ const Simpatisan = () => {
               <div className="flex justify-between w-[363px]">
                 <PatternFormat
                   value={formData.nik}
-                  onChange={(e) =>
-                    setFormData({ ...formData, nik: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
                   id="NIK"
                   format="#### #### #### ###"
                   allowEmptyFormatting
                   className="h-[40px] w-[235px]  px-2 outline-0 border text-[#374151]"
                 />
-                <div
-                  onClick={() => cekNik(formData.nik)}
-                  className="flex cursor-pointer justify-center gap-2 items-center w-[116px] border border-[#E44700] rounded-sm"
-                  type={"text"}
-                >
+                <div onClick={() => cekNik(formData.nik)} className="flex cursor-pointer justify-center gap-2 items-center w-[116px] border border-[#E44700] rounded-sm" type={"text"}>
                   <img src={cekNikIcon.src} />
-                  <p className="text-[16px] text-[#E44700] font-semibold">
-                    Cek NIK
-                  </p>
+                  <p className="text-[16px] text-[#E44700] font-semibold">Cek NIK</p>
                 </div>
               </div>
             </div>
@@ -211,11 +171,9 @@ const Simpatisan = () => {
                 Nama
               </label>
               <input
-                disabled={nikRes === undefined ? true : false}
+                disabled={disableForm === true ? true : false}
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
                 type={"text"}
                 id="nama"
@@ -227,11 +185,9 @@ const Simpatisan = () => {
                 Email
               </label>
               <input
-                disabled={nikRes === undefined ? true : false}
+                disabled={disableForm === true ? true : false}
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
                 type={"email"}
                 id="email"
@@ -241,15 +197,7 @@ const Simpatisan = () => {
               <label htmlFor="gender" className="text-[14px] text-[#374151] ">
                 Jenis Kelamin
               </label>
-              <select
-                disabled={nikRes === undefined ? true : false}
-                value={formData.gender}
-                onChange={(e) =>
-                  setFormData({ ...formData, gender: e.target.value })
-                }
-                id="gender"
-                className="h-[40px] w-[363px] border text-[#374151] outline-0"
-              >
+              <select disabled={disableForm === true ? true : false} value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151] outline-0">
                 <option value="" selected disabled>
                   Pilih Jenis Kelamin
                 </option>
@@ -258,28 +206,15 @@ const Simpatisan = () => {
               </select>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label
-                htmlFor="tanggal lahir"
-                className="text-[14px] text-[#374151] "
-              >
+              <label htmlFor="tanggal lahir" className="text-[14px] text-[#374151] ">
                 Tempat & Tgl Lahir
               </label>
               <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
+                <input disabled={disableForm === true ? true : false} value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
                 <input
-                  disabled={nikRes === undefined ? true : false}
-                  value={formData.place_birth}
-                  onChange={(e) =>
-                    setFormData({ ...formData, place_birth: e.target.value })
-                  }
-                  className="px-2 outline-0"
-                  type={"text"}
-                />
-                <input
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.date_birth}
-                  onChange={(e) =>
-                    setFormData({ ...formData, date_birth: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
                   className=" outline-0"
                   type="date"
                   id="tanggal lahir"
@@ -295,11 +230,9 @@ const Simpatisan = () => {
                 NO HP
               </label>
               <PatternFormat
-                disabled={nikRes === undefined ? true : false}
+                disabled={disableForm === true ? true : false}
                 value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 id="noHp"
                 format="###-###-###-###"
                 allowEmptyFormatting
@@ -308,21 +241,10 @@ const Simpatisan = () => {
               />
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label
-                htmlFor="pekerjaan"
-                className="text-[14px] text-[#374151] pr-[72px]"
-              >
+              <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
                 Pekerjaan
               </label>
-              <select
-                disabled={nikRes === undefined ? true : false}
-                value={formData.pekerjaan}
-                id="pekerjaan"
-                className="h-[40px] w-[363px] border text-[#374151]"
-                onChange={(e) =>
-                  setFormData({ ...formData, pekerjaan: e.target.value })
-                }
-              >
+              <select disabled={disableForm === true ? true : false} value={formData.pekerjaan} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })}>
                 <option value="" disabled selected>
                   Pilih Pekerjaan
                 </option>
@@ -343,19 +265,10 @@ const Simpatisan = () => {
             <p className="text-[#D1D5DB] font-medium ">ALAMAT SIMPATISAN</p>
             <div className="flex justify-between items-center pr-[140px]"></div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label
-                htmlFor="kabupaten"
-                className="text-[14px] text-[#374151] pr-[72px]"
-              >
+              <label htmlFor="kabupaten" className="text-[14px] text-[#374151] pr-[72px]">
                 Kabupaten Kota
               </label>
-              <select
-                disabled={nikRes === undefined ? true : false}
-                value={formData.id_kabupaten}
-                onChange={(e) => changeKabupaten(e.target.value)}
-                id="kabupaten"
-                className="h-[40px] w-[363px] border text-[#374151]"
-              >
+              <select disabled={disableForm === true ? true : false} value={formData.id_kabupaten} onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected hidden>
                   Pilih Kabupaten
                 </option>
@@ -369,19 +282,10 @@ const Simpatisan = () => {
               </select>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label
-                htmlFor="kecamatan"
-                className="text-[14px] text-[#374151] pr-[72px]"
-              >
+              <label htmlFor="kecamatan" className="text-[14px] text-[#374151] pr-[72px]">
                 Kecamatan
               </label>
-              <select
-                disabled={nikRes === undefined ? true : false}
-                value={formData.id_kecamatan}
-                onChange={(e) => changeKecamatan(e.target.value)}
-                id="kecamatan"
-                className="h-[40px] w-[363px] border text-[#374151]"
-              >
+              <select disabled={disableForm === true ? true : false} value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected hidden>
                   Pilih Kecamatan
                 </option>
@@ -395,21 +299,10 @@ const Simpatisan = () => {
               </select>
             </div>
             <div className="flex justify-between items-center pr-[140px]">
-              <label
-                htmlFor="desa"
-                className="text-[14px] text-[#374151] pr-[72px]"
-              >
+              <label htmlFor="desa" className="text-[14px] text-[#374151] pr-[72px]">
                 Desa
               </label>
-              <select
-                disabled={nikRes === undefined ? true : false}
-                value={formData.target_desa}
-                onChange={(e) =>
-                  setFormData({ ...formData, target_desa: e.target.value })
-                }
-                id="desa"
-                className="h-[40px] w-[363px] border text-[#374151]"
-              >
+              <select disabled={disableForm === true ? true : false} value={formData.target_desa} onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} id="desa" className="h-[40px] w-[363px] border text-[#374151]">
                 <option value="" disabled selected hidden>
                   Pilih Desa
                 </option>
@@ -427,11 +320,9 @@ const Simpatisan = () => {
                 Alamat
               </label>
               <input
-                disabled={nikRes === undefined ? true : false}
+                disabled={disableForm === true ? true : false}
                 value={formData.address}
-                onChange={(e) =>
-                  setFormData({ ...formData, address: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
                 type={"text"}
                 id="alamat"
@@ -440,10 +331,7 @@ const Simpatisan = () => {
           </div>
           <div className="flex justify-end mr-[140px] gap-3">
             <div className=" bg-white rounded-md mt-[27px] cursor-pointer  text-[18px] text-[#374151] font-semibold items-center justify-center flex">
-              <div
-                onClick={() => router.push("HomePage")}
-                className="h-[42px] px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] rounded-md"
-              >
+              <div onClick={() => router.push("HomePage")} className="h-[42px] px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] rounded-md">
                 <img src={homeIcn.src} />
                 <p>Kembali Ke Home </p>
               </div>

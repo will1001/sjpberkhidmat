@@ -35,13 +35,6 @@ export const panelSlice = createSlice({
   },
 });
 
-export const {
-  showOrHidePopUpDash,
-  showOrHidePopUpDptDps,
-  setIdPeriode,
-  setEditData,
-  setFormType,
-  setTabPanelRelawanDash,
-} = panelSlice.actions;
+export const { showOrHidePopUpDash, showOrHidePopUpDptDps, setIdPeriode, setEditData, setFormType, setTabPanelRelawanDash } = panelSlice.actions;
 
 export default panelSlice.reducer;

@@ -33,6 +33,7 @@ const Relawan = () => {
   const [nikRes, setNikRes] = useState();
   const [agreement, setAgreement] = useState(false);
   const idPeriode = useSelector((state) => state.panel.idPeriode);
+  const [disableForm, setDisableForm] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -67,9 +68,28 @@ const Relawan = () => {
   const cekNik = async (nik) => {
     const res = await axiosFetch("get", `user/check/nik?nik=${nik}`)
       .then((res) => {
-        setNikRes(res.data.data);
+        setDisableForm(false);
+        console.log(res);
+        setFormData({
+          name: res.data.data.name !== undefined ? res?.data?.data?.name : "",
+          id_periode: idPeriode,
+          nik: res.data.data.nik !== undefined ? res?.data?.data?.nik : "",
+          email: res.data.data.email !== undefined ? res?.data?.data?.email : "",
+          role: res.data.data.role !== undefined ? res?.data?.data?.role : "",
+          phone: res.data.data.phone !== undefined ? res?.data?.data?.phone : "",
+          pekerjaan: res.data.data.pekerjaan !== undefined ? res?.data?.data?.pekerjaan : "",
+          id_kabupaten: res.data.data.id_kabupaten !== undefined ? res?.data?.data?.id_kabupaten : "",
+          id_kecamatan: res.data.data.id_kecamatan !== undefined ? res?.data?.data?.id_kecamatan : "",
+          target_desa: res.data.data.target_desa !== undefined ? res?.data?.data?.target_desa : "",
+          password: "",
+          date_birth: res.data.data.date_birth !== undefined ? res?.data?.data?.date_birth : "",
+          place_birth: res.data.data.place_birth !== undefined ? res?.data?.data?.place_birth : "",
+          gender: res.data.data.gender !== undefined ? res?.data?.data?.gender : "",
+          address: res.data.data.address !== undefined ? res?.data?.data?.address : "",
+        });
       })
       .catch((err) => {
+        setDisableForm(false);
         console.log(err);
         alert(err?.response?.data?.message);
       });
@@ -100,36 +120,16 @@ const Relawan = () => {
     }
   };
 
-  useEffect(() => {
-    if (nikRes?.id_kabupaten !== undefined) {
-      axiosFetch("get", `user/kecamatan/${nikRes.id_kabupaten}`).then((res) => setKecamatan(res.data));
-    }
-    if (nikRes?.id_kecamatan !== undefined) {
-      axiosFetch("get", `user/kelurahan/${nikRes.id_kecamatan}`).then((res) => setKelurahan(res.data));
-    }
-  }, [nikRes?.id_kabupaten, nikRes?.id_kecamatan]);
+  // useEffect(() => {
+  //   if (nikRes?.id_kabupaten !== undefined) {
+  //     axiosFetch("get", `user/kecamatan/${nikRes.id_kabupaten}`).then((res) => setKecamatan(res.data));
+  //   }
+  //   if (nikRes?.id_kecamatan !== undefined) {
+  //     axiosFetch("get", `user/kelurahan/${nikRes.id_kecamatan}`).then((res) => setKelurahan(res.data));
+  //   }
+  // }, [nikRes?.id_kabupaten, nikRes?.id_kecamatan]);
 
-  useEffect(() => {
-    nikRes !== undefined &&
-      setFormData({
-        ...formData,
-        name: nikRes.name !== undefined && nikRes.name,
-        id_relawan: null,
-        id_periode: idPeriode,
-        nik: nikRes.nik !== undefined && nikRes.nik,
-        email: nikRes.email !== undefined && nikRes.email,
-        place_birth: nikRes.place_birth !== undefined && nikRes.place_birth,
-        date_birth: nikRes.date_birth !== undefined && nikRes.date_birth?.split("T").shift(),
-        gender: nikRes.gender !== undefined && nikRes.gender,
-        phone: nikRes.phone !== undefined && nikRes.phone,
-        id_kabupaten: nikRes.id_kabupaten !== undefined && nikRes.id_kabupaten,
-        id_kecamatan: nikRes.id_kecamatan !== undefined && nikRes.id_kecamatan,
-        pekerjaan: nikRes.pekerjaan !== undefined && nikRes.pekerjaan,
-        address: nikRes.address !== undefined && nikRes.address,
-        target_desa: nikRes.target_desa !== undefined && nikRes.target_desa,
-      });
-  }, [nikRes]);
-
+  console.log(formData);
   return (
     <>
       <DaftarRelawanBerhasil props={popUp} />
@@ -162,7 +162,7 @@ const Relawan = () => {
                     allowEmptyFormatting
                     className="h-[40px] w-[235px]  px-2 outline-0 border text-[#374151]"
                   />
-                  <div onClick={() => cekNik()} className="flex cursor-pointer justify-center gap-2 items-center w-[116px] border border-[#E44700] rounded-sm" type={"text"}>
+                  <div onClick={() => cekNik(formData.nik)} className="flex cursor-pointer justify-center gap-2 items-center w-[116px] border border-[#E44700] rounded-sm" type={"text"}>
                     <img src={cekNikIcon.src} />
                     <p className="text-[16px] text-[#E44700] font-semibold">Cek NIK</p>
                   </div>
@@ -174,7 +174,7 @@ const Relawan = () => {
                   Nama Akun
                 </label>
                 <input
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
@@ -188,7 +188,7 @@ const Relawan = () => {
                   Email
                 </label>
                 <input
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
@@ -202,7 +202,7 @@ const Relawan = () => {
                   No Hp Relawan
                 </label>
                 <PatternFormat
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   id="noHp"
@@ -217,7 +217,7 @@ const Relawan = () => {
                 <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
                   Jenis Kelamin
                 </label>
-                <select disabled={nikRes === undefined ? true : false} value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151]">
+                <select disabled={disableForm === true ? true : false} value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} id="gender" className="h-[40px] w-[363px] border text-[#374151]">
                   <option value="" disabled selected hidden>
                     Pilih Jenis Kelamin
                   </option>
@@ -231,9 +231,9 @@ const Relawan = () => {
                   Tempat & Tgl Lahir
                 </label>
                 <div className="h-[40px] w-[363px] border text-[#374151] flex justify-between">
-                  <input disabled={nikRes === undefined ? true : false} value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
+                  <input disabled={disableForm === true ? true : false} value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
                   <input
-                    disabled={nikRes === undefined ? true : false}
+                    disabled={disableForm === true ? true : false}
                     value={formData.date_birth}
                     onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
                     className=" outline-0"
@@ -251,7 +251,7 @@ const Relawan = () => {
                 <label htmlFor="pekerjaan" className="text-[14px] text-[#374151] pr-[72px]">
                   Pekerjaan
                 </label>
-                <select disabled={nikRes === undefined ? true : false} value={formData.pekerjaan} onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]">
+                <select disabled={disableForm === true ? true : false} value={formData.pekerjaan} onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} id="pekerjaan" className="h-[40px] w-[363px] border text-[#374151]">
                   <option value="" disabled selected hidden>
                     Pilih Pekerjaan
                   </option>
@@ -271,7 +271,7 @@ const Relawan = () => {
                   Kabupaten Kota
                 </label>
                 <select
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.id_kabupaten}
                   onChange={(e) => {
                     changeKabupaten(e.target.value);
@@ -294,7 +294,7 @@ const Relawan = () => {
                 <label htmlFor="kecamatan" className="text-[14px] text-[#374151] pr-[72px]">
                   Kecamatan
                 </label>
-                <select disabled={nikRes === undefined ? true : false} value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+                <select disabled={disableForm === true ? true : false} value={formData.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
                   <option value="" disabled selected hidden>
                     Pilih Kecamatan
                   </option>
@@ -312,7 +312,7 @@ const Relawan = () => {
                   Target Desa
                 </label>
                 <select
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.target_desa}
                   onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })}
                   id="target_desa"
@@ -333,7 +333,7 @@ const Relawan = () => {
               <div className="flex justify-between items-center pr-[140px]">
                 <label className="text-[14px] text-[#374151]">Alamat</label>
                 <input
-                  disabled={nikRes === undefined ? true : false}
+                  disabled={disableForm === true ? true : false}
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   className="h-[40px] w-[363px] border text-[#374151] px-2 outline-0"
@@ -351,7 +351,7 @@ const Relawan = () => {
                   Set Password
                 </label>
                 <div className={`flex items-center pr-2 h-[40px] w-[363px] border ${passwordMatch === false && "border-[#DC2626]"}`}>
-                  <input disabled={nikRes === undefined ? true : false} onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="w-full text-[#374151] px-2 outline-0" type={passwordType} id="password" />
+                  <input disabled={disableForm === true ? true : false} onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="w-full text-[#374151] px-2 outline-0" type={passwordType} id="password" />
                   {passwordType === "password" ? (
                     <img className="cursor-pointer" onClick={() => setPasswordType("text")} src={hide.src} alt="hide.png" />
                   ) : (
@@ -369,7 +369,7 @@ const Relawan = () => {
                   Tulis Ulang Password
                 </label>
                 <div className="flex items-center pr-2 h-[40px] w-[363px] border">
-                  <input disabled={nikRes === undefined ? true : false} onChange={(e) => verifikasiPass(e.target.value)} className="w-full text-[#374151] px-2 outline-0" type={passwordType2} id="password" />
+                  <input disabled={disableForm === true ? true : false} onChange={(e) => verifikasiPass(e.target.value)} className="w-full text-[#374151] px-2 outline-0" type={passwordType2} id="password" />
                   {passwordType2 === "password" ? (
                     <img className="cursor-pointer" onClick={() => setPasswordType2("text")} src={hide.src} alt="hide.png" />
                   ) : (
@@ -387,7 +387,7 @@ const Relawan = () => {
             </div>
             <div className="flex gap-3 mt-[40px]  ">
               <input
-                disabled={nikRes === undefined ? true : false}
+                disabled={disableForm === true ? true : false}
                 onClick={(e) => {
                   setAgreement(!agreement);
                 }}
