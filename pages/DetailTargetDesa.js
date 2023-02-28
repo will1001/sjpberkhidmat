@@ -12,6 +12,7 @@ import Button from "../src/component/Button";
 import { KembaliIcon } from "../src/utility/icon/icon";
 import { useRouter, withRouter } from "next/router";
 import { setTabPanelRelawanDash } from "../src/redux/panelReducer";
+import { setIdKabupaten } from "../src/redux/userReducer";
 
 function DetailTargetDesa({ routes }) {
   const customStyles = {
@@ -27,8 +28,11 @@ function DetailTargetDesa({ routes }) {
   const [detailTarget, setDetailTarget] = useState([]);
   const [dataTarget, setDataTarget] = useState(null);
   const [inputTarget, setInputTarget] = useState(null);
+  const [inputJmlPenduduk, setInputJmlPenduduk] = useState(null);
+  const [inputJmlTps, setInputJmlTps] = useState(null);
 
   const token = useSelector((state) => state.user.token);
+  const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
 
   const editTarget = (data) => {
     setDataTarget(data);
@@ -38,34 +42,58 @@ function DetailTargetDesa({ routes }) {
 
   const updateTarget = async (id) => {
     let formData;
+    let formDataDPTDPS;
 
-    if (inputTarget) {
+    if (inputTarget && inputJmlPenduduk && inputJmlTps) {
       formData = {
         id_periode: idPeriode,
         id_kelurahan: id,
         target: inputTarget,
       };
+      formDataDPTDPS = {
+        id_periode: idPeriode,
+        id_kelurahan: id,
+        jml_penduduk: inputJmlPenduduk,
+        jml_tps: inputJmlTps,
+      };
     } else {
-      alert("Isi Inputan Target");
+      alert("Isi Inputan Target, jumlah penduduk dan jumlah TPS");
     }
 
     await axiosFetch("post", `user/target`, formData, token)
       .then(() => {
         // alert("Update Target Berhasil");
         setPopUp(false);
-        location.reload();
       })
       .catch((error) => {
         // setHandelError(true);
         // setErrorMessage(error.response.data.message);
       });
+
+    await axiosFetch("post", `user/dpt_dps/statistik`, formDataDPTDPS, token)
+      .then(() => {
+        // alert("Update Target Berhasil");
+        setPopUp(false);
+      })
+      .catch((error) => {
+        // setHandelError(true);
+        // setErrorMessage(error.response.data.message);
+      });
+
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   };
 
   useEffect(() => {
+    if (router.query.id_kabupaten) {
+      dispatch(setIdKabupaten({ id_kabupaten: router.query.id_kabupaten }));
+    }
+
     axiosFetch(
       "get",
       `user/target/details?page=${1}&limit=50&id_kabupaten=${
-        router.query.id_kabupaten
+        router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
       }`,
       {},
       token
@@ -162,7 +190,7 @@ function DetailTargetDesa({ routes }) {
       {popUp && (
         <div className="w-full h-[200vh] absolute top-0">
           <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
-          <div className="bg-white h-[350px] w-[500px] absolute top-[10%] left-[33%] p-7">
+          <div className="bg-white h-[550px] w-[500px] absolute top-[10%] left-[33%] p-7">
             <div className="flex justify-end cursor-pointer">
               <img
                 onClick={() => {
@@ -192,6 +220,26 @@ function DetailTargetDesa({ routes }) {
                   type="number"
                   onChange={(e) => {
                     setInputTarget(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="flex items-center justify-start w-[400px] mt-[20px]">
+                <span className="mr-[53px]">Jumlah Penduduk</span>
+                <input
+                  className="h-[40px] w-[50%] border text-[#374151] px-2 outline-0"
+                  type="number"
+                  onChange={(e) => {
+                    setInputJmlPenduduk(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="flex items-center justify-start w-[400px] mt-[20px]">
+                <span className="mr-[100px]">Jumlah TPS</span>
+                <input
+                  className="h-[40px] w-[50%] border text-[#374151] px-2 outline-0"
+                  type="number"
+                  onChange={(e) => {
+                    setInputJmlTps(e.target.value);
                   }}
                 />
               </div>

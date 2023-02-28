@@ -203,7 +203,7 @@ const DptDps = () => {
             Tambah DPT / DPS
           </p>
         </div> */}
-        <div
+        {/* <div
           onClick={() => {
             dispatch(showOrHidePopUpDptDps({ type: "input_penduduk" }));
           }}
@@ -212,7 +212,7 @@ const DptDps = () => {
           <p className="font-semibold text-[#E44700] text-[18px]">
             Input Jumlah Penduduk
           </p>
-        </div>
+        </div> */}
       </div>
       <div className="mt-[20px] flex">
         {/* cari data berdasarkan input */}

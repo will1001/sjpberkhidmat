@@ -233,7 +233,7 @@ const RumahAspirasi = () => {
                           src={showIcon.src}
                           alt="edit icon"
                         />
-                        {alertHapus === false ? (
+                        {/* {alertHapus === false ? (
                           <img
                             onClick={() => setAlertHapus(true)}
                             className="h-[24px] w-[24px] cursor-pointer"
@@ -255,7 +255,7 @@ const RumahAspirasi = () => {
                               Batal
                             </p>
                           </div>
-                        )}
+                        )} */}
                       </td>
                     </tr>
                   </tbody>
