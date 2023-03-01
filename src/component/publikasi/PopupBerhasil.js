@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 const PopupBerhasil = ({ popUp, setPopUp, berhasil, setBerhasil, post }) => {
   const router = useRouter();
+
   return (
     <>
       {" "}

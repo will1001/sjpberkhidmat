@@ -76,10 +76,10 @@ const indexProgram = () => {
 
   console.log(program);
   return (
-    <>
+    <div className="h-screen">
       {editActive === true ? (
         <>
-          <div className=" bg-white">
+          <div className=" bg-white w-[400px]">
             <EditProgram close={editFalse} data={editData} />
           </div>
         </>
@@ -158,7 +158,7 @@ const indexProgram = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

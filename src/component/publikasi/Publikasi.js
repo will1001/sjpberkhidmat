@@ -107,6 +107,7 @@ const Publikasi = () => {
               <p className="w-[50px]">Aksi</p>
             </div>
             {program?.data?.data?.map((res, index) => (
+              // console.log(res)
               <div key={index} className={`flex items-center justify-between py-4 px-4 text-[#374151] ${(index + 1) % 2 == 0 ? "bg-[#fff]" : "bg-[#F9FAFB]"}  w-full`}>
                 <p className="w-[280px] break-words">{res?.title}</p>
                 <p className="w-[50px]">{["jpg", "jpeg", "png"].includes(res?.image?.split(".").pop().toLowerCase()) ? "Artikel" : "Video"}</p>
@@ -130,6 +131,8 @@ const Publikasi = () => {
                           title: res.title,
                           description: res.description,
                           category: res.category,
+                          page: res.video ? "video" : "artikel",
+                          video: res.video && res.video,
                         },
                       })
                     }

@@ -54,7 +54,7 @@ const HomePage = ({ router }) => {
 
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
 
-  console.log(getPublikasi?.data?.filter((data) => ["video"].includes(data?.description))[0], "ini get publikasi");
+  // console.log(getPublikasi?.data?.filter((data) => ["video"].includes(data?.description))[0], "ini get publikasi");
   return (
     <>
       <div className="w-[1350px] ">
@@ -194,7 +194,7 @@ const HomePage = ({ router }) => {
           </div>
 
           {getArtikel?.data?.map((res) => {
-            console.log(res, "ini res");
+            // console.log(res, "ini res");
             if (res.publication === true) {
               return (
                 <div key={res._id} className="flex w-full h-[144px] border border-[#6B7280] mb-[21px] py-[12px] rounded-md">

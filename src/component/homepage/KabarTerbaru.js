@@ -24,10 +24,7 @@ const KabarTerbaru = ({ data }) => {
           className="h-[30px] w-[30px] absolute mt-[40px] cursor-pointer z-20"
           src={playIcon.src}
         />
-        <video className=" rounded-xl object-fill">
-          <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + data?.image} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* <div className="flex mt-8">{data?.length !== 0 && <iframe className="rounded-sm" width="828" height="552" src={"https://www.youtube.com/embed/" + data?.video?.split("=").pop()}></iframe>}</div> */}
       </div>
 
       <div className="flex flex-col justify-between w-[239px]">

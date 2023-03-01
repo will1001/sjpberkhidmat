@@ -62,22 +62,20 @@ const KategoriKabar = () => {
       </div>
       {kategori.map((res, i) => {
         return (
-          <>
-            <div
-              onClick={() =>
-                router.push({
-                  pathname: "../../../publikasi/SemuaArtikel",
-                  query: { category: res.title },
-                })
-              }
-              key={i}
-              style={{ backgroundColor: res.bg }}
-              className={`flex w-[350px] h-[68px] rounded-full items-center px-6 gap-4 cursor-pointer`}
-            >
-              <res.icon />
-              <p className="text-[20px] text-white font-extrabold">{res.title}</p>
-            </div>
-          </>
+          <div
+            onClick={() =>
+              router.push({
+                pathname: "../../../publikasi/SemuaArtikel",
+                query: { category: res.title },
+              })
+            }
+            key={i}
+            style={{ backgroundColor: res.bg }}
+            className={`flex w-[350px] h-[68px] rounded-full items-center px-6 gap-4 cursor-pointer`}
+          >
+            <res.icon />
+            <p className="text-[20px] text-white font-extrabold">{res.title}</p>
+          </div>
         );
       })}
     </div>

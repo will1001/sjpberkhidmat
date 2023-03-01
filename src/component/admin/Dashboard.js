@@ -46,20 +46,20 @@ function Dashboard() {
   console.log(getTarget?.data);
 
   return (
-    <div className="bg-orange-50">
+    <div className="bg-orange-50 h-screen">
       <div className="pt-4 pl-8 ">
         <h1 className="font-bold text-[32px] text-slate-700 ml-24">Dapil Nusa Tenggara Barat II</h1>
-        <div className="flex ml-24 item-center gap-4 mt-2">
+        <div className="flex mx-24 item-center gap-4 mt-2">
           <JumlahPenduduk title={"Target Suara"} total={targetSuara?.toLocaleString()} icon={<TargetSuaraIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
           <JumlahPenduduk title={"Suara Periode Lalu"} total={suaraLalu?.toLocaleString()} icon={<TargetSuaraIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
           <JumlahPenduduk title={"Jumlah TPS"} total={jumlahTPS?.toLocaleString()} icon={<TpsIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
         </div>
-        <div className="flex ml-24 item-center gap-4 mt-2">
+        <div className="flex mx-24 item-center gap-4 mt-2">
           <JumlahPenduduk title={"Jumlah DPT/DPS"} total={jumlahDPTDPS?.toLocaleString()} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
           <JumlahPenduduk title={"Jumlah Relawan"} total={jumlahRelawans?.toLocaleString()} icon={<RelawanIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
           <JumlahPenduduk title={"Jumlah Simpatisan"} total={jumlahSimpatisan?.toLocaleString()} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
         </div>
-        <div className="ml-24 mt-6 mb-8">
+        <div className="pl-24 mt-6 mb-8">
           <div
             onClick={() => {
               router.push("/PetaKekuatan");
@@ -68,7 +68,7 @@ function Dashboard() {
             <Button title={"Peta Kekuatan"} text={"white"} icon={<PetaKekuatanIcon />} w={"280px"} h={"63px"} bgColor={"rgb(51, 65, 85)"} />
           </div>
         </div>
-        <div className="ml-24">
+        <div className="pl-24 bg-orange-50">
           <PetaLombok />
         </div>
       </div>
