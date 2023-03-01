@@ -9,7 +9,7 @@ function SideBar({ content }) {
   const router = useRouter();
   return (
     <>
-      <div onClick={() => router.back()} className="flex justify-end cursor-pointer">
+      <div onClick={() => router.back()} className="flex justify-end cursor-pointer mr-2">
         <BackIcon />
       </div>
       <div className="flex flex-col justify-between px-8 mt-2 h-full border-r-2 ">

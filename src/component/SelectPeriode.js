@@ -61,7 +61,7 @@ const SelectPeriode = () => {
         <p className="font-medium text-white text-[16px]">Periode {initialPeriode}</p>
       </button>
       <div
-        className="top-0 left-0 bottom-0 w-screen h-[1000px] absolute z-50"
+        className="top-0 left-0 bottom-0 w-screen h-[1000px] fixed z-50"
         style={{
           visibility: popup === false ? "hidden" : "visible",
           backgroundColor: "rgba(55, 65, 81, 0.32)",

@@ -85,7 +85,12 @@ const RealCount = ({ user }) => {
           <div className="p-8 ml-2">
             <p className="text-[32px] font-bold text-slate-700">Real Count DPR RI Dapil II Prov. NTB</p>
             <RealCountPenduduk />
-            <ProgresBar bgcolor={"#E44700"} progress={0} title={"Jumlah Suara Masuk"} />
+            <div className="flex">
+              <div className="w-full">
+                <ProgresBar bgcolor={"#E44700"} progress={0} title={"Jumlah Suara Masuk"} />
+              </div>
+              Jumlah Suara Masuk
+            </div>
             <div className="flex my-4 gap-3">
               <div className="bg-[#E44700] cursor-pointer flex items-center gap-2 py-2 px-4 rounded-sm">
                 <img src={inputIcon.src} alt="icon_input.png" />
