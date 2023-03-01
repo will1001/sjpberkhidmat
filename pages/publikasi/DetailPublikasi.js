@@ -97,12 +97,7 @@ const DetailPublikasi = () => {
       <div className="bg-[#FF5001] mt-[70px] flex justify-center py-6 text-[32px] text-white font-bold">Publikasi Video</div>
       <div className="flex pb-[150px] mt-[63px]">
         <div className="w-[800px] h-[500px]  bg-black rounded-md mx-[70px] ">
-          {router.query.image !== undefined && (
-            <video className="w-[800px] h-[500px] rounded-md" controls>
-              <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router?.query?.image} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
+          {router.query.image !== undefined && <iframe className="rounded-sm" width="800" height="500" src={"https://www.youtube.com/embed/" + router?.query?.image?.split("=").pop()}></iframe>}
 
           <div className="flex items-center  gap-8 mt-4">
             <p className="text-[#FF5001] h-[35px] flex items-center text-[18px] font-medium">{router.query.category}</p>
@@ -115,27 +110,22 @@ const DetailPublikasi = () => {
         <div>
           <p className="text-[#374151] text-[21px] font-bold mb-4">Video Lainnya</p>
           {getArtikel?.data
-            ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
+            ?.filter((data) => data.publication === true)
+            .filter((data) => data.description === "video")
             .map((res, index) => (
               <>
+                {console.log(res)}
                 {index <= 3 && (
-                  <div className="flex gap-3 h-[116px] items-center" key={res._id}>
-                    <div className="w-[175px] h-[116.67px]">
-                      <div className="">
-                        <video className="rounded-sm w-[175px] h-[116.67px] ">
-                          <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res?.image} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-
-                      <img
+                  <div className="flex gap-3  items-center mb-2" key={res._id}>
+                    <div className="">
+                      <div
                         onClick={() =>
                           router
                             .push({
                               pathname: "./DetailPublikasi",
                               query: {
                                 title: res.title,
-                                image: res.image,
+                                image: res.video,
                                 creat: res.createdAt,
                                 category: res.category,
                                 creat: res?.createdAt?.split("T").shift().split("-").reverse().join("/"),
@@ -143,9 +133,9 @@ const DetailPublikasi = () => {
                             })
                             .then(() => window.location.reload(false))
                         }
-                        className="relative h-[30px] w-[30px] top-[-70px] left-[75px] cursor-pointer "
-                        src={playIcon.src}
-                      />
+                        className="absolute cursor-pointer w-[175px] h-[116.67px]"
+                      ></div>
+                      <div className="">{res?.length !== 0 && <iframe className="rounded-sm" width="175" height="116.67" src={"https://www.youtube.com/embed/" + res?.video?.split("=").pop()}></iframe>}</div>
                     </div>
                     <div className="w-[200px] pt-[4px] pb-[20px]">
                       <p className="text-[12px] font-medium text-[#FF5001]">{res?.category}</p>
