@@ -30,11 +30,31 @@ function DetailTargetDesa({ routes }) {
   const [inputTarget, setInputTarget] = useState(null);
   const [inputJmlPenduduk, setInputJmlPenduduk] = useState(null);
   const [inputJmlTps, setInputJmlTps] = useState(null);
+  const [suaraPeriodeLalu, setSuaraPeriodeLalu] = useState(null);
 
   const token = useSelector((state) => state.user.token);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
 
-  const editTarget = (data) => {
+  const editTarget = async (data) => {
+    await axiosFetch(
+      "get",
+      `user/details/target_desa/current_input?id_kelurahan=${data._id}`,
+      {},
+      token
+    )
+      .then((res) => {
+        const data = res.data.data;
+        setInputTarget(data.jml_target);
+        setInputJmlPenduduk(data.jml_penduduk);
+        setInputJmlTps(data.jml_tps);
+        setSuaraPeriodeLalu(data.suara_periode_lalu);
+        // setPopUp(false);
+      })
+      .catch((error) => {
+        // setHandelError(true);
+        // setErrorMessage(error.response.data.message);
+      });
+
     setDataTarget(data);
     setPopUp(true);
   };
@@ -44,11 +64,12 @@ function DetailTargetDesa({ routes }) {
     let formData;
     let formDataDPTDPS;
 
-    if (inputTarget && inputJmlPenduduk && inputJmlTps) {
+    if (inputTarget && inputJmlPenduduk && inputJmlTps && suaraPeriodeLalu) {
       formData = {
         id_periode: idPeriode,
         id_kelurahan: id,
         target: inputTarget,
+        suara_periode_lalu: suaraPeriodeLalu,
       };
       formDataDPTDPS = {
         id_periode: idPeriode,
@@ -221,6 +242,7 @@ function DetailTargetDesa({ routes }) {
                   onChange={(e) => {
                     setInputTarget(e.target.value);
                   }}
+                  value={inputTarget}
                 />
               </div>
               <div className="flex items-center justify-start w-[400px] mt-[20px]">
@@ -231,6 +253,7 @@ function DetailTargetDesa({ routes }) {
                   onChange={(e) => {
                     setInputJmlPenduduk(e.target.value);
                   }}
+                  value={inputJmlPenduduk}
                 />
               </div>
               <div className="flex items-center justify-start w-[400px] mt-[20px]">
@@ -241,6 +264,18 @@ function DetailTargetDesa({ routes }) {
                   onChange={(e) => {
                     setInputJmlTps(e.target.value);
                   }}
+                  value={inputJmlTps}
+                />
+              </div>
+              <div className="flex items-center justify-start w-[400px] mt-[20px]">
+                <span className="mr-[50px]">Suara Periode Lalu</span>
+                <input
+                  className="h-[40px] w-[50%] border text-[#374151] px-2 outline-0"
+                  type="number"
+                  onChange={(e) => {
+                    setSuaraPeriodeLalu(e.target.value);
+                  }}
+                  value={suaraPeriodeLalu}
                 />
               </div>
               <ButtonPrimary
