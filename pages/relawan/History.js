@@ -24,12 +24,19 @@ const History = () => {
   const [alert, setalert] = useState(false);
   const [popup, setPopup] = useState(false);
   const [uploadPlano, setUploadPlano] = useState();
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    axiosFetch("get", "user/real_count/plano?page=1", {}, token)
-      .then((res) => setPlano(res))
-      .catch((err) => console.log(err));
-  }, []);
+    if (keyword !== "" && keyword.length >= 3) {
+      axiosFetch("get", `user/real_count/plano?page=1&keyword=${keyword}`, {}, token)
+        .then((res) => setPlano(res))
+        .catch((err) => console.log(err));
+    } else {
+      axiosFetch("get", "user/real_count/plano?page=1", {}, token)
+        .then((res) => setPlano(res))
+        .catch((err) => console.log(err));
+    }
+  }, [keyword]);
 
   const hapusPlano = (id) =>
     axiosFetch("delete", `user/real_count/plano/${id}`, {}, token)
@@ -56,6 +63,7 @@ const History = () => {
         });
     }
   };
+  console.log(keyword);
   return (
     <>
       <div className={`${popup === false ? "hidden" : "visible"} fixed left-0 w-screen h-screen bg-[#37415152]`}>
@@ -103,7 +111,7 @@ const History = () => {
         </div>
         <div className="flex justify-between">
           <div className="flex items-center w-[220px] border rounded-sm mt-3 py-1 px-2 stroke-black">
-            <input className="outline-0" type={"text"} id={"search"} placeholder="Cari Data" />
+            <input onChange={(e) => setKeyword(e.target.value)} className="outline-0" type={"text"} id={"search"} placeholder="Cari Data" />
             <div className="h-[15px] w-[15px] flex items-center">
               <SearchIcon />
             </div>
@@ -135,7 +143,7 @@ const History = () => {
                 onClick={() =>
                   router.push({
                     pathname: "./InputData",
-                    query: { plano: res.image },
+                    query: { plano: res.image, id: res._id },
                   })
                 }
                 className="cursor-pointer"

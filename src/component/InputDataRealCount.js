@@ -1,0 +1,145 @@
+import React, { useEffect } from "react";
+import { useState } from "react";
+import axiosFetch from "../API/axiosFetch";
+import useFetch from "../API/useFetch";
+
+const InputDataRealCount = ({ formInput, setFormInput, suaraCalon, setSuaraCalon }) => {
+  const getKabupaten = useFetch("get", "user/kabupaten");
+  const calon = useFetch("get", "user/real_count/calon");
+  const [kelurahan, setKelurahan] = useState();
+  const [kecamatan, setKecamatan] = useState();
+  useEffect(() => {
+    if (formInput.id_kabupaten !== undefined) {
+      const res = axiosFetch("get", `user/kecamatan/${formInput.id_kabupaten}`)
+        .then((res) => setKecamatan(res.data))
+        .catch((err) => console.log(err));
+    }
+  }, [formInput.id_kabupaten]);
+  useEffect(() => {
+    if (formInput.id_kecamatan !== undefined) {
+      const res = axiosFetch("get", `user/kelurahan/${formInput.id_kecamatan}`)
+        .then((res) => setKelurahan(res.data))
+        .catch((err) => console.log(err));
+    }
+  }, [formInput.id_kecamatan]);
+
+  //   console.log(formInput);
+  return (
+    <div className="text-[#374151]">
+      <p className="text-[21px] font-bold mb-3">Input Data Real Count</p>
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="nomor_tps">
+            Nomor TPS
+          </label>
+          <input onChange={(e) => setFormInput({ ...formInput, no_tps: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="nomor_tps" type={"number"} />
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="kab_kota">
+            Kabupaten / Kota
+          </label>
+          <select
+            value={formInput.id_kabupaten}
+            onChange={(e) => {
+              setFormInput({ ...formInput, id_kabupaten: e.target.value });
+            }}
+            className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
+            id="kab_kota"
+          >
+            <option selected="disable">Pilih Kabupaten</option>
+            {getKabupaten.data !== null &&
+              getKabupaten?.data?.map((res) => (
+                <option key={res._id} value={res._id}>
+                  {res.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="kecamatan">
+            kecamatan
+          </label>
+          <select onChange={(e) => setFormInput({ ...formInput, id_kecamatan: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="kecamatan">
+            <option selected="disable">Pilih Kecamatan</option>
+            {kecamatan !== undefined &&
+              kecamatan?.data?.map((res) => (
+                <option key={res._id} value={res._id}>
+                  {res.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="kelurahan">
+            Kelurahan
+          </label>
+          <select onChange={(e) => setFormInput({ ...formInput, id_kelurahan: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="kelurahan">
+            <option selected="disable">Pilih Desa / Kelurahan</option>
+            {kelurahan !== undefined &&
+              kelurahan?.data?.map((res) => (
+                <option key={res._id} value={res._id}>
+                  {res.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="jumlah_DPT">
+            Jumlah Pemilih dalam DPT
+          </label>
+          <input onChange={(e) => setFormInput({ ...formInput, jml_pemilih_dpt: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="jumlah_DPT" type={"number"} />
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="jumlah_DPTb">
+            Jumlah Pemilih dalam DPTb
+          </label>
+          <input onChange={(e) => setFormInput({ ...formInput, jml_pemilih_dptb: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="jumlah_DPTb" type={"number"} />
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="jumlah_DPK">
+            Jumlah Pemilih dalam DPK
+          </label>
+          <input onChange={(e) => setFormInput({ ...formInput, jml_pemilih_dpk: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="jumlah_DPK" type={"number"} />
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="suara_sah">
+            Surat Suara Sah
+          </label>
+          <input onChange={(e) => setFormInput({ ...formInput, surat_suara_sah: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="suara_sah" type={"number"} />
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="w-full" htmlFor="suara_tidak">
+            Surat Suara Tidak Sah
+          </label>
+          <input onChange={(e) => setFormInput({ ...formInput, surat_suara_tidak_sah: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="suara_tidak" type={"number"} />
+        </div>
+        <div className="flex justify-between  items-center mt-12 mb-2 font-medium text-[#9CA3AF]">
+          <p className="w-full">NAMA CALON</p>
+          <div className="w-full">
+            <p className="pl-[100px]">JUMLAH SUARA</p>
+          </div>
+        </div>
+        {calon.data !== null &&
+          calon?.data?.map((res) => (
+            <div className="flex justify-between items-center mb-2" key={res._id}>
+              <div htmlFor={res._id} className="flex items-center gap-3">
+                <img className="h-[57px] w-[47px]" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo} alt={res.name} />
+                <div>
+                  <p className="font-bold">{res.name}</p>
+                  <p className="text-[14px] text-[#9CA3AF]">{res.id_partai}</p>
+                </div>
+              </div>
+              <input
+                onChange={(e) => setSuaraCalon({ id_calon: res._id, id_plano: formInput.id_plano, jml_suara: e.target.value })}
+                className="border outline-none w-[195px] text-[14px] rounded-sm px-2 h-[40px]"
+                id={res._id}
+                type={"number"}
+              />
+            </div>
+          ))}
+      </div>
+    </div>
+  );
+};
+
+export default InputDataRealCount;
