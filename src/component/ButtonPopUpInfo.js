@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { DPTDPSIcon, Logistic, ProgramIcon, RelawanIcon, SimpatisanIcon, SuaraPeriodeLalu, TargetSuara, TpsIcon } from "../utility/icon/icon";
+import {
+  DPTDPSIcon,
+  Logistic,
+  ProgramIcon,
+  RelawanIcon,
+  SimpatisanIcon,
+  SuaraPeriodeLalu,
+  TargetSuara,
+  TpsIcon,
+} from "../utility/icon/icon";
 import JumlahPenduduk from "./JumlahPenduduk";
 import kotaIcon from "../utility/peta/kota_icon.png";
 import relawan from "../utility/peta/relawan.png";
@@ -16,9 +25,20 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import axiosFetch from "../API/axiosFetch";
 
-const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programData, gantiIcon, statistic, statisticKec }) => {
+const ButtonPopUpInfo = ({
+  type,
+  data,
+  setHover,
+  targetKab,
+  targetKec,
+  programData,
+  gantiIcon,
+  statistic,
+  statisticKec,
+}) => {
   const router = useRouter();
   const [active, setActive] = useState();
+  const [activeType, setActiveType] = useState();
   const [icon, setIcon] = useState(kotaIcon);
   const [total, setTotal] = useState();
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
@@ -31,6 +51,7 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
     if (gantiIcon !== undefined) {
       active !== button ? gantiIcon(button) : gantiIcon();
     }
+    setActiveType(button);
   };
 
   useEffect(() => {
@@ -62,7 +83,7 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
       setIcon(kotaIcon);
       setTotal();
     }
-  }, [handleButton, targetKab]);
+  }, [handleButton, targetKab, activeType]);
 
   const id_kabupaten = data?.toString();
   const [namaKecamatan, setNamaKecamatan] = useState();
@@ -79,7 +100,12 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
   }, [id_kabupaten]);
 
   useEffect(() => {
-    axiosFetch("get", "user/target/details?page=1&limit=1000&id_kabupaten=5271", {}, token)
+    axiosFetch(
+      "get",
+      "user/target/details?page=1&limit=1000&id_kabupaten=5271",
+      {},
+      token
+    )
       .then((res) => setDetailTarget(res?.data?.data))
       .catch((err) => console.log(err));
   }, []);
@@ -121,7 +147,14 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             title={"Target Suara"}
             icon={<TargetSuara />}
             total={
-              (statistic?.length !== undefined && (statistic[0]?.target_suara + statistic[1]?.target_suara + statistic[2]?.target_suara + statistic[3]?.target_suara + statistic[4]?.target_suara).toLocaleString()) ||
+              (statistic?.length !== undefined &&
+                (
+                  statistic[0]?.target_suara +
+                  statistic[1]?.target_suara +
+                  statistic[2]?.target_suara +
+                  statistic[3]?.target_suara +
+                  statistic[4]?.target_suara
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -147,7 +180,13 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             icon={<SuaraPeriodeLalu />}
             total={
               (statistic?.length !== undefined &&
-                (statistic[0]?.suara_periode_lalu + statistic[1]?.suara_periode_lalu + statistic[2]?.suara_periode_lalu + statistic[3]?.suara_periode_lalu + statistic[4]?.suara_periode_lalu).toLocaleString()) ||
+                (
+                  statistic[0]?.suara_periode_lalu +
+                  statistic[1]?.suara_periode_lalu +
+                  statistic[2]?.suara_periode_lalu +
+                  statistic[3]?.suara_periode_lalu +
+                  statistic[4]?.suara_periode_lalu
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -168,7 +207,14 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             title={"Jumlah TPS"}
             icon={<TpsIcon />}
             total={
-              (statistic?.length !== undefined && (statistic[0]?.jumlah_tps + statistic[1]?.jumlah_tps + statistic[2]?.jumlah_tps + statistic[3]?.jumlah_tps + statistic[4]?.jumlah_tps).toLocaleString()) ||
+              (statistic?.length !== undefined &&
+                (
+                  statistic[0]?.jumlah_tps +
+                  statistic[1]?.jumlah_tps +
+                  statistic[2]?.jumlah_tps +
+                  statistic[3]?.jumlah_tps +
+                  statistic[4]?.jumlah_tps
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -189,7 +235,14 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             title={"Jumlah DPT/DPS"}
             icon={<DPTDPSIcon />}
             total={
-              (statistic?.length !== undefined && (statistic[0]?.jumlah_dpt_dps + statistic[1]?.jumlah_dpt_dps + statistic[2]?.jumlah_dpt_dps + statistic[3]?.jumlah_dpt_dps + statistic[4]?.jumlah_dpt_dps).toLocaleString()) ||
+              (statistic?.length !== undefined &&
+                (
+                  statistic[0]?.jumlah_dpt_dps +
+                  statistic[1]?.jumlah_dpt_dps +
+                  statistic[2]?.jumlah_dpt_dps +
+                  statistic[3]?.jumlah_dpt_dps +
+                  statistic[4]?.jumlah_dpt_dps
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -210,7 +263,14 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             title={"Jumlah Relawan"}
             icon={<RelawanIcon />}
             total={
-              (statistic?.length !== undefined && (statistic[0]?.jumlah_relawans + statistic[1]?.jumlah_relawans + statistic[2]?.jumlah_relawans + statistic[3]?.jumlah_relawans + statistic[4]?.jumlah_relawans).toLocaleString()) ||
+              (statistic?.length !== undefined &&
+                (
+                  statistic[0]?.jumlah_relawans +
+                  statistic[1]?.jumlah_relawans +
+                  statistic[2]?.jumlah_relawans +
+                  statistic[3]?.jumlah_relawans +
+                  statistic[4]?.jumlah_relawans
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -232,7 +292,13 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             icon={<SimpatisanIcon />}
             total={
               (statistic?.length !== undefined &&
-                (statistic[0]?.jumlah_simpatisans + statistic[1]?.jumlah_simpatisans + statistic[2]?.jumlah_simpatisans + statistic[3]?.jumlah_simpatisans + statistic[4]?.jumlah_simpatisans).toLocaleString()) ||
+                (
+                  statistic[0]?.jumlah_simpatisans +
+                  statistic[1]?.jumlah_simpatisans +
+                  statistic[2]?.jumlah_simpatisans +
+                  statistic[3]?.jumlah_simpatisans +
+                  statistic[4]?.jumlah_simpatisans
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -253,7 +319,14 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             title={"Logistik"}
             icon={<Logistic />}
             total={
-              (statistic?.length !== undefined && (statistic[0]?.jumlah_logistik + statistic[1]?.jumlah_logistik + statistic[2]?.jumlah_logistik + statistic[3]?.jumlah_logistik + statistic[4]?.jumlah_logistik).toLocaleString()) ||
+              (statistic?.length !== undefined &&
+                (
+                  statistic[0]?.jumlah_logistik +
+                  statistic[1]?.jumlah_logistik +
+                  statistic[2]?.jumlah_logistik +
+                  statistic[3]?.jumlah_logistik +
+                  statistic[4]?.jumlah_logistik
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -274,7 +347,14 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
             title={"Program"}
             icon={<ProgramIcon />}
             total={
-              (statistic?.length !== undefined && (statistic[0]?.program + statistic[1]?.program + statistic[2]?.program + statistic[3]?.program + statistic[4]?.program).toLocaleString()) ||
+              (statistic?.length !== undefined &&
+                (
+                  statistic[0]?.program +
+                  statistic[1]?.program +
+                  statistic[2]?.program +
+                  statistic[3]?.program +
+                  statistic[4]?.program
+                ).toLocaleString()) ||
               (data !== undefined &&
                 statisticKec !== undefined &&
                 statisticKec
@@ -294,85 +374,257 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
       {/* semua kab / kota */}
       <div className={`${type === "kab_kota" ? "visible" : "hidden"}`}>
         <div className="flex py-2 px-[14px] fixed gap-2 bg-white left-[700px] rounded-full top-[20px] border border-[#374151] text-[#374151] font-medium">
-          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>} <span className="text-[#374151] font-bold">Semua Kab / Kota</span>
+          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>}{" "}
+          <span className="text-[#374151] font-bold">Semua Kab / Kota</span>
         </div>
         {/* div popup */}
         {/* lombok utara */}
         <div
           onMouseOver={() => setHover("lombok utara")}
           onMouseLeave={() => setHover()}
-          onClick={active === undefined ? () => detailKota("5208") : () => alert("belum update")}
+          onClick={
+            active === undefined
+              ? () => detailKota("5208")
+              : () => {
+                  let path = "Dashboard";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "Dashboard";
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah TPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah Relawan":
+                      path = "Relawan";
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "Simpatisan";
+                      break;
+                    case "Logistik":
+                      path = "/logistic";
+                      break;
+                    case "Program":
+                      path = "/program";
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: "/Admin",
+                    query: { component: path },
+                  });
+                }
+          }
           className="flex justify-center cursor-pointer items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[650px] top-[130px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {statistic?.length !== undefined && (
                 <>
-                  {total === "target" && statistic[3]?.target_suara?.toLocaleString()}
-                  {total === "program" && statistic[3]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statistic[3]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statistic[3]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statistic[3]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statistic[3]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statistic[3]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statistic[3]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statistic[3]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statistic[3]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statistic[3]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statistic[3]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statistic[3]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statistic[3]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statistic[3]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statistic[3]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Utara</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              Kab. Lombok Utara
+            </p>
           </div>
         </div>
         {/* kota mataram */}
         <div
           onMouseOver={() => setHover("kota mataram")}
           onMouseLeave={() => setHover()}
-          onClick={active === undefined ? () => detailKota("5271") : () => alert("belum update")}
+          onClick={
+            active === undefined
+              ? () => detailKota("5271")
+              : () => {
+                  let path = "Dashboard";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "Dashboard";
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah TPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah Relawan":
+                      path = "Relawan";
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "Simpatisan";
+                      break;
+                    case "Logistik":
+                      path = "/logistic";
+                      break;
+                    case "Program":
+                      path = "/program";
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: "/Admin",
+                    query: { component: path },
+                  });
+                }
+          }
           className="flex justify-center items-center gap-2 cursor-pointer  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[320px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {statistic?.length !== undefined && (
                 <>
-                  {total === "target" && statistic[4]?.target_suara?.toLocaleString()}
-                  {total === "program" && statistic[4]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statistic[4]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statistic[4]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statistic[4]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statistic[4]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statistic[4]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statistic[4]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statistic[4]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statistic[4]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statistic[4]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statistic[4]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statistic[4]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statistic[4]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statistic[4]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statistic[4]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kota Mataram</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              Kota Mataram
+            </p>
           </div>
         </div>
         {/* lombok barat */}
         <div
           onMouseOver={() => setHover("lombok barat")}
           onMouseLeave={() => setHover()}
-          onClick={active === undefined ? () => detailKota("5201") : () => alert("belum update")}
+          onClick={
+            active === undefined
+              ? () => detailKota("5201")
+              : () => {
+                  let path = "Dashboard";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "Dashboard";
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah TPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah Relawan":
+                      path = "Relawan";
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "Simpatisan";
+                      break;
+                    case "Logistik":
+                      path = "/logistic";
+                      break;
+                    case "Program":
+                      path = "/program";
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: "/Admin",
+                    query: { component: path },
+                  });
+                }
+          }
           className="flex justify-center items-center gap-2 cursor-pointer py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[420px] top-[480px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {statistic?.length !== undefined && (
                 <>
-                  {total === "target" && statistic[0]?.target_suara?.toLocaleString()}
-                  {total === "program" && statistic[0]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statistic[0]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statistic[0]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statistic[0]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statistic[0]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statistic[0]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statistic[0]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statistic[0]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statistic[0]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statistic[0]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statistic[0]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statistic[0]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statistic[0]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statistic[0]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statistic[0]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Barat</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              Kab. Lombok Barat
+            </p>
           </div>
         </div>
         {/* lombok tengah */}
@@ -380,52 +632,167 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("lombok tengah")}
           onMouseLeave={() => setHover()}
-          onClick={active === undefined ? () => detailKota("5202") : () => alert("belum update")}
+          onClick={
+            active === undefined
+              ? () => detailKota("5202")
+              : () => {
+                  let path = "Dashboard";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "Dashboard";
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah TPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah Relawan":
+                      path = "Relawan";
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "Simpatisan";
+                      break;
+                    case "Logistik":
+                      path = "/logistic";
+                      break;
+                    case "Program":
+                      path = "/program";
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: "/Admin",
+                    query: { component: path },
+                  });
+                }
+          }
           className="flex justify-center items-center gap-2 py-2 cursor-pointer px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[790px] top-[400px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {statistic?.length !== undefined && (
                 <>
-                  {total === "target" && statistic[1]?.target_suara?.toLocaleString()}
-                  {total === "program" && statistic[1]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statistic[1]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statistic[1]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statistic[1]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statistic[1]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statistic[1]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statistic[1]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statistic[1]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statistic[1]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statistic[1]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statistic[1]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statistic[1]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statistic[1]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statistic[1]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statistic[1]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Tengah</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              Kab. Lombok Tengah
+            </p>
           </div>
         </div>
         {/* lombok timur */}
         <div
           onMouseOver={() => setHover("lombok timur")}
           onMouseLeave={() => setHover()}
-          onClick={active === undefined ? () => detailKota("5203") : () => alert("belum update")}
+          onClick={
+            active === undefined
+              ? () => detailKota("5203")
+              : () => {
+                
+                  let path = "Dashboard";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "Dashboard";
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah TPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "Dashboard";
+                      break;
+                    case "Jumlah Relawan":
+                      path = "Relawan";
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "Simpatisan";
+                      break;
+                    case "Logistik":
+                      path = "/logistic";
+                      break;
+                    case "Program":
+                      path = "/program";
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: "/Admin",
+                    query: { component: path },
+                  });
+                }
+          }
           className="flex justify-center items-center gap-2 cursor-pointer  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[1000px] top-[230px] rounded-md "
         >
           <img className="h-[24px]" src={icon.src} alt="kota.png" />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {statistic?.length !== undefined && (
                 <>
-                  {total === "target" && statistic[2]?.target_suara?.toLocaleString()}
-                  {total === "program" && statistic[2]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statistic[2]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statistic[2]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statistic[2]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statistic[2]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statistic[2]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statistic[2]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statistic[2]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statistic[2]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statistic[2]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statistic[2]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statistic[2]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statistic[2]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statistic[2]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statistic[2]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>Kab. Lombok Timur</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              Kab. Lombok Timur
+            </p>
           </div>
         </div>
       </div>
@@ -433,7 +800,8 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
       {/* detail mataram */}
       <div className={`${data === "5271" ? "visible" : "hidden"}`}>
         <div className="flex py-2 bg-white px-[14px] fixed gap-2 left-[700px] rounded-full top-[20px] border border-[#374151] text-[#374151] font-medium">
-          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>} <span className="text-[#374151] font-bold">Kota Mataram</span>
+          {active === undefined ? <p>Peta Kekuatan:</p> : <p>{active}:</p>}{" "}
+          <span className="text-[#374151] font-bold">Kota Mataram</span>
         </div>
         {/* div popup */}
         {/* ampenan */}
@@ -448,24 +816,46 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           }
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[520px] top-[230px] rounded-md "
         >
-          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <img
+            className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`}
+            src={icon.src}
+            alt="kota.png"
+          />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {" "}
               {statisticKec?.length !== undefined && (
                 <>
-                  {total === "target" && statisticKec[0]?.target_suara?.toLocaleString()}
-                  {total === "program" && statisticKec[0]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statisticKec[0]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statisticKec[0]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statisticKec[0]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statisticKec[0]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statisticKec[0]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statisticKec[0]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statisticKec[0]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statisticKec[0]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Ampenan</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              kec. Ampenan
+            </p>
           </div>
         </div>
         {/* sekarbela */}
@@ -480,24 +870,46 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[490px] top-[420px] rounded-md "
         >
-          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <img
+            className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`}
+            src={icon.src}
+            alt="kota.png"
+          />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {" "}
               {statisticKec?.length !== undefined && (
                 <>
-                  {total === "target" && statisticKec[2]?.target_suara?.toLocaleString()}
-                  {total === "program" && statisticKec[2]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statisticKec[2]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statisticKec[2]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statisticKec[2]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statisticKec[2]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statisticKec[2]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statisticKec[2]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statisticKec[2]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statisticKec[2]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Sekarbela</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              kec. Sekarbela
+            </p>
           </div>
         </div>
         {/* mataram */}
@@ -512,24 +924,46 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           }
           className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[390px] rounded-md "
         >
-          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <img
+            className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`}
+            src={icon.src}
+            alt="kota.png"
+          />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {" "}
               {statisticKec?.length !== undefined && (
                 <>
-                  {total === "target" && statisticKec[5]?.target_suara?.toLocaleString()}
-                  {total === "program" && statisticKec[5]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statisticKec[5]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statisticKec[5]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statisticKec[5]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statisticKec[5]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statisticKec[5]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statisticKec[5]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statisticKec[5]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statisticKec[5]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Mataram</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              kec. Mataram
+            </p>
           </div>
         </div>
         {/* selaparang */}
@@ -544,24 +978,46 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           }
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[780px] top-[220px] rounded-md "
         >
-          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <img
+            className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`}
+            src={icon.src}
+            alt="kota.png"
+          />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {" "}
               {statisticKec?.length !== undefined && (
                 <>
-                  {total === "target" && statisticKec[3]?.target_suara?.toLocaleString()}
-                  {total === "program" && statisticKec[3]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statisticKec[3]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statisticKec[3]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statisticKec[3]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statisticKec[3]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statisticKec[3]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statisticKec[3]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statisticKec[3]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statisticKec[3]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Selaparang</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              kec. Selaparang
+            </p>
           </div>
         </div>
         {/* cakranegara */}
@@ -576,24 +1032,46 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[880px] top-[320px] rounded-md "
         >
-          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <img
+            className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`}
+            src={icon.src}
+            alt="kota.png"
+          />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {" "}
               {statisticKec?.length !== undefined && (
                 <>
-                  {total === "target" && statisticKec[4]?.target_suara?.toLocaleString()}
-                  {total === "program" && statisticKec[4]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statisticKec[4]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statisticKec[4]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statisticKec[4]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statisticKec[4]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statisticKec[4]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statisticKec[4]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statisticKec[4]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statisticKec[4]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Cakranegara</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              kec. Cakranegara
+            </p>
           </div>
         </div>
         {/* sandubaya */}
@@ -608,24 +1086,46 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
           }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[400px] rounded-md "
         >
-          <img className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`} src={icon.src} alt="kota.png" />
+          <img
+            className={`h-[24px] ${icon === kotaIcon ? "hidden" : "visible"}`}
+            src={icon.src}
+            alt="kota.png"
+          />
           <div>
-            <p className={`${icon === kotaIcon ? "hidden" : "visible"} text-[#FF5001] text-[26px] font-semibold`}>
+            <p
+              className={`${
+                icon === kotaIcon ? "hidden" : "visible"
+              } text-[#FF5001] text-[26px] font-semibold`}
+            >
               {" "}
               {statisticKec?.length !== undefined && (
                 <>
-                  {total === "target" && statisticKec[1]?.target_suara?.toLocaleString()}
-                  {total === "program" && statisticKec[1]?.program?.toLocaleString()}
-                  {total === "suara periode lalu" && statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
-                  {total === "jumlah tps" && statisticKec[1]?.jumlah_tps?.toLocaleString()}
-                  {total === "jumlah dpt/dps" && statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
-                  {total === "relawan" && statisticKec[1]?.jumlah_relawans?.toLocaleString()}
-                  {total === "simpatisan" && statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
-                  {total === "logistik" && statisticKec[1]?.jumlah_logistik?.toLocaleString()}
+                  {total === "target" &&
+                    statisticKec[1]?.target_suara?.toLocaleString()}
+                  {total === "program" &&
+                    statisticKec[1]?.program?.toLocaleString()}
+                  {total === "suara periode lalu" &&
+                    statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
+                  {total === "jumlah tps" &&
+                    statisticKec[1]?.jumlah_tps?.toLocaleString()}
+                  {total === "jumlah dpt/dps" &&
+                    statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
+                  {total === "relawan" &&
+                    statisticKec[1]?.jumlah_relawans?.toLocaleString()}
+                  {total === "simpatisan" &&
+                    statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
+                  {total === "logistik" &&
+                    statisticKec[1]?.jumlah_logistik?.toLocaleString()}
                 </>
               )}
             </p>
-            <p className={`${icon === kotaIcon ? " text-[18px] " : "text-[14px]"} text-[#374151] font-semibold`}>kec. Sandubaya</p>
+            <p
+              className={`${
+                icon === kotaIcon ? " text-[18px] " : "text-[14px]"
+              } text-[#374151] font-semibold`}
+            >
+              kec. Sandubaya
+            </p>
           </div>
         </div>
       </div>

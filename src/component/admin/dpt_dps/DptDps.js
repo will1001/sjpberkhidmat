@@ -301,10 +301,10 @@ const DptDps = () => {
           />
           <NewButton
             action={() => {
-              router.push({
-                pathname: "/Admin",
-                query: { component: "EksportDataDpt" },
-              });
+              // router.push({
+              //   pathname: "/Admin",
+              //   query: { component: "EksportDataDpt" },
+              // });
             }}
             style={exportButton}
             icon={Icon1}
