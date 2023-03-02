@@ -16,7 +16,7 @@ const RelawanContent = ({ setSelectTool }) => {
   };
   return (
     <>
-      <div className="mt-3">
+      <div className="mt-3 ">
         <SelectPeriode />
       </div>
 

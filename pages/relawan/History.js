@@ -12,20 +12,31 @@ import { useEffect } from "react";
 import axiosFetch from "../../src/API/axiosFetch";
 import { useSelector } from "react-redux";
 import { SearchIcon } from "../../src/utility/icon/icon";
+import alertInput from "../../src/utility/img/alert_realcount.png";
 
 const History = () => {
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
+  const periode = useSelector((state) => state.panel.idPeriode);
   const router = useRouter();
   // const getPlano = useFetch("get", "user/real_count/plano?page=1");
   const [planao, setPlano] = useState();
   const [alert, setalert] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const [uploadPlano, setUploadPlano] = useState();
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    axiosFetch("get", "user/real_count/plano?page=1", {}, token)
-      .then((res) => setPlano(res))
-      .catch((err) => console.log(err));
-  }, []);
+    if (keyword !== "" && keyword.length >= 3) {
+      axiosFetch("get", `user/real_count/plano?page=1&keyword=${keyword}`, {}, token)
+        .then((res) => setPlano(res))
+        .catch((err) => console.log(err));
+    } else {
+      axiosFetch("get", "user/real_count/plano?page=1", {}, token)
+        .then((res) => setPlano(res))
+        .catch((err) => console.log(err));
+    }
+  }, [keyword]);
 
   const hapusPlano = (id) =>
     axiosFetch("delete", `user/real_count/plano/${id}`, {}, token)
@@ -34,9 +45,60 @@ const History = () => {
         window.location.reload(false);
       })
       .catch((err) => console.log(err));
-  console.log(planao);
+
+  const postPlano = async () => {
+    const a = new FormData();
+    a.append("image", uploadPlano);
+    a.append("id_periode", periode);
+    {
+      await axiosFetch("post", `user/real_count/plano`, a, token)
+        .then((res) => {
+          console.log(res);
+          setUploadPlano();
+          setPopup(false);
+          window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  console.log(keyword);
   return (
     <>
+      <div className={`${popup === false ? "hidden" : "visible"} fixed left-0 w-screen h-screen bg-[#37415152]`}>
+        <div className="absolute bg-white py-12 rounded-sm px-12 left-[380px] top-[100px]">
+          <p onClick={() => setPopup(false)} className="absolute pr-2 text-[18px] font-medium text-[#374151] cursor-pointer top-0 right-0">
+            X
+          </p>
+          <p className="text-[#374151] text-[32px] font-bold">Upload Foto C1 Plano</p>
+          <div className="bg-[#FFECE480] mt-3">
+            <img src={alertInput.src} alt="alert_input.png" />
+          </div>
+          <div className="flex justify-between mt-3">
+            <p className="text-[#374151]">Upload Foto C Plano</p>
+            {uploadPlano === undefined ? (
+              <label htmlFor="input" className="flex flex-col items-center border py-4 px-16 rounded-md cursor-pointer">
+                <img src={uploadIcon.src} alt="uploadIcon.png" />
+
+                <p className="text-[12px] text-[#E44700] font-semibold">
+                  Upload a file <span className="text-black">of drag and drop</span>
+                </p>
+                <p className="text-[12px]">PNG, JPG, PDF upto 5MB</p>
+              </label>
+            ) : (
+              <div>{uploadPlano !== undefined && <img className="w-[300px] h-[150px]" src={URL.createObjectURL(uploadPlano)} />}</div>
+            )}
+
+            <input onChange={(e) => setUploadPlano(e.target.files[0])} id="input" className="hidden" type={"file"} />
+          </div>
+          <div className="flex justify-end">
+            <div onClick={postPlano} className="bg-[#E44700] text-white font-semibold py-2 px-4 mt-3 rounded-md cursor-pointer">
+              Upload Sekarang
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="text-[#374151] p-6">
         <div className="flex gap-12 border-b-2">
           <Logo />
@@ -49,12 +111,12 @@ const History = () => {
         </div>
         <div className="flex justify-between">
           <div className="flex items-center w-[220px] border rounded-sm mt-3 py-1 px-2 stroke-black">
-            <input className="outline-0" type={"text"} id={"search"} placeholder="Cari Data" />
+            <input onChange={(e) => setKeyword(e.target.value)} className="outline-0" type={"text"} id={"search"} placeholder="Cari Data" />
             <div className="h-[15px] w-[15px] flex items-center">
               <SearchIcon />
             </div>
           </div>
-          <div className="flex bg-[#E44700] items-center  justify-center gap-2 py-2 px-3 rounded-sm cursor-pointer">
+          <div onClick={() => setPopup(true)} className="flex bg-[#E44700] items-center  justify-center gap-2 py-2 px-3 rounded-sm cursor-pointer">
             <img src={uploadIcon.src} alt="upload_plano.png" />
             <p className="text-white font-semibold">Upload Foto C1 Plano</p>
           </div>
@@ -74,14 +136,14 @@ const History = () => {
             <p className="w-[200px]">
               {res?.createdAt?.split("T").pop().split(".").shift().split(":")[0]}:{res?.createdAt?.split("T").pop().split(".").shift().split(":")[1]} | {res?.createdAt?.split("T").shift().split("-").reverse().join("-")}
             </p>
-            <p className="w-[200px]">{res.relawan.name}</p>
-            <p className="w-[150px]">{res.status}</p>
+            <p className="w-[200px]">{res?.relawan?.name}</p>
+            <p className="w-[150px]">{res?.status}</p>
             <div className="w-[120px] flex gap-2 items-center">
               <img
                 onClick={() =>
                   router.push({
                     pathname: "./InputData",
-                    query: { plano: res.image },
+                    query: { plano: res.image, id: res._id },
                   })
                 }
                 className="cursor-pointer"

@@ -79,29 +79,26 @@ const SemuaPublikasi = () => {
       <p className="mt-[100px] mx-[70px] mb-2 text-[#374151] text-[26px] font-bold">Publikasi Video</p>
       <div className="grid grid-cols-4  gap-4 mr-2 ml-[70px] pb-[50px]">
         {getVideo?.data
-          ?.filter((data) => ["mp4", "mkv"].includes(data.image.split(".").pop().toLowerCase()))
+          ?.filter((data) => data.publication === true)
+          .filter((data) => data.description === "video")
           .map((res) => (
             <div key={res._id} className="w-[300px]">
               <div className="flex justify-center w-[300px] h-[200px]">
-                <img
+                <div
                   onClick={() =>
                     router.push({
                       pathname: "./DetailPublikasi",
                       query: {
                         title: res.title,
-                        image: res.image,
+                        image: res.video,
                         category: res.category,
                         creat: res?.createdAt?.split("T").shift().split("-").reverse().join("/"),
                       },
                     })
                   }
-                  className="h-[60px] w-[60px] absolute mt-[70px] cursor-pointer z-20"
-                  src={playIcon.src}
-                />
-                <video className=" w-[300px]  h-full bg-black">
-                  <source src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                  className="absolute cursor-pointer w-[300px] h-[200px]"
+                ></div>
+                <div className="">{res?.length !== 0 && <iframe className="rounded-sm" width="300" height="200" src={"https://www.youtube.com/embed/" + res?.video?.split("=").pop()}></iframe>}</div>
               </div>
               <p className="text-[#FF5001] text-[18px] font-semibold mt-2">{res.category}</p>
               <p className="text-[#374151] font-semibold">{res.title}</p>

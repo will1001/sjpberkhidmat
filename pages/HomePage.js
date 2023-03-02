@@ -54,7 +54,7 @@ const HomePage = ({ router }) => {
 
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
 
-  // console.log(getPublikasi?.data?.filter((data) => ["video"].includes(data?.description))[0], "ini get publikasi");
+  // console.log(getPublikasi);
   return (
     <>
       <div className="w-[1350px] ">
@@ -135,7 +135,9 @@ const HomePage = ({ router }) => {
           </div>
 
           <div className="flex px-[50px] justify-between mt-[55px] w-screen">
-            <Publikasi data={getPublikasi?.data?.filter((data) => ["video"].includes(data?.description))[0]} />
+            {getPublikasi?.data?.filter((data) => data.publication === true).filter((data) => data.description === "video")[0] && (
+              <Publikasi data={getPublikasi?.data?.filter((data) => data.publication === true).filter((data) => data.description === "video")[0]} />
+            )}
 
             <div className="flex flex-col gap-2 font-bold text-slate-700 text-[26px] object-contain">
               <p className="mb-2 flex items-center justify-between">
@@ -145,8 +147,10 @@ const HomePage = ({ router }) => {
                 </span>
               </p>
               {getPublikasi?.data
-                ?.filter((data) => ["mp4", "mkv"].includes(data?.image?.split(".").pop().toLowerCase()))
+                ?.filter((data) => data.publication === true)
+                .filter((data) => data.description === "video")
                 .map((res, index) => (
+                  // console.log(res)
                   <div key={res?._id}>{index <= 3 && <KabarTerbaru data={res} />}</div>
                 ))}
             </div>
