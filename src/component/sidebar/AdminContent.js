@@ -56,9 +56,9 @@ function AdminContent() {
                     }}
                     className="flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center"
                     style={{
-                      stroke: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
-                      backgroundColor: select === res.name ? "rgb(255, 247, 237)" : "white",
-                      WebkitTextFillColor: select === res.name ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
+                      stroke: router.query.component === res.path ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
+                      backgroundColor: router.query.component === res.path ? "rgb(255, 247, 237)" : "white",
+                      WebkitTextFillColor: router.query.component === res.path ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
                     }}
                   >
                     <span className="">{res.icon} </span> <span className="font-semibold">{res.name}</span>
