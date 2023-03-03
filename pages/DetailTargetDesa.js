@@ -15,6 +15,7 @@ import { setTabPanelRelawanDash } from "../src/redux/panelReducer";
 import { setIdKabupaten } from "../src/redux/userReducer";
 import Pagination from "../src/component/Pagination";
 import FilterData from "../src/component/FilterData";
+import useFetch from "../src/API/useFetch";
 
 function DetailTargetDesa({ routes }) {
   const customStyles = {
@@ -35,6 +36,9 @@ function DetailTargetDesa({ routes }) {
   const [suaraPeriodeLalu, setSuaraPeriodeLalu] = useState(null);
   const [currenPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState();
+  const [kecamatan, setKecamatan] = useState();
+  const [filterKecamatan, setFilterKecamatan] = useState("semua");
+  const [short, setShort] = useState("terkecil");
 
   const token = useSelector((state) => state.user.token);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
@@ -106,19 +110,32 @@ function DetailTargetDesa({ routes }) {
   };
 
   useEffect(() => {
+    router.query.id_kabupaten &&
+      axiosFetch("get", `user/kecamatan/${router.query.id_kabupaten}`)
+        .then((res) => setKecamatan(res.data))
+        .catch((err) => console.log(err));
+  }, [router.query.id_kabupaten]);
+
+  useEffect(() => {
     if (router.query.id_kabupaten) {
       dispatch(setIdKabupaten({ id_kabupaten: router.query.id_kabupaten }));
     }
     if (keyword !== undefined && keyword.length >= 3) {
-      axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&keyword=${keyword}`, {}, token)
+      axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&keyword=${keyword}&sort=${short}`, {}, token)
         .then((res) => setDetailTarget(res.data))
         .catch((err) => console.log(err));
     } else {
-      axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}`, {}, token)
-        .then((res) => setDetailTarget(res.data))
-        .catch((err) => console.log(err));
+      if (filterKecamatan === "semua") {
+        axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&sort=${short}`, {}, token)
+          .then((res) => setDetailTarget(res.data))
+          .catch((err) => console.log(err));
+      } else {
+        axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&id_kecamatan=${filterKecamatan}&sort=${short}`, {}, token)
+          .then((res) => setDetailTarget(res.data))
+          .catch((err) => console.log(err));
+      }
     }
-  }, [currenPage, keyword]);
+  }, [currenPage, keyword, filterKecamatan, short]);
 
   const columns = [
     {
@@ -167,7 +184,7 @@ function DetailTargetDesa({ routes }) {
       );
     }
   }
-  console.log(currenPage);
+  console.log(filterKecamatan);
   return (
     <>
       <div className="flex items-center">
@@ -185,7 +202,7 @@ function DetailTargetDesa({ routes }) {
         <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       </div>
       <div className=" px-[40px] pt-6 pb-3 text-[14px]">
-        <FilterData keyword={setKeyword} />
+        <FilterData short={short} setShort={setShort} keyword={setKeyword} kecamatan={kecamatan?.data !== undefined && kecamatan} setFilterKecamatan={setFilterKecamatan} />
       </div>
       <div className="px-[40px] py-[10px]">
         <DataTable columns={columns} data={data} customStyles={customStyles} />
