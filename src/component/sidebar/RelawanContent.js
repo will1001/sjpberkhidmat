@@ -28,9 +28,17 @@ const RelawanContent = ({ setSelectTool }) => {
               onClick={() => {
                 setSelect(res.name);
                 setSelectTool(res.name);
+                router.push({
+                  pathname: "/Admin",
+                  query: { component: res.path },
+                });
               }}
               key={i}
-              className={`flex items-center gap-2 ${select === res.name ? "bg-[#FFECE4] text-[#E44700] stroke-[#E44700]" : "stroke-[#374151] text-[#374151]"}  py-2 cursor-pointer text-[21px] font-medium`}
+              className={`flex items-center gap-2 ${
+                select === res.name
+                  ? "bg-[#FFECE4] text-[#E44700] stroke-[#E44700]"
+                  : "stroke-[#374151] text-[#374151]"
+              }  py-2 cursor-pointer text-[21px] font-medium`}
             >
               {res.icon} {res.name}
             </div>

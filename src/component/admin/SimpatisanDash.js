@@ -8,7 +8,7 @@ import ButtonPrimary from "../ButtonPrimary";
 import EditIcon from "../../utility/icon/edit2.png";
 
 import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const customStyles = {
   headCells: {
     style: { backgroundColor: "#374151", color: "white" },
@@ -16,7 +16,9 @@ const customStyles = {
 };
 
 const SimpatisanDash = () => {
-  const simpatisan = useFetch("get", "user/simpatisan?page=1&limit=100");
+  const token = useSelector((state) => state.user.token);
+
+  const simpatisan = useFetch("get", "user/simpatisan?page=1&limit=100", token);
   const dispatch = useDispatch();
 
   const editSimpatisan = (data) => {
