@@ -6,6 +6,7 @@ import searchIcon from "../../utility/icon/searchIcon.png";
 import useFetch from "../../API/useFetch";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import ButtonPrimary from "../ButtonPrimary";
 
 const RumahAspirasi = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const RumahAspirasi = () => {
     return res;
   };
   const token = useSelector((state) => state.user.token);
+  const roles = useSelector((state) => state.user.roles);
 
   const changeKelurahan = async (id_kecamatan) => {
     const res = await axiosFetch("get", `user/kelurahan/${id_kecamatan}`)
@@ -85,7 +87,7 @@ const RumahAspirasi = () => {
         <div className="ml-[60px] mt-[60px]">
           <p className="text-[#374151] text-[32px] font-bold">Rumah Aspirasi</p>
           <div className="flex gap-3 items-center mt-[23px] mb-[14px] text-[#374151]">
-            <div className="h-[32px] bg-white border border-[#D1D5DB] rounded-sm px-2 flex items-center">
+            {/* <div className="h-[32px] bg-white border border-[#D1D5DB] rounded-sm px-2 flex items-center">
               <input
                 onChange={(e) => setTypeSearch(e.target.value)}
                 className="outline-none"
@@ -93,8 +95,8 @@ const RumahAspirasi = () => {
                 type={"text"}
               />
               <img src={searchIcon.src} alt="search icon" />
-            </div>
-            <select
+            </div> */}
+            {/* <select
               className="outline-0 h-[32px] border border-[#D1D5DB] rounded-sm px-2"
               onChange={(e) => {
                 changeKecamatan(e.target.value);
@@ -132,9 +134,19 @@ const RumahAspirasi = () => {
                   {res.name}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
           <div>
+            {roles === "relawan" && (
+              <ButtonPrimary
+                title={"Tambah Aspirasi"}
+                action={() => {
+                  router.push("../Aspirasi");
+                }}
+              />
+            )}
+
+            <br />
             <table className="">
               <thead className="flex items-center rounded-t-sm  bg-[#374151]">
                 <tr className="text-white text-[14px] flex gap-2 items-center px-4 h-[51px]">
