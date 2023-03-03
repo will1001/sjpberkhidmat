@@ -17,17 +17,38 @@ import PetaLombok from "../../utility/PetaLombok";
 
 function Dashboard() {
   const router = useRouter();
-  const getTarget = useFetch("get", "user/dashboard/statistik/all");
+  const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
 
-  const jumlahSimpatisan = getTarget.data?.jumlah_simpatisans;
-  const targetSuara = getTarget.data?.target_suara;
-  const suaraLalu = getTarget.data?.suara_periode_lalu;
-
-  const jumlahTPS = getTarget.data?.jumlah_tps;
-
-  const jumlahDPTDPS = getTarget.data?.jumlah_dpt_dps;
-
-  const jumlahRelawans = getTarget.data?.jumlah_relawans;
+  const jumlahSimpatisan =
+    getTarget !== undefined &&
+    getTarget?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.jumlah_simpatisans;
+    }, 0);
+  const targetSuara =
+    getTarget !== undefined &&
+    getTarget?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.target_suara;
+    }, 0);
+  const suaraLalu =
+    getTarget !== undefined &&
+    getTarget?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.suara_periode_lalu;
+    }, 0);
+  const jumlahTPS =
+    getTarget !== undefined &&
+    getTarget?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.jumlah_tps;
+    }, 0);
+  const jumlahDPTDPS =
+    getTarget !== undefined &&
+    getTarget?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.jumlah_dpt_dps;
+    }, 0);
+  const jumlahRelawans =
+    getTarget !== undefined &&
+    getTarget?.data?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue?.jumlah_relawans;
+    }, 0);
 
   console.log(getTarget?.data);
 
