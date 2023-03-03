@@ -14,12 +14,12 @@ const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort,
         </label>
       )}
 
-      {kabupaten !== undefined && (
+      {kabupaten !== undefined && kabupaten.data !== undefined && (
         <label htmlFor="kabupaten" className="flex items-center gap-3">
           <p>Pilih Kabupaten / Kota</p>
           <select className="border p-2 rounded-sm" id="kabupaten">
             <option selected="disable">Pilih Kabupaten / Kota</option>
-            {kabupaten?.map((res) => (
+            {kabupaten?.data?.map((res) => (
               <option key={res._id} value={res._d}>
                 {res.name}
               </option>
@@ -27,7 +27,7 @@ const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort,
           </select>
         </label>
       )}
-      {kecamatan.data !== undefined && (
+      {kecamatan !== undefined && kecamatan.data !== undefined && (
         <label htmlFor="kecamatan" className="flex items-center gap-3">
           <p>Pilih Kecamatan</p>
           <select

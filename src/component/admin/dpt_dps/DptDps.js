@@ -18,11 +18,13 @@ import EditIcon from "../../../utility/icon/edit2.png";
 import { DeletIcon } from "../../../utility/icon/icon";
 import { showOrHidePopUpDptDps } from "../../../redux/panelReducer";
 import FilterData from "../../FilterData";
+import Pagination from "../../Pagination";
 
 const DptDps = () => {
   const router = useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
   const token = useSelector((state) => state.user.token);
+  const [currenPage, setCurrentPage] = useState(1);
   const [kabupaten, setKabupaten] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
   // const [kelurahan, setKelurahan] = useState([]);
@@ -37,10 +39,10 @@ const DptDps = () => {
 
   useEffect(() => {
     axios.get(base_url + "user/kabupaten").then((res) => setKabupaten(res.data));
-    axiosFetch("get", `user/dpt_dps?page=${1}`, {}, token)
+    axiosFetch("get", `user/dpt_dps?page=${currenPage}`, {}, token)
       .then((res) => setDptdps(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [currenPage]);
 
   let data = dptdps.data ? dptdps.data : [];
   let i = 0;
@@ -100,37 +102,31 @@ const DptDps = () => {
     {
       name: "NIK",
       selector: (row) => row.nik,
-      width: "150px ",
     },
     {
       name: "Nama",
       selector: (row) => row.name,
-      width: "160px ",
     },
-    // {
-    //   name: "Tempat Lahir",
-    //   selector: (row) => row.place_of_birth,
-    //   width: "110px ",
-    // },
-    // {
-    //   name: "Tanggal Lahir",
-    //   selector: (row) => row.birthDay,
-    //   width: "90px ",
-    // },
+    {
+      name: "Tempat Lahir",
+      selector: (row) => row.place_birth,
+    },
+    {
+      name: "Tanggal Lahir",
+      selector: (row) => row.date_birth.split("T").shift().split("-").reverse().join("/"),
+    },
     {
       name: "Kabupaten",
       selector: (row) => row.kabupaten?.name,
-      width: "120px ",
+      width: "200px",
     },
     {
       name: "Kecamatan",
       selector: (row) => row.kecamatan?.name,
-      width: "100px ",
     },
     {
       name: "Desa / Kel",
       selector: (row) => row.kelurahan?.name,
-      width: "90px ",
     },
     // {
     //   name: "Status Perkawinan",
@@ -140,12 +136,11 @@ const DptDps = () => {
     {
       name: "Jenis Kelamin",
       selector: (row) => row.gender,
-      width: "100px ",
     },
     {
       name: "Alamat",
       selector: (row) => row.address,
-      width: "220px ",
+      width: "500px",
     },
     // {
     //   name: "Aksi",
@@ -184,7 +179,7 @@ const DptDps = () => {
   // ];
   console.log(dptdps);
   return (
-    <div className="pl-[40px] pt-[45px] ">
+    <div className="pl-[40px] pt-[45px] pb-[100px]">
       <div className="flex items-center justify-between">
         <p className="font-bold text-[#374151] text-[32px]">DPT / DPS Dapil II Prov. NTB</p>
         <div className="pr-[20px]">
@@ -248,20 +243,51 @@ const DptDps = () => {
           />
         </div>
       </div>
-      <div className="w-[955px] mt-4 flex">
-        <DataTable columns={columns} data={data} customStyles={customStyles} conditionalRowStyles={conditionalRowStyles} />
-        {/* <div className="w-[88px]">
-          <p className="h-[51px] flex items-center justify-center bg-[#374151] text-white">
-            {" "}
-            Aksi
-          </p>
-          <div key={1} className="h-[57px] border-b-2 border-l-2">
-            <div className="flex justify-center pt-4 gap-2">
-              <img className="cursor-pointer" src={edit.src} alt="edit" />
-              <img className="cursor-pointer" src={deletIcon.src} alt="edit" />
-            </div>
-          </div>
-        </div> */}
+      {/* <div className="mt-4">
+        <DataTable className="" columns={columns} data={data} customStyles={customStyles} conditionalRowStyles={conditionalRowStyles} />
+        
+        <div className="flex"></div>
+      </div> */}
+      <div className="flex overflow-x-auto pb-4 rounded-sm mt-[24px] mr-[50px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]">
+        <table className="table-auto">
+          <thead className="">
+            <tr className="bg-[#374151] text-white h-[51px]">
+              <th className="px-4 py-2 text-left font-normal">NIK</th>
+              <th className="px-4 py-2 text-left font-normal">Nama</th>
+              <th className="px-4 py-2 text-left font-normal">Tempat Lahir</th>
+              <th className="px-4 py-2 text-left font-normal whitespace-nowrap">Tanggal Lahir</th>
+              <th className="px-4 py-2 text-left font-normal">Kabupaten</th>
+              <th className="px-4 py-2 text-left font-normal">Kecamatan</th>
+              <th className="px-4 py-2 text-left font-normal">Desa / Kel</th>
+              <th className="px-4 py-2 text-left font-normal whitespace-nowrap">Jenis Kelamin</th>
+              <th className="px-4 py-2 text-left font-normal">Alamat</th>
+              <th className=" font-normal absolute bg-[#374151] border-l-2 w-[100px] right-[50px] py-4">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dptdps?.data?.map((res, i) => (
+              <tr key={i} className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} h-[51px] text-[#374151]`}>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.nik}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.place_birth}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.date_birth?.split("T").shift().split("-").reverse().join("/")}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.kabupaten.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.kecamatan.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.kelurahan.name}</td>
+                <td className=" px-4 py-2 text-center">{res.gender}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.address}</td>
+                <td className=" px-4 py-2">Indonesia</td>
+                <td style={{ backgroundColor: (i + 1) % 2 !== 0 ? "#F9FAFB" : "white" }} className="absolute right-0 border-l-2 bg-slate-300 flex mr-[50px] px-6 py-4  gap-3 w-[100px] justify-center items-center">
+                  <img className="cursor-pointer" src={edit.src} />
+                  <img className="cursor-pointer" src={deletIcon.src} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="mr-[50px] mt-[24px]">
+        <Pagination current_page={currenPage} setCurrentPage={setCurrentPage} total_page={dptdps?.metadata?.totalPage} total={dptdps?.metadata?.total} />
       </div>
     </div>
   );
