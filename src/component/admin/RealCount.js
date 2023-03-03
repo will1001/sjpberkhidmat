@@ -25,6 +25,7 @@ const RealCount = ({ user }) => {
   const dataPartai = useFetch("get", "user/real_count/partai");
   const [popup, setPopup] = useState(false);
   const [plano, setPlano] = useState();
+  const getPlano = useFetch("get", "user/real_count/plano?page=1  ");
 
   const postPlano = async () => {
     const a = new FormData();
@@ -43,7 +44,7 @@ const RealCount = ({ user }) => {
     }
   };
 
-  console.log(plano);
+  console.log(getPlano);
 
   return (
     <>

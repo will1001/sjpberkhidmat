@@ -9,10 +9,12 @@ import CloseIcon from "../src/utility/icon/close.png";
 import ButtonPrimary from "../src/component/ButtonPrimary";
 import Button from "../src/component/Button";
 
-import { KembaliIcon } from "../src/utility/icon/icon";
+import { KembaliIcon, SearchIcon } from "../src/utility/icon/icon";
 import { useRouter, withRouter } from "next/router";
 import { setTabPanelRelawanDash } from "../src/redux/panelReducer";
 import { setIdKabupaten } from "../src/redux/userReducer";
+import Pagination from "../src/component/Pagination";
+import FilterData from "../src/component/FilterData";
 
 function DetailTargetDesa({ routes }) {
   const customStyles = {
@@ -31,17 +33,14 @@ function DetailTargetDesa({ routes }) {
   const [inputJmlPenduduk, setInputJmlPenduduk] = useState(null);
   const [inputJmlTps, setInputJmlTps] = useState(null);
   const [suaraPeriodeLalu, setSuaraPeriodeLalu] = useState(null);
+  const [currenPage, setCurrentPage] = useState(1);
+  const [keyword, setKeyword] = useState();
 
   const token = useSelector((state) => state.user.token);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
 
   const editTarget = async (data) => {
-    await axiosFetch(
-      "get",
-      `user/details/target_desa/current_input?id_kelurahan=${data._id}`,
-      {},
-      token
-    )
+    await axiosFetch("get", `user/details/target_desa/current_input?id_kelurahan=${data._id}`, {}, token)
       .then((res) => {
         const data = res.data.data;
         setInputTarget(data.jml_target);
@@ -110,18 +109,16 @@ function DetailTargetDesa({ routes }) {
     if (router.query.id_kabupaten) {
       dispatch(setIdKabupaten({ id_kabupaten: router.query.id_kabupaten }));
     }
-
-    axiosFetch(
-      "get",
-      `user/target/details?page=${1}&limit=50&id_kabupaten=${
-        router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
-      }`,
-      {},
-      token
-    )
-      .then((res) => setDetailTarget(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+    if (keyword !== undefined && keyword.length >= 3) {
+      axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&keyword=${keyword}`, {}, token)
+        .then((res) => setDetailTarget(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}`, {}, token)
+        .then((res) => setDetailTarget(res.data))
+        .catch((err) => console.log(err));
+    }
+  }, [currenPage, keyword]);
 
   const columns = [
     {
@@ -146,15 +143,7 @@ function DetailTargetDesa({ routes }) {
     },
     {
       name: "Status",
-      selector: (row) => (
-        <ProgressBar
-          progress={
-            row.targets ? row.jumlah_simpatisans / row.targets.target : 0
-          }
-          bgcolor={"#FF5001"}
-          height={"24px"}
-        />
-      ),
+      selector: (row) => <ProgressBar progress={row.targets ? row.jumlah_simpatisans / row.targets.target : 0} bgcolor={"#FF5001"} height={"24px"} />,
     },
     {
       name: "Edit",
@@ -178,35 +167,31 @@ function DetailTargetDesa({ routes }) {
       );
     }
   }
+  console.log(currenPage);
   return (
     <>
       <div className="flex items-center">
         <Logo />
-        <span className="ml-[50px] text-3xl font-bold">
-          Detail Target Simpatisan Per Desa
-        </span>
+        <span className="ml-[50px] text-3xl font-bold">Detail Target Simpatisan Per Desa</span>
       </div>
       <hr />
       <div
         className="px-[40px] py-[10px]"
         onClick={() => {
           router.back();
-          dispatch(
-            setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" })
-          );
+          dispatch(setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" }));
         }}
       >
-        <Button
-          title={"Kembali"}
-          icon={<KembaliIcon />}
-          text={"white"}
-          w={"149px"}
-          h={"53px"}
-          bgColor={"rgb(51, 65, 85)"}
-        />
+        <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
+      </div>
+      <div className=" px-[40px] pt-6 pb-3 text-[14px]">
+        <FilterData keyword={setKeyword} />
       </div>
       <div className="px-[40px] py-[10px]">
         <DataTable columns={columns} data={data} customStyles={customStyles} />
+      </div>
+      <div className="px-[40px] mt-6 pb-[50px]">
+        <Pagination setCurrentPage={setCurrentPage} total_page={detailTarget?.metadata?.totalPage} current_page={currenPage} total={detailTarget?.metadata?.total} />
       </div>
       {popUp && (
         <div className="w-full h-[200vh] absolute top-0">
