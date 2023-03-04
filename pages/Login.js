@@ -48,7 +48,9 @@ const Login = ({ router }) => {
     const res = await axiosFetch("post", `user/login`, formData)
       .then((res) => {
         if (res?.data) {
-          dispatch(setToken({ token: res.data.access_token, roles: res.data.roles }));
+          dispatch(
+            setToken({ token: res.data.access_token, roles: res.data.roles })
+          );
         } else {
           return <p>Loading.....</p>;
         }
@@ -74,6 +76,8 @@ const Login = ({ router }) => {
       router.push({ pathname: "Admin", query: { component: "Dashboard" } });
     } else if (roles === "relawan") {
       router.push({ pathname: "relawan/Relawan" });
+    } else if (roles === "koordinator") {
+      router.push({ pathname: "koordinator/Koordinator" });
     }
   }, [roles]);
 
@@ -92,33 +96,66 @@ const Login = ({ router }) => {
                   Email
                 </label>
 
-                <input onChange={(e) => setFormData({ ...formData, username: e.target.value })} className="h-[40px] rounded-md border text-[#374151] px-2 outline-0" type={"email"} id="email" />
+                <input
+                  onChange={(e) =>
+                    setFormData({ ...formData, username: e.target.value })
+                  }
+                  className="h-[40px] rounded-md border text-[#374151] px-2 outline-0"
+                  type={"email"}
+                  id="email"
+                />
               </div>
 
               {/* password */}
               <div className="flex flex-col self-stretch gap-2">
-                <label htmlFor="password" className="text-[14px] text-[#374151] ">
+                <label
+                  htmlFor="password"
+                  className="text-[14px] text-[#374151] "
+                >
                   Password
                 </label>
                 <div className="flex h-[40px] border rounded-md text-[#374151] px-2 items-center">
-                  <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="outline-0 w-full" type={passType} id="password" />
+                  <input
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className="outline-0 w-full"
+                    type={passType}
+                    id="password"
+                  />
                   {passType === "password" ? (
-                    <img className="cursor-pointer" onClick={() => setPasType("text")} src={hide.src} alt="hide.png" />
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => setPasType("text")}
+                      src={hide.src}
+                      alt="hide.png"
+                    />
                   ) : (
-                    <img className="cursor-pointer" onClick={() => setPasType("password")} src={show.src} alt="hide.png" />
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => setPasType("password")}
+                      src={show.src}
+                      alt="hide.png"
+                    />
                   )}
                 </div>
               </div>
 
               {/* button submit */}
-              <div onClick={login} className="cursor-pointer flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]">
+              <div
+                onClick={login}
+                className="cursor-pointer flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]"
+              >
                 Login
               </div>
             </div>
           </form>
           <p className="text-[#374151]">
             <span>Lupa Password / Email Anda? </span>
-            <span onClick={() => setPage("lupa password")} className="text-[#FF5001] font-semibold cursor-pointer">
+            <span
+              onClick={() => setPage("lupa password")}
+              className="text-[#FF5001] font-semibold cursor-pointer"
+            >
               Klik Disini
             </span>
           </p>
@@ -146,8 +183,20 @@ const Login = ({ router }) => {
               }
               className="text-[#9CA3AF] mt-[15px] flex items-center cursor-pointer"
             >
-              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199"
+                  stroke="#9CA3AF"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
               Kembali ke homepage
             </span>
@@ -156,9 +205,18 @@ const Login = ({ router }) => {
       </div>
     );
   } else if (page === "lupa password") {
-    return <ForgotPass email={email} setEmail={setEmail} pageForgot={setPageForgot} pagePeriv={setPageverif} />;
+    return (
+      <ForgotPass
+        email={email}
+        setEmail={setEmail}
+        pageForgot={setPageForgot}
+        pagePeriv={setPageverif}
+      />
+    );
   } else if (page === "perivikasi") {
-    return <Periv email={email} setPage={setPage} kePageLogin={setPageForgot} />;
+    return (
+      <Periv email={email} setPage={setPage} kePageLogin={setPageForgot} />
+    );
   }
 };
 
