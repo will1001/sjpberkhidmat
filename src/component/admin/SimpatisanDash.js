@@ -9,6 +9,7 @@ import EditIcon from "../../utility/icon/edit2.png";
 
 import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const customStyles = {
   headCells: {
     style: { backgroundColor: "#374151", color: "white" },
@@ -17,8 +18,21 @@ const customStyles = {
 
 const SimpatisanDash = () => {
   const token = useSelector((state) => state.user.token);
+  const router = useRouter();
 
-  const simpatisan = useFetch("get", "user/simpatisan?page=1&limit=100", token);
+  const simpatisan = useFetch(
+    "get",
+    `user/simpatisan?page=1&limit=100${
+      router.query.id_kabupaten !== undefined
+        ? "&id_kabupaten=" + router.query.id_kabupaten
+        : ""
+    }${
+      router.query.id_kecamatan !== undefined
+        ? "&id_kecamatan=" + router.query.id_kecamatan
+        : ""
+    }`,
+    token
+  );
   const dispatch = useDispatch();
 
   const editSimpatisan = (data) => {

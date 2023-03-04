@@ -15,6 +15,7 @@ import {
   showOrHidePopUpDash,
 } from "../../redux/panelReducer";
 import ListTargetDesa from "../ListTargetDesa";
+import { useRouter } from "next/router";
 
 const RelawanDash = () => {
   const customStyles = {
@@ -24,6 +25,7 @@ const RelawanDash = () => {
   };
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [pekerjaanFilter, setPekerjaanFilter] = useState(null);
   const [sorting, setSorting] = useState(null);
@@ -65,6 +67,14 @@ const RelawanDash = () => {
         pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
       }${sorting !== null ? "&sort=" + sorting : ""}${
         keyword !== null ? "&keyword=" + keyword : ""
+      }${
+        router.query.id_kabupaten !== undefined
+          ? "&id_kabupaten=" + router.query.id_kabupaten
+          : ""
+      }${
+        router.query.id_kecamatan !== undefined
+          ? "&id_kecamatan=" + router.query.id_kecamatan
+          : ""
       }`
     )
       .then((res) => setRelawan(res.data))
