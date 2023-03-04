@@ -30,6 +30,10 @@ const SimpatisanDash = () => {
       router.query.id_kecamatan !== undefined
         ? "&id_kecamatan=" + router.query.id_kecamatan
         : ""
+    }${
+      router.query.id_relawan !== undefined
+        ? "&id_relawan=" + router.query.id_relawan
+        : ""
     }`,
     token
   );

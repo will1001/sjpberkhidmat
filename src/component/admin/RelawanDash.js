@@ -91,7 +91,22 @@ const RelawanDash = () => {
     },
     {
       name: "Jumlah Rekrut",
-      selector: (row) => row.jumlah_simpatisans,
+      selector: (row) => (
+        <button
+          onClick={() => {
+            router.push({
+              pathname: "Admin",
+              query: {
+                component: "Simpatisan",
+                id_relawan: row._id,
+              },
+            });
+          }}
+        >
+          {row.jumlah_simpatisans}
+        </button>
+      ),
+      button: true,
     },
     {
       name: "email",
