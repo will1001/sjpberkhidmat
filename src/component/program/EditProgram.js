@@ -14,7 +14,7 @@ const DynamicHeader = dynamic(() => import("./TextEditor"), {
   ssr: false,
 });
 
-const EditProgram = ({ close, data }) => {
+const EditProgram = ({ close, data, setEditActive }) => {
   const publikasiStyle = {
     width: "155px",
     height: "42px",
@@ -105,14 +105,15 @@ const EditProgram = ({ close, data }) => {
     a.append("category", dataEdit.category);
 
     if (fileUpload === "image") {
-      a.append("image", imageFile);
+      imageFile !== undefined && a.append("image", imageFile);
     } else {
-      a.append("video", dataEdit.video);
+      dataEdit.video !== undefined && a.append("video", dataEdit.video);
     }
+
     a.append("publication", dataEdit.publication);
     a.append("id_kabupaten", dataEdit.id_kabupaten);
     a.append("id_kecamatan", dataEdit.id_kecamatan);
-    a.append("id_kelurahan", dataEdit.desa);
+    a.append("id_kelurahan", dataEdit.id_kelurahan);
     a.append("id_periode", periode);
 
     {
@@ -171,6 +172,11 @@ const EditProgram = ({ close, data }) => {
     setKelurahan(res.data);
   };
 
+  useEffect(() => {
+    dataEdit.id_kabupaten !== undefined && axiosFetch("get", `user/kecamatan/${dataEdit.id_kabupaten}`).then((res) => setKecamatan(res.data));
+    dataEdit.id_kecamatan !== undefined && axiosFetch("get", `user/kelurahan/${dataEdit.id_kecamatan}`).then((res) => setKelurahan(res.data));
+  }, []);
+
   console.log(dataEdit);
 
   return (
@@ -199,12 +205,21 @@ const EditProgram = ({ close, data }) => {
           </div>
         </div>
       </div>
-      <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2">
-        <Logo />
-        <p className="text-[26px] font-semibold font-serif text-[#374151] pr-[400px]">Edit Program</p>
-        <div onClick={() => setSwitchButton(true)}>
-          <NewButton title={"Simpan"} style={publikasiStyle} />
+      <div className="flex pl-[42px] mt-[32px] gap-4 border-b-2 justify-between w-screen">
+        <div className="flex">
+          <Logo />
+          <p className="text-[26px] whitespace-nowrap font-semibold font-serif text-[#374151]">Edit Program</p>
         </div>
+
+        <div className="flex gap-4">
+          <div onClick={() => setSwitchButton(true)}>
+            <NewButton title={"Simpan"} style={publikasiStyle} />
+          </div>
+          <div onClick={() => setEditActive(false)} className="h-[42px] text-[#374151] border border-[#374151] cursor-pointer flex items-center px-6 font-medium rounded-md">
+            Kembali
+          </div>
+        </div>
+
         {/* <NewButton title={"Simpan Draft"} style={draftStyle} /> */}
         {/* <div className="flex border border-[#B91C1C] rounded-md w-[44px] h-[42px] justify-center items-center">
           <DeletIcon />
@@ -248,8 +263,8 @@ const EditProgram = ({ close, data }) => {
             <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               Kabupaten / Kota
             </label>
-            <select onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
-              <option value={dataEdit?.id_kabupaten} disabled selected>
+            <select value={dataEdit.id_kabupaten} onChange={(e) => changeKabupaten(e.target.value)} id="kabupaten" className="h-[40px] w-[363px] border text-[#374151]">
+              <option disabled selected>
                 Pilih Kabupaten
               </option>
               {kabupaten.data?.map((res, i) => {
@@ -263,7 +278,7 @@ const EditProgram = ({ close, data }) => {
             <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               kecamatan
             </label>
-            <select onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+            <select value={dataEdit.id_kecamatan} onChange={(e) => changeKecamatan(e.target.value)} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
               <option value="" disabled selected>
                 Pilih Kecamatan
               </option>
@@ -278,9 +293,9 @@ const EditProgram = ({ close, data }) => {
             <label id="kota" value="kota" className="text-[12px] text-[#374151]">
               Kel / Desa
             </label>
-            <select onChange={(e) => setDataEdit({ ...dataEdit, desa: e.target.value })} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
+            <select value={dataEdit.id_kelurahan} onChange={(e) => setDataEdit({ ...dataEdit, id_kelurahan: e.target.value })} id="kecamatan" className="h-[40px] w-[363px] border text-[#374151]">
               <option value="" disabled selected>
-                Pilih Kecamatan
+                Pilih Desa / Kelurahan
               </option>
               {kelurahan.data?.map((res, i) => {
                 return (
