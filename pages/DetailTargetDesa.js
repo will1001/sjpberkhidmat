@@ -33,6 +33,7 @@ function DetailTargetDesa({ routes }) {
   const [inputTarget, setInputTarget] = useState(null);
   const [inputJmlPenduduk, setInputJmlPenduduk] = useState(null);
   const [inputJmlTps, setInputJmlTps] = useState(null);
+  const [inputJmlDptDps, setInputJmlDptDps] = useState(null);
   const [suaraPeriodeLalu, setSuaraPeriodeLalu] = useState(null);
   const [currenPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState();
@@ -44,12 +45,18 @@ function DetailTargetDesa({ routes }) {
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
 
   const editTarget = async (data) => {
-    await axiosFetch("get", `user/details/target_desa/current_input?id_kelurahan=${data._id}`, {}, token)
+    await axiosFetch(
+      "get",
+      `user/details/target_desa/current_input?id_kelurahan=${data._id}`,
+      {},
+      token
+    )
       .then((res) => {
         const data = res.data.data;
         setInputTarget(data.jml_target);
         setInputJmlPenduduk(data.jml_penduduk);
         setInputJmlTps(data.jml_tps);
+        setInputJmlDptDps(data.jml_dpt_dps);
         setSuaraPeriodeLalu(data.suara_periode_lalu);
         // setPopUp(false);
       })
@@ -67,7 +74,13 @@ function DetailTargetDesa({ routes }) {
     let formData;
     let formDataDPTDPS;
 
-    if (inputTarget && inputJmlPenduduk && inputJmlTps && suaraPeriodeLalu) {
+    if (
+      inputTarget &&
+      inputJmlPenduduk &&
+      inputJmlTps &&
+      inputJmlDptDps &&
+      suaraPeriodeLalu
+    ) {
       formData = {
         id_periode: idPeriode,
         id_kelurahan: id,
@@ -79,6 +92,7 @@ function DetailTargetDesa({ routes }) {
         id_kelurahan: id,
         jml_penduduk: inputJmlPenduduk,
         jml_tps: inputJmlTps,
+        jml_dpt_dps: inputJmlDptDps,
       };
     } else {
       alert("Isi Inputan Target, jumlah penduduk dan jumlah TPS");
@@ -121,16 +135,37 @@ function DetailTargetDesa({ routes }) {
       dispatch(setIdKabupaten({ id_kabupaten: router.query.id_kabupaten }));
     }
     if (keyword !== undefined && keyword.length >= 3) {
-      axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&keyword=${keyword}&sort=${short}`, {}, token)
+      axiosFetch(
+        "get",
+        `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${
+          router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
+        }&keyword=${keyword}&sort=${short}`,
+        {},
+        token
+      )
         .then((res) => setDetailTarget(res.data))
         .catch((err) => console.log(err));
     } else {
       if (filterKecamatan === "semua") {
-        axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&sort=${short}`, {}, token)
+        axiosFetch(
+          "get",
+          `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${
+            router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
+          }&sort=${short}`,
+          {},
+          token
+        )
           .then((res) => setDetailTarget(res.data))
           .catch((err) => console.log(err));
       } else {
-        axiosFetch("get", `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}&id_kecamatan=${filterKecamatan}&sort=${short}`, {}, token)
+        axiosFetch(
+          "get",
+          `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${
+            router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
+          }&id_kecamatan=${filterKecamatan}&sort=${short}`,
+          {},
+          token
+        )
           .then((res) => setDetailTarget(res.data))
           .catch((err) => console.log(err));
       }
@@ -159,8 +194,32 @@ function DetailTargetDesa({ routes }) {
       selector: (row) => row.targets?.target,
     },
     {
+      name: "Jumlah Penduduk",
+      selector: (row) => row.dpt_dps?.jml_penduduk,
+    },
+    {
+      name: "Jumlah TPS",
+      selector: (row) => row.dpt_dps?.jml_tps,
+    },
+    {
+      name: "Jumlah DPT /DPS",
+      selector: (row) => row.dpt_dps?.jml_dpt_dps,
+    },
+    {
+      name: "Suara Periode Lalu",
+      selector: (row) => row.suara_periode_lalu?.suara,
+    },
+    {
       name: "Status",
-      selector: (row) => <ProgressBar progress={row.targets ? row.jumlah_simpatisans / row.targets.target : 0} bgcolor={"#FF5001"} height={"24px"} />,
+      selector: (row) => (
+        <ProgressBar
+          progress={
+            row.targets ? row.jumlah_simpatisans / row.targets.target : 0
+          }
+          bgcolor={"#FF5001"}
+          height={"24px"}
+        />
+      ),
     },
     {
       name: "Edit",
@@ -189,31 +248,53 @@ function DetailTargetDesa({ routes }) {
     <>
       <div className="flex items-center">
         <Logo />
-        <span className="ml-[50px] text-3xl font-bold">Detail Target Simpatisan Per Desa</span>
+        <span className="ml-[50px] text-3xl font-bold">
+          Detail Target Simpatisan Per Desa
+        </span>
       </div>
       <hr />
       <div
         className="px-[40px] py-[10px]"
         onClick={() => {
           router.back();
-          dispatch(setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" }));
+          dispatch(
+            setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" })
+          );
         }}
       >
-        <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
+        <Button
+          title={"Kembali"}
+          icon={<KembaliIcon />}
+          text={"white"}
+          w={"149px"}
+          h={"53px"}
+          bgColor={"rgb(51, 65, 85)"}
+        />
       </div>
       <div className=" px-[40px] pt-6 pb-3 text-[14px]">
-        <FilterData short={short} setShort={setShort} keyword={setKeyword} kecamatan={kecamatan?.data !== undefined && kecamatan} setFilterKecamatan={setFilterKecamatan} />
+        <FilterData
+          short={short}
+          setShort={setShort}
+          keyword={setKeyword}
+          kecamatan={kecamatan?.data !== undefined && kecamatan}
+          setFilterKecamatan={setFilterKecamatan}
+        />
       </div>
       <div className="px-[40px] py-[10px]">
         <DataTable columns={columns} data={data} customStyles={customStyles} />
       </div>
       <div className="px-[40px] mt-6 pb-[50px]">
-        <Pagination setCurrentPage={setCurrentPage} total_page={detailTarget?.metadata?.totalPage} current_page={currenPage} total={detailTarget?.metadata?.total} />
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          total_page={detailTarget?.metadata?.totalPage}
+          current_page={currenPage}
+          total={detailTarget?.metadata?.total}
+        />
       </div>
       {popUp && (
         <div className="w-full h-[200vh] absolute top-0">
           <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
-          <div className="bg-white h-[550px] w-[500px] absolute top-[10%] left-[33%] p-7">
+          <div className="bg-white w-[500px] absolute top-[10%] left-[33%] p-7">
             <div className="flex justify-end cursor-pointer">
               <img
                 onClick={() => {
@@ -267,6 +348,17 @@ function DetailTargetDesa({ routes }) {
                     setInputJmlTps(e.target.value);
                   }}
                   value={inputJmlTps}
+                />
+              </div>
+              <div className="flex items-center justify-start w-[400px] mt-[20px]">
+                <span className="mr-[60px]">Jumlah DPT /DPS</span>
+                <input
+                  className="h-[40px] w-[50%] border text-[#374151] px-2 outline-0"
+                  type="number"
+                  onChange={(e) => {
+                    setInputJmlDptDps(e.target.value);
+                  }}
+                  value={inputJmlDptDps}
                 />
               </div>
               <div className="flex items-center justify-start w-[400px] mt-[20px]">
