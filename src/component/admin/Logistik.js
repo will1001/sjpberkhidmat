@@ -1,22 +1,48 @@
 import React, { useState } from "react";
-import { BackIcon, ChatIcon, DeletIcon, DropDownIcon, NextIcon, PrevIcon, ReadIcon, RelawanIcon, SearchIcon } from "../../utility/icon/icon";
+import {
+  BackIcon,
+  ChatIcon,
+  DeletIcon,
+  DropDownIcon,
+  NextIcon,
+  PrevIcon,
+  ReadIcon,
+  RelawanIcon,
+  SearchIcon,
+} from "../../utility/icon/icon";
 import ChatInput from "../logistik/ChatInput";
 import alert from "../../utility/img/alert_broadcast.png";
 import forum from "../../utility/img/forum.png";
+import ButtonPrimary from "../ButtonPrimary";
+import { useDispatch, useSelector } from "react-redux";
+import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
+import useFetch from "../../API/useFetch";
+import Moment from "moment";
+import "moment/locale/id";
 
 const Logistik = () => {
   const [popup, setPopup] = useState(false);
   const [popupPage, setPopupPage] = useState();
+  const dispatch = useDispatch();
 
   const handlePopUp = (name) => {
     setPopup(true);
     name !== popupPage ? setPopupPage(name) : setPopupPage();
   };
 
+  const token = useSelector((state) => state.user.token);
+  const roles = useSelector((state) => state.user.roles);
+
+  const logistik = useFetch("get", `user/logistik?page=1`, token);
+  Moment.locale("id");
+
   return (
     <>
       {/* popup chat */}
-      <div style={{ visibility: popup === false ? "hidden" : "visible" }} className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen">
+      <div
+        style={{ visibility: popup === false ? "hidden" : "visible" }}
+        className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen"
+      >
         {popupPage === "forum" && (
           <>
             <div className="absolute top-[100px] left-[500px] py-[40px] px-[80px] text-[#374151] bg-white">
@@ -35,7 +61,9 @@ const Logistik = () => {
                 </div>
 
                 <p className="text-[32px] font-bold mt-3">Kirim Ke Forum?</p>
-                <p className="mt-3">anda akan mengirimkan pesan ke semua akun</p>
+                <p className="mt-3">
+                  anda akan mengirimkan pesan ke semua akun
+                </p>
                 <p>relawan</p>
                 <div className="flex w-full gap-3 justify-between px-3 mt-3">
                   <div
@@ -47,7 +75,9 @@ const Logistik = () => {
                   >
                     Batal
                   </div>
-                  <div className="font-medium text-white bg-[#E44700] rounded-sm cursor-pointer py-2 w-full text-center">Kirim Pesan</div>
+                  <div className="font-medium text-white bg-[#E44700] rounded-sm cursor-pointer py-2 w-full text-center">
+                    Kirim Pesan
+                  </div>
                 </div>
               </div>
             </div>
@@ -65,19 +95,28 @@ const Logistik = () => {
               >
                 X
               </div>
-              <p className="text-[32px] font-bold mb-[42px]">Jumlah Penduduk NTB</p>
+              <p className="text-[32px] font-bold mb-[42px]">
+                Jumlah Penduduk NTB
+              </p>
               <img src={alert.src} alt="alert" />
               <div className="flex justify-between items-center mt-3">
                 <label className="text-[18px]" htmlFor="perihal">
                   Perihal
                 </label>
-                <input type={"text"} id="perihal" className="w-[300px] rounded-sm px-2 outline-none h-[40px] border" />
+                <input
+                  type={"text"}
+                  id="perihal"
+                  className="w-[300px] rounded-sm px-2 outline-none h-[40px] border"
+                />
               </div>
               <div className="flex justify-between items-center mt-3">
                 <label className="text-[18px]" htmlFor="status">
                   Status
                 </label>
-                <select id="status" className="w-[300px] rounded-sm px-2 outline-none h-[40px] border">
+                <select
+                  id="status"
+                  className="w-[300px] rounded-sm px-2 outline-none h-[40px] border"
+                >
                   <option>Proses</option>
                   <option>Menunggu</option>
                   <option>Belum Input</option>
@@ -87,10 +126,17 @@ const Logistik = () => {
                 <label className="text-[18px]" htmlFor="forum">
                   Detail Forum
                 </label>
-                <textarea type={"text"} id="forum" className="w-[300px] rounded-sm px-2 outline-none h-[140px] border" />
+                <textarea
+                  type={"text"}
+                  id="forum"
+                  className="w-[300px] rounded-sm px-2 outline-none h-[140px] border"
+                />
               </div>
               <div className="flex justify-end">
-                <div onClick={() => handlePopUp("forum")} className="py-2 px-4 bg-[#FF5001] text-white font-medium mt-3 rounded-sm cursor-pointer">
+                <div
+                  onClick={() => handlePopUp("forum")}
+                  className="py-2 px-4 bg-[#FF5001] text-white font-medium mt-3 rounded-sm cursor-pointer"
+                >
                   Broadcast Ke Relawan
                 </div>
               </div>
@@ -125,7 +171,10 @@ const Logistik = () => {
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Detail Pengajuan</p>
-                  <p className="w-[360px]">Ornare magna ultricies sed dapibus pharetra imperdiet nascetur viverra vitae.</p>
+                  <p className="w-[360px]">
+                    Ornare magna ultricies sed dapibus pharetra imperdiet
+                    nascetur viverra vitae.
+                  </p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Ubah Status</p>
@@ -140,19 +189,26 @@ const Logistik = () => {
                 {/* chat */}
                 <div className=" overflow-y-auto">
                   <div className="flex justify-center mb-12">
-                    <div className="bg-[#E5E7EB] text-[#6B7280] rounded-full px-2 py-1">12 Desember 2022</div>
+                    <div className="bg-[#E5E7EB] text-[#6B7280] rounded-full px-2 py-1">
+                      12 Desember 2022
+                    </div>
                   </div>
 
                   <div className="flex">
                     <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
-                      Ornare magna ultricies sed dapibus pharetra imperdiet nascetur viverra vitae.asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                      Ornare magna ultricies sed dapibus pharetra imperdiet
+                      nascetur viverra
+                      vitae.asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
                       <p className="text-end text-[12px] font-normal">10.23</p>
                     </p>
                   </div>
                   <div className="flex justify-end ">
                     <p className="font-medium bg-[#FF5001] text-white  rounded-t-xl rounded-bl-xl shadow-lg my-3 p-2 w-[420px]">
-                      Ornare magna ultricies sed dapibus pharetra imperdiet nascetur viverra vitae.
-                      <p className="text-[12px] font-normal flex gap-1 justify-end items-center">10.23 {<ReadIcon />}</p>
+                      Ornare magna ultricies sed dapibus pharetra imperdiet
+                      nascetur viverra vitae.
+                      <p className="text-[12px] font-normal flex gap-1 justify-end items-center">
+                        10.23 {<ReadIcon />}
+                      </p>
                     </p>
                   </div>
                 </div>
@@ -172,12 +228,25 @@ const Logistik = () => {
       <div className="p-[60px] text-[#374151] overflow-hidden stroke-[#374151]">
         <p className="text-[32px] font-bold">Logistik</p>
         <div className="flex">
-          <div className="bg-[#E44700] mt-[23px] text-white py-2 px-6 font-medium rounded-sm cursor-pointer">Tambah Data</div>
+          {roles === "relawan" && (
+            <div className="py-[10px]">
+              <ButtonPrimary
+                title={"Tambah Data"}
+                action={() => {
+                  dispatch(showOrHidePopUpDash({ type: "Logistik" }));
+                }}
+              />
+            </div>
+          )}
         </div>
         <div className="flex justify-between items-center mt-[24px]">
           <div className="flex items-center gap-4">
             <div className="w-[234px] py-2 border flex justify-between rounded-sm px-3">
-              <input className="outline-0 w-full" type={"text"} placeholder="Cari Data" />
+              <input
+                className="outline-0 w-full"
+                type={"text"}
+                placeholder="Cari Data"
+              />
               <SearchIcon />
             </div>
             <p>Filter</p>
@@ -188,7 +257,10 @@ const Logistik = () => {
               <option>Kecamatan</option>
             </select>
           </div>
-          <div onClick={() => handlePopUp("broadcast")} className="flex items-center gap-2 py-2 px-6 rounded-sm cursor-pointer font-medium bg-[#B91C1C] text-white stroke-white">
+          <div
+            onClick={() => handlePopUp("broadcast")}
+            className="flex items-center gap-2 py-2 px-6 rounded-sm cursor-pointer font-medium bg-[#B91C1C] text-white stroke-white"
+          >
             <RelawanIcon />
             <p>Broadcast</p>
           </div>
@@ -197,81 +269,87 @@ const Logistik = () => {
           <table className="w-full">
             <thead className="bg-[#374151]  ">
               <tr className="h-[51px] text-white flex justify-between items-center">
-                <th scope="col" className="w-[80px] px-2 py-3 text-left text-xs font-medium text-clip">
+                <th
+                  scope="col"
+                  className="w-[80px] px-2 py-3 text-left text-xs font-medium text-clip"
+                >
+                  No
+                </th>
+                <th
+                  scope="col"
+                  className="w-[80px] px-2 py-3 text-left text-xs font-medium text-clip"
+                >
                   tgl Pengajuan
                 </th>
-                <th scope="col" className="w-[120px] px-2 py-3 text-left text-xs font-medium text-clip">
+                <th
+                  scope="col"
+                  className="w-[120px] px-2 py-3 text-left text-xs font-medium text-clip"
+                >
                   Kab / Kota
                 </th>
-                <th scope="col" className="w-[160px] px-2 py-3 text-left text-xs font-medium text-clip">
+                <th
+                  scope="col"
+                  className="w-[160px] px-2 py-3 text-left text-xs font-medium text-clip"
+                >
                   Kebutuhan
                 </th>
-                <th scope="col" className="w-[356px] px-2 py-3 text-left text-xs font-medium">
+                <th
+                  scope="col"
+                  className="w-[356px] px-2 py-3 text-left text-xs font-medium"
+                >
                   Detail Pengajuan
                 </th>
-                <th scope="col" className="w-[150px] px-2 py-3 text-xs font-medium">
+                <th
+                  scope="col"
+                  className="w-[150px] px-2 py-3 text-xs font-medium"
+                >
                   Status
                 </th>
-                <th scope="col" className="w-[88px] border-l-2 flex justify-center px-2 py-3 text-left text-xs font-medium">
+                <th
+                  scope="col"
+                  className="w-[88px] border-l-2 flex justify-center px-2 py-3 text-left text-xs font-medium"
+                >
                   Aksi
                 </th>
               </tr>
             </thead>
             <tbody className="">
-              <tr className="flex justify-between bg-[#F9FAFB]">
-                <td className="w-[80px] px-2 py-3">11/12/23</td>
-                <td className="w-[120px] px-2 py-3">qewewqeqwe</td>
-                <td className="w-[160px] px-2 py-3">qweqwewewex</td>
-                <td className="max-w-[356px] px-2 py-3 break-words">qweqwewewexasdddddddddddddddddddddddddddddddddddddasdddddddddddddddddddddddddddddd</td>
-                <td className="w-[150px] flex items-center justify-center">
-                  <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">Belum Input</div>
-                </td>
-                <td className="w-[88px] px-2 py-3 border-l-2 border-white flex items-center justify-center ">
-                  <div className="flex  justify-center gap-3">
-                    <div onClick={() => handlePopUp("chat")} className="cursor-pointer">
-                      <ChatIcon />
-                    </div>
+              {logistik.data?.map((res, i) => {
+                return (
+                  <tr className="flex justify-between bg-[#F9FAFB]">
+                    <td className="w-[80px] px-2 py-3">{++i}</td>
+                    <td className="w-[80px] px-2 py-3">
+                      {Moment(res.createdAt).format("DD-MMMM-YYYY")}
+                    </td>
+                    <td className="w-[120px] px-2 py-3">
+                      {res.kabupaten.name}
+                    </td>
+                    <td className="w-[120px] px-2 py-3">
+                      {res.kecamatan.name}
+                    </td>
+                    <td className="max-w-[356px] px-2 py-3 break-words">
+                      {res.detail}
+                    </td>
+                    <td className="w-[150px] flex items-center justify-center">
+                      <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
+                        {res.status}
+                      </div>
+                    </td>
+                    <td className="w-[88px] px-2 py-3 border-l-2 border-white flex items-center justify-center ">
+                      <div className="flex  justify-center gap-3">
+                        <div
+                          onClick={() => handlePopUp("chat")}
+                          className="cursor-pointer"
+                        >
+                          <ChatIcon />
+                        </div>
 
-                    <DeletIcon />
-                  </div>
-                </td>
-              </tr>
-              <tr className="flex justify-between bg-[]">
-                <td className="w-[80px] px-2 py-3">11/12/23</td>
-                <td className="w-[120px] px-2 py-3">qewewqeqwe</td>
-                <td className="w-[160px] px-2 py-3">qweqwewewex</td>
-                <td className="max-w-[356px] px-2 py-3 break-words">qweqwewewexasdddddddddddddddddddddddddddddddddddddasdddddddddddddddddddddddddddddd</td>
-                <td className="w-[150px] px-2 py-3 flex items-center justify-center">
-                  <div className="bg-[#F1FAFF] border-[#0097EC] border text-[#0097EC] font-medium rounded-md text-center px-6 py-2">Selesai</div>
-                </td>
-                <td className="w-[88px] px-2 py-3 border-l-2 border-white flex justify-center items-center">
-                  <div className="flex justify-center gap-3">
-                    <div className="cursor-pointer">
-                      <ChatIcon />
-                    </div>
-
-                    <DeletIcon />
-                  </div>
-                </td>
-              </tr>
-              <tr className="flex justify-between bg-[#F9FAFB]">
-                <td className="w-[80px] px-2 py-3">11/12/23</td>
-                <td className="w-[120px] px-2 py-3">qewewqeqwe</td>
-                <td className="w-[160px] px-2 py-3">qweqwewewex</td>
-                <td className="max-w-[356px] px-2 py-3 break-words">qweqwewewexasdddddddddddddddddddddddddddddddddddddasdddddddddddddddddddddddddddddd</td>
-                <td className="w-[150px] flex items-center justify-center">
-                  <div className="bg-[#FFECE4] border-[#FF5001] border text-[#FF5001] font-medium rounded-md text-center px-6 py-2">Menunggu</div>
-                </td>
-                <td className="w-[88px] px-2 py-3 border-l-2 border-white flex items-center justify-center ">
-                  <div className="flex  justify-center gap-3">
-                    <div>
-                      <ChatIcon />
-                    </div>
-
-                    <DeletIcon />
-                  </div>
-                </td>
-              </tr>
+                        <DeletIcon />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -287,7 +365,9 @@ const Logistik = () => {
             <div className="stroke-[#D1D5DB]">
               <PrevIcon />
             </div>
-            <div className="bg-[#FF5001] rounded-md py-2 px-4 text-white cursor-pointer">1</div>
+            <div className="bg-[#FF5001] rounded-md py-2 px-4 text-white cursor-pointer">
+              1
+            </div>
             <div className="stroke-black">
               <NextIcon />
             </div>

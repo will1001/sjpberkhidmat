@@ -156,7 +156,7 @@ const Simpatisan = () => {
                   value={formData.nik}
                   onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
                   id="NIK"
-                  format="#### #### #### ###"
+                  format="#### #### #### ####"
                   allowEmptyFormatting
                   className="h-[40px] w-[235px]  px-2 outline-0 border text-[#374151]"
                 />

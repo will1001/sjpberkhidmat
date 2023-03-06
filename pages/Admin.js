@@ -26,6 +26,7 @@ import FormInputPassword from "../src/component/FormInputPassword";
 import { useEffect } from "react";
 import { DaftarRelawanIcon } from "../src/utility/icon/icon";
 import axiosFetch from "../src/API/axiosFetch";
+import FormInputTextArea from "../src/component/FormInputTextArea";
 var generator = require("generate-password");
 
 const gender = {
@@ -81,6 +82,8 @@ function Admin({ router }) {
     place_birth: "",
     gender: "",
     address: "",
+    detail: "",
+    kebutuhan: "",
   });
 
   const [formDataDPtDps, setFormDataDPtDps] = useState({
@@ -149,6 +152,27 @@ function Admin({ router }) {
       await axiosFetch("post", `user/dpt_dps/import`, a, token)
         .then((res) => {
           window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    location.reload();
+  };
+  const postLogistic = async () => {
+    const a = new FormData();
+    a.append("id_kabupaten", formData.id_kabupaten);
+    a.append("id_kecamatan", formData.id_kecamatan);
+    a.append("id_kelurahan", formData.target_desa);
+    a.append("kebutuhan", formData.kebutuhan);
+    a.append("detail", formData.detail);
+    a.append("id_periode", idPeriode);
+
+    {
+      await axiosFetch("post", `user/logistik`, a, token)
+        .then((res) => {
+          // window.location.reload(false);
+          dispatch(showOrHidePopUpDash({ type: null }));
         })
         .catch((error) => {
           console.log(error);
@@ -277,6 +301,101 @@ function Admin({ router }) {
             }
           })}
         </div>
+        {popUpDashType === "Logistik" && (
+          <>
+            <div className="w-full h-[200vh] absolute top-0">
+              <div className="bg-black opacity-50 w-full h-[200vh] absolute top-0"></div>
+              <div className="bg-white h-[1100px] w-[700px] absolute top-[5%] left-[33%] p-5">
+                <div className="flex justify-end cursor-pointer">
+                  <img
+                    onClick={() => {
+                      dispatch(showOrHidePopUpDash({ type: null }));
+                      dispatch(setEditData({ editData: null }));
+                      setClear(false);
+                      setStopEditData(false);
+                      setFormData({
+                        name: "",
+                        id_periode: idPeriode,
+                        nik: "",
+                        email: "",
+                        role: "relawan",
+                        phone: "",
+                        pekerjaan: "",
+                        id_kabupaten: "",
+                        id_kecamatan: "",
+                        target_desa: "",
+                        password: "",
+                        date_birth: "",
+                        place_birth: "",
+                        gender: "",
+                        address: "",
+                      });
+                    }}
+                    src={CloseIcon.src}
+                  />
+                </div>
+                <FormSelect
+                  label={"Kabupaten Kota"}
+                  type="text"
+                  onChange={(e) => changeKabupaten(e.target.value)}
+                  options={kabupaten}
+                  value={formData.id_kabupaten}
+                />
+                <FormSelect
+                  label={"Kecamatan"}
+                  type="text"
+                  onChange={(e) => changeKecamatan(e.target.value)}
+                  options={kecamatan}
+                  value={formData.id_kecamatan}
+                />
+                <FormSelect
+                  label={"Desa / Kelurahan"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, target_desa: e.target.value })
+                  }
+                  options={kelurahan}
+                  value={formData.target_desa}
+                />
+                <FormInputItem
+                  label={"Kebutuhan"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, kebutuhan: e.target.value })
+                  }
+                  value={formData.kebutuhan}
+                />
+                <FormInputTextArea
+                  label={"Detail Pengajuan"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, detail: e.target.value })
+                  }
+                  value={formData.detail}
+                />
+                <div className="flex mt-[40px] justify-end">
+                  <div
+                    onClick={() => {
+                      dispatch(showOrHidePopUpDash({ type: null }));
+                    }}
+                    className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
+                  >
+                    {/* <img src={homeIcn.src} /> */}
+                    <p className="text-[18px] font-semibold">Batalkan </p>
+                  </div>
+                  <div
+                    onClick={() => {
+                      postLogistic();
+                    }}
+                    className="h-[42px] w-[240px] bg-[#E44700] rounded-md  cursor-pointer  text-[18px] text-white font-semibold items-center justify-center gap-2 flex"
+                  >
+                    Buat Pengajuan
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
         {(popUpDashType === "Relawan" ||
           popUpDashType === "Simpatisan" ||
           popUpDashType === "Akun Tim") && (

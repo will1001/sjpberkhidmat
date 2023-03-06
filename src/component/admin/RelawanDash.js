@@ -86,6 +86,10 @@ const RelawanDash = () => {
 
   const columns = [
     {
+      name: "Nomor",
+      selector: (row, i) => ++i,
+    },
+    {
       name: "Nama Relawan",
       selector: (row) => row.name,
     },

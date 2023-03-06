@@ -98,6 +98,8 @@ function DetailTargetDesa({ routes }) {
       alert("Isi Inputan Target, jumlah penduduk dan jumlah TPS");
     }
 
+    // console.log(formDataDPTDPS);
+
     await axiosFetch("post", `user/target`, formData, token)
       .then(() => {
         // alert("Update Target Berhasil");
@@ -173,6 +175,10 @@ function DetailTargetDesa({ routes }) {
   }, [currenPage, keyword, filterKecamatan, short]);
 
   const columns = [
+    {
+      name: "Nomor",
+      selector: (row, i) => ++i,
+    },
     {
       name: "Desa / Kelurahan",
       selector: (row) => row.name,

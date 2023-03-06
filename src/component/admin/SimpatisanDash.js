@@ -63,6 +63,10 @@ const SimpatisanDash = () => {
 
   const columns = [
     {
+      name: "Nomor",
+      selector: (row, i) => ++i,
+    },
+    {
       name: "Nama",
       selector: (row) => row.name,
     },
