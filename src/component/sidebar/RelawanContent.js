@@ -28,10 +28,6 @@ const RelawanContent = ({ setSelectTool }) => {
               onClick={() => {
                 setSelect(res.name);
                 setSelectTool(res.name);
-                router.push({
-                  pathname: "/Admin",
-                  query: { component: res.path },
-                });
               }}
               key={i}
               className={`flex items-center gap-2 ${

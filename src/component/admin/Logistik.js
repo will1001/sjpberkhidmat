@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BackIcon,
   ChatIcon,
@@ -19,10 +19,17 @@ import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 import useFetch from "../../API/useFetch";
 import Moment from "moment";
 import "moment/locale/id";
+import axiosFetch from "../../API/axiosFetch";
 
 const Logistik = () => {
   const [popup, setPopup] = useState(false);
   const [popupPage, setPopupPage] = useState();
+  const [popupPengajuan, setPopupPengajuan] = useState(false)
+  const [kabupaten, setKabupaten] = useState()
+  const [getKecamatans, setGetKecamatans] = useState()
+  const [kecamatan, setKecamatan] = useState()
+  const [getKelurahans, setGetKelurahans] = useState()
+  const [kelurahan, setKelurahan] = useState()
   const dispatch = useDispatch();
 
   const handlePopUp = (name) => {
@@ -33,11 +40,62 @@ const Logistik = () => {
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
 
+  const getKabupaten = useFetch("get", "user/kabupaten")
+
+  useEffect(() => {
+    axiosFetch("get", `user/kecamatan/${kabupaten}`)
+      .then((res) => setGetKecamatans(res.data))
+      .catch((err) => console.log(err));
+  }, [kabupaten]);
+
+  useEffect(() => {
+    axiosFetch("get", `user/kelurahan/${kecamatan}`)
+      .then((res) => setGetKelurahans(res.data))
+      .catch((err) => console.log(err));
+  }, [kecamatan]);
+
   const logistik = useFetch("get", `user/logistik?page=1`, token);
   Moment.locale("id");
 
+
   return (
     <>
+      {/* popup pengajuan */}
+      <div style={{visibility : popupPengajuan === false ? "hidden" : "visible"}} className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50">
+        <div className="absolute p-[20px] top-[80px] left-[450px] bg-white text-[#374151] ">
+          <div onClick={() => setPopupPengajuan(false)} className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]">
+            X
+          </div>
+          <p className="text-[32px] text-center mb-[55px] font-bold">Tambah Pengajuan Logistik</p>
+          <div className="text-[14px]">
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Nama Relawan</label>
+              <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"text"} id="nama_relawan"/>
+            </div>
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Kabupaten / Kota</label>
+              <select onChange={(e) => setKabupaten(e.target.value)} className="border py-2 px-2 rounded-sm outline-none w-[330px]">
+                <option selected="disable">Pilih Kabupaten / Kota</option>
+                {getKabupaten?.data?.map((res) => <option className="mb-2" key={res._id} value={res._id}>{res.name}</option>)}
+              </select>
+            </div>
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Kabupaten / Kota</label>
+              <select onChange={(e) => setKecamatan(e.target.value)} className="border py-2 px-2 rounded-sm outline-none w-[330px]">
+                <option selected="disable">Pilih Kecamatan</option>
+                {getKecamatans?.data?.map((res) => <option className="mb-2" key={res._id} value={res._id}>{res.name}</option>)}
+              </select>
+            </div>
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Kabupaten / Kota</label>
+              <select onChange={(e) => setKelurahan(e.target.value)} className="border py-2 px-2 rounded-sm outline-none w-[330px]">
+                <option selected="disable">Pilih Desa / kelurahan</option>
+                {getKelurahans?.data?.map((res) => <option className="mb-2" key={res._id} value={res._id}>{res.name}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* popup chat */}
       <div
         style={{ visibility: popup === false ? "hidden" : "visible" }}
@@ -230,12 +288,18 @@ const Logistik = () => {
         <div className="flex">
           {roles === "relawan" && (
             <div className="py-[10px]">
-              <ButtonPrimary
-                title={"Tambah Data"}
-                action={() => {
-                  dispatch(showOrHidePopUpDash({ type: "Logistik" }));
-                }}
-              />
+              {roles === "Admin" ? (
+                <ButtonPrimary
+                  title={"Tambah Data"}
+                  action={() => {
+                    dispatch(showOrHidePopUpDash({ type: "Logistik" }));
+                  }}
+                />
+              ) : (
+                <div onClick={() => setPopupPengajuan(true)} className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 ">
+                  Tambah Pengajuan
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -265,49 +329,46 @@ const Logistik = () => {
             <p>Broadcast</p>
           </div>
         </div>
-        <div className="mt-[24px]">
-          <table className="w-full">
+        <div className=" flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]">
+          <table className="tabel-auto">
             <thead className="bg-[#374151]  ">
-              <tr className="h-[51px] text-white flex justify-between items-center">
+              <tr className="h-[51px] text-white ">
                 <th
                   scope="col"
-                  className="w-[80px] px-2 py-3 text-left text-xs font-medium text-clip"
+                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
                 >
                   No
                 </th>
                 <th
                   scope="col"
-                  className="w-[80px] px-2 py-3 text-left text-xs font-medium text-clip"
+                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
                 >
                   tgl Pengajuan
                 </th>
                 <th
                   scope="col"
-                  className="w-[120px] px-2 py-3 text-left text-xs font-medium text-clip"
+                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
                 >
                   Kab / Kota
                 </th>
                 <th
                   scope="col"
-                  className="w-[160px] px-2 py-3 text-left text-xs font-medium text-clip"
+                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
                 >
                   Kebutuhan
                 </th>
                 <th
                   scope="col"
-                  className="w-[356px] px-2 py-3 text-left text-xs font-medium"
+                  className=" px-2 py-3 text-left text-xs font-medium"
                 >
                   Detail Pengajuan
                 </th>
-                <th
-                  scope="col"
-                  className="w-[150px] px-2 py-3 text-xs font-medium"
-                >
+                <th scope="col" className=" px-2 py-3 text-xs font-medium">
                   Status
                 </th>
                 <th
                   scope="col"
-                  className="w-[88px] border-l-2 flex justify-center px-2 py-3 text-left text-xs font-medium"
+                  className=" border-l-2 bg-[#374151] px-2 py-3 sticky right-0 text-xs font-medium"
                 >
                   Aksi
                 </th>
@@ -316,26 +377,24 @@ const Logistik = () => {
             <tbody className="">
               {logistik.data?.map((res, i) => {
                 return (
-                  <tr className="flex justify-between bg-[#F9FAFB]">
-                    <td className="w-[80px] px-2 py-3">{++i}</td>
-                    <td className="w-[80px] px-2 py-3">
+                  <tr className="bg-[#F9FAFB] h-[52px]">
+                    <td className="px-2 py-3">{++i}</td>
+                    <td className=" px-2 py-3 whitespace-nowrap">
                       {Moment(res.createdAt).format("DD-MMMM-YYYY")}
                     </td>
-                    <td className="w-[120px] px-2 py-3">
+                    <td className="px-2 py-3 whitespace-nowrap">
                       {res.kabupaten.name}
                     </td>
-                    <td className="w-[120px] px-2 py-3">
-                      {res.kecamatan.name}
+                    <td className="px-2 py-3">{res.kecamatan.name}</td>
+                    <td className="px-2 py-3 max-w-[350px] break-words">
+                      {res.detail}asdasdsaddsadasdsadasdsadasd
                     </td>
-                    <td className="max-w-[356px] px-2 py-3 break-words">
-                      {res.detail}
-                    </td>
-                    <td className="w-[150px] flex items-center justify-center">
+                    <td className="px-2 py-3 ">
                       <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
                         {res.status}
                       </div>
                     </td>
-                    <td className="w-[88px] px-2 py-3 border-l-2 border-white flex items-center justify-center ">
+                    <td className="px-2 py-3 border-l-2 bg-white sticky right-0">
                       <div className="flex  justify-center gap-3">
                         <div
                           onClick={() => handlePopUp("chat")}

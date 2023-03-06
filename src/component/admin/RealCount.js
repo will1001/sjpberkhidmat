@@ -144,10 +144,12 @@ const RealCount = ({ user }) => {
                 Histori Upload
               </div>
             </div>
+            <div>
+              <p className="font-bold text-slate-700 text-[18px]">
+                Perolehan Suara Sementara
+              </p>
+            </div>
 
-            <p className="font-bold text-slate-700 text-[18px]">
-              Perolehan Suara Sementara
-            </p>
             <div className="flex gap-4 pt-4 pb-4">
               <button
                 onClick={() => activhandle("partai")}
