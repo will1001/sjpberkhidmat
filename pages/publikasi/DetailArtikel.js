@@ -113,7 +113,8 @@ const DetailArtikel = () => {
             ))}
           <div className="mt-12">
             <Logo />
-            <p>aliquet ultricies purus arcu nunc malesuada mattis ut maecenas malesuada sed nisl scelerisque pellentesque adipiscing mollis nisi, congue viverra diam pharetra.</p>
+            <p>Bekerja bersama untuk membangun masa depan yang
+lebih baik bagi masyarakat dan generasi yang akan datang.</p>
             <p className="text-[26px] mb-3 mt-3 font-bold">Kategori Publikasi</p>
             <div className="flex flex-col gap-2 font-medium cursor-pointer">
               <p>Bantuan Sosial</p>

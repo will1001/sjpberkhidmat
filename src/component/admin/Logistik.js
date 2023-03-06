@@ -108,10 +108,10 @@ const Logistik = () => {
   };
 
   useEffect(() => {
-    // if (loadNewChat) {
-    //   getChats(chatTargetId);
-    //   setLoadNewChat(false);
-    // }
+    if (loadNewChat) {
+      getChats(chatTargetId);
+      setLoadNewChat(false);
+    }
     setTimeout(() => {
       getChats(chatTargetId);
     }, 1000);
@@ -262,7 +262,7 @@ const Logistik = () => {
         )}
         {popupPage === "chat" && (
           <>
-            <div className="absolute inset-y-0 scrollbar scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]  overflow-scroll  right-0 bg-white text-[#374151]">
+            <div className="absolute z-50 inset-y-0 scrollbar scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]  overflow-scroll  right-0 bg-white text-[#374151]">
               <div
                 onClick={() => {
                   setPopup(false);
@@ -304,7 +304,7 @@ const Logistik = () => {
               </div>
               <div className="bg-[#F3F4F6] p-[20px] min-h-screen pr-8">
                 {/* chat */}
-                <div className=" overflow-y-auto">
+                <div className=" overflow-y-auto pb-[100px]">
                   <div className="flex justify-center mb-12">
                     <div className="bg-[#E5E7EB] text-[#6B7280] rounded-full px-2 py-1">
                       12 Desember 2022
@@ -481,14 +481,14 @@ const Logistik = () => {
                   scope="col"
                   className=" px-2 py-3 text-left text-xs font-medium"
                 >
-                  Detail Pengajuan
+                  Kecamatan
                 </th>
                 <th scope="col" className=" px-2 py-3 text-xs font-medium">
                   Status
                 </th>
                 <th
                   scope="col"
-                  className=" border-l-2 bg-[#374151] px-2 py-3 sticky right-0 text-xs font-medium"
+                  className=" border-l-2 bg-[#374151] px-2 py-3  text-white  text-xs font-medium"
                 >
                   Aksi
                 </th>
@@ -514,7 +514,7 @@ const Logistik = () => {
                         {res.status}
                       </div>
                     </td>
-                    <td className="px-2 py-3 border-l-2 bg-white sticky right-0">
+                    <td className="px-2 py-3 border-l-2  bg-white ">
                       <div className="flex  justify-center gap-3">
                         <div
                           onClick={() => handlePopUp("chat", res.id_relawan)}
