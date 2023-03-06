@@ -151,13 +151,13 @@ function Admin({ router }) {
     {
       await axiosFetch("post", `user/dpt_dps/import`, a, token)
         .then((res) => {
-          window.location.reload(false);
+          // window.location.reload(false);
         })
         .catch((error) => {
           console.log(error);
         });
     }
-    location.reload();
+    // location.reload();
   };
   const postLogistic = async () => {
     const a = new FormData();

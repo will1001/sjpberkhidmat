@@ -31,10 +31,16 @@ const Logistik = () => {
   const [getKelurahans, setGetKelurahans] = useState()
   const [kelurahan, setKelurahan] = useState()
   const dispatch = useDispatch();
+  const [message, setMessage] = useState("");
+  const [loadNewChat, setLoadNewChat] = useState(false);
+  const [chats, setChat] = useState([]);
+  const [chatTargetId, setChatTargetId] = useState("");
 
-  const handlePopUp = (name) => {
+  const handlePopUp = async (name, id_relawan) => {
     setPopup(true);
     name !== popupPage ? setPopupPage(name) : setPopupPage();
+    setChatTargetId(id_relawan);
+    getChats(id_relawan);
   };
 
   const token = useSelector((state) => state.user.token);
@@ -55,8 +61,61 @@ const Logistik = () => {
   }, [kecamatan]);
 
   const logistik = useFetch("get", `user/logistik?page=1`, token);
-  Moment.locale("id");
+  // const chats = useFetch("get", `user/chats`, token);
 
+  Moment.locale("id");
+  const sendMessage = async () => {
+    const a = new FormData();
+    let target = [];
+    target.push(chatTargetId);
+    a.append("target", target);
+    a.append("target", "");
+    a.append("message", message);
+    a.append("type", "text");
+
+    // dispatch(showOrHidePopUpDptDps({ type: null }));
+
+    {
+      await axiosFetch("post", `user/chats`, a, token)
+        .then((res) => {
+          // window.location.reload(false);
+          setLoadNewChat(true);
+          setMessage("");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    // location.reload();
+  };
+
+  const getChats = async (id_relawan) => {
+    {
+      await axiosFetch(
+        "get",
+        `user/chats?offset=0&target=${id_relawan}`,
+        [],
+        token
+      )
+        .then((res) => {
+          setChat(res.data);
+          // window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    // if (loadNewChat) {
+    //   getChats(chatTargetId);
+    //   setLoadNewChat(false);
+    // }
+    setTimeout(() => {
+      getChats(chatTargetId);
+    }, 1000);
+  });
 
   return (
     <>
@@ -251,8 +310,61 @@ const Logistik = () => {
                       12 Desember 2022
                     </div>
                   </div>
+                  {chats.data?.map((e, i) => {
+                    if (roles === "admin") {
+                      if (chatTargetId === e.user_id_from) {
+                        return (
+                          <div className="flex">
+                            <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
+                              {e.message}
+                              <p className="text-end text-[12px] font-normal">
+                                {e.is_read && <ReadIcon />}
+                              </p>
+                            </p>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div className="flex justify-end ">
+                            <p className="font-medium bg-[#FF5001] text-white  rounded-t-xl rounded-bl-xl shadow-lg my-3 p-2 w-[420px]">
+                              {e.message}
+                              <p className="text-[12px] font-normal flex gap-1 justify-end items-center">
+                                {Moment(e.createdAt).format("hh:mm")}{" "}
+                                {e.is_read && <ReadIcon />}
+                              </p>
+                            </p>
+                          </div>
+                        );
+                      }
+                    } else {
+                      if (chatTargetId === e.user_id_from) {
+                        return (
+                          <div className="flex justify-end ">
+                            <p className="font-medium bg-[#FF5001] text-white  rounded-t-xl rounded-bl-xl shadow-lg my-3 p-2 w-[420px]">
+                              {e.message}
+                              <p className="text-[12px] font-normal flex gap-1 justify-end items-center">
+                                {Moment(e.createdAt).format("hh:mm")}{" "}
+                                {e.is_read && <ReadIcon />}
+                              </p>
+                            </p>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div className="flex">
+                            <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
+                              {e.message}
+                              <p className="text-end text-[12px] font-normal">
+                                {e.is_read && <ReadIcon />}
+                              </p>
+                            </p>
+                          </div>
+                        );
+                      }
+                    }
+                  })}
 
-                  <div className="flex">
+                  {/* <div className="flex">
                     <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
                       Ornare magna ultricies sed dapibus pharetra imperdiet
                       nascetur viverra
@@ -268,11 +380,19 @@ const Logistik = () => {
                         10.23 {<ReadIcon />}
                       </p>
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="fixed bottom-0 z-50 py-3 px-6 w-full flex  bg-[#E5E7EB] items-center">
-                  <ChatInput onSendMessage={alert} />
+                  <ChatInput
+                    onSendMessage={(e) => {
+                      sendMessage();
+                    }}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                    }}
+                    value={message}
+                  />
                 </div>
                 {/*  */}
               </div>
@@ -321,13 +441,13 @@ const Logistik = () => {
               <option>Kecamatan</option>
             </select>
           </div>
-          <div
+          {/* <div
             onClick={() => handlePopUp("broadcast")}
             className="flex items-center gap-2 py-2 px-6 rounded-sm cursor-pointer font-medium bg-[#B91C1C] text-white stroke-white"
           >
             <RelawanIcon />
             <p>Broadcast</p>
-          </div>
+          </div> */}
         </div>
         <div className=" flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]">
           <table className="tabel-auto">
@@ -385,9 +505,9 @@ const Logistik = () => {
                     <td className="px-2 py-3 whitespace-nowrap">
                       {res.kabupaten.name}
                     </td>
-                    <td className="px-2 py-3">{res.kecamatan.name}</td>
-                    <td className="px-2 py-3 max-w-[350px] break-words">
-                      {res.detail}asdasdsaddsadasdsadasdsadasd
+                    <td className="w-[120px] px-2 py-3">{res.kebutuhan}</td>
+                    <td className="w-[120px] px-2 py-3">
+                      {res.kecamatan.name}
                     </td>
                     <td className="px-2 py-3 ">
                       <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
@@ -397,7 +517,7 @@ const Logistik = () => {
                     <td className="px-2 py-3 border-l-2 bg-white sticky right-0">
                       <div className="flex  justify-center gap-3">
                         <div
-                          onClick={() => handlePopUp("chat")}
+                          onClick={() => handlePopUp("chat", res.id_relawan)}
                           className="cursor-pointer"
                         >
                           <ChatIcon />
