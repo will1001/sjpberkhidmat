@@ -124,7 +124,7 @@ const SemuaArtikel = () => {
 
       <div className="grid grid-cols-4  gap-4 mr-2 ml-[70px] pb-[50px]">
         {getPublikasi?.data
-          ?.filter((data) => ["jpg", "jpeg", "png"].includes(data.image.split(".").pop().toLowerCase()))
+          ?.filter((data) => ["jpg", "jpeg", "png"].includes(data?.image?.split(".").pop().toLowerCase()))
           .filter((data) => (filter === "Semua" ? true : filter.includes(data.category)))
           .map((res) => (
             <div key={res._id} className="w-[300px]">

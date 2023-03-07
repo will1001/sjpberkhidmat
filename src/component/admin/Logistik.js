@@ -35,12 +35,14 @@ const Logistik = () => {
   const [loadNewChat, setLoadNewChat] = useState(false);
   const [chats, setChat] = useState([]);
   const [chatTargetId, setChatTargetId] = useState("");
+  const [dataChat, setDataChat] = useState()
 
-  const handlePopUp = async (name, id_relawan) => {
+  const handlePopUp = async (name, id_relawan, data) => {
     setPopup(true);
     name !== popupPage ? setPopupPage(name) : setPopupPage();
     setChatTargetId(id_relawan);
     getChats(id_relawan);
+    setDataChat(data)
   };
 
   const token = useSelector((state) => state.user.token);
@@ -116,6 +118,8 @@ const Logistik = () => {
       getChats(chatTargetId);
     }, 1000);
   });
+
+  console.log(dataChat)
 
   return (
     <>
@@ -517,7 +521,7 @@ const Logistik = () => {
                     <td className="px-2 py-3 border-l-2  bg-white ">
                       <div className="flex  justify-center gap-3">
                         <div
-                          onClick={() => handlePopUp("chat", res.id_relawan)}
+                          onClick={() => handlePopUp("chat", res.id_relawan, res)}
                           className="cursor-pointer"
                         >
                           <ChatIcon />

@@ -39,7 +39,7 @@ const DetailPublikasi = () => {
             <p
               onClick={() => {
                 router.push("/");
-                setSelectProgram(false);
+                // setSelectProgram(false);
               }}
               className={`cursor-pointer `}
             >
