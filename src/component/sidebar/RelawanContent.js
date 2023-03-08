@@ -4,6 +4,7 @@ import { useState } from "react";
 import { logoSidebar } from "../../utility/icon/LogoSidebar";
 import SelectPeriode from "../SelectPeriode";
 import { UserIcon } from "../../utility/icon/icon";
+import logoutIcon from "../../utility/icon/logout.png";
 
 const RelawanContent = ({ setSelectTool, username, role, setPopupPeriode }) => {
   const router = useRouter();

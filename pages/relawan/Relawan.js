@@ -5,6 +5,7 @@ import Logistik from "../../src/component/admin/Logistik";
 import RealCount from "../../src/component/admin/RealCount";
 import SimpatisanDash from "../../src/component/admin/SimpatisanDash";
 import RumahAspirasi from "../../src/component/aspirasi/RumahAspirasi";
+import RumahAspirasi from "../../src/component/aspirasi/RumahAspirasi";
 import RelawanContent from "../../src/component/sidebar/RelawanContent";
 import SideBar from "../../src/component/sidebar/SideBar";
 import Logo from "../../src/utility/Logo";
