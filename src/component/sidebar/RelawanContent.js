@@ -6,6 +6,7 @@ import { setToken } from "../../redux/userReducer";
 import { useDispatch } from "react-redux";
 import SelectPeriode from "../SelectPeriode";
 import { UserIcon } from "../../utility/icon/icon";
+import logoutIcon from "../../utility/icon/logout.png";
 
 const RelawanContent = ({ setSelectTool, username, role }) => {
   const router = useRouter();
@@ -47,7 +48,12 @@ const RelawanContent = ({ setSelectTool, username, role }) => {
               {res.icon} {res.name}
             </div>
           ))}
-        <div onClick={handleLogOut}>logout sementara</div>
+        <div
+          onClick={handleLogOut}
+          className="flex gap-2 p-2 justify-start w-full text-[18px] text-[#9CA3AF] font-medium items-center cursor-pointer"
+        >
+          <img src={logoutIcon.src} alt="logout.png" /> <p>Logout</p>
+        </div>
       </div>
     </>
   );

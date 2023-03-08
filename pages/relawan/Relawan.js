@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Logistik from "../../src/component/admin/Logistik";
 import RealCount from "../../src/component/admin/RealCount";
 import SimpatisanDash from "../../src/component/admin/SimpatisanDash";
+import RumahAspirasi from "../../src/component/aspirasi/RumahAspirasi";
 import RelawanContent from "../../src/component/sidebar/RelawanContent";
 import SideBar from "../../src/component/sidebar/SideBar";
 import Logo from "../../src/utility/Logo";
@@ -22,6 +23,7 @@ const Relawan = () => {
         {selectTool === "Real Count" && <RealCount user={"Relawan"} />}
         {selectTool === "Logistic" && <Logistik/>}
         {selectTool === "Simpatisan" && <SimpatisanDash/>}
+        {selectTool === "Aspirasi" && <RumahAspirasi/>}
       </div>
     </div>
   );
