@@ -14,6 +14,7 @@ const customStyles = {
   headCells: {
     style: { backgroundColor: "#374151", color: "white" },
   },
+  
 };
 
 const SimpatisanDash = () => {

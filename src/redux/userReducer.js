@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   token: "",
   roles: "",
+  name: "",
+  email:"",
   id_kabupaten: "",
 };
 
@@ -13,6 +15,8 @@ export const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload.token;
       state.roles = action.payload.roles;
+      state.name = action.payload.name;
+      state.email = action.payload.email;
     },
     setIdKabupaten: (state, action) => {
       state.id_kabupaten = action.payload.id_kabupaten;

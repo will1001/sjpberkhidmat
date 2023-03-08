@@ -15,7 +15,7 @@ const SelectPeriode = () => {
   const [to, setTo] = useState();
   const [popup, setPopup] = useState(false);
   const token = useSelector((state) => state.user.token);
-  // const periode = useSelector((state) => state.panel.idPeriode);
+  const periode = useSelector((state) => state.panel.idPeriode);
 
   const [dataPeriode, setDataPeriode] = useState();
 
@@ -26,6 +26,7 @@ const SelectPeriode = () => {
   const selectPeriode = (periode) => {
     setInitialPeriode !== periode && setInitialPeriode(periode);
   };
+
 
   // const postPeriode = async () => {
   //   const a = new FormData();
@@ -48,7 +49,7 @@ const SelectPeriode = () => {
   // const test = dispatch(setIdPeriode({ idPeriode: initialPeriode }));
   // dispatch(setToken({ token: res.data.access_token, roles: res.data.roles }));
 
-  console.log(initialPeriode);
+  console.log(periode);
 
   return (
     <>
@@ -58,10 +59,10 @@ const SelectPeriode = () => {
           setPopup(!false);
         }}
       >
-        <p className="font-medium text-white text-[16px]">Periode {initialPeriode}</p>
+        <p className="font-medium text-white text-[16px]">Periode {periode}</p>
       </button>
       <div
-        className="top-0 left-0 bottom-0 w-screen h-[1000px] fixed z-50"
+        className="top-0 left-0 w-screen h-[1000px] fixed "
         style={{
           visibility: popup === false ? "hidden" : "visible",
           backgroundColor: "rgba(55, 65, 81, 0.32)",
@@ -81,8 +82,8 @@ const SelectPeriode = () => {
             <p className="font-bold text-[32px] text-slate-700 mb-3">Pilih Periode</p>
             {dataPeriode?.data?.data?.map((res, i) => {
               return (
-                <button key={i} onClick={() => selectPeriode(`${res.from} - ${res.to}`)}>
-                  {initialPeriode === `${res.from} - ${res.to}` ? (
+                <button key={i} onClick={() => dispatch(setIdPeriode({ idPeriode: `${res.from} - ${res.to}` }))}>
+                  {periode === `${res.from} - ${res.to}` ? (
                     <div className="flex gap-4 mb-4">
                       <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="1" y="1.00684" width="28" height="28" rx="14" stroke="#FF5001" strokeWidth="2" />
@@ -118,7 +119,7 @@ const SelectPeriode = () => {
             </div> */}
             <button
               onClick={() => {
-                dispatch(setIdPeriode({ idPeriode: initialPeriode }));
+                // dispatch(setIdPeriode({ idPeriode: initialPeriode }));
                 setPopup(false);
               }}
               className="mt-16"

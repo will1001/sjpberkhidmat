@@ -50,6 +50,18 @@ const Logistik = () => {
 
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
+  const name = useSelector((state) => state.user.name);
+  const emaill = useSelector((state) => state.user.email);
+  const periode = useSelector((state) => state.panel.idPeriode);
+
+  const [formPengajuan, setFormPengajuan] = useState({
+    id_kabupaten: undefined,
+    id_kecamatan: undefined,
+    id_kelurahan: undefined,
+    kebutuhan: undefined,
+    detail: undefined,
+    id_periode: periode,
+  });
 
   const getKabupaten = useFetch("get", "user/kabupaten");
 
@@ -112,6 +124,12 @@ const Logistik = () => {
     }
   };
 
+  const postLogistik = () => {
+    axiosFetch("post", "user/logistik", formPengajuan, token)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   const deletLogistik = (id) =>
     axiosFetch("delete", `user/logistik/${id}`, {}, token)
       .then((res) => {
@@ -138,7 +156,7 @@ const Logistik = () => {
       .catch((err) => console.log(err));
   }, [deletLogistik]);
 
-  console.log(logistik);
+  console.log(formPengajuan.id_kabupaten);
 
   return (
     <>
@@ -147,7 +165,7 @@ const Logistik = () => {
         style={{ visibility: popupPengajuan === false ? "hidden" : "visible" }}
         className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50"
       >
-        <div className="absolute p-[20px] top-[80px] left-[450px] bg-white text-[#374151] ">
+        <div className="fixed p-[20px] top-[80px] left-[450px] bg-white text-[#374151] h-screen overflow-scroll scrollbar-thin scrollbar-thumb-[#374151]">
           <div
             onClick={() => setPopupPengajuan(false)}
             className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]"
@@ -169,6 +187,7 @@ const Logistik = () => {
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
                 type={"text"}
                 id="nama_relawan"
+                value={name}
               />
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
@@ -179,10 +198,16 @@ const Logistik = () => {
                 Kabupaten / Kota
               </label>
               <select
-                onChange={(e) => setKabupaten(e.target.value)}
+                onChange={(e) => {
+                  setKabupaten(e.target.value);
+                  setFormPengajuan({
+                    ...formPengajuan,
+                    id_kabupaten: e.target.value,
+                  });
+                }}
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
               >
-                <option selected="disable">Pilih Kabupaten / Kota</option>
+                <option disabled>Pilih Kabupaten / Kota</option>
                 {getKabupaten?.data?.map((res) => (
                   <option className="mb-2" key={res._id} value={res._id}>
                     {res.name}
@@ -198,10 +223,16 @@ const Logistik = () => {
                 Kabupaten / Kota
               </label>
               <select
-                onChange={(e) => setKecamatan(e.target.value)}
+                onChange={(e) => {
+                  setKecamatan(e.target.value);
+                  setFormPengajuan({
+                    ...formPengajuan,
+                    id_kecamatan: e.target.value,
+                  });
+                }}
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
               >
-                <option selected="disable">Pilih Kecamatan</option>
+                <option disabled>Pilih Kecamatan</option>
                 {getKecamatans?.data?.map((res) => (
                   <option className="mb-2" key={res._id} value={res._id}>
                     {res.name}
@@ -217,16 +248,73 @@ const Logistik = () => {
                 Kabupaten / Kota
               </label>
               <select
-                onChange={(e) => setKelurahan(e.target.value)}
+                onChange={(e) => {
+                  setKelurahan(e.target.value);
+                  setFormPengajuan({
+                    ...formPengajuan,
+                    id_kelurahan: e.target.value,
+                  });
+                }}
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
               >
-                <option selected="disable">Pilih Desa / kelurahan</option>
+                <option disabled>Pilih Desa / kelurahan</option>
                 {getKelurahans?.data?.map((res) => (
                   <option className="mb-2" key={res._id} value={res._id}>
                     {res.name}
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label className="w-[180px] items-center flex" htmlFor="email">
+                Email
+              </label>
+              <input
+                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+                type={"email"}
+                id="email"
+                value={emaill}
+              />
+            </div>
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label
+                className="w-[180px] items-center flex"
+                htmlFor="kebutuhan"
+              >
+                Kebutuhan
+              </label>
+              <input
+                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+                type={"text"}
+                id="kebutuhan"
+                onChange={(e) =>
+                  setFormPengajuan({
+                    ...formPengajuan,
+                    kebutuhan: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="flex gap-[72px] justify-between mb-3">
+              <label className="w-[180px] flex" htmlFor="detail_pengajuan">
+                Detail Pengajuan
+              </label>
+              <textarea
+                className="border py-2 px-2 rounded-sm outline-none w-[330px] h-[200px]"
+                type={"text"}
+                id="detail_pengajuan"
+                onChange={(e) =>
+                  setFormPengajuan({ ...formPengajuan, detail: e.target.value })
+                }
+              />
+            </div>
+            <div className="flex justify-end items-center gap-3 pb-[100px] mt-12">
+              <div className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">
+                Batalkan
+              </div>
+              <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
+                Buat Pengajuan
+              </div>
             </div>
           </div>
         </div>

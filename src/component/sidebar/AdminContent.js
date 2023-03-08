@@ -36,7 +36,8 @@ function AdminContent() {
             <p className="text-xs text-slate-700 font-thin">Akun {roles} </p>
           </div>
         </div>
-        <SelectPeriode />
+        <div className=""><SelectPeriode /></div>
+        
         <hr />
         <div className="mt-4 ">
           {logoSidebar.map((res, i) => {

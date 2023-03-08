@@ -36,6 +36,7 @@ const Login = ({ router }) => {
   const dispatch = useDispatch();
   const roles = useSelector((state) => state.user.roles);
   const token = useSelector((state) => state.user.token);
+  const name = useSelector((state) => state.user.name)
 
   const [formData, setFormData] = useState({
     username: "",
@@ -49,7 +50,7 @@ const Login = ({ router }) => {
       .then((res) => {
         if (res?.data) {
           dispatch(
-            setToken({ token: res.data.access_token, roles: res.data.roles })
+            setToken({ token: res.data.access_token, roles: res.data.roles, name: res.data.name, email: res.data.email })
           );
         } else {
           return <p>Loading.....</p>;

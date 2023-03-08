@@ -5,8 +5,9 @@ import { logoSidebar } from "../../utility/icon/LogoSidebar";
 import { setToken } from "../../redux/userReducer";
 import { useDispatch } from "react-redux";
 import SelectPeriode from "../SelectPeriode";
+import { UserIcon } from "../../utility/icon/icon";
 
-const RelawanContent = ({ setSelectTool }) => {
+const RelawanContent = ({ setSelectTool, username, role }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [select, setSelect] = useState("Real Count");
@@ -16,6 +17,13 @@ const RelawanContent = ({ setSelectTool }) => {
   };
   return (
     <>
+      <div className="flex gap-3 items-center">
+        <UserIcon />
+        <div className="text-[#374151]">
+          <p className="text-[21px] font-medium">{username}</p>
+          <p>Akun {role}</p>
+        </div>
+      </div>
       <div className="mt-3 ">
         <SelectPeriode />
       </div>

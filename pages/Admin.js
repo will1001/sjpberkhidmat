@@ -294,7 +294,7 @@ function Admin({ router }) {
         <div className=" basis-3/12 sticky  h-screen w-full  scrollbar-thumb-[#9CA3AF] scrollbar-thin scrollbar-track-[#E5E7EB] overflow-x-hidden">
           <SideBar content={<AdminContent />} />
         </div>
-        <div className="basis-9/12 w-full h-screen sticky scrollbar-thin scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB] overflow-scroll">
+        <div className="basis-9/12 w-full h-screen scrollbar-thin scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB] overflow-scroll">
           {logoSidebar.map((res, i) => {
             if (router.query.component === res.path) {
               return <div key={i}>{res.component}</div>;

@@ -924,8 +924,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             onMouseLeave={() => hoverhandler()}
             className={`fixed ${icon === undefined ? "top-[80px] left-[1000px]" : "top-[65px] left-[1040px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -940,7 +940,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[9]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sambelia</p> : <p className="font-medium text-[16px]">Sambelia</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sambelia</p> : <p className="font-medium text-[12px]">Sambelia</p>}
               </div>
             </div>
           </div>
@@ -954,10 +954,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Suralaga")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[320px] left-[920px]" : "top-[415px] left-[900px]"} `}
+            className={`fixed ${icon === undefined ? "top-[320px] left-[920px]" : "top-[335px] left-[920px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -972,7 +972,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[16]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Suralaga</p> : <p className="font-medium text-[16px]">Suralaga</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Suralaga</p> : <p className="font-medium text-[12px]">Suralaga</p>}
               </div>
             </div>
           </div>
@@ -988,8 +988,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             onMouseLeave={() => hoverhandler()}
             className={`fixed ${icon === undefined ? "top-[80px] left-[780px]" : "top-[65px] left-[730px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1003,7 +1003,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[2]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sembalun</p> : <p className="font-medium text-[16px]">Sembalun</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sembalun</p> : <p className="font-medium text-[12px]">Sembalun</p>}
               </div>
             </div>
           </div>
@@ -1019,8 +1019,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             onMouseLeave={() => hoverhandler()}
             className={`fixed ${icon === undefined ? "top-[160px] left-[1000px]" : "top-[155px] left-[1040px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1034,7 +1034,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[0]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Pringgabaya</p> : <p className="font-medium text-[16px]">Pringgabaya</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Pringgabaya</p> : <p className="font-medium text-[12px]">Pringgabaya</p>}
               </div>
             </div>
           </div>
@@ -1048,10 +1048,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Suela")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[160px] left-[900px]" : "top-[100px] left-[890px]"} `}
+            className={`fixed ${icon === undefined ? "top-[160px] left-[900px]" : "top-[130px] left-[890px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1066,7 +1066,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[19]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Suela</p> : <p className="font-medium text-[16px]">Suela</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Suela</p> : <p className="font-medium text-[12px]">Suela</p>}
               </div>
             </div>
           </div>
@@ -1080,10 +1080,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Wanasaba")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[220px] left-[910px]" : "top-[170px] left-[900px]"} `}
+            className={`fixed ${icon === undefined ? "top-[220px] left-[910px]" : "top-[200px] left-[900px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1098,7 +1098,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[7]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Wanasaba</p> : <p className="font-medium text-[16px]">Wanasaba</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Wanasaba</p> : <p className="font-medium text-[12px]">Wanasaba</p>}
               </div>
             </div>
           </div>
@@ -1112,10 +1112,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Aikmel")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[180px] left-[760px]" : "top-[135px] left-[740px]"} `}
+            className={`fixed ${icon === undefined ? "top-[180px] left-[790px]" : "top-[150px] left-[780px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1130,7 +1130,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[6]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Aikmel</p> : <p className="font-medium text-[16px]">Aikmel</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Aikmel</p> : <p className="font-medium text-[12px]">Aikmel</p>}
               </div>
             </div>
           </div>
@@ -1144,10 +1144,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Pringgasela")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[230px] left-[700px]" : "top-[205px] left-[685px]"} `}
+            className={`fixed ${icon === undefined ? "top-[230px] left-[730px]" : "top-[205px] left-[720px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1161,7 +1161,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[4]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Pringgasela</p> : <p className="font-medium text-[16px]">Pringgasela</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Pringgasela</p> : <p className="font-medium text-[12px]">Pringgasela</p>}
               </div>
             </div>
           </div>
@@ -1175,10 +1175,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Sikur")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[280px] left-[710px]" : "top-[275px] left-[675px]"} `}
+            className={`fixed ${icon === undefined ? "top-[280px] left-[740px]" : "top-[275px] left-[710px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1193,7 +1193,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[11]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sikur</p> : <p className="font-medium text-[16px]">Sikur</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sikur</p> : <p className="font-medium text-[12px]">Sikur</p>}
               </div>
             </div>
           </div>
@@ -1207,10 +1207,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Montong Gading")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[325px] left-[590px]" : "top-[345px] left-[575px]"} `}
+            className={`fixed ${icon === undefined ? "top-[325px] left-[630px]" : "top-[345px] left-[620px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1224,7 +1224,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[5]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Montong Gading</p> : <p className="font-medium text-[16px]">Montong Gading</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Montong Gading</p> : <p className="font-medium text-[12px]">Montong Gading</p>}
               </div>
             </div>
           </div>
@@ -1238,10 +1238,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Lenek")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[270px] left-[890px]" : "top-[255px] left-[930px]"} `}
+            className={`fixed ${icon === undefined ? "top-[270px] left-[890px]" : "top-[265px] left-[910px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1256,7 +1256,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[20]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Lenek</p> : <p className="font-medium text-[16px]">Lenek</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Lenek</p> : <p className="font-medium text-[12px]">Lenek</p>}
               </div>
             </div>
           </div>
@@ -1270,10 +1270,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Masbagik")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[325px] left-[770px]" : "top-[275px] left-[800px]"} `}
+            className={`fixed ${icon === undefined ? "top-[300px] left-[820px]" : "top-[275px] left-[800px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1288,7 +1288,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[14]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Masbagik</p> : <p className="font-medium text-[16px]">Masbagik</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Masbagik</p> : <p className="font-medium text-[12px]">Masbagik</p>}
               </div>
             </div>
           </div>
@@ -1302,10 +1302,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Terara")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[670px]" : "top-[415px] left-[650px]"} `}
+            className={`fixed ${icon === undefined ? "top-[370px] left-[690px]" : "top-[400px] left-[700px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1320,7 +1320,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[13]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Terara</p> : <p className="font-medium text-[16px]">Terara</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Terara</p> : <p className="font-medium text-[12px]">Terara</p>}
               </div>
             </div>
           </div>
@@ -1334,10 +1334,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Labuhan Haji")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[970px]" : "top-[410px] left-[1025px]"} `}
+            className={`fixed ${icon === undefined ? "top-[370px] left-[970px]" : "top-[390px] left-[960px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1352,7 +1352,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[18]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Labuhan Haji</p> : <p className="font-medium text-[16px]">Labuhan Haji</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Labuhan Haji</p> : <p className="font-medium text-[12px]">Labuhan Haji</p>}
               </div>
             </div>
           </div>
@@ -1366,10 +1366,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Selong")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[410px] left-[860px]" : "top-[340px] left-[935px]"} `}
+            className={`fixed ${icon === undefined ? "top-[370px] left-[880px]" : "top-[390px] left-[870px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1384,7 +1384,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[17]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Selong</p> : <p className="font-medium text-[16px]">Selong</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Selong</p> : <p className="font-medium text-[12px]">Selong</p>}
               </div>
             </div>
           </div>
@@ -1398,10 +1398,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Sukamulia")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[367px] left-[800px]" : "top-[345px] left-[800px]"} `}
+            className={`fixed ${icon === undefined ? "top-[340px] left-[800px]" : "top-[330px] left-[800px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1416,7 +1416,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[15]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sukamulia</p> : <p className="font-medium text-[16px]">Sukamulia</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sukamulia</p> : <p className="font-medium text-[12px]">Sukamulia</p>}
               </div>
             </div>
           </div>
@@ -1430,10 +1430,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Sakra")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[500px] left-[870px]" : "top-[425px] left-[770px]"} `}
+            className={`fixed ${icon === undefined ? "top-[400px] left-[750px]" : "top-[400px] left-[790px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1447,7 +1447,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[3]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sakra</p> : <p className="font-medium text-[16px]">Sakra</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sakra</p> : <p className="font-medium text-[12px]">Sakra</p>}
               </div>
             </div>
           </div>
@@ -1461,10 +1461,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Sakra Timur")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[455px] left-[890px]" : "top-[495px] left-[790px]"} `}
+            className={`fixed ${icon === undefined ? "top-[455px] left-[890px]" : "top-[455px] left-[900px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1479,7 +1479,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[12]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sakra Timur</p> : <p className="font-medium text-[16px]">Sakra Timur</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sakra Timur</p> : <p className="font-medium text-[12px]">Sakra Timur</p>}
               </div>
             </div>
           </div>
@@ -1493,10 +1493,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Sakra Barat")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[440px] left-[700px]" : "top-[485px] left-[620px]"} `}
+            className={`fixed ${icon === undefined ? "top-[440px] left-[730px]" : "top-[460px] left-[690px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1510,7 +1510,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[1]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Sakra Barat</p> : <p className="font-medium text-[16px]">Sakra Barat</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sakra Barat</p> : <p className="font-medium text-[12px]">Sakra Barat</p>}
               </div>
             </div>
           </div>
@@ -1524,10 +1524,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             }
             onMouseEnter={() => hoverhandler("Keruak")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[485px] left-[740px]" : "top-[565px] left-[720px]"} `}
+            className={`fixed ${icon === undefined ? "top-[485px] left-[780px]" : "top-[490px] left-[810px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1542,7 +1542,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[8]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Keruak</p> : <p className="font-medium text-[16px]">Keruak</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Keruak</p> : <p className="font-medium text-[12px]">Keruak</p>}
               </div>
             </div>
           </div>
@@ -1558,8 +1558,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
             onMouseLeave={() => hoverhandler()}
             className={`fixed ${icon === undefined ? "top-[550px] left-[790px]" : "top-[565px] left-[890px]"} `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
+              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
@@ -1574,7 +1574,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "program" && statisticKec?.length !== undefined && statisticKec[10]?.program?.toLocaleString()?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Jerowaru</p> : <p className="font-medium text-[16px]">Jerowaru</p>}
+                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Jerowaru</p> : <p className="font-medium text-[12px]">Jerowaru</p>}
               </div>
             </div>
           </div>
