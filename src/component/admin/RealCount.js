@@ -191,7 +191,7 @@ const RealCount = ({ user }) => {
                       className="h-[69px] border-[0.5px] flex px-[21px] gap-3"
                     >
                       <p className="text-[21px] font-medium text-[#374151] flex items-center">
-                        18%
+                        {res.persantase_suara.toFixed(1)} %
                       </p>
                       <div className="flex items-center">
                         <img
@@ -225,14 +225,14 @@ const RealCount = ({ user }) => {
                     <div key={res._id} className="h-[69px] border">
                       <div className="flex items-center px-[12px] gap-3 py-2">
                         <p className="text-[#374151] text-[26px] font-semibold">
-                          55%
+                          {res.persantase_suara.toFixed(1)} %
                         </p>
                         <div className="flex flex-col justify-center">
                           <p className="text-[14px] text-[#6B7280]">
                             Total Suara
                           </p>
                           <p className="text-[16px] text-[#374151] font-bold">
-                            57.135
+                            {res.suara}
                           </p>
                         </div>
 
@@ -328,7 +328,7 @@ const RealCount = ({ user }) => {
                     className="h-[69px] border-[0.5px] flex px-[21px] gap-3"
                   >
                     <p className="text-[21px] font-medium text-[#374151] flex items-center">
-                      18%
+                      {res.persantase_suara.toFixed(1)} %
                     </p>
                     <div className="flex items-center">
                       <img
@@ -362,14 +362,14 @@ const RealCount = ({ user }) => {
                   <div key={res._id} className="h-[69px] border">
                     <div className="flex items-center px-[12px] gap-3 py-2">
                       <p className="text-[#374151] text-[26px] font-semibold">
-                        55%
+                        {res.persantase_suara.toFixed(1)} %
                       </p>
                       <div className="flex flex-col justify-center">
                         <p className="text-[14px] text-[#6B7280]">
                           Total Suara
                         </p>
                         <p className="text-[16px] text-[#374151] font-bold">
-                          57.135
+                          {res.suara}
                         </p>
                       </div>
 
