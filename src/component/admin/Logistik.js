@@ -280,21 +280,20 @@ const Logistik = () => {
                 <p className="text-[21px] font-bold">Logistik Kota Mataram</p>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Tgl Pengajuan</p>
-                  <p>11/12/23</p>
+                  <p>{dataChat?.createdAt?.split("T").shift().split("-").reverse().join("/")}</p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Kebutuhan</p>
-                  <p>Flayer</p>
+                  <p>{dataChat?.kebutuhan}</p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Status</p>
-                  <p>Belum Input </p>
+                  <p>{dataChat?.status}</p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Detail Pengajuan</p>
                   <p className="w-[360px]">
-                    Ornare magna ultricies sed dapibus pharetra imperdiet
-                    nascetur viverra vitae.
+                    {dataChat?.detail}
                   </p>
                 </div>
                 <div className="flex gap-4 mt-2">
