@@ -24,31 +24,34 @@ import axiosFetch from "../../API/axiosFetch";
 const Logistik = () => {
   const [popup, setPopup] = useState(false);
   const [popupPage, setPopupPage] = useState();
-  const [popupPengajuan, setPopupPengajuan] = useState(false)
-  const [kabupaten, setKabupaten] = useState()
-  const [getKecamatans, setGetKecamatans] = useState()
-  const [kecamatan, setKecamatan] = useState()
-  const [getKelurahans, setGetKelurahans] = useState()
-  const [kelurahan, setKelurahan] = useState()
+  const [popupPengajuan, setPopupPengajuan] = useState(false);
+  const [kabupaten, setKabupaten] = useState();
+  const [getKecamatans, setGetKecamatans] = useState();
+  const [kecamatan, setKecamatan] = useState();
+  const [getKelurahans, setGetKelurahans] = useState();
+  const [kelurahan, setKelurahan] = useState();
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
   const [loadNewChat, setLoadNewChat] = useState(false);
   const [chats, setChat] = useState([]);
   const [chatTargetId, setChatTargetId] = useState("");
-  const [dataChat, setDataChat] = useState()
+  const [dataChat, setDataChat] = useState();
+  const [alertHapus, setAlertHapus] = useState(false);
+  const [logistik, setLogistik] = useState();
+  const [deleteId, setDeleteId] = useState();
 
   const handlePopUp = async (name, id_relawan, data) => {
     setPopup(true);
     name !== popupPage ? setPopupPage(name) : setPopupPage();
     setChatTargetId(id_relawan);
     getChats(id_relawan);
-    setDataChat(data)
+    setDataChat(data);
   };
 
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
 
-  const getKabupaten = useFetch("get", "user/kabupaten")
+  const getKabupaten = useFetch("get", "user/kabupaten");
 
   useEffect(() => {
     axiosFetch("get", `user/kecamatan/${kabupaten}`)
@@ -62,7 +65,7 @@ const Logistik = () => {
       .catch((err) => console.log(err));
   }, [kecamatan]);
 
-  const logistik = useFetch("get", `user/logistik?page=1`, token);
+  // const logistik = useFetch("get", `user/logistik?page=1`, token);
   // const chats = useFetch("get", `user/chats`, token);
 
   Moment.locale("id");
@@ -109,6 +112,14 @@ const Logistik = () => {
     }
   };
 
+  const deletLogistik = (id) =>
+    axiosFetch("delete", `user/logistik/${id}`, {}, token)
+      .then((res) => {
+        console.log(res);
+        setAlertHapus(false);
+      })
+      .catch((err) => console.log(err));
+
   useEffect(() => {
     if (loadNewChat) {
       getChats(chatTargetId);
@@ -119,41 +130,102 @@ const Logistik = () => {
     }, 1000);
   });
 
-  console.log(dataChat)
+  useEffect(() => {
+    axiosFetch("get", `user/logistik?page=1`, {}, token)
+      .then((res) => {
+        setLogistik(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [deletLogistik]);
+
+  console.log(logistik);
 
   return (
     <>
       {/* popup pengajuan */}
-      <div style={{visibility : popupPengajuan === false ? "hidden" : "visible"}} className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50">
+      <div
+        style={{ visibility: popupPengajuan === false ? "hidden" : "visible" }}
+        className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50"
+      >
         <div className="absolute p-[20px] top-[80px] left-[450px] bg-white text-[#374151] ">
-          <div onClick={() => setPopupPengajuan(false)} className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]">
+          <div
+            onClick={() => setPopupPengajuan(false)}
+            className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]"
+          >
             X
           </div>
-          <p className="text-[32px] text-center mb-[55px] font-bold">Tambah Pengajuan Logistik</p>
+          <p className="text-[32px] text-center mb-[55px] font-bold">
+            Tambah Pengajuan Logistik
+          </p>
           <div className="text-[14px]">
             <div className="flex gap-[72px] justify-between mb-3">
-              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Nama Relawan</label>
-              <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"text"} id="nama_relawan"/>
+              <label
+                className="w-[180px] items-center flex"
+                htmlFor="nama_relawan"
+              >
+                Nama Relawan
+              </label>
+              <input
+                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+                type={"text"}
+                id="nama_relawan"
+              />
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Kabupaten / Kota</label>
-              <select onChange={(e) => setKabupaten(e.target.value)} className="border py-2 px-2 rounded-sm outline-none w-[330px]">
+              <label
+                className="w-[180px] items-center flex"
+                htmlFor="nama_relawan"
+              >
+                Kabupaten / Kota
+              </label>
+              <select
+                onChange={(e) => setKabupaten(e.target.value)}
+                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+              >
                 <option selected="disable">Pilih Kabupaten / Kota</option>
-                {getKabupaten?.data?.map((res) => <option className="mb-2" key={res._id} value={res._id}>{res.name}</option>)}
+                {getKabupaten?.data?.map((res) => (
+                  <option className="mb-2" key={res._id} value={res._id}>
+                    {res.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Kabupaten / Kota</label>
-              <select onChange={(e) => setKecamatan(e.target.value)} className="border py-2 px-2 rounded-sm outline-none w-[330px]">
+              <label
+                className="w-[180px] items-center flex"
+                htmlFor="nama_relawan"
+              >
+                Kabupaten / Kota
+              </label>
+              <select
+                onChange={(e) => setKecamatan(e.target.value)}
+                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+              >
                 <option selected="disable">Pilih Kecamatan</option>
-                {getKecamatans?.data?.map((res) => <option className="mb-2" key={res._id} value={res._id}>{res.name}</option>)}
+                {getKecamatans?.data?.map((res) => (
+                  <option className="mb-2" key={res._id} value={res._id}>
+                    {res.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">Kabupaten / Kota</label>
-              <select onChange={(e) => setKelurahan(e.target.value)} className="border py-2 px-2 rounded-sm outline-none w-[330px]">
+              <label
+                className="w-[180px] items-center flex"
+                htmlFor="nama_relawan"
+              >
+                Kabupaten / Kota
+              </label>
+              <select
+                onChange={(e) => setKelurahan(e.target.value)}
+                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+              >
                 <option selected="disable">Pilih Desa / kelurahan</option>
-                {getKelurahans?.data?.map((res) => <option className="mb-2" key={res._id} value={res._id}>{res.name}</option>)}
+                {getKelurahans?.data?.map((res) => (
+                  <option className="mb-2" key={res._id} value={res._id}>
+                    {res.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -280,7 +352,14 @@ const Logistik = () => {
                 <p className="text-[21px] font-bold">Logistik Kota Mataram</p>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Tgl Pengajuan</p>
-                  <p>{dataChat?.createdAt?.split("T").shift().split("-").reverse().join("/")}</p>
+                  <p>
+                    {dataChat?.createdAt
+                      ?.split("T")
+                      .shift()
+                      .split("-")
+                      .reverse()
+                      .join("/")}
+                  </p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Kebutuhan</p>
@@ -292,9 +371,7 @@ const Logistik = () => {
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Detail Pengajuan</p>
-                  <p className="w-[360px]">
-                    {dataChat?.detail}
-                  </p>
+                  <p className="w-[360px]">{dataChat?.detail}</p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Ubah Status</p>
@@ -419,7 +496,10 @@ const Logistik = () => {
                   }}
                 />
               ) : (
-                <div onClick={() => setPopupPengajuan(true)} className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 ">
+                <div
+                  onClick={() => setPopupPengajuan(true)}
+                  className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 "
+                >
                   Tambah Pengajuan
                 </div>
               )}
@@ -498,40 +578,67 @@ const Logistik = () => {
               </tr>
             </thead>
             <tbody className="">
-              {logistik.data?.map((res, i) => {
-                return (
-                  <tr className="bg-[#F9FAFB] h-[52px]">
-                    <td className="px-2 py-3">{++i}</td>
-                    <td className=" px-2 py-3 whitespace-nowrap">
-                      {Moment(res.createdAt).format("DD-MMMM-YYYY")}
-                    </td>
-                    <td className="px-2 py-3 whitespace-nowrap">
-                      {res.kabupaten.name}
-                    </td>
-                    <td className="w-[120px] px-2 py-3">{res.kebutuhan}</td>
-                    <td className="w-[120px] px-2 py-3">
-                      {res.kecamatan.name}
-                    </td>
-                    <td className="px-2 py-3 ">
-                      <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
-                        {res.status}
-                      </div>
-                    </td>
-                    <td className="px-2 py-3 border-l-2  bg-white ">
-                      <div className="flex  justify-center gap-3">
-                        <div
-                          onClick={() => handlePopUp("chat", res.id_relawan, res)}
-                          className="cursor-pointer"
-                        >
-                          <ChatIcon />
+              {logistik !== undefined &&
+                logistik.data?.map((res, i) => {
+                  return (
+                    <tr className="bg-[#F9FAFB] h-[52px]">
+                      <td className="px-2 py-3">{++i}</td>
+                      <td className=" px-2 py-3 whitespace-nowrap">
+                        {Moment(res.createdAt).format("DD-MMMM-YYYY")}
+                      </td>
+                      <td className="px-2 py-3 whitespace-nowrap">
+                        {res.kabupaten.name}
+                      </td>
+                      <td className="w-[120px] px-2 py-3">{res.kebutuhan}</td>
+                      <td className="w-[120px] px-2 py-3">
+                        {res.kecamatan.name}
+                      </td>
+                      <td className="px-2 py-3 ">
+                        <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
+                          {res.status}
                         </div>
-
-                        <DeletIcon />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                      </td>
+                      <td className="px-2 py-3 border-l-2  bg-white ">
+                        <div className="flex items-center justify-center gap-3">
+                          <div
+                            onClick={() =>
+                              handlePopUp("chat", res.id_relawan, res)
+                            }
+                            className="cursor-pointer"
+                          >
+                            <ChatIcon />
+                          </div>
+                          {alertHapus !== false && res._id === deleteId ? (
+                            <div className="flex gap-3 items-center justify-center">
+                              <div
+                                className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md"
+                                onClick={() => setAlertHapus(false)}
+                              >
+                                Batal
+                              </div>
+                              <div
+                                className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md"
+                                onClick={() => deletLogistik(res._id)}
+                              >
+                                Hapus
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => {
+                                setAlertHapus(true);
+                                setDeleteId(res._id);
+                              }}
+                              className="cursor-pointer"
+                            >
+                              <DeletIcon />
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
