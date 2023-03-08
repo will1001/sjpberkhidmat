@@ -230,7 +230,7 @@ const AddCalon = ({ nama, logo, partai, nomor, id }) => {
                 Pilih Partai
               </option>
               {getPartai?.data?.map((res) => (
-                <option className="text-[#374151] font-bold" key={res._id}>
+                <option value={res._id} className="text-[#374151] font-bold" key={res._id}>
                   {res?.name}
                 </option>
               ))}

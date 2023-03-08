@@ -111,7 +111,7 @@ const TambahCalon = () => {
               Pilih Partai
             </option>
             {getPartai?.data?.map((res) => (
-              <option className="text-[#374151] font-bold" key={res._id}>
+              <option className="text-[#374151] font-bold" key={res._id} value={res._id}>
                 {res?.name}
               </option>
             ))}
