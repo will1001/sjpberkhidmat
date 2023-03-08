@@ -11,13 +11,28 @@ import RumahAspirasi from "../../component/aspirasi/RumahAspirasi";
 import Program from "../../component/program/IndexProgram";
 import Publikasi from "../../component/publikasi/Publikasi";
 
-import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, PublikasiIcon, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon, AspirasiIcon, TambahAkunIcon } from "./icon";
+import {
+  DashboardIcon,
+  RealCountIcon,
+  DPTDPSIcon,
+  ProgramIcon,
+  Logistic,
+  PublikasiIcon,
+  SetingSliderIcon,
+  DaftarAkunIcon,
+  SimpatisanIcon,
+  RelawanIcon,
+  AspirasiIcon,
+  TambahAkunIcon,
+  ForumIcon,
+} from "./icon";
 export const logoSidebar = [
   {
     name: "Dashboard",
     path: "Dashboard",
     icon: <DashboardIcon />,
     component: <Dashboard />,
+    koordinator: true,
   },
   {
     name: "Real Count",
@@ -25,12 +40,14 @@ export const logoSidebar = [
     icon: <RealCountIcon />,
     component: <RealCount />,
     role: "relawan",
+    koordinator: true,
   },
   {
     name: "DPT/DPS",
     path: "DptDps",
     icon: <DPTDPSIcon />,
     component: <DptDps />,
+    koordinator: true,
   },
   {
     name: "Program",
@@ -38,14 +55,27 @@ export const logoSidebar = [
     icon: <ProgramIcon />,
     component: <Program />,
   },
-  { name: "Logistic", path: "/logistic", icon: <Logistic />, role: "relawan", component: <Logistik /> },
-  { name: "Publikasi", path: "/publikasi", icon: <PublikasiIcon />, component: <Publikasi /> },
+  {
+    name: "Logistik",
+    path: "/logistik",
+    icon: <Logistic />,
+    role: "relawan",
+    component: <Logistik />,
+    koordinator: true,
+  },
+  {
+    name: "Publikasi",
+    path: "/publikasi",
+    icon: <PublikasiIcon />,
+    component: <Publikasi />,
+  },
 
   {
     name: "Relawan",
     path: "Relawan",
     icon: <RelawanIcon />,
     component: <Relawan />,
+    koordinator: true,
   },
   {
     name: "Simpatisan",
@@ -53,6 +83,7 @@ export const logoSidebar = [
     icon: <SimpatisanIcon />,
     component: <Simpatisan />,
     role: "relawan",
+    koordinator: true,
   },
   {
     name: "Aspirasi",
@@ -73,6 +104,14 @@ export const logoSidebar = [
     path: "AkunTimSJP",
     icon: <TambahAkunIcon />,
     component: <AkunTimSjp />,
+  },
+  {
+    name: "Forum",
+    path: "Forum",
+    icon: <ForumIcon />,
+    // component: <AkunTimSjp />,
+    role: "relawan",
+    koordinator: true,
   },
   { path: "EksportDataDpt", component: <EksportDataDpt /> },
 ];

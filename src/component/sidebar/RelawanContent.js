@@ -2,19 +2,13 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import { logoSidebar } from "../../utility/icon/LogoSidebar";
-import { setToken } from "../../redux/userReducer";
-import { useDispatch } from "react-redux";
 import SelectPeriode from "../SelectPeriode";
 import { UserIcon } from "../../utility/icon/icon";
 
-const RelawanContent = ({ setSelectTool, username, role }) => {
+const RelawanContent = ({ setSelectTool, username, role, setPopupPeriode }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [select, setSelect] = useState("Real Count");
-  const handleLogOut = () => {
-    dispatch(setToken({ token: "", roles: "" }));
-    router.push("../Login");
-  };
+
   return (
     <>
       <div className="flex gap-3 items-center">
@@ -24,10 +18,10 @@ const RelawanContent = ({ setSelectTool, username, role }) => {
           <p>Akun {role}</p>
         </div>
       </div>
-      <div className="mt-3 ">
-        <SelectPeriode />
+      <div className="mt-3">
+        <SelectPeriode setPopupPeriode={setPopupPeriode} />
       </div>
-
+      <div className="border-b-2 mt-3" />
       <div className="mt-3">
         {logoSidebar
           .filter((data) => ["relawan"].includes(data.role))
@@ -42,12 +36,12 @@ const RelawanContent = ({ setSelectTool, username, role }) => {
                 select === res.name
                   ? "bg-[#FFECE4] text-[#E44700] stroke-[#E44700]"
                   : "stroke-[#374151] text-[#374151]"
-              }  py-2 cursor-pointer text-[21px] font-medium`}
+              }  py-2 px-2 cursor-pointer text-[18px] font-medium`}
             >
               {res.icon} {res.name}
             </div>
           ))}
-        <div onClick={handleLogOut}>logout sementara</div>
+        <div className="border-t-2 mt-3 mb-3" />
       </div>
     </>
   );

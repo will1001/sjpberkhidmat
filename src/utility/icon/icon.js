@@ -211,6 +211,26 @@ export function DPTDPSIcon() {
   );
 }
 
+export function ForumIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15 5H17C18.1046 5 19 5.89543 19 7V13C19 14.1046 18.1046 15 17 15H15V19L11 15H7C6.44772 15 5.94772 14.7761 5.58579 14.4142M5.58579 14.4142L9 11H13C14.1046 11 15 10.1046 15 9V3C15 1.89543 14.1046 1 13 1H3C1.89543 1 1 1.89543 1 3V9C1 10.1046 1.89543 11 3 11H5V15L5.58579 14.4142Z"
+        stroke="current"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function ProgramIcon() {
   return (
     <svg
@@ -298,7 +318,7 @@ export function TambahAkunIcon() {
     >
       <path
         d="M18 9V12M18 12V15M18 12H21M18 12H15M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7ZM3 20C3 16.6863 5.68629 14 9 14C12.3137 14 15 16.6863 15 20V21H3V20Z"
-        stroke="#374151"
+        stroke="current"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -22,63 +22,97 @@ import { DeletIcon } from "../../../utility/icon/icon";
 import { showOrHidePopUpDptDps } from "../../../redux/panelReducer";
 import FilterData from "../../FilterData";
 import Pagination from "../../Pagination";
+import useFetch from "../../../API/useFetch";
 
 const DptDps = () => {
   const router = useRouter();
   const base_url = "https://api.sjpberkhidmat.id/";
   const token = useSelector((state) => state.user.token);
   const [currenPage, setCurrentPage] = useState(1);
-  const [kabupaten, setKabupaten] = useState([]);
-  const [kecamatan, setKecamatan] = useState([]);
+  const [filterKabupaten, setFilterKabupaten] = useState("semua");
+  const [kecamatan, setKecamatan] = useState();
+  const [filterKecamatan, setFilterKecamatan] = useState("semua");
+  const [keyword, setKeyword] = useState(" ");
   // const [kelurahan, setKelurahan] = useState([]);
   const [dptdps, setDptdps] = useState([]);
   const dispatch = useDispatch();
 
   const idPeriode = useSelector((state) => state.panel.idPeriode);
+  const username = useSelector((state) => state.panel.name);
+  const roles = useSelector((state) => state.panel.roles);
   const [formData, setFormData] = useState({
     file: "",
     id_periode: idPeriode,
   });
 
   useEffect(() => {
-    axios
-      .get(base_url + "user/kabupaten")
-      .then((res) => setKabupaten(res.data));
-    axiosFetch("get", `user/dpt_dps?page=${currenPage}`, {}, token)
-      .then((res) => setDptdps(res.data))
-      .catch((err) => console.log(err));
-  }, [currenPage]);
+    username === "koordinator mataram"
+      ? axiosFetch(
+          "get",
+          `user/dpt_dps?page=${currenPage}${
+            filterKabupaten !== "semua"
+              ? `&idKabupaten=5271`
+              : `&idKabupaten=5271`
+          }${
+            filterKecamatan !== "semua" ? `&idKecamatan=${filterKecamatan}` : ``
+          }${
+            keyword !== " " && keyword.length >= 3 ? `&keyword=${keyword}` : ``
+          }`,
+          {},
+          token
+        )
+          .then((res) => setDptdps(res.data))
+          .catch((err) => console.log(err))
+      : axiosFetch(
+          "get",
+          `user/dpt_dps?page=${currenPage}${
+            filterKabupaten !== "semua" ? `&idKabupaten=${filterKabupaten}` : ``
+          }${
+            filterKecamatan !== "semua" ? `&idKecamatan=${filterKecamatan}` : ``
+          }${
+            keyword !== " " && keyword.length >= 3 ? `&keyword=${keyword}` : ``
+          }`,
+          {},
+          token
+        )
+          .then((res) => setDptdps(res.data))
+          .catch((err) => console.log(err));
+  }, [currenPage, filterKabupaten, filterKecamatan, keyword, username]);
 
-  let data = dptdps.data ? dptdps.data : [];
-  let i = 0;
-  if (data) {
-    for (const res of data) {
-      data[i++].aksi = (
-        <div className="flex justify-between w-[55px] cursor-pointer">
-          <img
-            onClick={() => {
-              // editRelawan(res);
-            }}
-            src={EditIcon.src}
-          />
-          <div
-            onClick={() => {
-              // hapusRelawan(res.email);
-            }}
-          >
-            <DeletIcon />
-          </div>
-        </div>
-      );
-    }
-  }
+  // let data = dptdps.data ? dptdps.data : [];
+  // let i = 0;
+  // if (data) {
+  //   for (const res of data) {
+  //     data[i++].aksi = (
+  //       <div className="flex justify-between w-[55px] cursor-pointer">
+  //         <img
+  //           onClick={() => {
+  //             // editRelawan(res);
+  //           }}
+  //           src={EditIcon.src}
+  //         />
+  //         <div
+  //           onClick={() => {
+  //             // hapusRelawan(res.email);
+  //           }}
+  //         >
+  //           <DeletIcon />
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // }
 
-  const changeKabupaten = (idKabupaten) => {
-    // setFormData({ ...formData, id_kabupaten: idKabupaten });
-    axios.get(base_url + `user/kecamatan/${idKabupaten}`).then((res) => {
-      setKecamatan(res.data);
-    });
-  };
+  useEffect(() => {
+    roles === "admin" &&
+      axiosFetch("get", `user/kecamatan/${filterKabupaten}`)
+        .then((res) => setKecamatan(res.data))
+        .catch((err) => console.log(err));
+        username === "koordinator mataram" && 
+        axiosFetch("get", `user/kecamatan/5271`)
+        .then((res) => setKecamatan(res.data))
+        .catch((err) => console.log(err));
+  }, [filterKabupaten, username]);
 
   //   style
   const ImportButton = {
@@ -183,7 +217,9 @@ const DptDps = () => {
   //     alamat: "1988",
   //   },
   // ];
-  console.log(dptdps);
+
+  const getKabupaten = useFetch("get", "user/kabupaten");
+  console.log(username);
   return (
     <div className="pl-[40px] pt-[45px] pb-[100px]">
       <div className="flex items-center justify-between">
@@ -211,9 +247,20 @@ const DptDps = () => {
           </p>
         </div> */}
       </div>
-      <div className="mt-[20px] flex">
+      <div className="mt-[20px] flex mr-[50px]">
         {/* cari data berdasarkan input */}
-        <FilterData />
+        <div className="w-screen">
+          <FilterData
+            kabupaten={roles === "admin" && getKabupaten}
+            setFilterKabupaten={roles === "admin" && setFilterKabupaten}
+            setFilterKecamatan={setFilterKecamatan}
+            kecamatan={kecamatan}
+            display={"hide"}
+            keyword={setKeyword}
+            filterKabupaten={filterKabupaten}
+          />
+        </div>
+
         <div className="ml-[60px] flex gap-3">
           {/* <label
             className="flex items-center justify-center gap-2 cursor-pointer"

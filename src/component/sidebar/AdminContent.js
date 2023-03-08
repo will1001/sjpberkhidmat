@@ -8,7 +8,7 @@ import SelectPeriode from "../SelectPeriode";
 import logoutIcon from "../../utility/icon/logout.png";
 import { setToken } from "../../redux/userReducer";
 
-function AdminContent() {
+function AdminContent({setPopupPeriode}) {
   const [select, setSelect] = useState("Dashboard");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -26,17 +26,19 @@ function AdminContent() {
     router.push("Login");
   };
 
+  const username = useSelector((state) => state.user.name)
+
   return (
     <>
-      <div className="mt-2 mb-16 h-screen">
+      <div className="mt-2 h-screen">
         <div className="flex items-center mb-4">
           <UserIcon />
           <div className="flex flex-col pl-2 ">
-            <p className="font-semibold text-slate-700">Username</p>
+            <p className="font-semibold text-slate-700">{username}</p>
             <p className="text-xs text-slate-700 font-thin">Akun {roles} </p>
           </div>
         </div>
-        <div className=""><SelectPeriode /></div>
+        <div className=""><SelectPeriode setPopupPeriode={setPopupPeriode}/></div>
         
         <hr />
         <div className="mt-4 ">
@@ -92,9 +94,7 @@ function AdminContent() {
           })}
         </div>
         <div className="border my-[18px]" />
-        <div onClick={handleLogOut} className="flex gap-2 p-2 justify-start w-full text-[18px] text-[#9CA3AF] font-medium items-center cursor-pointer">
-          <img src={logoutIcon.src} alt="logout.png" /> <p>Logout</p>
-        </div>
+       
       </div>
     </>
   );

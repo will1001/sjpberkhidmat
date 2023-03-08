@@ -2,12 +2,32 @@ import React from "react";
 import { useState } from "react";
 import { SearchIcon } from "../utility/icon/icon";
 
-const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort, setFilterKecamatan }) => {
+const FilterData = ({
+  keyword,
+  kabupaten,
+  kecamatan,
+  kelurahan,
+  short,
+  setShort,
+  setFilterKecamatan,
+  setFilterKabupaten,
+  display,
+  filterKabupaten,
+}) => {
   return (
     <div className="flex justify-between">
       {keyword !== undefined && (
-        <label htmlFor="search_data" className="flex items-center border rounded-sm stroke-black ">
-          <input onChange={(e) => keyword(e.target.value)} className="outline-none py-2 px-2" placeholder="Cari Data" type={"text"} id="search_data" />
+        <label
+          htmlFor="search_data"
+          className={` flex items-center border rounded-sm stroke-black`}
+        >
+          <input
+            onChange={(e) => keyword(e.target.value)}
+            className="outline-none py-2 px-2"
+            placeholder="Cari Data"
+            type={"text"}
+            id="search_data"
+          />
           <div className="flex items-center px-2">
             <SearchIcon />
           </div>
@@ -16,11 +36,18 @@ const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort,
 
       {kabupaten !== undefined && kabupaten.data !== undefined && (
         <label htmlFor="kabupaten" className="flex items-center gap-3">
-          <p>Pilih Kabupaten / Kota</p>
-          <select className="border p-2 rounded-sm" id="kabupaten">
-            <option selected="disable">Pilih Kabupaten / Kota</option>
+          <p className={`${display === "hide" ? "hidden" : "visible"}`}>Pilih Kabupaten / Kota</p>
+          <select
+          value={filterKabupaten}
+            onChange={(e) => {
+              setFilterKabupaten && setFilterKabupaten(e.target.value);
+            }}
+            className="border p-2 rounded-sm"
+            id="kabupaten"
+          >
+            <option value={"semua"}>Pilih Kabupaten / Kota</option>
             {kabupaten?.data?.map((res) => (
-              <option key={res._id} value={res._d}>
+              <option key={res._id} value={res._id}>
                 {res.name}
               </option>
             ))}
@@ -29,7 +56,7 @@ const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort,
       )}
       {kecamatan !== undefined && kecamatan.data !== undefined && (
         <label htmlFor="kecamatan" className="flex items-center gap-3">
-          <p>Pilih Kecamatan</p>
+          <p className={`${display === "hide" ? "hidden" : "visible"}`}>Pilih Kecamatan</p>
           <select
             onChange={(e) => {
               setFilterKecamatan && setFilterKecamatan(e.target.value);

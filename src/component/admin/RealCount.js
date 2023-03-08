@@ -22,6 +22,7 @@ const RealCount = ({ user }) => {
   const router = useRouter();
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
+  const roles = useSelector((state) => state.user.roles)
   const dataCalon = useFetch("get", "user/real_count/calon");
   const dataPartai = useFetch("get", "user/real_count/partai");
   const [popup, setPopup] = useState(false);
@@ -127,7 +128,7 @@ const RealCount = ({ user }) => {
               </div>
               Jumlah Suara Masuk
             </div>
-            <div className="flex my-4 gap-3">
+            <div className={`${roles === "koordinator" && "hidden"} flex my-4 gap-3 `}>
               <div className="bg-[#E44700] cursor-pointer flex items-center gap-2 py-2 px-4 rounded-sm">
                 <img src={inputIcon.src} alt="icon_input.png" />
                 <p

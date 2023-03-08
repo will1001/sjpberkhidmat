@@ -50,7 +50,7 @@ const Login = ({ router }) => {
       .then((res) => {
         if (res?.data) {
           dispatch(
-            setToken({ token: res.data.access_token, roles: res.data.roles, name: res.data.name, email: res.data.email })
+            setToken({ token: res.data.access_token, roles: res.data.roles, name: res.data.name, email: res.data.email, id_kabupaten: res.data.id_kabupaten })
           );
         } else {
           return <p>Loading.....</p>;

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import useFetch from "../../API/useFetch";
 
 import Button from "../../component/Button";
@@ -18,6 +19,7 @@ import PetaLombok from "../../utility/PetaLombok";
 function Dashboard() {
   const router = useRouter();
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
+  const username = useSelector((state) => state.user.name);
 
   const jumlahSimpatisan =
     getTarget !== undefined &&
@@ -50,7 +52,7 @@ function Dashboard() {
       return accumulator + currentValue?.jumlah_relawans;
     }, 0);
 
-  console.log(getTarget?.data);
+  console.log(username);
 
   return (
     <div className="bg-orange-50 h-screen">
@@ -119,7 +121,13 @@ function Dashboard() {
         <div className="pl-24 mt-6 mb-8">
           <div
             onClick={() => {
-              router.push("/PetaKekuatan");
+              username === "koordinator mataram" &&
+                router.push({
+                  pathname: "../peta_kekuatan/DetailKota",
+                  query: { kota: "5271" },
+                });
+
+              username === undefined && router.push("/PetaKekuatan");
             }}
           >
             <Button
