@@ -84,6 +84,14 @@ const SimpatisanDash = () => {
       selector: (row) => row.email,
     },
     {
+      name: "No Hp",
+      selector: (row) => row.phone,
+    },
+    {
+      name: "pekerjaan",
+      selector: (row) => row.pekerjaan?.name,
+    },
+    {
       name: "Jenis Kelamin",
       selector: (row) => (row.gender === "L" ? "Laki-Laki" : "Perempuan"),
     },

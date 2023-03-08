@@ -113,6 +113,10 @@ const RelawanDash = () => {
       button: true,
     },
     {
+      name: "NIK",
+      selector: (row) => row.nik,
+    },
+    {
       name: "email",
       selector: (row) => row.email,
     },
@@ -123,7 +127,7 @@ const RelawanDash = () => {
     {
       name: "pekerjaan",
       selector: (row) => row.pekerjaans.name,
-    },
+    },  
     {
       name: "Target Desa",
       selector: (row) => row.target_desa.name,

@@ -65,7 +65,12 @@ const Publikasi = () => {
   };
 
   useEffect(() => {
-    const res = axiosFetch("get", `user/articles?type=artikel&page=${currentPage ? currentPage : "1"}`, {}, token)
+    const res = axiosFetch(
+      "get",
+      `user/articles?type=artikel&page=${currentPage ? currentPage : "1"}`,
+      {},
+      token
+    )
       .then((res) => {
         setProgram(res);
         // console.log(res.data.metadata.totalPage);
@@ -93,9 +98,15 @@ const Publikasi = () => {
       ) : (
         <>
           <div className="ml-[59px] mr-[20px] mt-[67px]">
-            <p className="text-[32px] font-bold text-[#374151]  font-serif mb-4">Publikasi</p>
+            <p className="text-[32px] font-bold text-[#374151]  font-serif mb-4">
+              Publikasi
+            </p>
             <div className="mb-[20px]">
-              <NewButton title={"Tambah Data"} style={style} action={() => handleTambah()} />
+              <NewButton
+                title={"Tambah Data"}
+                style={style}
+                action={() => handleTambah()}
+              />
             </div>
 
             <div className="flex justify-between  py-4 px-4 text-white bg-[#374151] w-full px-4]">
@@ -108,16 +119,54 @@ const Publikasi = () => {
             </div>
             {program?.data?.data?.map((res, index) => (
               // console.log(res)
-              <div key={index} className={`flex items-center justify-between py-4 px-4 text-[#374151] ${(index + 1) % 2 == 0 ? "bg-[#fff]" : "bg-[#F9FAFB]"}  w-full`}>
+              <div
+                key={index}
+                onClick={() => {
+                  router.push({
+                    pathname: "../../publikasi/DetailPublikasi",
+                    query: {
+                      title: res?.title,
+                      image: res?.video,
+                      category: res?.category,
+                      creat: res?.createdAt
+                        ?.split("T")
+                        .shift()
+                        .split("-")
+                        .reverse()
+                        .join("/"),
+                    },
+                  });
+                }}
+                className={`flex cursor-pointer items-center justify-between py-4 px-4 text-[#374151] ${
+                  (index + 1) % 2 == 0 ? "bg-[#fff]" : "bg-[#F9FAFB]"
+                }  w-full`}
+              >
                 <p className="w-[280px] break-words">{res?.title}</p>
-                <p className="w-[50px]">{["jpg", "jpeg", "png"].includes(res?.image?.split(".").pop().toLowerCase()) ? "Artikel" : "Video"}</p>
+                <p className="w-[50px]">
+                  {["jpg", "jpeg", "png"].includes(
+                    res?.image?.split(".").pop().toLowerCase()
+                  )
+                    ? "Artikel"
+                    : "Video"}
+                </p>
                 <p className="w-[130px]">{res?.category}</p>
-                <p className="w-[80px]">{res?.createdAt?.split("T").shift().split("-").reverse().join("/")}</p>
+                <p className="w-[80px]">
+                  {res?.createdAt
+                    ?.split("T")
+                    .shift()
+                    .split("-")
+                    .reverse()
+                    .join("/")}
+                </p>
                 <div className="w-[80px] flex justify-center">
                   {res?.publication === true ? (
-                    <div className="bg-[#FFECE4] text-[#FF5001] font-medium flex justify-center py-2 px-2 rounded-md">Published</div>
+                    <div className="bg-[#FFECE4] text-[#FF5001] font-medium flex justify-center py-2 px-2 rounded-md">
+                      Published
+                    </div>
                   ) : (
-                    <div className="flex justify-center items-center bg-[#F3F4F6] font-medium p-2 rounded-md">Draft</div>
+                    <div className="flex justify-center items-center bg-[#F3F4F6] font-medium p-2 rounded-md">
+                      Draft
+                    </div>
                   )}
                 </div>
                 <div className="flex gap-2 justify-center items-center w-[50px]">
@@ -140,13 +189,23 @@ const Publikasi = () => {
                     src={edit.src}
                   />
                   {alertHapus !== res._id ? (
-                    <img onClick={() => setAlertHapus(res._id)} className="cursor-pointer" src={delet.src} />
+                    <img
+                      onClick={() => setAlertHapus(res._id)}
+                      className="cursor-pointer"
+                      src={delet.src}
+                    />
                   ) : (
                     <p className="flex gap-2 font-medium">
-                      <span className="cursor-pointer text-red-500" onClick={() => handleDelet(res?._id)}>
+                      <span
+                        className="cursor-pointer text-red-500"
+                        onClick={() => handleDelet(res?._id)}
+                      >
                         Hapus
                       </span>
-                      <span className="cursor-pointer text-[#374151]" onClick={() => setAlertHapus()}>
+                      <span
+                        className="cursor-pointer text-[#374151]"
+                        onClick={() => setAlertHapus()}
+                      >
                         Batal
                       </span>
                     </p>
@@ -156,12 +215,22 @@ const Publikasi = () => {
             ))}
             <div className="flex justify-between mt-3">
               <div className="flex items-center gap-2">
-                <div className="border px-2 py-1 rounded-md text-[#828282]">10</div>
-                <p className="text-[#828282]">Showing 1 - 10 of {pages?.total}</p>
+                <div className="border px-2 py-1 rounded-md text-[#828282]">
+                  10
+                </div>
+                <p className="text-[#828282]">
+                  Showing 1 - 10 of {pages?.total}
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 {test?.map((i) => (
-                  <div onClick={() => changePage(i + 1)} className={`cursor-pointer ${currentPage === i + 1 ? "bg-[#FF5001] text-[white]" : ""}  px-3 rounded-md  py-1`} key={i}>
+                  <div
+                    onClick={() => changePage(i + 1)}
+                    className={`cursor-pointer ${
+                      currentPage === i + 1 ? "bg-[#FF5001] text-[white]" : ""
+                    }  px-3 rounded-md  py-1`}
+                    key={i}
+                  >
                     {i + 1}
                   </div>
                 ))}

@@ -37,7 +37,7 @@ const History = () => {
         .then((res) => setPlano(res))
         .catch((err) => console.log(err));
     } else {
-      axiosFetch("get", "user/real_count/plano?page=1", {}, token)
+      axiosFetch("get", "user/real_count/plano?page=1&limit=100", {}, token)
         .then((res) => setPlano(res))
         .catch((err) => console.log(err));
     }
@@ -135,9 +135,12 @@ const History = () => {
       <div className="text-[#374151] p-6">
         <div className="flex gap-12 border-b-2">
           <Logo />
-          <p className="text-[26px] font-semibold"> {roles === "relawan"
-                ? "History Upload C1 Plano"
-                : "Foto C Plano (Diupload Relawan)"}</p>
+          <p className="text-[26px] font-semibold">
+            {" "}
+            {roles === "relawan"
+              ? "History Upload C1 Plano"
+              : "Foto C Plano (Diupload Relawan)"}
+          </p>
         </div>
 
         <div
@@ -160,13 +163,15 @@ const History = () => {
               <SearchIcon />
             </div>
           </div>
-          <div
-            onClick={() => setPopup(true)}
-            className="flex bg-[#E44700] items-center  justify-center gap-2 py-2 px-3 rounded-sm cursor-pointer"
-          >
-            <img src={uploadIcon.src} alt="upload_plano.png" />
-            <p className="text-white font-semibold">Upload Foto C1 Plano</p>
-          </div>
+          {roles === "relawan" && (
+            <div
+              onClick={() => setPopup(true)}
+              className="flex bg-[#E44700] items-center  justify-center gap-2 py-2 px-3 rounded-sm cursor-pointer"
+            >
+              <img src={uploadIcon.src} alt="upload_plano.png" />
+              <p className="text-white font-semibold">Upload Foto C1 Plano</p>
+            </div>
+          )}
         </div>
         <div className="flex bg-[#374151] text-white gap-3 p-2 mt-3 rounded-t-sm">
           <p className="w-[100px]">Thumbnail</p>
@@ -224,16 +229,32 @@ const History = () => {
             <p className="w-[200px]">{res?.relawan?.name}</p>
             <p className="w-[150px]">{res?.status}</p>
             <div className="w-[120px] flex gap-2 items-center">
-              <img
-                onClick={() =>
-                  router.push({
-                    pathname: "./InputData",
-                    query: { plano: res.image, id: res._id },
-                  })
-                }
-                className="cursor-pointer"
-                src={editIcon.src}
-              />
+              {roles === "relawan" ? (
+                <img
+                  onClick={() =>
+                    router.push({
+                      pathname: "./InputData",
+                      query: { plano: res.image, id: res._id },
+                    })
+                  }
+                  className="cursor-pointer"
+                  src={editIcon.src}
+                />
+              ) : (
+                <div
+                  onClick={() =>
+                    router.push({
+                      pathname: "./InputData",
+                      query: { plano: res.image, id: res._id },
+                    })
+                  }
+                  className="flex rounded-xl bg-[#E44700] items-center  justify-center gap-2 py-2 px-6 cursor-pointer"
+                >
+                  <img src={uploadIcon.src} alt="upload_plano.png" />
+                  <p className="text-white font-semibold">Verifikasi</p>
+                </div>
+              )}
+
               {alert === false ? (
                 <img
                   onClick={() => setalert(true)}

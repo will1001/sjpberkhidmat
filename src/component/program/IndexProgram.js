@@ -103,7 +103,18 @@ const indexProgram = () => {
             </div>
             {program?.data.map((res) => {
               return (
-                <div key={res._id} className="flex py-2 items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
+                <div key={res._id} onClick={()=>{
+                  router.push({
+                    pathname: "artikel/DetailProgram",
+                    query: {
+                      title: res?.title,
+                      description: res?.description,
+                      image: res?.image,
+                      video: res?.video,
+                      kabupaten: res?.kabupaten?.name,
+                    },
+                  });
+                }}  className="flex py-2 cursor-pointer items-center justify-between pl-[16px] gap-2 pr-[16px] border mb-2 rounded-sm  mr-[40px] border-[#D1D5DB]">
                   <div>
                     <img src={icon.src} alt="icon.png" />
                   </div>
