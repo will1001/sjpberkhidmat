@@ -13,6 +13,9 @@ import FormInputItem from "../../src/component/FormInputItem";
 import FormSelect from "../../src/component/FormSelect";
 import FormDatePlaceBirth from "../../src/component/admin/FormDatePlaceBirth";
 import useFetch from "../../src/API/useFetch";
+import { DaftarRelawanIcon } from "../../src/utility/icon/icon";
+import { setEditData, showOrHidePopUpDash } from "../../src/redux/panelReducer";
+import { useEffect } from "react";
 
 const Relawan = () => {
   const [selectTool, setSelectTool] = useState("Real Count");
@@ -27,7 +30,10 @@ const Relawan = () => {
   const idPeriode = useSelector((state) => state.panel.idPeriode);
   const pekerjaan = useFetch("get", "user/jobs");
   const kabupaten = useFetch("get", "user/kabupaten");
-
+  const [kecamatan, setKecamatan] = useState([]);
+  const [kelurahan, setKelurahan] = useState([]);
+  const [clear, setClear] = useState(false);
+  const [stopEditData, setStopEditData] = useState(false);
   const changeKabupaten = async (idKabupaten) => {
     setFormData({ ...formData, id_kabupaten: idKabupaten });
     const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
@@ -162,6 +168,32 @@ const Relawan = () => {
     }
     location.reload();
   };
+
+  useEffect(() => {
+    if (editData && !clear && !stopEditData) {
+      setFormData({
+        name: editData.name,
+        email: editData.email,
+        nik: editData.nik,
+        phone: editData.phone,
+        pekerjaan:
+          popUpDashType === "Relawan"
+            ? editData.pekerjaan
+            : editData.pekerjaan?._id,
+        id_kabupaten: editData.id_kabupaten,
+        id_kecamatan: editData.id_kecamatan,
+        target_desa: editData.target_desa,
+        date_birth: editData.date_birth,
+        place_birth: editData.place_birth,
+        gender: editData.gender,
+        address: editData.address,
+      });
+      setTimeout(() => {
+        setStopEditData(true);
+      }, 1000);
+    }
+    console.log(editData);
+  }, [formData, editData]);
 
   return (
     <div className="flex h-screen">
