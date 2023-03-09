@@ -19,8 +19,8 @@ import PetaLombok from "../../utility/PetaLombok";
 function Dashboard() {
   const router = useRouter();
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
-  const roles = useSelector((state) => state.user.roles);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
+  const roles = useSelector((state) => state.user.roles);
 
   const jumlahSimpatisan =
     getTarget !== undefined &&
