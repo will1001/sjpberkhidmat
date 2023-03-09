@@ -113,16 +113,16 @@ const DetailKelurahan = () => {
           </div>
           <div className="mt-[32px]">
             <p className="text-[#6B7280]">Urutkan</p>
-            <select onChange={(e) => setTerkecil(e.target.value)} className="border w-[400px] h-[48px] font-medium mt-2 rounded-sm outline-0">
-              <option>Jumlah Terendah</option>
-              <option>Jumlah Tertinggi</option>
+            <select onChange={(e) => setFilterUrutan(e.target.value)} className="border w-[400px] h-[48px] font-medium mt-2 rounded-sm outline-0">
+              <option value={"terkecil"}>Jumlah Terkecil</option>
+              <option value={"terbanyak"}>Jumlah Tertinggi</option>
             </select>
           </div>
           <div className="flex gap-3 justify-center mt-[32px]">
-            <div onClick={() => setPopupFilter(false)} className="border flex justify-center rounded-md py-2 px-6 text-[18px] font-semibold w-full cursor-pointer">
+            {/* <div onClick={() => setPopupFilter(false)} className="border flex justify-center rounded-md py-2 px-6 text-[18px] font-semibold w-full cursor-pointer">
               Batal
-            </div>
-            <div className="w-full text-white font-semibold rounded-md bg-[#E44700] text-[18px] py-2 px-6 flex justify-center cursor-pointer">Terapkan Filter</div>
+            </div> */}
+            <div onClick={() => setPopupFilter(false)} className="w-full text-white font-semibold rounded-md bg-[#E44700] text-[18px] py-2 px-6 flex justify-center cursor-pointer">Terapkan Filter</div>
           </div>
         </div>
       </div>

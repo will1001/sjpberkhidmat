@@ -20,6 +20,7 @@ function Dashboard() {
   const router = useRouter();
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
   const username = useSelector((state) => state.user.name);
+  const roles = useSelector((state) => state.user.roles)
 
   const jumlahSimpatisan =
     getTarget !== undefined &&
@@ -127,7 +128,7 @@ function Dashboard() {
                   query: { kota: "5271" },
                 });
 
-              username === undefined && router.push("/PetaKekuatan");
+              roles === "admin" && router.push("/PetaKekuatan");
             }}
           >
             <Button
