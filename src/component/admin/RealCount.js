@@ -22,7 +22,7 @@ const RealCount = ({ user }) => {
   const router = useRouter();
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
-  const roles = useSelector((state) => state.user.roles)
+  const roles = useSelector((state) => state.user.roles);
   const dataCalon = useFetch("get", "user/real_count/calon");
   const dataPartai = useFetch("get", "user/real_count/partai");
   const [popup, setPopup] = useState(false);
@@ -128,7 +128,11 @@ const RealCount = ({ user }) => {
               </div>
               Jumlah Suara Masuk
             </div>
-            <div className={`${roles === "koordinator" && "hidden"} flex my-4 gap-3 `}>
+            <div
+              className={`${
+                roles === "koordinator" && "hidden"
+              } flex my-4 gap-3 `}
+            >
               <div className="bg-[#E44700] cursor-pointer flex items-center gap-2 py-2 px-4 rounded-sm">
                 <img src={inputIcon.src} alt="icon_input.png" />
                 <p
@@ -251,7 +255,7 @@ const RealCount = ({ user }) => {
                             {res?.name}
                           </p>
                           <p className="text-[14px]  text-[#E44700]">
-                            Fraksi {res.id_partai}
+                            Fraksi {res.partai?.name}
                           </p>
                         </div>
                       </div>
@@ -281,7 +285,7 @@ const RealCount = ({ user }) => {
                 onClick={() => router.push("relawan/History")}
                 className="text-white font-medium py-2 px-4 rounded-md bg-[#E44700] cursor-pointer"
               >
-               Lihat Detail
+                Lihat Detail
               </div>
             </div>
           </div>
@@ -388,7 +392,7 @@ const RealCount = ({ user }) => {
                           {res?.name}
                         </p>
                         <p className="text-[14px]  text-[#E44700]">
-                          Fraksi {res.id_partai}
+                          Fraksi {res.partai?.name}
                         </p>
                       </div>
                     </div>

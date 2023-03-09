@@ -10,11 +10,11 @@ import EditIcon from "../../utility/icon/edit2.png";
 import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import axiosFetch from "../../API/axiosFetch";
 const customStyles = {
   headCells: {
     style: { backgroundColor: "#374151", color: "white" },
   },
-  
 };
 
 const SimpatisanDash = () => {
@@ -49,7 +49,7 @@ const SimpatisanDash = () => {
   };
   const hapusSimpatisan = (email) => {
     if (confirm("Hapus Simpatisan ?")) {
-      axiosFetch("delete", "user/users/simpatisan", { email }, token);
+      axiosFetch("delete", "user/users", { email }, token);
       // Save it!
       // console.log('Thing was saved to the database.');
       setTimeout(function () {

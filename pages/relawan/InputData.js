@@ -141,9 +141,12 @@ const InputData = () => {
       <div className="fixed bg-white w-screen px-8 py-2 border-b-2 z-20">
         <div className="flex justify-between items-center gap-12">
           <Logo />
-          <div className="flex items-center ">
-            <img className="" src={alert.src} />
-          </div>
+          {roles === "relawan" && (
+            <div className="flex items-center ">
+              <img className="" src={alert.src} />
+            </div>  
+          )}
+
           <div className="flex gap-3">
             <div
               onClick={postPlano}

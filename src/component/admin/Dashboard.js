@@ -19,7 +19,8 @@ import PetaLombok from "../../utility/PetaLombok";
 function Dashboard() {
   const router = useRouter();
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
-  const username = useSelector((state) => state.user.name);
+  const roles = useSelector((state) => state.user.roles);
+  const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
 
   const jumlahSimpatisan =
     getTarget !== undefined &&
@@ -51,8 +52,6 @@ function Dashboard() {
     getTarget?.data?.reduce((accumulator, currentValue) => {
       return accumulator + currentValue?.jumlah_relawans;
     }, 0);
-
-  console.log(username);
 
   return (
     <div className="bg-orange-50 h-screen">
@@ -121,13 +120,14 @@ function Dashboard() {
         <div className="pl-24 mt-6 mb-8">
           <div
             onClick={() => {
-              username === "koordinator mataram" &&
+              // console.log(roles === "admin");
+              roles === "koordinator" &&
                 router.push({
                   pathname: "../peta_kekuatan/DetailKota",
-                  query: { kota: "5271" },
+                  query: { kota: id_kabupaten },
                 });
 
-              username === undefined && router.push("/PetaKekuatan");
+              roles === "admin" && router.push("/PetaKekuatan");
             }}
           >
             <Button

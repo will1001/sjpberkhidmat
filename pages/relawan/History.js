@@ -86,6 +86,7 @@ const History = () => {
           <p className="text-[#374151] text-[32px] font-bold">
             Upload Foto C1 Plano
           </p>
+          
           <div className="bg-[#FFECE480] mt-3">
             <img src={alertInput.src} alt="alert_input.png" />
           </div>
