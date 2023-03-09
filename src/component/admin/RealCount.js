@@ -281,7 +281,7 @@ const RealCount = ({ user }) => {
                 onClick={() => router.push("relawan/History")}
                 className="text-white font-medium py-2 px-4 rounded-md bg-[#E44700] cursor-pointer"
               >
-                Input Sekarang
+               Lihat Detail
               </div>
             </div>
           </div>
