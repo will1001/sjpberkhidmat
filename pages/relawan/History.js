@@ -173,108 +173,110 @@ const History = () => {
             </div>
           )}
         </div>
-        <div className="flex bg-[#374151] text-white gap-3 p-2 mt-3 rounded-t-sm">
-          <p className="w-[100px]">Thumbnail</p>
-          <p className="w-[570px]">Nama File</p>
-          <p className="w-[200px]">Waktu Upload</p>
-          <p className="w-[200px]">Relawan</p>
-          <p className="w-[150px]">Status</p>
-          <p className="w-[120px]">Aksi</p>
-        </div>
-        {planao?.data?.data?.map((res, i) => (
-          <div
-            style={
-              (i + 1) % 2 !== 0
-                ? { background: "#F9FAFB" }
-                : { background: "white" }
-            }
-            className="flex py-[20px] items-center gap-3"
-            key={res._id}
-          >
-            <div className="w-[100px] justify-center flex">
-              {res.image !== undefined && (
-                <img
-                  className="w-[80px] h-[80px]"
-                  src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image}
-                />
-              )}
-            </div>
-            <p className="w-[570px]">{res.image}</p>
-            <p className="w-[200px]">
-              {
-                res?.createdAt
-                  ?.split("T")
-                  .pop()
-                  .split(".")
-                  .shift()
-                  .split(":")[0]
-              }
-              :
-              {
-                res?.createdAt
-                  ?.split("T")
-                  .pop()
-                  .split(".")
-                  .shift()
-                  .split(":")[1]
-              }{" "}
-              |{" "}
-              {res?.createdAt
-                ?.split("T")
-                .shift()
-                .split("-")
-                .reverse()
-                .join("-")}
-            </p>
-            <p className="w-[200px]">{res?.relawan?.name}</p>
-            <p className="w-[150px]">{res?.status}</p>
-            <div className="w-[120px] flex gap-2 items-center">
-              {roles === "relawan" ? (
-                <img
-                  onClick={() =>
-                    router.push({
-                      pathname: "./InputData",
-                      query: { plano: res.image, id: res._id },
-                    })
-                  }
-                  className="cursor-pointer"
-                  src={editIcon.src}
-                />
-              ) : (
-                <div
-                  onClick={() =>
-                    router.push({
-                      pathname: "./InputData",
-                      query: { plano: res.image, id: res._id },
-                    })
-                  }
-                  className="flex rounded-xl bg-[#E44700] items-center  justify-center gap-2 py-2 px-6 cursor-pointer"
-                >
-                  <img src={uploadIcon.src} alt="upload_plano.png" />
-                  <p className="text-white font-semibold">Verifikasi</p>
-                </div>
-              )}
-
-              {alert === false ? (
-                <img
-                  onClick={() => setalert(true)}
-                  className="cursor-pointer"
-                  src={deleteIcon.src}
-                />
-              ) : (
-                <div className="flex gap-3 font-medium">
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => setalert(false)}
-                  >
-                    Batal
-                  </div>
-                  <div className="text-red-700 cursor-pointer">Hapus</div>
-                </div>
-              )}
-            </div>
+        <div className="">
+          <div className="flex items-center bg-[#374151] text-white gap-3 p-2 mt-3 rounded-t-sm mr-[50px] w-screen h-[50px]">
+            <p className="w-[100px]">Thumbnail</p>
+            <p className="w-[450px]">Nama File</p>
+            <p className="w-[180px]">Waktu Upload</p>
+            <p className="w-[200px]">Relawan</p>
+            <p className="w-[150px]">Status</p>
+            <p className="w-[200px] text-center">Aksi</p>
           </div>
-        ))}
+          {planao?.data?.data?.map((res, i) => (
+            <div
+              style={
+                (i + 1) % 2 !== 0
+                  ? { background: "#F9FAFB" }
+                  : { background: "white" }
+              }
+              className="flex py-[20px] items-center gap-3 p-2 mr-[50px] w-screen"
+              key={res._id}
+            >
+              <div className="w-[100px] justify-center flex">
+                {res.image !== undefined && (
+                  <img
+                    className="w-[80px] h-[80px]"
+                    src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image}
+                  />
+                )}
+              </div>
+              <p className="w-[450px]">{res.image}</p>
+              <p className="w-[180px]">
+                {
+                  res?.createdAt
+                    ?.split("T")
+                    .pop()
+                    .split(".")
+                    .shift()
+                    .split(":")[0]
+                }
+                :
+                {
+                  res?.createdAt
+                    ?.split("T")
+                    .pop()
+                    .split(".")
+                    .shift()
+                    .split(":")[1]
+                }{" "}
+                |{" "}
+                {res?.createdAt
+                  ?.split("T")
+                  .shift()
+                  .split("-")
+                  .reverse()
+                  .join("-")}
+              </p>
+              <p className="w-[200px]">{res?.relawan?.name}</p>
+              <p className="w-[150px]">{res?.status}</p>
+              <div className="w-[200px] flex gap-2 items-center">
+                {roles === "relawan" ? (
+                  <img
+                    onClick={() =>
+                      router.push({
+                        pathname: "./InputData",
+                        query: { plano: res.image, id: res._id },
+                      })
+                    }
+                    className="cursor-pointer"
+                    src={editIcon.src}
+                  />
+                ) : (
+                  <div
+                    onClick={() =>
+                      router.push({
+                        pathname: "./InputData",
+                        query: { plano: res.image, id: res._id },
+                      })
+                    }
+                    className="flex rounded-xl bg-[#E44700] items-center  justify-center gap-2 py-2 px-6 cursor-pointer"
+                  >
+                    <img src={uploadIcon.src} alt="upload_plano.png" />
+                    <p className="text-white font-semibold">Verifikasi</p>
+                  </div>
+                )}
+
+                {alert === false ? (
+                  <img
+                    onClick={() => setalert(true)}
+                    className="cursor-pointer"
+                    src={deleteIcon.src}
+                  />
+                ) : (
+                  <div className="flex gap-3 font-medium">
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => setalert(false)}
+                    >
+                      Batal
+                    </div>
+                    <div className="text-red-700 cursor-pointer">Hapus</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
