@@ -312,7 +312,10 @@ const Logistik = () => {
               <div className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">
                 Batalkan
               </div>
-              <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
+              <div
+                onClick={postLogistik}
+                className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]"
+              >
                 Buat Pengajuan
               </div>
             </div>
@@ -655,6 +658,9 @@ const Logistik = () => {
                   Kecamatan
                 </th>
                 <th scope="col" className=" px-2 py-3 text-xs font-medium">
+                  Relawan
+                </th>
+                <th scope="col" className=" px-2 py-3 text-xs font-medium">
                   Status
                 </th>
                 <th
@@ -681,11 +687,15 @@ const Logistik = () => {
                       <td className="w-[120px] px-2 py-3">
                         {res.kecamatan.name}
                       </td>
+                      <td className="px-2 py-3 whitespace-nowrap">
+                        {res.relawan[0]?.name}
+                      </td>
                       <td className="px-2 py-3 ">
                         <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
                           {res.status}
                         </div>
                       </td>
+
                       <td className="px-2 py-3 border-l-2  bg-white ">
                         <div className="flex items-center justify-center gap-3">
                           <div
