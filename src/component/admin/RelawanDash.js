@@ -22,6 +22,7 @@ const RelawanDash = () => {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
     },
+  
   };
 
   const dispatch = useDispatch();

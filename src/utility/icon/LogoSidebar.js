@@ -8,6 +8,7 @@ import SetingSlider from "../../component/admin/seting_slider/SetingSlider";
 import Simpatisan from "../../component/admin/SimpatisanDash";
 import AkunTimSjp from "../../component/akunTimSjp/AkunTimSjp";
 import RumahAspirasi from "../../component/aspirasi/RumahAspirasi";
+import Forum from "../../component/Forum";
 import Program from "../../component/program/IndexProgram";
 import Publikasi from "../../component/publikasi/Publikasi";
 
@@ -109,7 +110,7 @@ export const logoSidebar = [
     name: "Forum",
     path: "Forum",
     icon: <ForumIcon />,
-    // component: <AkunTimSjp />,
+    component: <Forum />,
     role: "relawan",
     koordinator: true,
   },

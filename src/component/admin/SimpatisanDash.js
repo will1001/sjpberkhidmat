@@ -19,11 +19,12 @@ const customStyles = {
 
 const SimpatisanDash = () => {
   const token = useSelector((state) => state.user.token);
+  const roles = useSelector((state) => state.user.roles);
   const router = useRouter();
 
   const simpatisan = useFetch(
-    "get",
-    `user/simpatisan?page=1&limit=100${
+    roles === "admin" && "get",
+    `user/simpatisan?page=1&limit=10${
       router.query.id_kabupaten !== undefined
         ? "&id_kabupaten=" + router.query.id_kabupaten
         : ""

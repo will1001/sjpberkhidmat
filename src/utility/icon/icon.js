@@ -211,6 +211,46 @@ export function DPTDPSIcon() {
   );
 }
 
+export function MailIcon() {
+  return (
+    <svg
+      width="21"
+      height="18"
+      viewBox="0 0 21 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.02466 5.02733L8.93106 10.2639C9.60421 10.7098 10.4794 10.7071 11.1499 10.2573L19.0246 4.97312M3.05778 16.0213L17.0577 15.9791C18.1623 15.9758 19.055 15.0776 19.0517 13.9731L19.0216 3.97313C19.0182 2.86856 18.1201 1.97583 17.0156 1.97916L3.01562 2.02132C1.91105 2.02465 1.01832 2.92277 1.02165 4.02733L1.05176 14.0273C1.05509 15.1319 1.95321 16.0246 3.05778 16.0213Z"
+        stroke="current"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function Titik3Icon() {
+  return (
+    <svg
+      width="4"
+      height="18"
+      viewBox="0 0 4 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2 2L2 2.01M2 9L2 9.01M2 16L2 16.01M2 3C1.44772 3 1 2.55228 1 2C1 1.44772 1.44772 1 2 1C2.55228 1 3 1.44772 3 2C3 2.55228 2.55228 3 2 3ZM2 10C1.44771 10 1 9.55228 1 9C1 8.44772 1.44771 8 2 8C2.55228 8 3 8.44772 3 9C3 9.55228 2.55228 10 2 10ZM2 17C1.44771 17 0.999999 16.5523 0.999999 16C0.999999 15.4477 1.44771 15 2 15C2.55228 15 3 15.4477 3 16C3 16.5523 2.55228 17 2 17Z"
+        stroke="#111827"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function ForumIcon() {
   return (
     <svg

@@ -3,7 +3,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import Dashboard from "../../src/component/admin/Dashboard";
 import DptDps from "../../src/component/admin/dpt_dps/DptDps";
+import Logistik from "../../src/component/admin/Logistik";
 import RealCount from "../../src/component/admin/RealCount";
+import RelawanDash from "../../src/component/admin/RelawanDash";
+import SimpatisanDash from "../../src/component/admin/SimpatisanDash";
+import Forum from "../../src/component/Forum";
 import KoordinatorContetn from "../../src/component/sidebar/KoordinatorContetn";
 import RelawanContent from "../../src/component/sidebar/RelawanContent";
 import SideBar from "../../src/component/sidebar/SideBar";
@@ -23,6 +27,10 @@ const Relawan = () => {
        {selectTool === "Dashboard" && <Dashboard/>}
         {selectTool === "Real Count" && <RealCount user={"Relawan"} />}
         {selectTool === "DPT/DPS" && <DptDps/>}
+        {selectTool === "Logistik" && <Logistik/>}
+        {selectTool === "Relawan" && <RelawanDash/>}
+        {selectTool === "Simpatisan" && <SimpatisanDash/>}
+        {selectTool === "Forum" && <Forum/>}
       </div>
     </div>
   );
