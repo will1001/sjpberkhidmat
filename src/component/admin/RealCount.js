@@ -187,32 +187,40 @@ const RealCount = ({ user }) => {
                 >
                   <AlertInput />
                 </div>
-                {dataPartai?.data?.map((res) =>
+                <div className="border-b-[0.5px]">
+                {dataPartai?.data?.map((res, i) =>
                   res === undefined ? (
                     <p>Loading...</p>
                   ) : (
                     <div
                       key={res._id}
-                      className="h-[69px] border-[0.5px] flex px-[21px] gap-3"
+                      className={`${
+                        i === 0 && "border-[#FF5001] border-[0.5px]"
+                      } h-[69px] border-t-[0.5px] flex justify-between px-[21px] items-center`}
                     >
-                      <p className="text-[21px] font-medium text-[#374151] flex items-center">
-                        {res.persantase_suara.toFixed(1)} %
-                      </p>
-                      <div className="flex items-center">
+                      <div className="flex gap-3">
                         <img
                           className="h-[50px] w-[40px]"
                           src={`${
                             process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo
                           }`}
                         />
+                        <p className="text-[16px] w-[650px] flex items-center font-semibold text-[#374151]">
+                          {res?.name}
+                        </p>
                       </div>
 
-                      <p className="text-[16px] flex items-center font-semibold text-[#374151]">
-                        {res?.name}
+                      <p
+                        className={`${
+                          i === 0 && "text-[#FF5001]"
+                        } text-[21px] font-semibold text-[#374151] flex items-center`}
+                      >
+                        {res.persantase_suara.toFixed(1)} %
                       </p>
                     </div>
                   )
                 )}
+              </div>
               </>
             ) : (
               <>
@@ -223,45 +231,50 @@ const RealCount = ({ user }) => {
                 >
                   <AlertInput />
                 </div>
-                {dataCalon?.data.map((res) =>
+                <div className="border-b-[0.5px]">
+                {dataCalon?.data.map((res, i) =>
                   res === undefined ? (
                     <p>Loading...</p>
                   ) : (
-                    <div key={res._id} className="h-[69px] border">
-                      <div className="flex items-center px-[12px] gap-3 py-2">
-                        <p className="text-[#374151] text-[26px] font-semibold">
-                          {res.persantase_suara.toFixed(1)} %
-                        </p>
-                        <div className="flex flex-col justify-center">
-                          <p className="text-[14px] text-[#6B7280]">
-                            Total Suara
-                          </p>
-                          <p className="text-[16px] text-[#374151] font-bold">
-                            {res.suara}
-                          </p>
+                    <div key={res._id} className={`${i === 0 && "border-[0.5px] border-[#FF5001]"} h-[69px] border-t-[0.5px]`}>
+                      <div className="flex items-center justify-between px-[12px] gap-3 py-2">
+                        <div className="flex gap-3">
+                          <div className="flex items-center">
+                            <img
+                              className="h-[50px] w-[50px]"
+                              src={`${
+                                process.env.NEXT_PUBLIC_BASE_URL_IMAGE +
+                                res.logo
+                              }`}
+                            />
+                          </div>
+                          <div className="w-[500px]">
+                            <p className="text-[16px] font-semibold text-[#374151]">
+                              {res?.name}
+                            </p>
+                            <p className={`text-[14px]  ${i === 0 ? "text-[#E44700]" : "text-[#9CA3AF]"} `}>
+                              Fraksi {res.partai?.name}
+                            </p>
+                          </div>
                         </div>
-
-                        <div className="flex items-center">
-                          <img
-                            className="h-[50px] w-[50px]"
-                            src={`${
-                              process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo
-                            }`}
-                          />
-                        </div>
-
-                        <div>
-                          <p className="text-[16px] font-semibold text-[#374151]">
-                            {res?.name}
-                          </p>
-                          <p className="text-[14px]  text-[#E44700]">
-                            Fraksi {res.partai?.name}
+                        <div className="flex justify-between items-center w-[300px]">
+                          <div className="flex flex-col justify-center">
+                            <p className="text-[14px] text-[#6B7280]">
+                              Total Suara
+                            </p>
+                            <p className="text-[16px] text-[#374151] font-bold">
+                              {res.suara}
+                            </p>
+                          </div>
+                          <p className={`${i === 0 ? "text-[#E44700]" : "text-[#374151] "} text-[21px] font-semibold`}>
+                            {res.persantase_suara.toFixed(1)} %
                           </p>
                         </div>
                       </div>
                     </div>
                   )
                 )}
+              </div>
               </>
             )}
           </div>
@@ -289,10 +302,10 @@ const RealCount = ({ user }) => {
               </div>
             </div>
           </div>
-          <p className="font-bold text-slate-700 text-[18px]">
+          <p className="font-bold text-slate-700 text-[18px] mt-[24px]">
             Perolehan Suara Sementara
           </p>
-          <div className="flex gap-4 pt-4 pb-4">
+          <div className="flex gap-4 p-4">
             <button
               onClick={() => activhandle("partai")}
               className={
@@ -324,32 +337,40 @@ const RealCount = ({ user }) => {
               >
                 <AlertInput />
               </div>
-              {dataPartai?.data?.map((res) =>
-                res === undefined ? (
-                  <p>Loading...</p>
-                ) : (
-                  <div
-                    key={res._id}
-                    className="h-[69px] border-[0.5px] flex px-[21px] gap-3"
-                  >
-                    <p className="text-[21px] font-medium text-[#374151] flex items-center">
-                      {res.persantase_suara.toFixed(1)} %
-                    </p>
-                    <div className="flex items-center">
-                      <img
-                        className="h-[50px] w-[40px]"
-                        src={`${
-                          process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo
-                        }`}
-                      />
-                    </div>
+              <div className="border-b-[0.5px]">
+                {dataPartai?.data?.map((res, i) =>
+                  res === undefined ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <div
+                      key={res._id}
+                      className={`${
+                        i === 0 && "border-[#FF5001] border-[0.5px]"
+                      } h-[69px] border-t-[0.5px] flex justify-between px-[21px] items-center`}
+                    >
+                      <div className="flex gap-3">
+                        <img
+                          className="h-[50px] w-[40px]"
+                          src={`${
+                            process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo
+                          }`}
+                        />
+                        <p className="text-[16px] w-[650px] flex items-center font-semibold text-[#374151]">
+                          {res?.name}
+                        </p>
+                      </div>
 
-                    <p className="text-[16px] flex items-center font-semibold text-[#374151]">
-                      {res?.name}
-                    </p>
-                  </div>
-                )
-              )}
+                      <p
+                        className={`${
+                          i === 0 && "text-[#FF5001]"
+                        } text-[21px] font-semibold text-[#374151] flex items-center`}
+                      >
+                        {res.persantase_suara.toFixed(1)} %
+                      </p>
+                    </div>
+                  )
+                )}
+              </div>
             </>
           ) : (
             <>
@@ -360,51 +381,56 @@ const RealCount = ({ user }) => {
               >
                 <AlertInput />
               </div>
-              {dataCalon?.data.map((res) =>
-                res === undefined ? (
-                  <p>Loading...</p>
-                ) : (
-                  <div key={res._id} className="h-[69px] border">
-                    <div className="flex items-center px-[12px] gap-3 py-2">
-                      <p className="text-[#374151] text-[26px] font-semibold">
-                        {res.persantase_suara.toFixed(1)} %
-                      </p>
-                      <div className="flex flex-col justify-center">
-                        <p className="text-[14px] text-[#6B7280]">
-                          Total Suara
-                        </p>
-                        <p className="text-[16px] text-[#374151] font-bold">
-                          {res.suara}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center">
-                        <img
-                          className="h-[50px] w-[50px]"
-                          src={`${
-                            process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo
-                          }`}
-                        />
-                      </div>
-
-                      <div>
-                        <p className="text-[16px] font-semibold text-[#374151]">
-                          {res?.name}
-                        </p>
-                        <p className="text-[14px]  text-[#E44700]">
-                          Fraksi {res.partai?.name}
-                        </p>
+              <div className="border-b-[0.5px]">
+                {dataCalon?.data.map((res, i) =>
+                  res === undefined ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <div key={res._id} className={`${i === 0 && "border-[0.5px] border-[#FF5001]"} h-[69px] border-t-[0.5px]`}>
+                      <div className="flex items-center justify-between px-[12px] gap-3 py-2">
+                        <div className="flex gap-3">
+                          <div className="flex items-center">
+                            <img
+                              className="h-[50px] w-[50px]"
+                              src={`${
+                                process.env.NEXT_PUBLIC_BASE_URL_IMAGE +
+                                res.logo
+                              }`}
+                            />
+                          </div>
+                          <div className="w-[500px]">
+                            <p className="text-[16px] font-semibold text-[#374151]">
+                              {res?.name}
+                            </p>
+                            <p className={`text-[14px]  ${i === 0 ? "text-[#E44700]" : "text-[#9CA3AF]"} `}>
+                              Fraksi {res.partai?.name}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center w-[300px]">
+                          <div className="flex flex-col justify-center">
+                            <p className="text-[14px] text-[#6B7280]">
+                              Total Suara
+                            </p>
+                            <p className="text-[16px] text-[#374151] font-bold">
+                              {res.suara}
+                            </p>
+                          </div>
+                          <p className={`${i === 0 ? "text-[#E44700]" : "text-[#374151] "} text-[21px] font-semibold`}>
+                            {res.persantase_suara.toFixed(1)} %
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              )}
+                  )
+                )}
+              </div>
             </>
           )}
 
           <button
             onClick={() => router.push("RealCountAdmn")}
-            className="mt-4 w-[220px] h-[42px] bg-[#E44700] text-white text-[18px] font-semibold rounded-md"
+            className="mt-12 w-[220px] h-[42px] bg-[#E44700] text-white text-[18px] font-semibold rounded-md"
           >
             Input Calon & Partai
           </button>
