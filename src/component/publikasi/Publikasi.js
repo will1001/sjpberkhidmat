@@ -121,27 +121,31 @@ const Publikasi = () => {
               // console.log(res)
               <div
                 key={index}
-                onClick={() => {
-                  router.push({
-                    pathname: "../../publikasi/DetailPublikasi",
-                    query: {
-                      title: res?.title,
-                      image: res?.video,
-                      category: res?.category,
-                      creat: res?.createdAt
-                        ?.split("T")
-                        .shift()
-                        .split("-")
-                        .reverse()
-                        .join("/"),
-                    },
-                  });
-                }}
                 className={`flex cursor-pointer items-center justify-between py-4 px-4 text-[#374151] ${
                   (index + 1) % 2 == 0 ? "bg-[#fff]" : "bg-[#F9FAFB]"
                 }  w-full`}
               >
-                <p className="w-[280px] break-words">{res?.title}</p>
+                <p
+                  onClick={() => {
+                    router.push({
+                      pathname: "../../publikasi/DetailPublikasi",
+                      query: {
+                        title: res?.title,
+                        image: res?.video,
+                        category: res?.category,
+                        creat: res?.createdAt
+                          ?.split("T")
+                          .shift()
+                          .split("-")
+                          .reverse()
+                          .join("/"),
+                      },
+                    });
+                  }}
+                  className="w-[280px] break-words"
+                >
+                  {res?.title}
+                </p>
                 <p className="w-[50px]">
                   {["jpg", "jpeg", "png"].includes(
                     res?.image?.split(".").pop().toLowerCase()
