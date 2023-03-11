@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MailIcon } from "../utility/icon/icon";
 import forumTimIcon from "../utility/img/tim_koordinator_forum.png";
 import forumBesarIcon from "../utility/img/forum_besar.png";
@@ -6,18 +6,21 @@ import ppUser from "../utility/img/pp_user.png";
 import ChatForum from "./ChatForum";
 
 const Forum = () => {
+  const [roomChat, setRoomChat] = useState("");
+  const [roomtitle, setRoomTitle] = useState("");
+  const [roomLogo, setRoomLogo] = useState("");
   return (
     <div className="flex">
       <div className="px-[36px] pb-[150px] text-[#374151] scrollbar-track-white scrollbar-thin sticky h-screen overflow-scroll w-[500px] overflow-x-hidden border-r-2">
         <p className="mt-[76px] text-[32px] font-bold">Forum</p>
-        <div className="flex mb-[40px] text-[16px] mt-[16px] border gap-3 px-4 items-center h-[48px] rounded-full stroke-[#374151]">
+        {/* <div className="flex mb-[40px] text-[16px] mt-[16px] border gap-3 px-4 items-center h-[48px] rounded-full stroke-[#374151]">
           <MailIcon />
           <input
             type={"text"}
             placeholder="Cari Pesan..."
             className="outline-none w-full"
           />
-        </div>
+        </div> */}
         {/* list forum */}
         <div className="border-y-[1px] py-6">
           <div className="flex gap-3 items-center bg-[#FFECE480] px-2 py-1 mb-2">
@@ -26,7 +29,14 @@ const Forum = () => {
               src={forumTimIcon.src}
               alt="forum Tim Koordinator"
             />
-            <div className="cursor-pointer">
+            <div
+              onClick={() => {
+                setRoomChat("7c1b3334-22c2-4c92-8255-c1c6105aae6c");
+                setRoomTitle("Tim Koordinator");
+                setRoomLogo(forumTimIcon);
+              }}
+              className="cursor-pointer"
+            >
               <p className="text-black font-semibold">Tim Koordinator</p>
               <p className="text-[14px] text-[#4B5563]">
                 Pandji: Siap Meluncur!
@@ -39,7 +49,14 @@ const Forum = () => {
               src={forumBesarIcon.src}
               alt="forum Besar"
             />
-            <div className="cursor-pointer">
+            <div
+              onClick={() => {
+                setRoomChat("a5d0dd52-7856-402f-95b9-e7785f2abc68");
+                setRoomTitle("Forum Besar Tim SJP");
+                setRoomLogo(forumBesarIcon);
+              }}
+              className="cursor-pointer"
+            >
               <p className="text-black font-semibold">Forum Besar Tim SJP</p>
               <p className="text-[14px] text-[#4B5563]">
                 Pandji: Siap Meluncur!
@@ -101,7 +118,11 @@ const Forum = () => {
         </div>
       </div>
       <div className="overflow-scroll h-screen w-full scrollbar-thin scrollbar-track-white">
-        <ChatForum />
+        <ChatForum
+          roomChat={roomChat}
+          roomtitle={roomtitle}
+          roomLogo={roomLogo}
+        />
       </div>
     </div>
   );

@@ -476,11 +476,11 @@ const Logistik = () => {
               <div className="bg-[#F3F4F6] p-[20px] min-h-screen pr-8">
                 {/* chat */}
                 <div className=" overflow-y-auto pb-[100px]">
-                  <div className="flex justify-center mb-12">
+                  {/* <div className="flex justify-center mb-12">
                     <div className="bg-[#E5E7EB] text-[#6B7280] rounded-full px-2 py-1">
                       12 Desember 2022
                     </div>
-                  </div>
+                  </div> */}
                   {chats.data?.map((e, i) => {
                     if (roles === "admin") {
                       if (chatTargetId === e.user_id_from) {

@@ -16,6 +16,7 @@ import useFetch from "../../src/API/useFetch";
 import { DaftarRelawanIcon } from "../../src/utility/icon/icon";
 import { setEditData, showOrHidePopUpDash } from "../../src/redux/panelReducer";
 import { useEffect } from "react";
+import Forum from "../../src/component/Forum";
 
 const Relawan = () => {
   const [selectTool, setSelectTool] = useState("Real Count");
@@ -218,6 +219,7 @@ const Relawan = () => {
         {selectTool === "Logistik" && <Logistik />}
         {selectTool === "Simpatisan" && <SimpatisanDash />}
         {selectTool === "Aspirasi" && <RumahAspirasi />}
+        {selectTool === "Forum" && <Forum />}
       </div>
       {(popUpDashType === "Relawan" ||
         popUpDashType === "Simpatisan" ||
