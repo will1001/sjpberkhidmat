@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BackIcon,
-  ChatIcon,
-  DeletIcon,
-  DropDownIcon,
-  NextIcon,
-  PrevIcon,
-  ReadIcon,
-  RelawanIcon,
-  SearchIcon,
-} from "../../utility/icon/icon";
+import { BackIcon, ChatIcon, DeletIcon, DetailIcon, DropDownIcon, NextIcon, PrevIcon, ReadIcon, RelawanIcon, SearchIcon } from "../../utility/icon/icon";
 import ChatInput from "../logistik/ChatInput";
 import alert from "../../utility/img/alert_broadcast.png";
 import forum from "../../utility/img/forum.png";
@@ -109,12 +99,7 @@ const Logistik = () => {
 
   const getChats = async (id_relawan) => {
     {
-      await axiosFetch(
-        "get",
-        `user/chats?offset=0&target=${id_relawan}`,
-        [],
-        token
-      )
+      await axiosFetch("get", `user/chats?offset=0&target=${id_relawan}`, [], token)
         .then((res) => {
           setChat(res.data);
           // window.location.reload(false);
@@ -169,40 +154,21 @@ const Logistik = () => {
   return (
     <>
       {/* popup pengajuan */}
-      <div
-        style={{ visibility: popupPengajuan === false ? "hidden" : "visible" }}
-        className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50"
-      >
+      <div style={{ visibility: popupPengajuan === false ? "hidden" : "visible" }} className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50">
         <div className="fixed p-[20px] top-[80px] left-[450px] bg-white text-[#374151] h-screen overflow-scroll scrollbar-thin scrollbar-thumb-[#374151]">
-          <div
-            onClick={() => setPopupPengajuan(false)}
-            className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]"
-          >
+          <div onClick={() => setPopupPengajuan(false)} className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]">
             X
           </div>
-          <p className="text-[32px] text-center mb-[55px] font-bold">
-            Tambah Pengajuan Logistik
-          </p>
+          <p className="text-[32px] text-center mb-[55px] font-bold">Tambah Pengajuan Logistik</p>
           <div className="text-[14px]">
             <div className="flex gap-[72px] justify-between mb-3">
-              <label
-                className="w-[180px] items-center flex"
-                htmlFor="nama_relawan"
-              >
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                 Nama Relawan
               </label>
-              <input
-                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                type={"text"}
-                id="nama_relawan"
-                value={name}
-              />
+              <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"text"} id="nama_relawan" value={name} />
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label
-                className="w-[180px] items-center flex"
-                htmlFor="nama_relawan"
-              >
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                 Kabupaten / Kota
               </label>
               <select
@@ -224,10 +190,7 @@ const Logistik = () => {
               </select>
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label
-                className="w-[180px] items-center flex"
-                htmlFor="nama_relawan"
-              >
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                 Kabupaten / Kota
               </label>
               <select
@@ -249,10 +212,7 @@ const Logistik = () => {
               </select>
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label
-                className="w-[180px] items-center flex"
-                htmlFor="nama_relawan"
-              >
+              <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                 Kabupaten / Kota
               </label>
               <select
@@ -277,18 +237,10 @@ const Logistik = () => {
               <label className="w-[180px] items-center flex" htmlFor="email">
                 Email
               </label>
-              <input
-                className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                type={"email"}
-                id="email"
-                value={emaill}
-              />
+              <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"email"} id="email" value={emaill} />
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
-              <label
-                className="w-[180px] items-center flex"
-                htmlFor="kebutuhan"
-              >
+              <label className="w-[180px] items-center flex" htmlFor="kebutuhan">
                 Kebutuhan
               </label>
               <input
@@ -307,23 +259,11 @@ const Logistik = () => {
               <label className="w-[180px] flex" htmlFor="detail_pengajuan">
                 Detail Pengajuan
               </label>
-              <textarea
-                className="border py-2 px-2 rounded-sm outline-none w-[330px] h-[200px]"
-                type={"text"}
-                id="detail_pengajuan"
-                onChange={(e) =>
-                  setFormPengajuan({ ...formPengajuan, detail: e.target.value })
-                }
-              />
+              <textarea className="border py-2 px-2 rounded-sm outline-none w-[330px] h-[200px]" type={"text"} id="detail_pengajuan" onChange={(e) => setFormPengajuan({ ...formPengajuan, detail: e.target.value })} />
             </div>
             <div className="flex justify-end items-center gap-3 pb-[100px] mt-12">
-              <div className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">
-                Batalkan
-              </div>
-              <div
-                onClick={postLogistik}
-                className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]"
-              >
+              <div className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">Batalkan</div>
+              <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
                 Buat Pengajuan
               </div>
             </div>
@@ -331,10 +271,7 @@ const Logistik = () => {
         </div>
       </div>
       {/* popup chat */}
-      <div
-        style={{ visibility: popup === false ? "hidden" : "visible" }}
-        className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen"
-      >
+      <div style={{ visibility: popup === false ? "hidden" : "visible" }} className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen">
         {popupPage === "forum" && (
           <>
             <div className="absolute top-[100px] left-[500px] py-[40px] px-[80px] text-[#374151] bg-white">
@@ -353,9 +290,7 @@ const Logistik = () => {
                 </div>
 
                 <p className="text-[32px] font-bold mt-3">Kirim Ke Forum?</p>
-                <p className="mt-3">
-                  anda akan mengirimkan pesan ke semua akun
-                </p>
+                <p className="mt-3">anda akan mengirimkan pesan ke semua akun</p>
                 <p>relawan</p>
                 <div className="flex w-full gap-3 justify-between px-3 mt-3">
                   <div
@@ -367,9 +302,7 @@ const Logistik = () => {
                   >
                     Batal
                   </div>
-                  <div className="font-medium text-white bg-[#E44700] rounded-sm cursor-pointer py-2 w-full text-center">
-                    Kirim Pesan
-                  </div>
+                  <div className="font-medium text-white bg-[#E44700] rounded-sm cursor-pointer py-2 w-full text-center">Kirim Pesan</div>
                 </div>
               </div>
             </div>
@@ -387,28 +320,19 @@ const Logistik = () => {
               >
                 X
               </div>
-              <p className="text-[32px] font-bold mb-[42px]">
-                Jumlah Penduduk NTB
-              </p>
+              <p className="text-[32px] font-bold mb-[42px]">Jumlah Penduduk NTB</p>
               <img src={alert.src} alt="alert" />
               <div className="flex justify-between items-center mt-3">
                 <label className="text-[18px]" htmlFor="perihal">
                   Perihal
                 </label>
-                <input
-                  type={"text"}
-                  id="perihal"
-                  className="w-[300px] rounded-sm px-2 outline-none h-[40px] border"
-                />
+                <input type={"text"} id="perihal" className="w-[300px] rounded-sm px-2 outline-none h-[40px] border" />
               </div>
               <div className="flex justify-between items-center mt-3">
                 <label className="text-[18px]" htmlFor="status">
                   Status
                 </label>
-                <select
-                  id="status"
-                  className="w-[300px] rounded-sm px-2 outline-none h-[40px] border"
-                >
+                <select id="status" className="w-[300px] rounded-sm px-2 outline-none h-[40px] border">
                   <option>Proses</option>
                   <option>Menunggu</option>
                   <option>Belum Input</option>
@@ -418,17 +342,10 @@ const Logistik = () => {
                 <label className="text-[18px]" htmlFor="forum">
                   Detail Forum
                 </label>
-                <textarea
-                  type={"text"}
-                  id="forum"
-                  className="w-[300px] rounded-sm px-2 outline-none h-[140px] border"
-                />
+                <textarea type={"text"} id="forum" className="w-[300px] rounded-sm px-2 outline-none h-[140px] border" />
               </div>
               <div className="flex justify-end">
-                <div
-                  onClick={() => handlePopUp("forum")}
-                  className="py-2 px-4 bg-[#FF5001] text-white font-medium mt-3 rounded-sm cursor-pointer"
-                >
+                <div onClick={() => handlePopUp("forum")} className="py-2 px-4 bg-[#FF5001] text-white font-medium mt-3 rounded-sm cursor-pointer">
                   Broadcast Ke Relawan
                 </div>
               </div>
@@ -451,14 +368,7 @@ const Logistik = () => {
                 <p className="text-[21px] font-bold">Logistik Kota Mataram</p>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Tgl Pengajuan</p>
-                  <p>
-                    {dataChat?.createdAt
-                      ?.split("T")
-                      .shift()
-                      .split("-")
-                      .reverse()
-                      .join("/")}
-                  </p>
+                  <p>{dataChat?.createdAt?.split("T").shift().split("-").reverse().join("/")}</p>
                 </div>
                 <div className="flex gap-4 mt-2">
                   <p className="w-[140px] text-[#6B7280]">Kebutuhan</p>
@@ -481,100 +391,6 @@ const Logistik = () => {
                   </select>
                 </div>
               </div>
-              <div className="bg-[#F3F4F6] p-[20px] min-h-screen pr-8">
-                {/* chat */}
-                <div className=" overflow-y-auto pb-[100px]">
-                  {/* <div className="flex justify-center mb-12">
-                    <div className="bg-[#E5E7EB] text-[#6B7280] rounded-full px-2 py-1">
-                      12 Desember 2022
-                    </div>
-                  </div> */}
-                  {chats.data?.map((e, i) => {
-                    if (roles === "admin") {
-                      if (chatTargetId === e.user_id_from) {
-                        return (
-                          <div className="flex">
-                            <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
-                              {e.message}
-                              <p className="text-end text-[12px] font-normal">
-                                {e.is_read && <ReadIcon />}
-                              </p>
-                            </p>
-                          </div>
-                        );
-                      } else {
-                        return (
-                          <div className="flex justify-end ">
-                            <p className="font-medium bg-[#FF5001] text-white  rounded-t-xl rounded-bl-xl shadow-lg my-3 p-2 w-[420px]">
-                              {e.message}
-                              <p className="text-[12px] font-normal flex gap-1 justify-end items-center">
-                                {Moment(e.createdAt).format("hh:mm")}{" "}
-                                {e.is_read && <ReadIcon />}
-                              </p>
-                            </p>
-                          </div>
-                        );
-                      }
-                    } else {
-                      if (chatTargetId === e.user_id_from) {
-                        return (
-                          <div className="flex justify-end ">
-                            <p className="font-medium bg-[#FF5001] text-white  rounded-t-xl rounded-bl-xl shadow-lg my-3 p-2 w-[420px]">
-                              {e.message}
-                              <p className="text-[12px] font-normal flex gap-1 justify-end items-center">
-                                {Moment(e.createdAt).format("hh:mm")}{" "}
-                                {e.is_read && <ReadIcon />}
-                              </p>
-                            </p>
-                          </div>
-                        );
-                      } else {
-                        return (
-                          <div className="flex">
-                            <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
-                              {e.message}
-                              <p className="text-end text-[12px] font-normal">
-                                {e.is_read && <ReadIcon />}
-                              </p>
-                            </p>
-                          </div>
-                        );
-                      }
-                    }
-                  })}
-
-                  {/* <div className="flex">
-                    <p className=" font-medium bg-white rounded-t-xl rounded-br-xl shadow-lg my-3 p-2 w-[420px] break-words">
-                      Ornare magna ultricies sed dapibus pharetra imperdiet
-                      nascetur viverra
-                      vitae.asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                      <p className="text-end text-[12px] font-normal">10.23</p>
-                    </p>
-                  </div>
-                  <div className="flex justify-end ">
-                    <p className="font-medium bg-[#FF5001] text-white  rounded-t-xl rounded-bl-xl shadow-lg my-3 p-2 w-[420px]">
-                      Ornare magna ultricies sed dapibus pharetra imperdiet
-                      nascetur viverra vitae.
-                      <p className="text-[12px] font-normal flex gap-1 justify-end items-center">
-                        10.23 {<ReadIcon />}
-                      </p>
-                    </p>
-                  </div> */}
-                </div>
-
-                <div className="fixed bottom-0 z-50 py-3 px-6 w-full flex  bg-[#E5E7EB] items-center">
-                  <ChatInput
-                    onSendMessage={(e) => {
-                      sendMessage();
-                    }}
-                    onChange={(e) => {
-                      setMessage(e.target.value);
-                    }}
-                    value={message}
-                  />
-                </div>
-                {/*  */}
-              </div>
             </div>
           </>
         )}
@@ -595,10 +411,7 @@ const Logistik = () => {
                   }}
                 />
               ) : (
-                <div
-                  onClick={() => setPopupPengajuan(true)}
-                  className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 "
-                >
+                <div onClick={() => setPopupPengajuan(true)} className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 ">
                   Tambah Pengajuan
                 </div>
               )}
@@ -608,11 +421,7 @@ const Logistik = () => {
         <div className="flex justify-between items-center mt-[24px]">
           <div className="flex items-center gap-4">
             <div className="w-[234px] py-2 border flex justify-between rounded-sm px-3">
-              <input
-                className="outline-0 w-full"
-                type={"text"}
-                placeholder="Cari Data"
-              />
+              <input className="outline-0 w-full" type={"text"} placeholder="Cari Data" />
               <SearchIcon />
             </div>
             <p>Filter</p>
@@ -635,34 +444,19 @@ const Logistik = () => {
           <table className="tabel-auto">
             <thead className="bg-[#374151]  ">
               <tr className="h-[51px] text-white ">
-                <th
-                  scope="col"
-                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                >
+                <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                   No
                 </th>
-                <th
-                  scope="col"
-                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                >
+                <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                   tgl Pengajuan
                 </th>
-                <th
-                  scope="col"
-                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                >
+                <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                   Kab / Kota
                 </th>
-                <th
-                  scope="col"
-                  className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                >
+                <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                   Kebutuhan
                 </th>
-                <th
-                  scope="col"
-                  className=" px-2 py-3 text-left text-xs font-medium"
-                >
+                <th scope="col" className=" px-2 py-3 text-left text-xs font-medium">
                   Kecamatan
                 </th>
                 <th scope="col" className=" px-2 py-3 text-xs font-medium">
@@ -671,10 +465,7 @@ const Logistik = () => {
                 <th scope="col" className=" px-2 py-3 text-xs font-medium">
                   Status
                 </th>
-                <th
-                  scope="col"
-                  className=" border-l-2 bg-[#374151] px-2 py-3  text-white  text-xs font-medium"
-                >
+                <th scope="col" className=" border-l-2 bg-[#374151] px-2 py-3  text-white  text-xs font-medium">
                   Aksi
                 </th>
               </tr>
@@ -685,47 +476,26 @@ const Logistik = () => {
                   return (
                     <tr className="bg-[#F9FAFB] h-[52px]">
                       <td className="px-2 py-3">{++i}</td>
-                      <td className=" px-2 py-3 whitespace-nowrap">
-                        {Moment(res.createdAt).format("DD-MMMM-YYYY")}
-                      </td>
-                      <td className="px-2 py-3 whitespace-nowrap">
-                        {res.kabupaten.name}
-                      </td>
+                      <td className=" px-2 py-3 whitespace-nowrap">{Moment(res.createdAt).format("DD-MMMM-YYYY")}</td>
+                      <td className="px-2 py-3 whitespace-nowrap">{res.kabupaten.name}</td>
                       <td className="w-[120px] px-2 py-3">{res.kebutuhan}</td>
-                      <td className="w-[120px] px-2 py-3">
-                        {res.kecamatan.name}
-                      </td>
-                      <td className="px-2 py-3 whitespace-nowrap">
-                        {res.relawan[0]?.name}
-                      </td>
+                      <td className="w-[120px] px-2 py-3">{res.kecamatan.name}</td>
+                      <td className="px-2 py-3 whitespace-nowrap">{res.relawan[0]?.name}</td>
                       <td className="px-2 py-3 ">
-                        <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
-                          {res.status}
-                        </div>
+                        <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">{res.status}</div>
                       </td>
 
                       <td className="px-2 py-3 border-l-2  bg-white ">
                         <div className="flex items-center justify-center gap-3">
-                          <div
-                            onClick={() =>
-                              handlePopUp("chat", res.id_relawan, res)
-                            }
-                            className="cursor-pointer"
-                          >
-                            <ChatIcon />
+                          <div onClick={() => handlePopUp("chat", res.id_relawan, res)} className="cursor-pointer">
+                            <DetailIcon />
                           </div>
                           {alertHapus !== false && res._id === deleteId ? (
                             <div className="flex gap-3 items-center justify-center">
-                              <div
-                                className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md"
-                                onClick={() => setAlertHapus(false)}
-                              >
+                              <div className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md" onClick={() => setAlertHapus(false)}>
                                 Batal
                               </div>
-                              <div
-                                className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md"
-                                onClick={() => deletLogistik(res._id)}
-                              >
+                              <div className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md" onClick={() => deletLogistik(res._id)}>
                                 Hapus
                               </div>
                             </div>
@@ -760,9 +530,7 @@ const Logistik = () => {
             <div className="stroke-[#D1D5DB]">
               <PrevIcon />
             </div>
-            <div className="bg-[#FF5001] rounded-md py-2 px-4 text-white cursor-pointer">
-              1
-            </div>
+            <div className="bg-[#FF5001] rounded-md py-2 px-4 text-white cursor-pointer">1</div>
             <div className="stroke-black">
               <NextIcon />
             </div>
