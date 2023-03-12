@@ -34,7 +34,7 @@ function SideBar({ content }) {
         <div>
           <Logo />
         </div>
-        <div className="mb-auto">{content}</div>
+        <div className="mb-10">{content}</div>
         <div
           onClick={handleLogOut}
           className="flex gap-2 p-2 justify-start w-full text-[18px] text-[#9CA3AF] font-medium items-center cursor-pointer"

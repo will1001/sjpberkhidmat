@@ -40,24 +40,17 @@ const DptDps = () => {
   const idPeriode = useSelector((state) => state.panel.idPeriode);
   const username = useSelector((state) => state.panel.name);
   const roles = useSelector((state) => state.panel.roles);
+  const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const [formData, setFormData] = useState({
     file: "",
     id_periode: idPeriode,
   });
 
   useEffect(() => {
-    username === "koordinator mataram"
+    roles === "koordinator"
       ? axiosFetch(
           "get",
-          `user/dpt_dps?page=${currenPage}${
-            filterKabupaten !== "semua"
-              ? `&idKabupaten=5271`
-              : `&idKabupaten=5271`
-          }${
-            filterKecamatan !== "semua" ? `&idKecamatan=${filterKecamatan}` : ``
-          }${
-            keyword !== " " && keyword.length >= 3 ? `&keyword=${keyword}` : ``
-          }`,
+          `user/dpt_dps?page=${currenPage}&idKabupaten=${id_kabupaten}`,
           {},
           token
         )
@@ -108,8 +101,8 @@ const DptDps = () => {
       axiosFetch("get", `user/kecamatan/${filterKabupaten}`)
         .then((res) => setKecamatan(res.data))
         .catch((err) => console.log(err));
-        username === "koordinator mataram" && 
-        axiosFetch("get", `user/kecamatan/5271`)
+    username === "koordinator mataram" &&
+      axiosFetch("get", `user/kecamatan/5271`)
         .then((res) => setKecamatan(res.data))
         .catch((err) => console.log(err));
   }, [filterKabupaten, username]);
@@ -247,22 +240,23 @@ const DptDps = () => {
           </p>
         </div> */}
       </div>
-      <div className="mt-[20px] flex mr-[50px]">
-        {/* cari data berdasarkan input */}
-        <div className="w-screen">
-          <FilterData
-            kabupaten={roles === "admin" && getKabupaten}
-            setFilterKabupaten={roles === "admin" && setFilterKabupaten}
-            setFilterKecamatan={setFilterKecamatan}
-            kecamatan={kecamatan}
-            display={"hide"}
-            keyword={setKeyword}
-            filterKabupaten={filterKabupaten}
-          />
-        </div>
+      {roles === "admin" && (
+        <div className="mt-[20px] flex mr-[50px]">
+          {/* cari data berdasarkan input */}
+          <div className="w-screen">
+            <FilterData
+              kabupaten={roles === "admin" && getKabupaten}
+              setFilterKabupaten={roles === "admin" && setFilterKabupaten}
+              setFilterKecamatan={setFilterKecamatan}
+              kecamatan={kecamatan}
+              display={"hide"}
+              keyword={setKeyword}
+              filterKabupaten={filterKabupaten}
+            />
+          </div>
 
-        <div className="ml-[60px] flex gap-3">
-          {/* <label
+          <div className="ml-[60px] flex gap-3">
+            {/* <label
             className="flex items-center justify-center gap-2 cursor-pointer"
             htmlFor="file_upload"
             style={ImportButton}
@@ -278,26 +272,27 @@ const DptDps = () => {
               className="hidden"
             />
           </label> */}
-          <NewButton
-            style={ImportButton}
-            title={"Impor"}
-            icon={Icon2}
-            action={() => {
-              dispatch(showOrHidePopUpDptDps({ type: "import" }));
-            }}
-          />
-          <NewButton
-            action={() => {
-              // router.push({
-              //   pathname: "/Admin",
-              //   query: { component: "EksportDataDpt" },
-              // });
-            }}
-            style={exportButton}
-            icon={Icon1}
-          />
+            <NewButton
+              style={ImportButton}
+              title={"Impor"}
+              icon={Icon2}
+              action={() => {
+                dispatch(showOrHidePopUpDptDps({ type: "import" }));
+              }}
+            />
+            <NewButton
+              action={() => {
+                // router.push({
+                //   pathname: "/Admin",
+                //   query: { component: "EksportDataDpt" },
+                // });
+              }}
+              style={exportButton}
+              icon={Icon1}
+            />
+          </div>
         </div>
-      </div>
+      )}
       {/* <div className="mt-4">
         <DataTable className="" columns={columns} data={data} customStyles={customStyles} conditionalRowStyles={conditionalRowStyles} />
         

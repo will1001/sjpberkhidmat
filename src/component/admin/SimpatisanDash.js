@@ -20,25 +20,33 @@ const customStyles = {
 const SimpatisanDash = () => {
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
+  const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const router = useRouter();
 
-  const simpatisan = useFetch(
-    roles === "admin" && "get",
-    `user/simpatisan?page=1&limit=10${
-      router.query.id_kabupaten !== undefined
-        ? "&id_kabupaten=" + router.query.id_kabupaten
-        : ""
-    }${
-      router.query.id_kecamatan !== undefined
-        ? "&id_kecamatan=" + router.query.id_kecamatan
-        : ""
-    }${
-      router.query.id_relawan !== undefined
-        ? "&id_relawan=" + router.query.id_relawan
-        : ""
-    }`,
-    token
-  );
+  const simpatisan =
+    roles === "koordinator"
+      ? useFetch(
+          "get",
+          `user/simpatisan?page=1&limit=10&id_kabupaten=${id_kabupaten}`,
+          token
+        )
+      : useFetch(
+          "get",
+          `user/simpatisan?page=1&limit=10${
+            router.query.id_kabupaten !== undefined
+              ? "&id_kabupaten=" + router.query.id_kabupaten
+              : ""
+          }${
+            router.query.id_kecamatan !== undefined
+              ? "&id_kecamatan=" + router.query.id_kecamatan
+              : ""
+          }${
+            router.query.id_relawan !== undefined
+              ? "&id_relawan=" + router.query.id_relawan
+              : ""
+          }`,
+          token
+        );
   const dispatch = useDispatch();
 
   const editSimpatisan = (data) => {

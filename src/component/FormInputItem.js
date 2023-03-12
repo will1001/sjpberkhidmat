@@ -1,6 +1,6 @@
 import React from "react";
 
-function FormInputItem({ label, type, onChange, value, disabled }) {
+function FormInputItem({ label, type, onChange, value, disabled ,maxLength}) {
   return (
     <div className="flex justify-start items-center my-3">
       <label className="text-[14px] w-[20%] text-[#374151] mr-[50px]">
@@ -12,6 +12,7 @@ function FormInputItem({ label, type, onChange, value, disabled }) {
         type={type}
         value={value}
         disabled={disabled}
+        maxLength={maxLength}
       />
     </div>
   );

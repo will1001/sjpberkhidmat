@@ -166,9 +166,9 @@ const HomePage = ({ router }) => {
                 query: { type: "simpatisan" },
               });
             }}
-            className="cursor-pointer w-screen absolute left-[55%]"
+            className="cursor-pointer w-screen absolute left-[52%] top-[205%]"
           >
-            <DaftarSimpatisanButton />
+           <DaftarSimpatisanButton />
           </div>
         </div>
 

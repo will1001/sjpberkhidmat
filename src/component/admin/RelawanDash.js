@@ -22,7 +22,6 @@ const RelawanDash = () => {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
     },
-  
   };
 
   const dispatch = useDispatch();
@@ -33,6 +32,8 @@ const RelawanDash = () => {
   const [keyword, setKeyword] = useState(null);
   const [relawan, setRelawan] = useState([]);
   const token = useSelector((state) => state.user.token);
+  const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
+  const roles = useSelector((state) => state.user.roles);
   const tabPanelRelawanDash = useSelector(
     (state) => state.panel.tabPanelRelawanDash
   );
@@ -62,24 +63,34 @@ const RelawanDash = () => {
 
   useEffect(() => {
     dispatch(setTabPanelRelawanDash({ tabPanelRelawanDash: "relawan" }));
-    axiosFetch(
-      "get",
-      `user/relawan?page=${1}&limit=100${
-        pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
-      }${sorting !== null ? "&sort=" + sorting : ""}${
-        keyword !== null ? "&keyword=" + keyword : ""
-      }${
-        router.query.id_kabupaten !== undefined
-          ? "&id_kabupaten=" + router.query.id_kabupaten
-          : ""
-      }${
-        router.query.id_kecamatan !== undefined
-          ? "&id_kecamatan=" + router.query.id_kecamatan
-          : ""
-      }`
-    )
-      .then((res) => setRelawan(res.data))
-      .catch((err) => console.log(err));
+
+    if (roles === "koordinator") {
+      axiosFetch(
+        "get",
+        `user/relawan?page=${1}&limit=100&id_kabupaten=${id_kabupaten}`
+      )
+        .then((res) => setRelawan(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      axiosFetch(
+        "get",
+        `user/relawan?page=${1}&limit=100${
+          pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
+        }${sorting !== null ? "&sort=" + sorting : ""}${
+          keyword !== null ? "&keyword=" + keyword : ""
+        }${
+          router.query.id_kabupaten !== undefined
+            ? "&id_kabupaten=" + router.query.id_kabupaten
+            : ""
+        }${
+          router.query.id_kecamatan !== undefined
+            ? "&id_kecamatan=" + router.query.id_kecamatan
+            : ""
+        }`
+      )
+        .then((res) => setRelawan(res.data))
+        .catch((err) => console.log(err));
+    }
   }, [pekerjaanFilter, sorting, keyword, relawanSub]);
 
   const pekerjaan = useFetch("get", "user/jobs");
@@ -128,7 +139,7 @@ const RelawanDash = () => {
     {
       name: "pekerjaan",
       selector: (row) => row.pekerjaans.name,
-    },  
+    },
     {
       name: "Target Desa",
       selector: (row) => row.target_desa.name,

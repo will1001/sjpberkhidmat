@@ -50,6 +50,7 @@ const Logistik = () => {
 
   const token = useSelector((state) => state.user.token);
   const roles = useSelector((state) => state.user.roles);
+  const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const name = useSelector((state) => state.user.name);
   const emaill = useSelector((state) => state.user.email);
   const periode = useSelector((state) => state.panel.idPeriode);
@@ -139,17 +140,24 @@ const Logistik = () => {
       .catch((err) => console.log(err));
 
   useEffect(() => {
-    if (loadNewChat) {
-      getChats(chatTargetId);
-      setLoadNewChat(false);
-    }
-    setTimeout(() => {
-      getChats(chatTargetId);
-    }, 1000);
-  });
+    // if (loadNewChat) {
+    //   getChats(chatTargetId);
+    //   setLoadNewChat(false);
+    // }
+    // setTimeout(() => {
+    //   getChats(chatTargetId);
+    // }, 1000);
+  }, []);
 
   useEffect(() => {
-    axiosFetch("get", `user/logistik?page=1`, {}, token)
+    axiosFetch(
+      "get",
+      `user/logistik?page=1${
+        roles === "koordinator" && "&id_kabupaten=" + id_kabupaten
+      }`,
+      {},
+      token
+    )
       .then((res) => {
         setLogistik(res.data);
       })
