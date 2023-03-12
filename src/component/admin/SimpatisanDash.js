@@ -24,18 +24,8 @@ const SimpatisanDash = () => {
 
   const simpatisan = useFetch(
     roles === "admin" && "get",
-    `user/simpatisan?page=1&limit=10${
-      router.query.id_kabupaten !== undefined
-        ? "&id_kabupaten=" + router.query.id_kabupaten
-        : ""
-    }${
-      router.query.id_kecamatan !== undefined
-        ? "&id_kecamatan=" + router.query.id_kecamatan
-        : ""
-    }${
-      router.query.id_relawan !== undefined
-        ? "&id_relawan=" + router.query.id_relawan
-        : ""
+    `user/simpatisan?page=1&limit=10${router.query.id_kabupaten !== undefined ? "&id_kabupaten=" + router.query.id_kabupaten : ""}${router.query.id_kecamatan !== undefined ? "&id_kecamatan=" + router.query.id_kecamatan : ""}${
+      router.query.id_relawan !== undefined ? "&id_relawan=" + router.query.id_relawan : ""
     }`,
     token
   );
@@ -131,7 +121,7 @@ const SimpatisanDash = () => {
       <div className="flex justify-between items-center px-[40px] py-[10px]">
         <h1 className="text-4xl font-bold">Simpatisan</h1>
       </div>
-      <div className="px-[40px] py-[10px]">
+      <div className={`${roles === "koordinator" ? "hidden" : "visible"} px-[40px] py-[10px]`}>
         <ButtonPrimary
           title={"Tambah Simpatisan"}
           action={() => {
@@ -140,18 +130,11 @@ const SimpatisanDash = () => {
         />
       </div>
       <div className="flex justify-between items-center px-[40px] py-[10px]">
-        <SearchInput
-          placeholder={"Cari Data"}
-          onChange={(e) => setKeyword(e.target.value)}
-        />
+        <SearchInput placeholder={"Cari Data"} onChange={(e) => setKeyword(e.target.value)} />
 
         <div>
           <span>Urutkan </span>
-          <select
-            onChange={(e) => setSorting(e.target.value)}
-            id="sorting"
-            className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
-          >
+          <select onChange={(e) => setSorting(e.target.value)} id="sorting" className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md">
             <option value="terbaru">Terbaru</option>
             <option value="terbanyak">Terbanyak Rekrut</option>
           </select>
