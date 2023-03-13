@@ -213,7 +213,7 @@ const Simpatisan = () => {
                 <input disabled={disableForm === true ? true : false} value={formData.place_birth} onChange={(e) => setFormData({ ...formData, place_birth: e.target.value })} className="px-2 outline-0" type={"text"} />
                 <input
                   disabled={disableForm === true ? true : false}
-                  value={formData.date_birth}
+                  value={formData.date_birth.split("T")[0]}
                   onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
                   className=" outline-0"
                   type="date"

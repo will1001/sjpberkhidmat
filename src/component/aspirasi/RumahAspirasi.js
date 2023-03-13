@@ -226,7 +226,7 @@ const RumahAspirasi = () => {
                         <img
                           onClick={() => {
                             router.push({
-                              pathname: "aspirasi/DetailAspirasi",
+                              pathname: "/aspirasi/DetailAspirasi",
                               query: {
                                 id: res._id,
                                 nama: res.name,
