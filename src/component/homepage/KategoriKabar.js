@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9 } from "../../utility/icon/icon";
 
-const KategoriKabar = () => {
+const KategoriKabar = ({ mobile }) => {
   const kategori = [
     {
       icon: Icon1,
@@ -47,38 +47,75 @@ const KategoriKabar = () => {
   ];
   const router = useRouter();
   return (
-    <div className="flex flex-col gap-4">
-      <div
-        onClick={() =>
-          router.push({
-            pathname: "../../../publikasi/SemuaArtikel",
-            query: { category: "Semua" },
-          })
-        }
-        className={`flex w-[350px] h-[68px] rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
-      >
-        <Icon9 />
-        <p className="text-[20px] text-white font-extrabold">Semua Kategori</p>
-      </div>
-      {kategori.map((res, i) => {
-        return (
+    <>
+      {mobile !== undefined ? (
+        <div className="flex flex-col gap-4">
           <div
             onClick={() =>
               router.push({
                 pathname: "../../../publikasi/SemuaArtikel",
-                query: { category: res.title },
+                query: { category: "Semua" },
               })
             }
-            key={i}
-            style={{ backgroundColor: res.bg }}
-            className={`flex w-[350px] h-[68px] rounded-full items-center px-6 gap-4 cursor-pointer`}
+            className={`flex w-[350px] py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
           >
-            <res.icon />
-            <p className="text-[20px] text-white font-extrabold">{res.title}</p>
+            <Icon9 mobile={mobile} />
+            <p className="text-[18px] text-white font-extrabold">Semua Kategori</p>
           </div>
-        );
-      })}
-    </div>
+          {kategori.map((res, i) => {
+            return (
+              <div
+                onClick={() =>
+                  router.push({
+                    pathname: "../../../publikasi/SemuaArtikel",
+                    query: { category: res.title },
+                  })
+                }
+                key={i}
+                style={{ backgroundColor: res.bg }}
+                className={`flex w-[350px] py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
+              >
+                <res.icon mobile={mobile} />
+                <p className="text-[20px] text-white font-extrabold">{res.title}</p>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          <div
+            onClick={() =>
+              router.push({
+                pathname: "../../../publikasi/SemuaArtikel",
+                query: { category: "Semua" },
+              })
+            }
+            className={`flex w-[350px] h-[68px] rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
+          >
+            <Icon9 />
+            <p className="text-[20px] text-white font-extrabold">Semua Kategori</p>
+          </div>
+          {kategori.map((res, i) => {
+            return (
+              <div
+                onClick={() =>
+                  router.push({
+                    pathname: "../../../publikasi/SemuaArtikel",
+                    query: { category: res.title },
+                  })
+                }
+                key={i}
+                style={{ backgroundColor: res.bg }}
+                className={`flex w-[350px] h-[68px] rounded-full items-center px-6 gap-4 cursor-pointer`}
+              >
+                <res.icon />
+                <p className="text-[20px] text-white font-extrabold">{res.title}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 
