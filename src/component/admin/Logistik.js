@@ -138,7 +138,7 @@ const Logistik = () => {
     axiosFetch(
       "get",
       `user/logistik?page=1${
-        roles === "koordinator" && "&id_kabupaten=" + id_kabupaten
+        roles === "koordinator" ? "&id_kabupaten=" + id_kabupaten:''
       }`,
       {},
       token

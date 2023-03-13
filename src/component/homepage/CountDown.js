@@ -5,7 +5,7 @@ const CountDown = () => {
   return (
     <div className="flex gap-4">
       <Countdown
-        date={Date.now() + (1707840000000 - Date.now())}
+        date={Date.now() + (1692201600000 - Date.now())}
         renderer={(props) => (
           <>
             <div className="flex flex-col pb-2 justify-center h-[92px] w-[92px] bg-white rounded-lg items-center">
