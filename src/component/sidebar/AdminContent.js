@@ -8,7 +8,7 @@ import SelectPeriode from "../SelectPeriode";
 import logoutIcon from "../../utility/icon/logout.png";
 import { setToken } from "../../redux/userReducer";
 
-function AdminContent({setPopupPeriode}) {
+function AdminContent({ setPopupPeriode }) {
   const [select, setSelect] = useState("Dashboard");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function AdminContent({setPopupPeriode}) {
     router.push("Login");
   };
 
-  const username = useSelector((state) => state.user.name)
+  const username = useSelector((state) => state.user.name);
 
   return (
     <>
@@ -38,8 +38,10 @@ function AdminContent({setPopupPeriode}) {
             <p className="text-xs text-slate-700 font-thin">Akun {roles} </p>
           </div>
         </div>
-        <div className=""><SelectPeriode setPopupPeriode={setPopupPeriode}/></div>
-        
+        <div className="">
+          <SelectPeriode setPopupPeriode={setPopupPeriode} />
+        </div>
+
         <hr />
         <div className="mt-4 ">
           {logoSidebar.map((res, i) => {
@@ -57,7 +59,7 @@ function AdminContent({setPopupPeriode}) {
                         query: { component: res.path },
                       });
                     }}
-                    className="flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center"
+                    className={`${res.name === "Seting Slider" && "border-t-2 mt-6"} flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center`}
                     style={{
                       stroke: router.query.component === res.path ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
                       backgroundColor: router.query.component === res.path ? "rgb(255, 247, 237)" : "white",
@@ -93,9 +95,8 @@ function AdminContent({setPopupPeriode}) {
             }
           })}
         </div>
-        <div className="border my-[18px]" />
-       
       </div>
+      <div className="border my-[2px]" />
     </>
   );
 }

@@ -3,7 +3,7 @@ import Logo from "../utility/Logo";
 
 function Footer() {
   return (
-    <div className="flex flex-col justify-center border-t-2 py-2 ">
+    <div className="flex flex-col justify-center py-2 ">
       <div className="flex justify-center">
         <div className="">
           <p className="text-[16px] text-[#4B5563] font-semibold">H. SURYADI JAYA PURNAMA, S.T.</p>

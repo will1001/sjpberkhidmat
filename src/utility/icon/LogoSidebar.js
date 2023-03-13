@@ -12,21 +12,7 @@ import Forum from "../../component/Forum";
 import Program from "../../component/program/IndexProgram";
 import Publikasi from "../../component/publikasi/Publikasi";
 
-import {
-  DashboardIcon,
-  RealCountIcon,
-  DPTDPSIcon,
-  ProgramIcon,
-  Logistic,
-  PublikasiIcon,
-  SetingSliderIcon,
-  DaftarAkunIcon,
-  SimpatisanIcon,
-  RelawanIcon,
-  AspirasiIcon,
-  TambahAkunIcon,
-  ForumIcon,
-} from "./icon";
+import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, PublikasiIcon, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon, AspirasiIcon, TambahAkunIcon, ForumIcon } from "./icon";
 export const logoSidebar = [
   {
     name: "Dashboard",
@@ -93,6 +79,14 @@ export const logoSidebar = [
     component: <RumahAspirasi />,
     role: "relawan",
   },
+  {
+    name: "Forum",
+    path: "Forum",
+    icon: <ForumIcon />,
+    component: <Forum />,
+    role: "relawan",
+    koordinator: true,
+  },
 
   {
     name: "Seting Slider",
@@ -106,13 +100,6 @@ export const logoSidebar = [
     icon: <TambahAkunIcon />,
     component: <AkunTimSjp />,
   },
-  {
-    name: "Forum",
-    path: "Forum",
-    icon: <ForumIcon />,
-    component: <Forum />,
-    role: "relawan",
-    koordinator: true,
-  },
+
   { path: "EksportDataDpt", component: <EksportDataDpt /> },
 ];

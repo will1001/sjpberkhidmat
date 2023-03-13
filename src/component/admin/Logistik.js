@@ -112,8 +112,10 @@ const Logistik = () => {
 
   const postLogistik = () => {
     axiosFetch("post", "user/logistik", formPengajuan, token)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => setPopupPengajuan(false))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const deletLogistik = (id) =>
@@ -135,21 +137,14 @@ const Logistik = () => {
   }, []);
 
   useEffect(() => {
-    axiosFetch(
-      "get",
-      `user/logistik?page=1${
-        roles === "koordinator" && "&id_kabupaten=" + id_kabupaten
-      }`,
-      {},
-      token
-    )
+    axiosFetch("get", `user/logistik?page=1${roles === "koordinator" ? `&id_kabupaten=${id_kabupaten}` : ""}`, {}, token)
       .then((res) => {
         setLogistik(res.data);
       })
       .catch((err) => console.log(err));
-  }, [deletLogistik]);
+  }, [popupPengajuan, alertHapus]);
 
-  console.log(formPengajuan.id_kabupaten);
+  console.log(logistik);
 
   return (
     <>
@@ -181,7 +176,7 @@ const Logistik = () => {
                 }}
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
               >
-                <option disabled>Pilih Kabupaten / Kota</option>
+                <option selected={"disabled"}>Pilih Kabupaten / Kota</option>
                 {getKabupaten?.data?.map((res) => (
                   <option className="mb-2" key={res._id} value={res._id}>
                     {res.name}
@@ -203,7 +198,7 @@ const Logistik = () => {
                 }}
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
               >
-                <option disabled>Pilih Kecamatan</option>
+                <option selected={"disabled"}>Pilih Kecamatan</option>
                 {getKecamatans?.data?.map((res) => (
                   <option className="mb-2" key={res._id} value={res._id}>
                     {res.name}
@@ -225,7 +220,7 @@ const Logistik = () => {
                 }}
                 className="border py-2 px-2 rounded-sm outline-none w-[330px]"
               >
-                <option disabled>Pilih Desa / kelurahan</option>
+                <option selected={"disabled"}>Pilih Desa / kelurahan</option>
                 {getKelurahans?.data?.map((res) => (
                   <option className="mb-2" key={res._id} value={res._id}>
                     {res.name}
@@ -465,7 +460,7 @@ const Logistik = () => {
                 <th scope="col" className=" px-2 py-3 text-xs font-medium">
                   Status
                 </th>
-                <th scope="col" className=" border-l-2 bg-[#374151] px-2 py-3  text-white  text-xs font-medium">
+                <th scope="col" className=" border-l-2 bg-[#374151] px-2 py-3 sticky right-0 text-white  text-xs font-medium">
                   Aksi
                 </th>
               </tr>
@@ -474,7 +469,7 @@ const Logistik = () => {
               {logistik !== undefined &&
                 logistik.data?.map((res, i) => {
                   return (
-                    <tr className="bg-[#F9FAFB] h-[52px]">
+                    <tr className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"}  h-[52px]`}>
                       <td className="px-2 py-3">{++i}</td>
                       <td className=" px-2 py-3 whitespace-nowrap">{Moment(res.createdAt).format("DD-MMMM-YYYY")}</td>
                       <td className="px-2 py-3 whitespace-nowrap">{res.kabupaten.name}</td>
@@ -485,9 +480,9 @@ const Logistik = () => {
                         <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">{res.status}</div>
                       </td>
 
-                      <td className="px-2 py-3 border-l-2  bg-white ">
+                      <td className={`px-2 py-3 border-l-2  ${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} sticky right-0`}>
                         <div className="flex items-center justify-center gap-3">
-                          <div onClick={() => handlePopUp("chat", res.id_relawan, res)} className="cursor-pointer">
+                          <div onClick={() => handlePopUp("chat", res.id_relawan, res)} className={`${alertHapus === true && "hidden"} cursor-pointer`}>
                             <DetailIcon />
                           </div>
                           {alertHapus !== false && res._id === deleteId ? (
@@ -505,7 +500,7 @@ const Logistik = () => {
                                 setAlertHapus(true);
                                 setDeleteId(res._id);
                               }}
-                              className="cursor-pointer"
+                              className={`${alertHapus === true && "hidden"} cursor-pointer`}
                             >
                               <DeletIcon />
                             </div>
