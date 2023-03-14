@@ -155,6 +155,7 @@ const RumahAspirasi = () => {
                   <th className="w-[150px] flex">Kecamatan</th>
                   <th className="w-[150px] flex">Desa / Kelurahan</th>
                   <th className="w-[200px] flex">Detail Aspirasi</th>
+                  <th className="w-[200px] flex">Relawan</th>
                   <th className="w-[100px] flex justify-center">Action</th>
                 </tr>
               </thead>
@@ -218,6 +219,9 @@ const RumahAspirasi = () => {
                       </td>
                       <td className="w-[150px] break-words">
                         {res.kelurahan.name}
+                      </td>
+                      <td className="w-[200px] break-words overflow-hidden">
+                        {res.detail}
                       </td>
                       <td className="w-[200px] break-words overflow-hidden">
                         {res.detail}

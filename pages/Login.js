@@ -83,7 +83,7 @@ const Login = ({ router }) => {
       router.push({ pathname: "Admin", query: { component: "Dashboard" } });
     } else if (roles === "relawan") {
       router.push({ pathname: "relawan/Relawan" });
-    } else if (roles === "koordinator") {
+    } else if (roles === "koordinator" || roles === "ketua_tim") {
       router.push({ pathname: "koordinator/Koordinator" });
     }
   }, [roles]);
