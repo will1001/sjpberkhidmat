@@ -17,6 +17,7 @@ import detailProgramImg from "../src/utility/img/detailProgram.png";
 import useFetch from "../src/API/useFetch";
 import listIcon from "../src/utility/icon/centerIcon.png";
 import playIcon from "../src/utility/icon/playIcon.png";
+import Pagination from "../src/component/Pagination";
 
 const HomePage = ({ router }) => {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
@@ -32,6 +33,7 @@ const HomePage = ({ router }) => {
   const refPublikasi = useRef();
   const refPendaftaran = useRef();
   const refAspirasi = useRef();
+  const [popupMobile, setPopupMobile] = useState(false);
 
   const goto = (ref) => {
     window.scrollTo({
@@ -75,9 +77,9 @@ const HomePage = ({ router }) => {
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
         // mobile view
         <div className="w-screen">
-          <div className="p-[16px] flex items-center justify-between">
+          <div className="p-[16px] sticky top-0 z-50 border-b-[1px] bg-white flex items-center justify-between">
             <Logo mobile={screenSize} />
-            <img className="w-[24px] h-[24px]" src={listIcon.src} alt={"drop down"} />
+            <img onClick={() => setPopupMobile(!popupMobile)} className="w-[24px] h-[24px]" src={listIcon.src} alt={"drop down"} />
           </div>
           {getBackground?.data === null ? (
             <p>Loading....</p>
@@ -155,9 +157,114 @@ const HomePage = ({ router }) => {
                 <p className="text-[#374151] font-bold my-3">Kategori Kabar</p>
                 <KategoriKabar mobile={screenSize} />
               </div>
-
               {/* end filter category artikel */}
               {/* end publikasi artikel */}
+              {/* poster */}
+              <div className="flex justify-center">
+                {banner?.data?.map((res, i) => {
+                  return <img key={i} className="mt-[32px] mb-[60px] w-[328px] h-[328px] rounded-xl" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.image} alt="gambar  " />;
+                })}
+              </div>
+              {/* endposter */}
+
+              {/* program */}
+              <div className="px-[16px] pb-3 bg-[#4B5563]">
+                <p className="text-center text-[21px] text-white font-bold py-3">Program SJP Berkhidmat</p>
+                {getArtikel?.data?.map((res) => {
+                  // console.log(res, "ini res");
+                  if (res.publication === true) {
+                    return (
+                      <div className="pl-[16px] py-2 border-[#6B7280] rounded-sm mb-2 border-[1px] flex" key={res._id}>
+                        <div className="w-[230px]">
+                          <p className="text-[10px] text-[#FF5001] font-semibold">{res.category}</p>
+                          <p className="text-[10px] text-white font-semibold h-[32px] break-words overflow-hidden">{res.title}</p>
+                          <div className="text-white text-[10px] h-[52px] overflow-hidden">
+                            <div className="text-white w-[213px] text-[10px]" dangerouslySetInnerHTML={{ __html: res?.description }} />
+                          </div>
+                        </div>
+                        <div
+                          onClick={() => {
+                            router.push({
+                              pathname: "artikel/DetailProgram",
+                              query: {
+                                title: res?.title,
+                                description: res?.description,
+                                image: res?.image,
+                                video: res?.video,
+                                kabupaten: res?.kabupaten?.name,
+                              },
+                            });
+                          }}
+                          className="border-l-[1px] border-[#6B7280] cursor-pointer justify-center flex items-center"
+                        >
+                          <img className="" src={detailProgramImg.src} alt="lihatDetail.png" />
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              {/* end program */}
+
+              {/* Aspirasi */}
+              <div className="bg-[#FF5001] pt-[37px] pb-[29px] px-[16px]">
+                <p className="text-[16px] font-bold text-white">Kami membuka pintu komunikasi yang kondusif dan terbuka untuk menerima pesan dan aspirasi dari masyarakat.</p>
+                <p className="mt-2 text-[12px] text-white">Kami menantikan dukungan dan masukan Anda. Ayo bersama-sama kita wujudkan perubahan yang diinginkan!</p>
+                <div className="mt-4 flex text-[#374151]">
+                  <div onClick={() => Router.push("Aspirasi")} className="bg-white text-[14px] font-semibold py-1 px-2 rounded-sm">
+                    Sampaikan Aspirasi
+                  </div>
+                </div>
+              </div>
+              {/* end Aspirasi */}
+              {/* footer */}
+              <div className="px-[16px] pt-[35px]">
+                <Logo />
+                <p className="text-[14px] text-[#4B5563] font-semibold">H. SURYADI JAYA PURNAMA, S.T.</p>
+                <p className="text-[10px] text-[#FF5001] font-semibold">DPR RI Dapil II Provinsi Nusa Tenggara Barat</p>
+                <p className="text-[10px] text-[#4B5563]">Bekerja bersama untuk membangun masa depan yang lebih baik bagi masyarakat dan generasi yang akan datang.</p>
+                <div className="flex py-[40px]">
+                  <div className="text-[14px] text-[#4B5563]">
+                    Pemilu 2024 <br />
+                    Publikasi <br />
+                    Gallery <br />
+                    Rumah Aspirasi <br />
+                    Daftar Relawan <br />
+                    Daftar Simpatisan
+                  </div>
+                  <div className="ml-[52px]">
+                    <p className="text-[16px] text-[#4B5563] font-bold">Social Media</p>
+                    <div className="grid grid-cols-3 grid-rows-3 mt-3 ">
+                      <LinkedInIcon />
+                      <FacebookIcon />
+                      <InstagramIcon />
+                      <YouTubeIcon />
+                      <TwitterIcon />
+                      <TikTokIcon />
+                    </div>
+                  </div>
+                </div>
+                <div className="border-b-[1px]" />
+                <p className="mt-2 text-[12px] pb-3 px-2 text-[#9CA3AF] text-center">Copyright © 2022. Website Resmi SJP Berkhidmat dikelola oleh Tim Internal</p>
+              </div>
+              {/* end footer */}
+              {/* popup di mobile */}
+              <div className={`${popupMobile === false ? "hidden" : "visible"} fixed z-50 bg-white top-0 mt-[60px] px-[16px] py-1 w-screen h-screen`}>
+                <div className="flex gap-3">
+                  <div onClick={() => Router.push("Aspirasi")} className="bg-[#E44700] text-center w-full text-white text-[14px] font-semibold py-1 px-2 rounded-sm">
+                    Sampaikan Aspirasi
+                  </div>
+                  <div
+                    onClick={() => {
+                      router.push({ pathname: "Login" });
+                    }}
+                    className="text-[#E44700] text-center border w-full border-[#E44700] text-[14px] font-semibold py-1 px-2 rounded-sm"
+                  >
+                    Login
+                  </div>
+                </div>
+              </div>
+              {/* end popup di mobile */}
             </div>
           </>
         </div>
