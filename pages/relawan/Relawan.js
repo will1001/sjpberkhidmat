@@ -17,6 +17,7 @@ import { DaftarRelawanIcon } from "../../src/utility/icon/icon";
 import { setEditData, showOrHidePopUpDash } from "../../src/redux/panelReducer";
 import { useEffect } from "react";
 import Forum from "../../src/component/Forum";
+import axiosFetch from "../../src/API/axiosFetch";
 
 const Relawan = () => {
   const [selectTool, setSelectTool] = useState("Real Count");
@@ -155,7 +156,7 @@ const Relawan = () => {
         )
           .then((res) => {
             console.log(res, "berhasil daftar");
-            alert("Pendaftaran Berhasil");
+            // alert("Pendaftaran Berhasil");
 
             dispatch(showOrHidePopUpDash({ type: null }));
             // setHandelSuccess(true);
@@ -167,7 +168,7 @@ const Relawan = () => {
           });
       }
     }
-    location.reload();
+    // location.reload();
   };
 
   useEffect(() => {
@@ -289,6 +290,7 @@ const Relawan = () => {
               }
               value={formData.nik}
               disabled={editData && true}
+              maxLength={16}
             />
             <FormSelect
               label={"Jenis Kelamin"}

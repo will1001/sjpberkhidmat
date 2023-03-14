@@ -201,12 +201,9 @@ function Admin({ router }) {
   const register = async () => {
     if (popUpDashType === "Relawan") {
       if (editData) {
-        console.log(formData);
-
         await axiosFetch("put", `user/users`, formData, token)
           .then(() => {
             alert("Edit Berhasil");
-            dispatch(showOrHidePopUpDash({ type: null }));
           })
           .catch((error) => {
             // setHandelError(true);
@@ -214,10 +211,12 @@ function Admin({ router }) {
           });
       } else {
         if (formData.password === confirmPassword) {
+          delete formData.detail;
+          delete formData.kebutuhan;
+
           await axiosFetch("post", `user/register`, formData)
             .then(() => {
               alert("Pendaftaran Berhasil");
-              dispatch(showOrHidePopUpDash({ type: null }));
             })
             .catch((error) => {
               // setHandelError(true);
@@ -239,7 +238,6 @@ function Admin({ router }) {
         await axiosFetch("post", `user/register`, formDataSimpatisan)
           .then(() => {
             alert("Pendaftaran Berhasil");
-            dispatch(showOrHidePopUpDash({ type: null }));
           })
           .catch((error) => {
             // setHandelError(true);
@@ -254,7 +252,6 @@ function Admin({ router }) {
         await axiosFetch("put", `user/users`, formData, token)
           .then(() => {
             alert("Edit Berhasil");
-            dispatch(showOrHidePopUpDash({ type: null }));
           })
           .catch((error) => {
             // setHandelError(true);
@@ -275,7 +272,6 @@ function Admin({ router }) {
             console.log(res, "berhasil daftar");
             alert("Pendaftaran Berhasil");
 
-            dispatch(showOrHidePopUpDash({ type: null }));
             // setHandelSuccess(true);
           })
           .catch((err) => {
@@ -285,7 +281,9 @@ function Admin({ router }) {
           });
       }
     }
-    location.reload();
+    dispatch(showOrHidePopUpDash({ type: null }));
+
+    // location.reload();
   };
 
   const [popupPeriode, setPopupPeriode] = useState(false);

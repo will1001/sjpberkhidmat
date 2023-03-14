@@ -10,6 +10,7 @@ import EditIcon from "../../utility/icon/edit2.png";
 import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+
 import axiosFetch from "../../API/axiosFetch";
 const customStyles = {
   headCells: {
@@ -22,6 +23,7 @@ const SimpatisanDash = () => {
   const roles = useSelector((state) => state.user.roles);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const router = useRouter();
+  const [keyword, setKeyword] = useState(null);
 
   const simpatisan =
     roles === "koordinator"
@@ -44,6 +46,8 @@ const SimpatisanDash = () => {
             router.query.id_relawan !== undefined
               ? "&id_relawan=" + router.query.id_relawan
               : ""
+          }${
+            keyword !== null ? "&keyword=" + keyword : ""
           }`,
           token
         );

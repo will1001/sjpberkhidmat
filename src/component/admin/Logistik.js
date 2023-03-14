@@ -186,7 +186,7 @@ const Logistik = () => {
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
               <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
-                Kabupaten / Kota
+                Kecamatan
               </label>
               <select
                 onChange={(e) => {
@@ -208,7 +208,7 @@ const Logistik = () => {
             </div>
             <div className="flex gap-[72px] justify-between mb-3">
               <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
-                Kabupaten / Kota
+                Desa
               </label>
               <select
                 onChange={(e) => {
@@ -257,7 +257,7 @@ const Logistik = () => {
               <textarea className="border py-2 px-2 rounded-sm outline-none w-[330px] h-[200px]" type={"text"} id="detail_pengajuan" onChange={(e) => setFormPengajuan({ ...formPengajuan, detail: e.target.value })} />
             </div>
             <div className="flex justify-end items-center gap-3 pb-[100px] mt-12">
-              <div className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">Batalkan</div>
+              <div onClick={()=>{setPopupPengajuan(false)}} className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">Batalkan</div>
               <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
                 Buat Pengajuan
               </div>

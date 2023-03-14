@@ -318,7 +318,7 @@ const Relawan = () => {
                   />
                   <input
                     disabled={disableForm === true ? true : false}
-                    value={formData.date_birth}
+                    value={formData.date_birth.split("T")[0]}
                     onChange={(e) =>
                       setFormData({ ...formData, date_birth: e.target.value })
                     }
