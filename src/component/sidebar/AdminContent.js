@@ -30,7 +30,7 @@ function AdminContent({ setPopupPeriode }) {
 
   return (
     <>
-      <div className="mt-2 h-screen">
+      <div className="mt-2">
         <div className="flex items-center mb-4">
           <UserIcon />
           <div className="flex flex-col pl-2 ">
@@ -59,7 +59,7 @@ function AdminContent({ setPopupPeriode }) {
                         query: { component: res.path },
                       });
                     }}
-                    className={`${res.name === "Seting Slider" && "border-t-2 mt-6"} flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center`}
+                    className={`${res.name === "Seting Slider" && "border-t-2 my-2"} flex gap-2 p-2 justify-start w-full text-[18px] font-medium items-center`}
                     style={{
                       stroke: router.query.component === res.path ? "rgb(234, 88, 12)" : "rgb(51, 65, 85)",
                       backgroundColor: router.query.component === res.path ? "rgb(255, 247, 237)" : "white",
@@ -94,9 +94,9 @@ function AdminContent({ setPopupPeriode }) {
               }
             }
           })}
+          <div className="border my-[2px]" />
         </div>
       </div>
-      <div className="border my-[2px]" />
     </>
   );
 }
