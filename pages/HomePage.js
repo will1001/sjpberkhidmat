@@ -250,7 +250,7 @@ const HomePage = ({ router }) => {
               {/* end footer */}
               {/* popup di mobile */}
               <div className={`${popupMobile === false ? "hidden" : "visible"} fixed z-50 bg-white top-0 mt-[60px] px-[16px] py-1 w-screen h-screen`}>
-                <div className="flex gap-3">
+                <div className="flex gap-3 mb-[32px] mt-2">
                   <div onClick={() => Router.push("Aspirasi")} className="bg-[#E44700] text-center w-full text-white text-[14px] font-semibold py-1 px-2 rounded-sm">
                     Sampaikan Aspirasi
                   </div>
@@ -263,6 +263,12 @@ const HomePage = ({ router }) => {
                     Login
                   </div>
                 </div>
+                <p onClick={() => setPopupMobile(false)} className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2">
+                  Beranda
+                </p>
+                <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Program</p>
+                <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Publikasi</p>
+                <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Pendaftaran Anggota</p>
               </div>
               {/* end popup di mobile */}
             </div>
