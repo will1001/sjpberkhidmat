@@ -9,6 +9,7 @@ import hide from "../src/utility/icon/hide_password.png";
 import ForgotPass from "../src/component/login/ForgotPass";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 import Periv from "../src/component/login/Periv";
+import { KembaliIcon, PrevIcon } from "../src/utility/icon/icon";
 
 const Login = ({ router }) => {
   const containerStyle = {
@@ -88,10 +89,80 @@ const Login = ({ router }) => {
     }
   }, [roles]);
 
+  const [screenSize, setScreenSize] = useState({
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenSize({
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   console.log(formData);
 
   if (page === "login") {
-    return (
+    return screenSize.width >= 350 && screenSize.width <= 450 ? (
+      // login mobile
+      <div className="pt-[55px] px-[16px]">
+        <div className="flex justify-center mb-[44px]">
+          <Logo />
+        </div>
+        {/* email */}
+        <p className="text-[#6B7280] mb-2">Email</p>
+        <input onChange={(e) => setFormData({ ...formData, username: e.target.value })} placeholder="Masukkan Email Anda" className="border p-2 rounded-sm w-full border-[#D1D5DB]" type={"email"} />
+        {/* password */}
+        <p className="text-[#6B7280] mb-2 mt-3">Password</p>
+        <div className="flex h-[40px] border rounded-sm text-[#374151] px-2 items-center">
+          <input placeholder="Masukkan Password Anda" onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="outline-0 w-full" type={passType} id="password" />
+          {passType === "password" ? (
+            <img className="cursor-pointer" onClick={() => setPasType("text")} src={hide.src} alt="hide.png" />
+          ) : (
+            <img className="cursor-pointer" onClick={() => setPasType("password")} src={show.src} alt="hide.png" />
+          )}
+        </div>
+        {/* login button */}
+        <div onClick={login} className="flex justify-center bg-[#FF5001] mt-3 text-white font-medium rounded-sm py-2">
+          Login
+        </div>
+        <p className="text-[14px] text-[#374151] text-center mt-[21px]">
+          Lupa Password / Email Anda?{" "}
+          <span onClick={() => setPage("lupa password")} className="text-[#FF5001] font-medium">
+            Klik Disini
+          </span>
+        </p>
+        <p className="text-[14px] text-[#374151] text-center mt-2">Tertarik menjadi Relawan / Simpatisan?</p>
+        <p
+          onClick={() => {
+            router.push({
+              pathname: "Daftar",
+              query: { type: "simpatisan" },
+            });
+          }}
+          className="text-[14px] font-medium text-[#FF5001] text-center mt-2"
+        >
+          Klik Disini
+        </p>
+        <div
+          onClick={() =>
+            router.push({
+              pathname: "HomePage",
+            })
+          }
+          className="flex justify-center items-center mt-3 gap-3 stroke-[#9CA3AF] text-[#9CA3AF]"
+        >
+          <PrevIcon />
+          <p>Kembali ke homepage</p>
+        </div>
+      </div>
+    ) : (
+      // login dekstop
       <div style={containerStyle}>
         <div style={containWrap}>
           <Logo />
@@ -103,66 +174,33 @@ const Login = ({ router }) => {
                   Email
                 </label>
 
-                <input
-                  onChange={(e) =>
-                    setFormData({ ...formData, username: e.target.value })
-                  }
-                  className="h-[40px] rounded-md border text-[#374151] px-2 outline-0"
-                  type={"email"}
-                  id="email"
-                />
+                <input onChange={(e) => setFormData({ ...formData, username: e.target.value })} className="h-[40px] rounded-md border text-[#374151] px-2 outline-0" type={"email"} id="email" />
               </div>
 
               {/* password */}
               <div className="flex flex-col self-stretch gap-2">
-                <label
-                  htmlFor="password"
-                  className="text-[14px] text-[#374151] "
-                >
+                <label htmlFor="password" className="text-[14px] text-[#374151] ">
                   Password
                 </label>
                 <div className="flex h-[40px] border rounded-md text-[#374151] px-2 items-center">
-                  <input
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
-                    }
-                    className="outline-0 w-full"
-                    type={passType}
-                    id="password"
-                  />
+                  <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} className="outline-0 w-full" type={passType} id="password" />
                   {passType === "password" ? (
-                    <img
-                      className="cursor-pointer"
-                      onClick={() => setPasType("text")}
-                      src={hide.src}
-                      alt="hide.png"
-                    />
+                    <img className="cursor-pointer" onClick={() => setPasType("text")} src={hide.src} alt="hide.png" />
                   ) : (
-                    <img
-                      className="cursor-pointer"
-                      onClick={() => setPasType("password")}
-                      src={show.src}
-                      alt="hide.png"
-                    />
+                    <img className="cursor-pointer" onClick={() => setPasType("password")} src={show.src} alt="hide.png" />
                   )}
                 </div>
               </div>
 
               {/* button submit */}
-              <div
-                onClick={login}
-                className="cursor-pointer flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]"
-              >
+              <div onClick={login} className="cursor-pointer flex justify-center rounded-md items-center h-[48px] w-[411px] bg-[#E44700] font-semibold text-white text-[18px]">
                 Login
               </div>
             </div>
           </form>
           <p className="text-[#374151]">
             <span>Lupa Password / Email Anda? </span>
-            <span
-              onClick={() => setPage("lupa password")}
-              className="text-[#FF5001] font-semibold cursor-pointer"
-            >
+            <span onClick={() => setPage("lupa password")} className="text-[#FF5001] font-semibold cursor-pointer">
               Klik Disini
             </span>
           </p>
@@ -190,20 +228,8 @@ const Login = ({ router }) => {
               }
               className="text-[#9CA3AF] mt-[15px] flex items-center cursor-pointer"
             >
-              <svg
-                width="20"
-                height="21"
-                viewBox="0 0 20 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199"
-                  stroke="#9CA3AF"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.5 16.7087L6.66667 10.8753L12.5 5.04199" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               Kembali ke homepage
             </span>
@@ -212,18 +238,9 @@ const Login = ({ router }) => {
       </div>
     );
   } else if (page === "lupa password") {
-    return (
-      <ForgotPass
-        email={email}
-        setEmail={setEmail}
-        pageForgot={setPageForgot}
-        pagePeriv={setPageverif}
-      />
-    );
+    return <ForgotPass email={email} setEmail={setEmail} pageForgot={setPageForgot} pagePeriv={setPageverif} />;
   } else if (page === "perivikasi") {
-    return (
-      <Periv email={email} setPage={setPage} kePageLogin={setPageForgot} />
-    );
+    return <Periv email={email} setPage={setPage} kePageLogin={setPageForgot} />;
   }
 };
 
