@@ -94,7 +94,7 @@ function DetailProgram({ router }) {
             <p className="mt-2 text-[12px]">Daerah Tujuan Program</p>
             <p className="text-[12px] text-[#E44700] font-semibold">{router.query.kabupaten}</p>
             {router.query.image !== null && <img className="w-screen h-[458px] mt-3" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + router.query.image} alt="" />}
-            {router.query.video !== undefined && <iframe className="w-screen h-[458px] mt-3" width="800" height="500" src={"https://www.youtube.com/embed/" + router.query.video?.split("=").pop()}></iframe>}
+            {router.query.video !== "" && router.query.video !== undefined && <iframe className="w-screen h-[458px] mt-3" width="800" height="500" src={"https://www.youtube.com/embed/" + router.query.video?.split("=").pop()}></iframe>}
             <div className="text-[#374151] w-full break-words mt-2" dangerouslySetInnerHTML={{ __html: router.query.description }} />
           </div>
           <div className="bg-[#4B5563] px-[16px] pb-[53px]">
