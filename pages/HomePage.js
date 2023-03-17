@@ -218,7 +218,7 @@ const HomePage = ({ router }) => {
               </div>
               {/* end Aspirasi */}
               {/* footer */}
-              <div className="px-[16px] pt-[35px]">
+              <div className="px-[16px] bg-[#F3F4F6] pt-[35px]">
                 <Logo />
                 <p className="text-[14px] text-[#4B5563] font-semibold">H. SURYADI JAYA PURNAMA, S.T.</p>
                 <p className="text-[10px] text-[#FF5001] font-semibold">DPR RI Dapil II Provinsi Nusa Tenggara Barat</p>
@@ -236,10 +236,18 @@ const HomePage = ({ router }) => {
                     <p className="text-[16px] text-[#4B5563] font-bold">Social Media</p>
                     <div className="grid grid-cols-3 grid-rows-3 mt-3 ">
                       <LinkedInIcon />
-                      <FacebookIcon />
-                      <InstagramIcon />
-                      <YouTubeIcon />
-                      <TwitterIcon />
+                      <a href="https://www.facebook.com/sjp.officialpage?mibextid=ZbWKwL" target="_blank">
+                        <FacebookIcon />
+                      </a>
+                      <a target="_blank" href="https://www.instagram.com/suryadi.sjp/?igshid=OGQ2MjdiOTE=">
+                        <InstagramIcon />
+                      </a>
+                      <a href="https://youtube.com/@suryadijayapurnama_sjp4774" target="_blank">
+                        <YouTubeIcon />
+                      </a>
+                      <a href="https://twitter.com/suryadi_sjpntb" target="_blank">
+                        <TwitterIcon />
+                      </a>
                       <TikTokIcon />
                     </div>
                   </div>
@@ -266,9 +274,22 @@ const HomePage = ({ router }) => {
                 <p onClick={() => setPopupMobile(false)} className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2">
                   Beranda
                 </p>
+                <p onClick={() => router.push("Profil")} className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">
+                  Profil
+                </p>
                 <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Program</p>
                 <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Publikasi</p>
-                <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Pendaftaran Anggota</p>
+                <p
+                  onClick={() =>
+                    router.push({
+                      pathname: "Daftar",
+                      query: { type: "simpatisan" },
+                    })
+                  }
+                  className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2"
+                >
+                  Pendaftaran Anggota
+                </p>
               </div>
               {/* end popup di mobile */}
             </div>

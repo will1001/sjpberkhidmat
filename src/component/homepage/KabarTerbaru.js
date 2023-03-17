@@ -10,7 +10,20 @@ const KabarTerbaru = ({ data, mobile }) => {
   return (
     <>
       {mobile !== undefined ? (
-        <div className="flex justify-between gap-2 ">
+        <div
+          onClick={() =>
+            router.push({
+              pathname: "../../publikasi/DetailPublikasi",
+              query: {
+                title: data?.title,
+                image: data?.video,
+                category: data?.category,
+                creat: data?.createdAt?.split("T").shift().split("-").reverse().join("/"),
+              },
+            })
+          }
+          className="flex justify-between gap-2 "
+        >
           <div className="flex h-[82px]">
             <div
               onClick={() =>
@@ -24,7 +37,6 @@ const KabarTerbaru = ({ data, mobile }) => {
                   },
                 })
               }
-              className="absolute cursor-pointer h-[82px]"
             ></div>
             <div className="">{data?.length !== 0 && <iframe className="rounded-md" width="105" height="82" src={"https://www.youtube.com/embed/" + data?.video?.split("=").pop()}></iframe>}</div>
           </div>
