@@ -278,7 +278,9 @@ const HomePage = ({ router }) => {
                   Profil
                 </p>
                 <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Program</p>
-                <p className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">Publikasi</p>
+                <p onClick={() => router.push("publikasi/SemuaPublikasi")} className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2">
+                  Publikasi
+                </p>
                 <p
                   onClick={() =>
                     router.push({
