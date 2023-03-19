@@ -7,7 +7,7 @@ import ppUser from "../utility/img/pp_user.png";
 import Moment from "moment";
 import "moment/locale/id";
 
-const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
+const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
   const [chats, setChat] = useState([]);
   const token = useSelector((state) => state.user.token);
   const [message, setMessage] = useState("");
@@ -16,22 +16,40 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
   const sendMessage = async () => {
     const a = new FormData();
     let target = [];
-    a.append("forum", roomChat);
-    a.append("message", message);
-    a.append("type", "text");
 
     // dispatch(showOrHidePopUpDptDps({ type: null }));
-
-    {
-      await axiosFetch("post", `user/chats/forum`, a, token)
-        .then((res) => {
-          // window.location.reload(false);
-          setMessage("");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (chatType === "forum") {
+      a.append("forum", roomChat);
+      a.append("message", message);
+      a.append("type", "text");
+      {
+        await axiosFetch("post", `user/chats/forum`, a, token)
+          .then((res) => {
+            // window.location.reload(false);
+            setMessage("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } else {
+      // target.push(roomChat);
+      a.append("target", roomChat);
+      a.append("target", "");
+      a.append("message", message);
+      a.append("type", "text");
+      {
+        await axiosFetch("post", `user/chats`, a, token)
+          .then((res) => {
+            // window.location.reload(false);
+            setMessage("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
+
     setMessage("");
 
     // location.reload();
@@ -39,7 +57,30 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
 
   const getChatsForum = async () => {
     {
-      await axiosFetch("get", `user/chats/forum?offset=0&forum=${roomChat}`, [], token)
+      await axiosFetch(
+        "get",
+        `user/chats/forum?offset=0&forum=${roomChat}`,
+        [],
+        token
+      )
+        .then((res) => {
+          setChat(res.data);
+          // window.location.reload(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const getChatsPrivate = async () => {
+    {
+      await axiosFetch(
+        "get",
+        `user/chats?offset=0&target=${roomChat}`,
+        [],
+        token
+      )
         .then((res) => {
           setChat(res.data);
           // window.location.reload(false);
@@ -51,7 +92,11 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
   };
   useEffect(() => {
     setTimeout(() => {
-      getChatsForum(roomChat);
+      if (chatType === "forum") {
+        getChatsForum();
+      } else {
+        getChatsPrivate();
+      }
     }, 1000);
   });
 
@@ -62,7 +107,9 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
           <img src={roomLogo.src} />
           <div>
             <p className=" text-black font-semibold">{roomtitle}</p>
-            <p className="w-[330px] whitespace-nowrap truncate">{/* Gawati Zulaika Karsa Dabukke Budi Pradipta eko mamat maman */}</p>
+            <p className="w-[330px] whitespace-nowrap truncate">
+              {/* Gawati Zulaika Karsa Dabukke Budi Pradipta eko mamat maman */}
+            </p>
           </div>
         </div>
         <Titik3Icon />
@@ -84,13 +131,22 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
                 <>
                   <div className="flex gap-3 mb-6">
                     <div className="flex items-end">
-                      <img className="h-[32px] w-[32px] rounded-full" src={ppUser.src} />
+                      <img
+                        className="h-[32px] w-[32px] rounded-full"
+                        src={ppUser.src}
+                      />
                     </div>
 
                     <div className="shadow-lg bg-white px-2 py-1 rounded-xl rounded-bl-none">
-                      <p className="text-[14px] text-[#FF5001] font-semibold">{e.user.name}</p>
-                      <p className="w-[345px] text-[14px] text-[#374151]">{e.message}</p>
-                      <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
+                      <p className="text-[14px] text-[#FF5001] font-semibold">
+                        {e.user?.name}
+                      </p>
+                      <p className="w-[345px] text-[14px] text-[#374151]">
+                        {e.message}
+                      </p>
+                      <p className="flex justify-end text-[10px] text-[#1F2937]">
+                        {Moment(e.createdAt).format("hh:mm")}
+                      </p>
                     </div>
                   </div>
                 </>
@@ -100,7 +156,9 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
                 <div className="flex justify-end mb-6">
                   <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
                     <p className="text-[14px] w-[345px]">{e.message}</p>
-                    <p className="text-[10px] flex justify-end">{Moment(e.createdAt).format("hh:mm")}</p>
+                    <p className="text-[10px] flex justify-end">
+                      {Moment(e.createdAt).format("hh:mm")}
+                    </p>
                   </div>
                 </div>
               );
@@ -122,6 +180,9 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo }) => {
             type={"text"}
             onChange={(e) => {
               setMessage(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              sendMessage();
             }}
             value={message}
           />
