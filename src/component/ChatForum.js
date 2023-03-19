@@ -182,7 +182,9 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
               setMessage(e.target.value);
             }}
             onKeyDown={(e) => {
-              sendMessage();
+              if (e.key === "Enter") {
+                sendMessage();
+              }
             }}
             value={message}
           />
