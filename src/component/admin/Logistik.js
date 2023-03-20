@@ -257,7 +257,14 @@ const Logistik = () => {
               <textarea className="border py-2 px-2 rounded-sm outline-none w-[330px] h-[200px]" type={"text"} id="detail_pengajuan" onChange={(e) => setFormPengajuan({ ...formPengajuan, detail: e.target.value })} />
             </div>
             <div className="flex justify-end items-center gap-3 pb-[100px] mt-12">
-              <div onClick={()=>{setPopupPengajuan(false)}} className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4">Batalkan</div>
+              <div
+                onClick={() => {
+                  setPopupPengajuan(false);
+                }}
+                className="text-[#9CA3AF] border text-[18px] border-[#9CA3AF] rounded-md cursor-pointer font-semibold py-2 px-4"
+              >
+                Batalkan
+              </div>
               <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
                 Buat Pengajuan
               </div>
@@ -460,7 +467,7 @@ const Logistik = () => {
                 <th scope="col" className=" px-2 py-3 text-xs font-medium">
                   Status
                 </th>
-                <th scope="col" className=" border-l-2 bg-[#374151] px-2 py-3 sticky right-0 text-white  text-xs font-medium">
+                <th scope="col" className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 ${popupPage === "chat" && "-z-50"} text-white  text-xs font-medium`}>
                   Aksi
                 </th>
               </tr>
@@ -480,7 +487,7 @@ const Logistik = () => {
                         <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">{res.status}</div>
                       </td>
 
-                      <td className={`px-2 py-3 border-l-2  ${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} sticky right-0`}>
+                      <td className={`px-2 py-3 border-l-2  ${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} sticky right-0 ${popupPage === "chat" && "-z-50"}`}>
                         <div className="flex items-center justify-center gap-3">
                           <div onClick={() => handlePopUp("chat", res.id_relawan, res)} className={`${alertHapus === true && "hidden"} cursor-pointer`}>
                             <DetailIcon />
