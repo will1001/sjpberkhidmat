@@ -36,6 +36,7 @@ const AddProgram = () => {
   //     setFormat(e.target.value);
 
   //   };
+  
   const router = useRouter();
   const [switchButton, setSwitchButton] = useState(false);
   const [fileUpload, setFileUpload] = useState("image");
