@@ -15,6 +15,26 @@ export function UserIcon() {
     </svg>
   );
 }
+export function KameraIcon() {
+  return (
+    <svg width="21" height="19" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1.5 6.5C1.5 5.39543 2.39543 4.5 3.5 4.5H4.42963C5.09834 4.5 5.7228 4.1658 6.09373 3.6094L6.90627 2.3906C7.2772 1.8342 7.90166 1.5 8.57037 1.5H12.4296C13.0983 1.5 13.7228 1.8342 14.0937 2.3906L14.9063 3.6094C15.2772 4.1658 15.9017 4.5 16.5704 4.5H17.5C18.6046 4.5 19.5 5.39543 19.5 6.5V15.5C19.5 16.6046 18.6046 17.5 17.5 17.5H3.5C2.39543 17.5 1.5 16.6046 1.5 15.5V6.5Z"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.5 10.5C13.5 12.1569 12.1569 13.5 10.5 13.5C8.84315 13.5 7.5 12.1569 7.5 10.5C7.5 8.84315 8.84315 7.5 10.5 7.5C12.1569 7.5 13.5 8.84315 13.5 10.5Z"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 //ICON Dashboard
 
@@ -116,7 +136,32 @@ export function ImportGambarIcon() {
     <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M1.39746 13.6328L5.98325 9.04703C6.7643 8.26598 8.03063 8.26598 8.81167 9.04703L13.3975 13.6328M11.3975 11.6328L12.9832 10.047C13.7643 9.26598 15.0306 9.26598 15.8117 10.047L17.3975 11.6328M11.3975 5.63281H11.4075M3.39746 17.6328H15.3975C16.502 17.6328 17.3975 16.7374 17.3975 15.6328V3.63281C17.3975 2.52824 16.502 1.63281 15.3975 1.63281H3.39746C2.29289 1.63281 1.39746 2.52824 1.39746 3.63281V15.6328C1.39746 16.7374 2.29289 17.6328 3.39746 17.6328Z"
-        stroke="#111827"
+        stroke="current"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+export function FotoPlanoIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="current" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4.79844 3.6001C3.47295 3.6001 2.39844 4.67461 2.39844 6.0001V18.0001C2.39844 19.3256 3.47295 20.4001 4.79844 20.4001H19.1984C20.5239 20.4001 21.5984 19.3256 21.5984 18.0001V6.0001C21.5984 4.67461 20.5239 3.6001 19.1984 3.6001H4.79844ZM19.1984 18.0001H4.79844L9.59844 8.4001L13.1984 15.6001L15.5984 10.8001L19.1984 18.0001Z"
+        fill="current"
+      />
+    </svg>
+  );
+}
+export function InputIcon() {
+  return (
+    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8 3H3C1.89543 3 1 3.89543 1 5V16C1 17.1046 1.89543 18 3 18H14C15.1046 18 16 17.1046 16 16V11M14.5858 1.58579C15.3668 0.804738 16.6332 0.804738 17.4142 1.58579C18.1953 2.36683 18.1953 3.63316 17.4142 4.41421L8.82842 13H6L6 10.1716L14.5858 1.58579Z"
+        stroke="current"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

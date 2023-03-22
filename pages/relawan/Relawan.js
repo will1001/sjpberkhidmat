@@ -21,11 +21,13 @@ import axiosFetch from "../../src/API/axiosFetch";
 import NavbarMobile from "../../src/component/mobile/NavbarMobile";
 import SelectPeriode from "../../src/component/SelectPeriode";
 import ToolSidebar from "../../src/component/mobile/ToolSidebar";
+import { setToolMobile } from "../../src/redux/toolMobileReducer";
 
 const Relawan = () => {
   const [selectTool, setSelectTool] = useState("Real Count");
   const name = useSelector((state) => state.user.name);
   const role = useSelector((state) => state.user.roles);
+  const tool = useSelector((state) => state.toolMobile.tool);
   const [popupPeriode, setPopupPeriode] = useState(false);
   const editData = useSelector((state) => state.panel.editData);
   const dispatch = useDispatch();
@@ -217,10 +219,13 @@ const Relawan = () => {
           {popupMobile === true && (
             <div className="w-[257px] fixed bg-white shadow-lg pl-[20px] pr-[17px] pt-[28px] h-screen">
               <SelectPeriode setPopupPeriode={setPopupPeriode} />
-              <ToolSidebar setSelectTool={setSelectTool} />
+              <ToolSidebar />
             </div>
           )}
-          <div>{selectTool === "Real Count" && <RealCount />}</div>
+          <div>
+            {tool === "Real Count" && <RealCount />}
+            {tool === "Logistik" && <div>asdsad</div>}
+          </div>
         </div>
       ) : (
         <div className="flex h-screen">
