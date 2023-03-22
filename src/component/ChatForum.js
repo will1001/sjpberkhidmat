@@ -52,13 +52,23 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
       // target.push(roomChat);
       a.append("target", roomChat);
       a.append("target", "");
-      a.append("message", message);
-      a.append("type", "text");
+
+      if (fileMessage) {
+        a.append("message", " ");
+        a.append("type", "image");
+        a.append("image", fileMessage);
+      } else {
+        a.append("message", message);
+        a.append("type", "text");
+      }
       {
         await axiosFetch("post", `user/chats`, a, token)
           .then((res) => {
             // window.location.reload(false);
             setMessage("");
+            setFileMessage(null);
+            setFilePreview(null);
+            setTypeFilePreview(null);
           })
           .catch((error) => {
             console.log(error);
