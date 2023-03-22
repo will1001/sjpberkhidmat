@@ -130,26 +130,40 @@ const RealCount = ({ user }) => {
                     res === undefined ? (
                       <p>Loading...</p>
                     ) : (
-                      <div key={res._id} className={`${i === 0 && "border-[0.5px] border-[#FF5001]"} h-[69px] border-t-[0.5px] `}>
-                        <div className="flex items-center justify-between px-[12px] gap-3 py-2">
-                          <div className="flex gap-3 ">
-                            <div className="flex items-center">
-                              <img className="h-[50px] w-[50px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
-                            </div>
-                            <div className="w-[400px]">
-                              <p className="text-[16px] font-semibold text-[#374151]">{res?.name}</p>
-                              <p className={`text-[14px]  ${i === 0 ? "text-[#E44700]" : "text-[#9CA3AF]"} `}>Fraksi {res.partai?.name}</p>
-                            </div>
-                          </div>
-                          <div className="flex justify-between items-center ">
-                            <div className="flex flex-col justify-center">
-                              <p className="text-[14px] text-[#6B7280]">Total Suara</p>
-                              <p className="text-[16px] text-[#374151] font-bold">{res.suara}</p>
-                            </div>
-                            <p className={`${i === 0 ? "text-[#E44700]" : "text-[#374151] "} text-[18px] font-semibold`}>{res.persantase_suara.toFixed(1)} %</p>
-                          </div>
+                      <div key={res._id} className={`flex w-[700px] items-center ${i === 0 && "border-[0.5px] border-[#FF5001]"} py-1 border-t-[0.5px]`}>
+                        <div className={`w-[80px] text-center text-[21px] ${i === 0 ? "text-[#FF5001]" : "text-[#374151]"} font-bold`}>{res.persantase_suara.toFixed(0)} %</div>
+                        <div>
+                          <img className="h-[57px] w-[47px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
+                        </div>
+                        <div className="ml-2 w-[350px]">
+                          <p className="text-[14px] text-[#374151] font-semibold">{res?.name}</p>
+                          <p className={`text-[14px] ${i === 0 ? "text-[#E44700]" : "text-[#9CA3AF]"}`}>Fraksi {res.partai?.name}</p>
+                        </div>
+                        <div>
+                          <p className="text-[14px] text-[#6B7280]">Total Suara</p>
+                          <p className="text-[14px] text-[#374151] font-bold">{res.suara}</p>
                         </div>
                       </div>
+                      // <div key={res._id} className={`${i === 0 && "border-[0.5px] border-[#FF5001]"} h-[69px] border-t-[0.5px] `}>
+                      //   <div className="flex items-center justify-between px-[12px] gap-3 py-2">
+                      //     <div className="flex gap-3 ">
+                      //       <div className="flex items-center">
+                      //         <img className="h-[50px] w-[50px]" src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}`} />
+                      //       </div>
+                      //       <div className="w-[400px]">
+                      //         <p className="text-[16px] font-semibold text-[#374151]">{res?.name}</p>
+                      //         <p className={`text-[14px]  ${i === 0 ? "text-[#E44700]" : "text-[#9CA3AF]"} `}>Fraksi {res.partai?.name}</p>
+                      //       </div>
+                      //     </div>
+                      //     <div className="flex justify-between items-center ">
+                      //       <div className="flex flex-col justify-center">
+                      //         <p className="text-[14px] text-[#6B7280]">Total Suara</p>
+                      //         <p className="text-[16px] text-[#374151] font-bold">{res.suara}</p>
+                      //       </div>
+                      //       <p className={`${i === 0 ? "text-[#E44700]" : "text-[#374151] "} text-[18px] font-semibold`}>{res.persantase_suara.toFixed(1)} %</p>
+                      //     </div>
+                      //   </div>
+                      // </div>
                     )
                   )}
                 </div>
