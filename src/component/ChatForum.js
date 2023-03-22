@@ -4,6 +4,9 @@ import axiosFetch from "../API/axiosFetch";
 import { ImportGambarIcon, KirimIcon, Titik3Icon } from "../utility/icon/icon";
 import ForumBesarIcon from "../utility/img/forum_besar.png";
 import ppUser from "../utility/img/pp_user.png";
+import fileIcon from "../utility/icon/file.png";
+import CloseIcon from "../utility/icon/close.png";
+
 import Moment from "moment";
 import "moment/locale/id";
 
@@ -11,6 +14,9 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
   const [chats, setChat] = useState([]);
   const token = useSelector((state) => state.user.token);
   const [message, setMessage] = useState("");
+  const [fileMessage, setFileMessage] = useState("");
+  const [filePreview, setFilePreview] = useState("");
+  const [typeFilePreview, setTypeFilePreview] = useState("");
   Moment.locale("id");
 
   const sendMessage = async () => {
@@ -20,13 +26,23 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
     // dispatch(showOrHidePopUpDptDps({ type: null }));
     if (chatType === "forum") {
       a.append("forum", roomChat);
-      a.append("message", message);
-      a.append("type", "text");
+      if (fileMessage) {
+        a.append("message", " ");
+        a.append("type", "image");
+        a.append("image", fileMessage);
+      } else {
+        a.append("message", message);
+        a.append("type", "text");
+      }
+
       {
         await axiosFetch("post", `user/chats/forum`, a, token)
           .then((res) => {
             // window.location.reload(false);
             setMessage("");
+            setFileMessage(null);
+            setFilePreview(null);
+            setTypeFilePreview(null);
           })
           .catch((error) => {
             console.log(error);
@@ -36,13 +52,23 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
       // target.push(roomChat);
       a.append("target", roomChat);
       a.append("target", "");
-      a.append("message", message);
-      a.append("type", "text");
+
+      if (fileMessage) {
+        a.append("message", " ");
+        a.append("type", "image");
+        a.append("image", fileMessage);
+      } else {
+        a.append("message", message);
+        a.append("type", "text");
+      }
       {
         await axiosFetch("post", `user/chats`, a, token)
           .then((res) => {
             // window.location.reload(false);
             setMessage("");
+            setFileMessage(null);
+            setFilePreview(null);
+            setTypeFilePreview(null);
           })
           .catch((error) => {
             console.log(error);
@@ -127,8 +153,8 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
 
           {chats.data?.map((e, i) => {
             if (!e.is_me) {
-              return (
-                <>
+              if (e.type === "image") {
+                return (
                   <div className="flex gap-3 mb-6">
                     <div className="flex items-end">
                       <img
@@ -141,37 +167,117 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
                       <p className="text-[14px] text-[#FF5001] font-semibold">
                         {e.user?.name}
                       </p>
-                      <p className="w-[345px] text-[14px] text-[#374151]">
-                        {e.message}
-                      </p>
+                      <img
+                        className="w-[150px]"
+                        src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.image}
+                      />
                       <p className="flex justify-end text-[10px] text-[#1F2937]">
                         {Moment(e.createdAt).format("hh:mm")}
                       </p>
                     </div>
                   </div>
-                </>
-              );
+                );
+              } else {
+                return (
+                  <>
+                    <div className="flex gap-3 mb-6">
+                      <div className="flex items-end">
+                        <img
+                          className="h-[32px] w-[32px] rounded-full"
+                          src={ppUser.src}
+                        />
+                      </div>
+
+                      <div className="shadow-lg bg-white px-2 py-1 rounded-xl rounded-bl-none">
+                        <p className="text-[14px] text-[#FF5001] font-semibold">
+                          {e.user?.name}
+                        </p>
+                        <p className="w-[345px] text-[14px] text-[#374151]">
+                          {e.message}
+                        </p>
+                        <p className="flex justify-end text-[10px] text-[#1F2937]">
+                          {Moment(e.createdAt).format("hh:mm")}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                );
+              }
             } else {
-              return (
-                <div className="flex justify-end mb-6">
-                  <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
-                    <p className="text-[14px] w-[345px]">{e.message}</p>
-                    <p className="text-[10px] flex justify-end">
-                      {Moment(e.createdAt).format("hh:mm")}
-                    </p>
+              if (e.type === "image") {
+                return (
+                  <div className="flex justify-end mb-6">
+                    <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
+                      <img
+                        className="w-[150px]"
+                        src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.image}
+                      />
+                      <p className="text-[10px] flex justify-end">
+                        {Moment(e.createdAt).format("hh:mm")}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              } else {
+                return (
+                  <div className="flex justify-end mb-6">
+                    <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
+                      <p className="text-[14px] w-[345px]">{e.message}</p>
+                      <p className="text-[10px] flex justify-end">
+                        {Moment(e.createdAt).format("hh:mm")}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
             }
           })}
         </div>
         {/* tutup chat */}
       </div>
+      {/* pop up upload file */}
+      {filePreview && (
+        <div className="bg-gray-300 w-full h-[400px] relative">
+          <div className="flex justify-end p-[10px]">
+            <img
+              onClick={() => {
+                setFilePreview(null);
+              }}
+              className="cursor-pointer"
+              src={CloseIcon.src}
+              alt=""
+            />
+          </div>
+          <div className="flex justify-center">
+            {typeFilePreview.includes("image") ? (
+              <img
+                src={filePreview}
+                className="w-[280px] h-[330px] object-fill"
+              />
+            ) : (
+              <img src={fileIcon.src} />
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="sticky bottom-0  bg-[#E5E7EB] py-2">
         <div className="flex gap-3 px-[24px]">
           {/* import gambar */}
           <div className="h-[48px] w-[60px] bg-white flex items-center justify-center rounded-full cursor-pointer">
-            <ImportGambarIcon />
+            <label htmlFor="file_chat">
+              <ImportGambarIcon />
+              <input
+                className="hidden"
+                type="file"
+                id="file_chat"
+                onChange={(e) => {
+                  setTypeFilePreview(e.target.files[0].type);
+                  setFilePreview(URL.createObjectURL(e.target.files[0]));
+                  setFileMessage(e.target.files[0]);
+                }}
+              />
+            </label>
           </div>
           {/* text chat */}
           <input
@@ -187,6 +293,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType }) => {
               }
             }}
             value={message}
+            disabled={!filePreview ? false : true}
           />
           {/* kirim chat */}
           <div
