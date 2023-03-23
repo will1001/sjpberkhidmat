@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { DropDownIcon, NextIcon, PrevIcon } from "../utility/icon/icon";
 
-const Pagination = ({ total_page, current_page, total, setCurrentPage }) => {
+const Pagination = ({ total_page, current_page, total, setCurrentPage, mobile }) => {
   const [button, setButton] = useState();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Pagination = ({ total_page, current_page, total, setCurrentPage }) => {
   //   console.log(setCurrentPage);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className={`${mobile === true ? "flex flex-col items-center gap-3 mt-3" : "flex items-center justify-between"} `}>
       <div className="flex items-center gap-3 text-[#D1D5DB] stroke-[#D1D5DB]">
         <div className=" flex items-center border px-2 py-1 rounded-md">
           10 <DropDownIcon />

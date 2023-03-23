@@ -224,7 +224,7 @@ const Relawan = () => {
           )}
           <div>
             {tool === "Real Count" && <RealCount />}
-            {tool === "Logistik" && <div>asdsad</div>}
+            {tool === "Logistik" && <Logistik />}
           </div>
         </div>
       ) : (
