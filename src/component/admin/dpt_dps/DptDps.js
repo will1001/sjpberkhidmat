@@ -33,6 +33,7 @@ const DptDps = () => {
   const [kecamatan, setKecamatan] = useState();
   const [filterKecamatan, setFilterKecamatan] = useState("semua");
   const [keyword, setKeyword] = useState(" ");
+  const [exportExcel, setExportExcel] = useState([]);
   // const [kelurahan, setKelurahan] = useState([]);
   const [dptdps, setDptdps] = useState([]);
   const dispatch = useDispatch();
@@ -47,6 +48,9 @@ const DptDps = () => {
   });
 
   useEffect(() => {
+    axiosFetch("get", `user/dpt_dps/export`, {}, token)
+      .then((res) => setExportExcel(res.data))
+      .catch((err) => console.log(err));
     roles === "koordinator"
       ? axiosFetch(
           "get",
@@ -219,9 +223,9 @@ const DptDps = () => {
         <p className="font-bold text-[#374151] text-[32px]">
           DPT / DPS Dapil II Prov. NTB
         </p>
-        <div className="pr-[20px]">
+        {/* <div className="pr-[20px]">
           <JumlahDptDps />
-        </div>
+        </div> */}
       </div>
       <div className="flex gap-3 mt-2">
         {/* <div className="w-[209px] h-[42px] bg-[#E44700] rounded-md items-center flex justify-center cursor-pointer">
@@ -282,6 +286,12 @@ const DptDps = () => {
             />
             <NewButton
               action={() => {
+                console.log(exportExcel);
+                // alert(exportExcel.link);
+                window.open(
+                  process.env.NEXT_PUBLIC_BASE_URL_IMAGE + exportExcel.link,
+                  "_blank"
+                );
                 // router.push({
                 //   pathname: "/Admin",
                 //   query: { component: "EksportDataDpt" },
