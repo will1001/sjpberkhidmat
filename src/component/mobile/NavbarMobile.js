@@ -17,6 +17,7 @@ const NavbarMobile = ({ popup, setPopup }) => {
   const role = useSelector((state) => state.user.roles);
   const handleLogOut = () => {
     dispatch(setToken({ token: "", roles: "" }));
+    router.push("../Login");
     if (role === "relawan") {
       router.push("../Login");
     } else if (role === "admin") {

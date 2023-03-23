@@ -3,12 +3,7 @@ import { useState } from "react";
 import axiosFetch from "../API/axiosFetch";
 import useFetch from "../API/useFetch";
 
-const InputDataRealCount = ({
-  formInput,
-  setFormInput,
-  suaraCalon,
-  setSuaraCalon,
-}) => {
+const InputDataRealCount = ({ formInput, setFormInput, suaraCalon, setSuaraCalon, mobile }) => {
   const getKabupaten = useFetch("get", "user/kabupaten");
   const calon = useFetch("get", "user/real_count/calon");
   const [kelurahan, setKelurahan] = useState();
@@ -37,15 +32,7 @@ const InputDataRealCount = ({
           <label className="w-full" htmlFor="nomor_tps">
             Nomor TPS
           </label>
-          <input
-            value={formInput.no_tps}
-            onChange={(e) =>
-              setFormInput({ ...formInput, no_tps: e.target.value })
-            }
-            className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
-            id="nomor_tps"
-            type={"number"}
-          />
+          <input value={formInput.no_tps} onChange={(e) => setFormInput({ ...formInput, no_tps: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="nomor_tps" type={"number"} />
         </div>
         <div className="flex justify-between items-center mb-2">
           <label className="w-full" htmlFor="kab_kota">
@@ -72,14 +59,7 @@ const InputDataRealCount = ({
           <label className="w-full" htmlFor="kecamatan">
             kecamatan
           </label>
-          <select
-            onChange={(e) =>
-              setFormInput({ ...formInput, id_kecamatan: e.target.value })
-            }
-            className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
-            id="kecamatan"
-            value={formInput.id_kecamatan}
-          >
+          <select onChange={(e) => setFormInput({ ...formInput, id_kecamatan: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="kecamatan" value={formInput.id_kecamatan}>
             <option selected="disable">Pilih Kecamatan</option>
             {kecamatan !== undefined &&
               kecamatan?.data?.map((res) => (
@@ -93,14 +73,7 @@ const InputDataRealCount = ({
           <label className="w-full" htmlFor="kelurahan">
             Kelurahan
           </label>
-          <select
-            onChange={(e) =>
-              setFormInput({ ...formInput, id_kelurahan: e.target.value })
-            }
-            className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
-            id="kelurahan"
-            value={formInput.id_kelurahan}
-          >
+          <select onChange={(e) => setFormInput({ ...formInput, id_kelurahan: e.target.value })} className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]" id="kelurahan" value={formInput.id_kelurahan}>
             <option selected="disable">Pilih Desa / Kelurahan</option>
             {kelurahan !== undefined &&
               kelurahan?.data?.map((res) => (
@@ -115,9 +88,7 @@ const InputDataRealCount = ({
             Jumlah Pemilih dalam DPT
           </label>
           <input
-            onChange={(e) =>
-              setFormInput({ ...formInput, jml_pemilih_dpt: e.target.value })
-            }
+            onChange={(e) => setFormInput({ ...formInput, jml_pemilih_dpt: e.target.value })}
             className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
             id="jumlah_DPT"
             type={"number"}
@@ -129,9 +100,7 @@ const InputDataRealCount = ({
             Jumlah Pemilih dalam DPTb
           </label>
           <input
-            onChange={(e) =>
-              setFormInput({ ...formInput, jml_pemilih_dptb: e.target.value })
-            }
+            onChange={(e) => setFormInput({ ...formInput, jml_pemilih_dptb: e.target.value })}
             className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
             id="jumlah_DPTb"
             type={"number"}
@@ -143,9 +112,7 @@ const InputDataRealCount = ({
             Jumlah Pemilih dalam DPK
           </label>
           <input
-            onChange={(e) =>
-              setFormInput({ ...formInput, jml_pemilih_dpk: e.target.value })
-            }
+            onChange={(e) => setFormInput({ ...formInput, jml_pemilih_dpk: e.target.value })}
             className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
             id="jumlah_DPK"
             type={"number"}
@@ -157,9 +124,7 @@ const InputDataRealCount = ({
             Surat Suara Sah
           </label>
           <input
-            onChange={(e) =>
-              setFormInput({ ...formInput, surat_suara_sah: e.target.value })
-            }
+            onChange={(e) => setFormInput({ ...formInput, surat_suara_sah: e.target.value })}
             className="border outline-none w-full text-[14px] rounded-sm px-2 h-[40px]"
             id="suara_sah"
             type={"number"}
@@ -191,16 +156,9 @@ const InputDataRealCount = ({
         </div>
         {calon.data !== null &&
           calon?.data?.map((res) => (
-            <div
-              className="flex justify-between items-center mb-2"
-              key={res._id}
-            >
+            <div className={`${mobile === true ? "mb-2" : "flex justify-between items-center mb-2"} `} key={res._id}>
               <div htmlFor={res._id} className="flex items-center gap-3">
-                <img
-                  className="h-[57px] w-[47px]"
-                  src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo}
-                  alt={res.name}
-                />
+                <img className="h-[57px] w-[47px]" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + res.logo} alt={res.name} />
                 <div>
                   <p className="font-bold">{res.name}</p>
                   <p className="text-[14px] text-[#9CA3AF]">{res.id_partai}</p>
@@ -214,7 +172,7 @@ const InputDataRealCount = ({
                     jml_suara: e.target.value,
                   })
                 }
-                className="border outline-none w-[195px] text-[14px] rounded-sm px-2 h-[40px]"
+                className={`${mobile === true ? "border outline-none w-full text-[14px] rounded-sm px-2 h-[40px] mt-2" : "border outline-none w-[195px] text-[14px] rounded-sm px-2 h-[40px]"} `}
                 id={res._id}
                 type={"number"}
               />
