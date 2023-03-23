@@ -6,6 +6,10 @@ import ppUser from "../utility/img/pp_user.png";
 import PeopleIcon from "../utility/icon/people.png";
 import ChatForum from "./ChatForum";
 import useFetch from "../API/useFetch";
+import CloseIcon from "../utility/icon/close.png";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setImagePreviewer } from "../redux/panelReducer";
 
 const Forum = () => {
   const [roomChat, setRoomChat] = useState("");
@@ -13,6 +17,9 @@ const Forum = () => {
   const [roomLogo, setRoomLogo] = useState("");
   const [chatType, setChatType] = useState("");
   const [contactSearch, setContactSearch] = useState("");
+  const imagePreviewer = useSelector((state) => state.panel.imagePreviewer);
+  const dispatch = useDispatch();
+
   const contacts = useFetch(
     "get",
     `user/chats/room/list${
@@ -22,6 +29,36 @@ const Forum = () => {
 
   return (
     <div className="flex">
+      {imagePreviewer && (
+        <>
+          <div className="w-full h-[100vh] absolute z-50">
+            {" "}
+            <div
+              onClick={() => {
+                dispatch(setImagePreviewer({ imagePreviewer: null }));
+              }}
+              className="bg-black h-[100vh] opacity-30"
+            >
+              <div className="flex cursor-pointer">
+                <img
+                  onClick={() => {
+                    dispatch(setImagePreviewer({ imagePreviewer: null }));
+                  }}
+                  className="w-[40px]"
+                  src={CloseIcon.src}
+                />
+              </div>
+            </div>
+            <div className="">
+              <img
+                className="w-[700px] absolute top-10 left-60"
+                src={imagePreviewer}
+                alt=""
+              />
+            </div>
+          </div>
+        </>
+      )}
       <div className="px-[36px] pb-[150px] text-[#374151] scrollbar-track-white scrollbar-thin sticky h-screen overflow-scroll w-[550px] overflow-x-hidden border-r-2">
         <p className="mt-[76px] text-[32px] font-bold">Forum</p>
         <div className="flex mb-[40px] text-[16px] mt-[16px] border gap-3 px-4 items-center h-[48px] rounded-full stroke-[#374151]">

@@ -7,6 +7,7 @@ const initialState = {
   editData: null,
   formType: null,
   tabPanelRelawanDash: "relawan",
+  imagePreviewer: null,
 };
 
 export const panelSlice = createSlice({
@@ -32,9 +33,20 @@ export const panelSlice = createSlice({
     setTabPanelRelawanDash: (state, action) => {
       state.tabPanelRelawanDash = action.payload.tabPanelRelawanDash;
     },
+    setImagePreviewer: (state, action) => {
+      state.imagePreviewer = action.payload.imagePreviewer;
+    },
   },
 });
 
-export const { showOrHidePopUpDash, showOrHidePopUpDptDps, setIdPeriode, setEditData, setFormType, setTabPanelRelawanDash } = panelSlice.actions;
+export const {
+  setImagePreviewer,
+  showOrHidePopUpDash,
+  showOrHidePopUpDptDps,
+  setIdPeriode,
+  setEditData,
+  setFormType,
+  setTabPanelRelawanDash,
+} = panelSlice.actions;
 
 export default panelSlice.reducer;
