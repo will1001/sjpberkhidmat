@@ -52,8 +52,19 @@ const InputDataRealCount = ({
       token
     )
       .then((res) => {
+        // console.log("res.data.data");
+        // console.log(res.data.data.length === 0);
+        // console.log("res.data.data");
         setSuaraCalon(res.data.data);
-        // setSuaraCalonRecent(res.data.data);
+        // if (res.data.data.length === 0) {
+        //   let temp = [];
+        //   temp.push({
+        //     id_calon: " ",
+        //     id_plano: formInput.id_plano,
+        //     jml_suara: 0,
+        //   });
+        //   setSuaraCalon(temp);
+        // }
       })
       .catch((err) => console.log(err));
   }, [formInput.id_kecamatan]);
@@ -263,7 +274,13 @@ const InputDataRealCount = ({
                 } `}
                 id={res._id}
                 type={"number"}
-                value={suaraCalon.length === 0 ? 0 : suaraCalon[ind].jml_suara}
+                value={
+                  suaraCalon.length === 0
+                    ? 0
+                    : suaraCalon[ind]
+                    ? suaraCalon[ind].jml_suara
+                    : 0
+                }
                 // value={suaraCalonRecent}
               />
             </div>
