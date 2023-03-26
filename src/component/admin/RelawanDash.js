@@ -16,6 +16,7 @@ import {
 } from "../../redux/panelReducer";
 import ListTargetDesa from "../ListTargetDesa";
 import { useRouter } from "next/router";
+import Pagination from "../Pagination";
 
 const RelawanDash = () => {
   const customStyles = {
@@ -38,6 +39,7 @@ const RelawanDash = () => {
     (state) => state.panel.tabPanelRelawanDash
   );
   const [relawanSub, setRelawanSub] = useState(tabPanelRelawanDash);
+  const [currenPage, setCurrentPage] = useState(1);
 
   const editRelawan = (data) => {
     delete data.aksi;
@@ -67,14 +69,14 @@ const RelawanDash = () => {
     if (roles === "koordinator") {
       axiosFetch(
         "get",
-        `user/relawan?page=${1}&limit=100&id_kabupaten=${id_kabupaten}`
+        `user/relawan?page=${currenPage}&limit=10&id_kabupaten=${id_kabupaten}`
       )
         .then((res) => setRelawan(res.data))
         .catch((err) => console.log(err));
     } else {
       axiosFetch(
         "get",
-        `user/relawan?page=${1}&limit=100${
+        `user/relawan?page=${currenPage}&limit=10${
           pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
         }${sorting !== null ? "&sort=" + sorting : ""}${
           keyword !== null ? "&keyword=" + keyword : ""
@@ -99,7 +101,7 @@ const RelawanDash = () => {
   const columns = [
     {
       name: "Nomor",
-      selector: (row, i) => ++i,
+      selector: (row, i) => ++i + (currenPage - 1) * 10,
     },
     {
       name: "Nama Relawan",
@@ -172,6 +174,7 @@ const RelawanDash = () => {
       );
     }
   }
+  console.log(relawan);
 
   return (
     <div className="">
@@ -255,6 +258,12 @@ const RelawanDash = () => {
               columns={columns}
               data={data}
               customStyles={customStyles}
+            />
+            <Pagination
+              setCurrentPage={setCurrentPage}
+              total_page={relawan?.metadata?.totalPage}
+              current_page={currenPage}
+              total={relawan?.metadata?.total}
             />
           </div>
         </>
