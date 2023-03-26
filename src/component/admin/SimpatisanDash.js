@@ -65,12 +65,31 @@ const SimpatisanDash = ({ register, popupMobile }) => {
 
   useEffect(() => {
     roles === "koordinator"
-      ? axiosFetch("get", `user/simpatisan?page=${currentPage}&limit=10&id_kabupaten=${id_kabupaten}`, {}, token).then((res) => setSimpatisan(res.data))
+      ? axiosFetch(
+          "get",
+          `user/simpatisan?page=${currentPage}&limit=10&id_kabupaten=${id_kabupaten}`,
+          {},
+          token
+        ).then((res) => setSimpatisan(res.data))
       : axiosFetch(
           "get",
-          `user/simpatisan?page=${currentPage}&limit=10${router.query.id_kabupaten !== undefined ? "&id_kabupaten=" + router.query.id_kabupaten : ""}${
-            router.query.id_kecamatan !== undefined ? "&id_kecamatan=" + router.query.id_kecamatan : ""
-          }${router.query.id_relawan !== undefined ? "&id_relawan=" + router.query.id_relawan : ""}${keyword !== null && keyword?.length >= 3 ? "&keyword=" + keyword : ""}`,
+          `user/simpatisan?page=${currentPage}&limit=10${
+            router.query.id_kabupaten !== undefined
+              ? "&id_kabupaten=" + router.query.id_kabupaten
+              : ""
+          }${
+            router.query.id_kecamatan !== undefined
+              ? "&id_kecamatan=" + router.query.id_kecamatan
+              : ""
+          }${
+            router.query.id_relawan !== undefined
+              ? "&id_relawan=" + router.query.id_relawan
+              : ""
+          }${
+            keyword !== null && keyword?.length >= 3
+              ? "&keyword=" + keyword
+              : ""
+          }`,
           {},
           token
         ).then((res) => setSimpatisan(res.data));
@@ -79,7 +98,7 @@ const SimpatisanDash = ({ register, popupMobile }) => {
   const columns = [
     {
       name: "Nomor",
-      selector: (row, i) => ++i,
+      selector: (row, i) => ++i + (currentPage - 1) * 10,
     },
     {
       name: "Nama",
@@ -160,38 +179,66 @@ const SimpatisanDash = ({ register, popupMobile }) => {
     <>
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
         <div className="px-[16px]">
-          <p className="text-[24px] text-[#374151] font-bold mt-2">Simpatisan</p>
+          <p className="text-[24px] text-[#374151] font-bold mt-2">
+            Simpatisan
+          </p>
           <div
             onClick={() => {
               dispatch(showOrHidePopUpDash({ type: "Simpatisan" }));
             }}
             className="flex justify-center mt-3 bg-[#E44700] py-2 rounded-sm"
           >
-            <p className="font-semibold text-white text-[14px]">Tambah Simpatisan</p>
+            <p className="font-semibold text-white text-[14px]">
+              Tambah Simpatisan
+            </p>
           </div>
           <div className="flex mt-3">
             <div className="flex stroke-[#374151] border px-2 py-1 w-full">
-              <input className="w-full outline-none" type={"text"} placeholder={"Cari Data"} onChange={(e) => setKeyword(e.target.value)} />
+              <input
+                className="w-full outline-none"
+                type={"text"}
+                placeholder={"Cari Data"}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
               <SearchIcon />
             </div>
           </div>
-          <div className={`${popupMobile === true && "scrollbar-none"} flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]`}>
+          <div
+            className={`${
+              popupMobile === true && "scrollbar-none"
+            } flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]`}
+          >
             <table className="tabel-auto">
               <thead className="bg-[#374151]  ">
                 <tr className="h-[51px] text-white ">
-                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
+                  <th
+                    scope="col"
+                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
+                  >
                     No
                   </th>
-                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
+                  <th
+                    scope="col"
+                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
+                  >
                     Nama
                   </th>
-                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
+                  <th
+                    scope="col"
+                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
+                  >
                     Nik
                   </th>
-                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
+                  <th
+                    scope="col"
+                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
+                  >
                     Email
                   </th>
-                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium">
+                  <th
+                    scope="col"
+                    className=" px-2 py-3 text-left text-xs font-medium"
+                  >
                     No.Hp
                   </th>
                   <th scope="col" className=" px-2 py-3 text-xs font-medium">
@@ -200,7 +247,10 @@ const SimpatisanDash = ({ register, popupMobile }) => {
                   <th scope="col" className=" px-2 py-3 text-xs font-medium">
                     Jenis Kelamin
                   </th>
-                  <th scope="col" className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 text-white  text-xs font-medium`}>
+                  <th
+                    scope="col"
+                    className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 text-white  text-xs font-medium`}
+                  >
                     Aksi
                   </th>
                 </tr>
@@ -209,15 +259,36 @@ const SimpatisanDash = ({ register, popupMobile }) => {
                 {simpatisan !== undefined &&
                   simpatisan.data?.map((res, i) => {
                     return (
-                      <tr key={res._id} className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"}`}>
+                      <tr
+                        key={res._id}
+                        className={`${
+                          (i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"
+                        }`}
+                      >
                         <td className="px-2 py-3">{++i}</td>
-                        <td className=" px-2 py-3 whitespace-nowrap">{res.name}</td>
-                        <td className="px-2 py-3 whitespace-nowrap">{res.nik}</td>
-                        <td className="px-2 py-3 whitespace-nowrap">{res.email}</td>
-                        <td className="px-2 py-3 whitespace-nowrap">{res.phone}</td>
-                        <td className="px-2 py-3 whitespace-nowrap">{res.pekerjaan?.name}</td>
-                        <td className="px-2 py-3 whitespace-nowrap">{res.gender}</td>
-                        <td className={`px-2 py-3 border-l-2  ${(i + 1) % 2 === 0 ? "bg-[#F9FAFB]" : "bg-white"} sticky right-0`}>
+                        <td className=" px-2 py-3 whitespace-nowrap">
+                          {res.name}
+                        </td>
+                        <td className="px-2 py-3 whitespace-nowrap">
+                          {res.nik}
+                        </td>
+                        <td className="px-2 py-3 whitespace-nowrap">
+                          {res.email}
+                        </td>
+                        <td className="px-2 py-3 whitespace-nowrap">
+                          {res.phone}
+                        </td>
+                        <td className="px-2 py-3 whitespace-nowrap">
+                          {res.pekerjaan?.name}
+                        </td>
+                        <td className="px-2 py-3 whitespace-nowrap">
+                          {res.gender}
+                        </td>
+                        <td
+                          className={`px-2 py-3 border-l-2  ${
+                            (i + 1) % 2 === 0 ? "bg-[#F9FAFB]" : "bg-white"
+                          } sticky right-0`}
+                        >
                           <div className="flex items-center justify-center gap-3 px-2">
                             <img
                               onClick={() => {
@@ -240,14 +311,24 @@ const SimpatisanDash = ({ register, popupMobile }) => {
               </tbody>
             </table>
           </div>
-          <Pagination mobile={true} total={simpatisan?.metadata?.total} current_page={currentPage} setCurrentPage={setCurrentPage} total_page={simpatisan?.metadata?.totalPage} />
+          <Pagination
+            mobile={true}
+            total={simpatisan?.metadata?.total}
+            current_page={currentPage}
+            setCurrentPage={setCurrentPage}
+            total_page={simpatisan?.metadata?.totalPage}
+          />
         </div>
       ) : (
         <div className="">
           <div className="flex justify-between items-center px-[40px] py-[10px]">
             <h1 className="text-4xl font-bold">Simpatisan</h1>
           </div>
-          <div className={`${roles === "koordinator" ? "hidden" : "visible"} px-[40px] py-[10px]`}>
+          <div
+            className={`${
+              roles === "koordinator" ? "hidden" : "visible"
+            } px-[40px] py-[10px]`}
+          >
             <ButtonPrimary
               title={"Tambah Simpatisan"}
               action={() => {
@@ -256,18 +337,35 @@ const SimpatisanDash = ({ register, popupMobile }) => {
             />
           </div>
           <div className="flex justify-between items-center px-[40px] py-[10px]">
-            <SearchInput placeholder={"Cari Data"} onChange={(e) => setKeyword(e.target.value)} />
+            <SearchInput
+              placeholder={"Cari Data"}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
 
             <div>
               <span>Urutkan </span>
-              <select onChange={(e) => setSorting(e.target.value)} id="sorting" className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md">
+              <select
+                onChange={(e) => setSorting(e.target.value)}
+                id="sorting"
+                className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
+              >
                 <option value="terbaru">Terbaru</option>
                 <option value="terbanyak">Terbanyak Rekrut</option>
               </select>
             </div>
           </div>
           <div className="px-[40px] py-[10px]">
-            <DataTable columns={columns} data={data} customStyles={customStyles} />
+            <DataTable
+              columns={columns}
+              data={data}
+              customStyles={customStyles}
+            />
+            <Pagination
+              total={simpatisan?.metadata?.total}
+              current_page={currentPage}
+              setCurrentPage={setCurrentPage}
+              total_page={simpatisan?.metadata?.totalPage}
+            />
           </div>
         </div>
       )}
