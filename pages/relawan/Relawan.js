@@ -226,6 +226,7 @@ const Relawan = () => {
             {tool === "Real Count" && <RealCount />}
             {tool === "Logistik" && <Logistik popupMobile={popupMobile} />}
             {tool === "Simpatisan" && <SimpatisanDash register={register} popupMobile={popupMobile} />}
+            {tool === "Aspirasi" && <RumahAspirasi popupMobile={popupMobile} />}
           </div>
           {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
             <div className="bg-white h-screen w-screen absolute top-0 left-0 p-5">
