@@ -12,7 +12,7 @@ import "moment/locale/id";
 import axiosFetch from "../../API/axiosFetch";
 import Pagination from "../Pagination";
 
-const Logistik = () => {
+const Logistik = ({ popupMobile }) => {
   const [popup, setPopup] = useState(false);
   const [popupPage, setPopupPage] = useState();
   const [popupPengajuan, setPopupPengajuan] = useState(false);
@@ -161,7 +161,6 @@ const Logistik = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(logistik);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 950 ? (
@@ -210,7 +209,7 @@ const Logistik = () => {
               ))}
             </select>
           </div>
-          <div className=" flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]">
+          <div className={`${popupMobile === true && "scrollbar-none"} flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]`}>
             <table className="tabel-auto">
               <thead className="bg-[#374151]  ">
                 <tr className="h-[51px] text-white ">

@@ -3,7 +3,6 @@ import useFetch from "../../../API/useFetch";
 import { PendudukIcon } from "../../../utility/icon/icon";
 const RealCountPenduduk = ({ mobile }) => {
   const getStatistik = useFetch("get", "user/dashboard/statistik/all");
-  console.log(getStatistik);
   return (
     <>
       {mobile === true ? (

@@ -7,6 +7,7 @@ import { logoSidebar } from "../../utility/icon/LogoSidebar";
 const ToolSidebar = ({ setSelectTool }) => {
   const dispatch = useDispatch();
   const tool = useSelector((state) => state.toolMobile.tool);
+
   return (
     <div>
       {logoSidebar

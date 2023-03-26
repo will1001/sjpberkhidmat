@@ -210,7 +210,7 @@ const Relawan = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  console.log(popupMobile);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
@@ -224,8 +224,134 @@ const Relawan = () => {
           )}
           <div>
             {tool === "Real Count" && <RealCount />}
-            {tool === "Logistik" && <Logistik />}
+            {tool === "Logistik" && <Logistik popupMobile={popupMobile} />}
+            {tool === "Simpatisan" && <SimpatisanDash register={register} popupMobile={popupMobile} />}
           </div>
+          {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
+            <div className="bg-white h-screen w-screen absolute top-0 left-0 p-5">
+              <div className="flex justify-end cursor-pointer">
+                <img
+                  onClick={() => {
+                    dispatch(showOrHidePopUpDash({ type: null }));
+                    dispatch(setEditData({ editData: null }));
+                    setClear(false);
+                    setStopEditData(false);
+                    setFormData({
+                      name: "",
+                      id_periode: idPeriode,
+                      nik: "",
+                      email: "",
+                      role: "relawan",
+                      phone: "",
+                      pekerjaan: "",
+                      id_kabupaten: "",
+                      id_kecamatan: "",
+                      target_desa: "",
+                      password: "",
+                      date_birth: "",
+                      place_birth: "",
+                      gender: "",
+                      address: "",
+                    });
+                  }}
+                  src={CloseIcon.src}
+                />
+              </div>
+              <div className="font-bold text-4xl">Tambah {popUpDashType}</div>
+              <FormInputItem mobile={true} label={"Nama Akun"} type="text" onChange={(e) => setFormData({ ...formData, name: e.target.value })} value={formData.name} />
+              <FormInputItem mobile={true} label={"Email"} type="text" onChange={(e) => setFormData({ ...formData, email: e.target.value })} value={formData.email} disabled={editData && true} />
+              <FormInputItem mobile={true} label={"No Hp"} type="text" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} value={formData.phone} />
+              <FormInputItem mobile={true} label={"NIK"} type="text" onChange={(e) => setFormData({ ...formData, nik: e.target.value })} value={formData.nik} disabled={editData && true} maxLength={16} />
+              <FormSelect mobile={true} label={"Jenis Kelamin"} type="text" onChange={(e) => setFormData({ ...formData, gender: e.target.value })} options={gender} value={formData.gender} />
+              <FormDatePlaceBirth
+                onChangePlace={(e) => setFormData({ ...formData, place_birth: e.target.value })}
+                valuePlace={formData.place_birth}
+                onChangeDate={(e) => setFormData({ ...formData, date_birth: e.target.value })}
+                valueDate={formData.date_birth}
+                mobile={true}
+              />
+              {popUpDashType !== "Akun Tim" && <FormSelect mobile={true} label={"Pekerjaan"} type="text" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} options={pekerjaan} value={formData.pekerjaan?._id} />}
+
+              <h1>ALAMAT {popUpDashType.toUpperCase()}</h1>
+              <FormSelect mobile={true} label={"Kabupaten Kota"} type="text" onChange={(e) => changeKabupaten(e.target.value)} options={kabupaten} value={formData.id_kabupaten} />
+              {popUpDashType !== "Akun Tim" && <FormSelect mobile={true} label={"Kecamatan"} type="text" onChange={(e) => changeKecamatan(e.target.value)} options={kecamatan} value={formData.id_kecamatan} />}
+              {popUpDashType !== "Akun Tim" && <FormSelect mobile={true} label={"Target Desa"} type="text" onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} options={kelurahan} value={formData.target_desa} />}
+
+              <FormInputItem mobile={true} label={"Alamat"} type="text" onChange={(e) => setFormData({ ...formData, address: e.target.value })} value={formData.address} />
+              <div className="border-b-2 my-[30px]" />
+              {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") && editData === null && (
+                <>
+                  {" "}
+                  <div className="flex justify-start items-center">
+                    <div className="w-[20%] mr-[50px]">Set Password</div>
+                    <div
+                      onClick={() => {
+                        generatePassword();
+                      }}
+                      className="flex items-center border-2 rounded-md p-3 cursor-pointer"
+                    >
+                      <img src={KeyIcon.src} /> <span className="font-bold ml-3">Generate Password</span>
+                    </div>
+                  </div>
+                  <FormInputPassword
+                    label={""}
+                    value={formData.password}
+                    type={passwordType}
+                    onclickShow={() => setPasswordType("text")}
+                    onClickHide={() => setPasswordType("password")}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  />
+                  <FormInputPassword
+                    label={"Tulis Ulang Password"}
+                    value={confirmPassword}
+                    type={passwordType2}
+                    onclickShow={() => setPasswordType2("text")}
+                    onClickHide={() => setPasswordType2("password")}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                    }}
+                  />
+                </>
+              )}
+
+              <div className="flex mt-[40px] justify-end">
+                <div
+                  onClick={() => {
+                    setClear(true);
+                    setFormData({
+                      name: "",
+                      id_periode: idPeriode,
+                      nik: "",
+                      email: "",
+                      role: "relawan",
+                      phone: "",
+                      pekerjaan: "",
+                      id_kabupaten: "",
+                      id_kecamatan: "",
+                      target_desa: "",
+                      password: "",
+                      date_birth: "",
+                      place_birth: "",
+                      gender: "",
+                      address: "",
+                    });
+                  }}
+                  className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
+                >
+                  {/* <img src={homeIcn.src} /> */}
+                  <p className="text-[18px] font-semibold">Bersihkan </p>
+                </div>
+                <div
+                  onClick={() => {
+                    register();
+                  }}
+                  className="h-[42px] w-[240px] bg-[#E44700] rounded-md  cursor-pointer  text-[18px] text-white font-semibold items-center justify-center gap-2 flex"
+                >
+                  Buat Akun <DaftarRelawanIcon />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex h-screen">

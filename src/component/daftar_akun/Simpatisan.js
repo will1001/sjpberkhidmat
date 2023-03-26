@@ -13,7 +13,7 @@ import { GagalPost } from "../../utility/icon/icon";
 
 const Simpatisan = () => {
   const router = useRouter();
-  const relawan = useFetch("get", "user/relawan?page=1");
+  const relawan = useFetch("get", "user/relawan?page=1&limit=100");
   const kabupaten = useFetch("get", "user/kabupaten?lombok");
   const pekerjaan = useFetch("get", "user/jobs");
   const [errorMessage, setErrorMessage] = useState("");
