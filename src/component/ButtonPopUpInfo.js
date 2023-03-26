@@ -423,7 +423,7 @@ const ButtonPopUpInfo = ({
                       break;
                     case "Logistik":
                       path = "Admin";
-                      query = { component: "/logistic" };
+                      query = { component: "/logistik" };
 
                       break;
                     case "Program":
@@ -527,7 +527,7 @@ const ButtonPopUpInfo = ({
                       break;
                     case "Logistik":
                       path = "Admin";
-                      query = { component: "/logistic" };
+                      query = { component: "/logistik" };
 
                       break;
                     case "Program":
@@ -631,7 +631,7 @@ const ButtonPopUpInfo = ({
                       break;
                     case "Logistik":
                       path = "Admin";
-                      query = { component: "/logistic" };
+                      query = { component: "/logistik" };
 
                       break;
                     case "Program":
@@ -736,7 +736,7 @@ const ButtonPopUpInfo = ({
                       break;
                     case "Logistik":
                       path = "Admin";
-                      query = { component: "/logistic" };
+                      query = { component: "/logistik" };
 
                       break;
                     case "Program":
@@ -834,7 +834,7 @@ const ButtonPopUpInfo = ({
                     break;
                   case "Logistik":
                     path = "Admin";
-                    query = { component: "/logistic" };
+                    query = { component: "/logistik" };
 
                     break;
                   case "Program":
