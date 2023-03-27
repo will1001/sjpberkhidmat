@@ -207,7 +207,7 @@ function Admin({ router }) {
           delete formData.detail;
           delete formData.kebutuhan;
 
-          await axiosFetch("post", `user/register`, formData)
+          await axiosFetch("post", `user/register`, formData, token)
             .then(() => {
               alert("Pendaftaran Berhasil");
             })
@@ -224,6 +224,8 @@ function Admin({ router }) {
       formDataSimpatisan.role = "koordinator";
       delete formDataSimpatisan.phone;
       delete formDataSimpatisan.pekerjaan;
+      delete formDataSimpatisan.detail;
+      delete formDataSimpatisan.kebutuhan;
       delete formDataSimpatisan.target_desa;
       formDataSimpatisan.id_kecamatan = "5201010";
 

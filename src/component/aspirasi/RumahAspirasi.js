@@ -76,7 +76,14 @@ const RumahAspirasi = ({ popupMobile }) => {
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
         <div className="px-[16px]">
           <p className="mt-[21px] text-[21px] font-bold text-[#374151]">Rumah Aspirasi</p>
-          <div className="flex justify-center py-1 rounded-sm bg-[#E44700] font-medium text-white mt-3">Tambah Aspirasi</div>
+          <div
+            onClick={() => {
+              router.push("../Aspirasi");
+            }}
+            className="flex justify-center py-1 rounded-sm bg-[#E44700] font-medium text-white mt-3"
+          >
+            Tambah Aspirasi
+          </div>
           <div className={`${popupMobile === true && "scrollbar-none"} flex w-full overflow-x-auto pb-4 rounded-sm scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]`}>
             <table className="table-auto w-full mt-4">
               <thead className="bg-[#374151]">

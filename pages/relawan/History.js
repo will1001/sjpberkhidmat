@@ -90,6 +90,9 @@ const History = () => {
 
   useEffect(() => {
     tool === "Logistik" && router.back();
+    tool === "Simpatisan" && router.back();
+    tool === "Aspirasi" && router.back();
+    tool === "Forum" && router.back();
   }, [tool]);
 
   return (

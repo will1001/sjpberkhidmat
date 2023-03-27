@@ -8,7 +8,7 @@ function Camera({ screenSize, setOpenCamera, setUploadPlano }) {
 
   const startCamera = () => {
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({ video: { facingMode: { exact: "environment" } } })
       .then((stream) => {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
