@@ -161,6 +161,8 @@ const Logistik = ({ popupMobile }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  console.log(id_kabupaten);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 950 ? (

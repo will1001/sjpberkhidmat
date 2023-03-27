@@ -2,32 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { SearchIcon } from "../utility/icon/icon";
 
-const FilterData = ({
-  keyword,
-  kabupaten,
-  kecamatan,
-  kelurahan,
-  short,
-  setShort,
-  setFilterKecamatan,
-  setFilterKabupaten,
-  display,
-  filterKabupaten,
-}) => {
+const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort, setFilterKecamatan, setFilterKabupaten, display, filterKabupaten }) => {
   return (
     <div className="flex justify-between">
       {keyword !== undefined && (
-        <label
-          htmlFor="search_data"
-          className={` flex items-center border rounded-sm stroke-black`}
-        >
-          <input
-            onChange={(e) => keyword(e.target.value)}
-            className="outline-none py-2 px-2"
-            placeholder="Cari Data"
-            type={"text"}
-            id="search_data"
-          />
+        <label htmlFor="search_data" className={` flex items-center border rounded-sm stroke-black`}>
+          <input onChange={(e) => keyword(e.target.value)} className="outline-none py-2 px-2" placeholder="Cari Data" type={"text"} id="search_data" />
           <div className="flex items-center px-2">
             <SearchIcon />
           </div>
@@ -38,7 +18,7 @@ const FilterData = ({
         <label htmlFor="kabupaten" className="flex items-center gap-3">
           <p className={`${display === "hide" ? "hidden" : "visible"}`}>Pilih Kabupaten / Kota</p>
           <select
-          value={filterKabupaten}
+            value={filterKabupaten}
             onChange={(e) => {
               setFilterKabupaten && setFilterKabupaten(e.target.value);
             }}

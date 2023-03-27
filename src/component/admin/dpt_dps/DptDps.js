@@ -8,10 +8,7 @@ import Icon1 from "../../../utility/icon/Icon_export.png";
 import edit from "../../../utility/icon/edit_icon.png";
 import deletIcon from "../../../utility/icon/delet_icon.png";
 import DataTable from "react-data-table-component";
-import {
-  customStyles,
-  conditionalRowStyles,
-} from "../../../utility/tabelstyle";
+import { customStyles, conditionalRowStyles } from "../../../utility/tabelstyle";
 import { useRouter } from "next/router";
 import EksportDataDpt from "./EksportData";
 import RealCount from "../RealCount";
@@ -52,21 +49,12 @@ const DptDps = () => {
       .then((res) => setExportExcel(res.data))
       .catch((err) => console.log(err));
     roles === "koordinator"
-      ? axiosFetch(
-          "get",
-          `user/dpt_dps?page=${currenPage}&idKabupaten=${id_kabupaten}`,
-          {},
-          token
-        )
+      ? axiosFetch("get", `user/dpt_dps?page=${currenPage}&idKabupaten=${id_kabupaten}`, {}, token)
           .then((res) => setDptdps(res.data))
           .catch((err) => console.log(err))
       : axiosFetch(
           "get",
-          `user/dpt_dps?page=${currenPage}${
-            filterKabupaten !== "semua" ? `&idKabupaten=${filterKabupaten}` : ``
-          }${
-            filterKecamatan !== "semua" ? `&idKecamatan=${filterKecamatan}` : ``
-          }${
+          `user/dpt_dps?page=${currenPage}${filterKabupaten !== "semua" ? `&idKabupaten=${filterKabupaten}` : ``}${filterKecamatan !== "semua" ? `&idKecamatan=${filterKecamatan}` : ``}${
             keyword !== " " && keyword.length >= 3 ? `&keyword=${keyword}` : ``
           }`,
           {},
@@ -149,8 +137,7 @@ const DptDps = () => {
     },
     {
       name: "Tanggal Lahir",
-      selector: (row) =>
-        row.date_birth.split("T").shift().split("-").reverse().join("/"),
+      selector: (row) => row.date_birth.split("T").shift().split("-").reverse().join("/"),
     },
     {
       name: "Kabupaten",
@@ -216,13 +203,11 @@ const DptDps = () => {
   // ];
 
   const getKabupaten = useFetch("get", "user/kabupaten");
-  console.log(username);
+  console.log(id_kabupaten);
   return (
     <div className="pl-[40px] pt-[45px] pb-[100px]">
       <div className="flex items-center justify-between">
-        <p className="font-bold text-[#374151] text-[32px]">
-          DPT / DPS Dapil II Prov. NTB
-        </p>
+        <p className="font-bold text-[#374151] text-[32px]">DPT / DPS Dapil II Prov. NTB</p>
         {/* <div className="pr-[20px]">
           <JumlahDptDps />
         </div> */}
@@ -288,10 +273,7 @@ const DptDps = () => {
               action={() => {
                 console.log(exportExcel);
                 // alert(exportExcel.link);
-                window.open(
-                  process.env.NEXT_PUBLIC_BASE_URL_IMAGE + exportExcel.link,
-                  "_blank"
-                );
+                window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + exportExcel.link, "_blank");
                 // router.push({
                 //   pathname: "/Admin",
                 //   query: { component: "EksportDataDpt" },
@@ -315,51 +297,25 @@ const DptDps = () => {
               <th className="px-4 py-2 text-left font-normal">NIK</th>
               <th className="px-4 py-2 text-left font-normal">Nama</th>
               <th className="px-4 py-2 text-left font-normal">Tempat Lahir</th>
-              <th className="px-4 py-2 text-left font-normal whitespace-nowrap">
-                Tanggal Lahir
-              </th>
+              <th className="px-4 py-2 text-left font-normal whitespace-nowrap">Tanggal Lahir</th>
               <th className="px-4 py-2 text-left font-normal">Kabupaten</th>
               <th className="px-4 py-2 text-left font-normal">Kecamatan</th>
               <th className="px-4 py-2 text-left font-normal">Desa / Kel</th>
-              <th className="px-4 py-2 text-left font-normal whitespace-nowrap">
-                Jenis Kelamin
-              </th>
+              <th className="px-4 py-2 text-left font-normal whitespace-nowrap">Jenis Kelamin</th>
               <th className="px-4 py-2 text-left font-normal">Alamat</th>
-              <th className=" font-normal sticky right-0  bg-[#374151] border-l-2 w-[100px] dpy-4">
-                Aksi
-              </th>
+              <th className=" font-normal sticky right-0  bg-[#374151] border-l-2 w-[100px] dpy-4">Aksi</th>
             </tr>
           </thead>
           <tbody>
             {dptdps?.data?.map((res, i) => (
-              <tr
-                key={i}
-                className={`${
-                  (i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"
-                } h-[51px] text-[#374151]`}
-              >
+              <tr key={i} className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} h-[51px] text-[#374151]`}>
                 <td className=" px-4 py-2 whitespace-nowrap">{res.nik}</td>
                 <td className=" px-4 py-2 whitespace-nowrap">{res.name}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">
-                  {res.place_birth}
-                </td>
-                <td className=" px-4 py-2 whitespace-nowrap">
-                  {res.date_birth
-                    ?.split("T")
-                    .shift()
-                    .split("-")
-                    .reverse()
-                    .join("/")}
-                </td>
-                <td className=" px-4 py-2 whitespace-nowrap">
-                  {res.kabupaten.name}
-                </td>
-                <td className=" px-4 py-2 whitespace-nowrap">
-                  {res.kecamatan.name}
-                </td>
-                <td className=" px-4 py-2 whitespace-nowrap">
-                  {res.kelurahan.name}
-                </td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.place_birth}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.date_birth?.split("T").shift().split("-").reverse().join("/")}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.kabupaten.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.kecamatan.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res.kelurahan.name}</td>
                 <td className=" px-4 py-2 text-center">{res.gender}</td>
                 <td className=" px-4 py-2 whitespace-nowrap">{res.address}</td>
                 {/* <td className=" px-4 py-2">Indonesia</td> */}
@@ -378,12 +334,7 @@ const DptDps = () => {
         </table>
       </div>
       <div className="mr-[50px] mt-[24px]">
-        <Pagination
-          current_page={currenPage}
-          setCurrentPage={setCurrentPage}
-          total_page={dptdps?.metadata?.totalPage}
-          total={dptdps?.metadata?.total}
-        />
+        <Pagination current_page={currenPage} setCurrentPage={setCurrentPage} total_page={dptdps?.metadata?.totalPage} total={dptdps?.metadata?.total} />
       </div>
     </div>
   );

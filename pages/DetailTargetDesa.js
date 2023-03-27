@@ -45,12 +45,7 @@ function DetailTargetDesa({ routes }) {
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
 
   const editTarget = async (data) => {
-    await axiosFetch(
-      "get",
-      `user/details/target_desa/current_input?id_kelurahan=${data._id}`,
-      {},
-      token
-    )
+    await axiosFetch("get", `user/details/target_desa/current_input?id_kelurahan=${data._id}`, {}, token)
       .then((res) => {
         const data = res.data.data;
         setInputTarget(data.jml_target);
@@ -74,13 +69,7 @@ function DetailTargetDesa({ routes }) {
     let formData;
     let formDataDPTDPS;
 
-    if (
-      inputTarget &&
-      inputJmlPenduduk &&
-      inputJmlTps &&
-      inputJmlDptDps &&
-      suaraPeriodeLalu
-    ) {
+    if (inputTarget && inputJmlPenduduk && inputJmlTps && inputJmlDptDps && suaraPeriodeLalu) {
       formData = {
         id_periode: idPeriode,
         id_kelurahan: id,
@@ -136,35 +125,13 @@ function DetailTargetDesa({ routes }) {
     if (router.query.id_kabupaten) {
       dispatch(setIdKabupaten({ id_kabupaten: router.query.id_kabupaten }));
     }
-    if (keyword !== undefined && keyword.length >= 3) {
-      axiosFetch(
-        "get",
-        `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${
-          router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
-        }&keyword=${keyword}&sort=${short}`,
-        {},
-        token
-      )
-        .then((res) => setDetailTarget(res.data))
-        .catch((err) => console.log(err));
-    } else {
-      if (filterKecamatan === "semua") {
+    {
+      {
         axiosFetch(
           "get",
-          `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${
-            router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
-          }&sort=${short}`,
-          {},
-          token
-        )
-          .then((res) => setDetailTarget(res.data))
-          .catch((err) => console.log(err));
-      } else {
-        axiosFetch(
-          "get",
-          `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${
-            router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten
-          }&id_kecamatan=${filterKecamatan}&sort=${short}`,
+          `user/target/details?page=${currenPage}&limit=10&id_kabupaten=${router.query.id_kabupaten ? router.query.id_kabupaten : id_kabupaten}${
+            filterKecamatan !== "semua" && router.query.id_kecamatan === undefined ? `&id_kecamatan=${filterKecamatan}` : ``
+          }${router.query.id_kecamatan ? `&id_kecamatan=${router.query.id_kecamatan}` : ""}${keyword !== undefined ? `&keyword=${keyword}` : ""}&sort=${short}`,
           {},
           token
         )
@@ -172,7 +139,7 @@ function DetailTargetDesa({ routes }) {
           .catch((err) => console.log(err));
       }
     }
-  }, [currenPage, keyword, filterKecamatan, short]);
+  }, [currenPage, keyword, filterKecamatan, short, router.query.id_kecamatan]);
 
   const columns = [
     {
@@ -217,15 +184,7 @@ function DetailTargetDesa({ routes }) {
     },
     {
       name: "Status",
-      selector: (row) => (
-        <ProgressBar
-          progress={
-            row.targets ? row.jumlah_simpatisans / row.targets.target : 0
-          }
-          bgcolor={"#FF5001"}
-          height={"24px"}
-        />
-      ),
+      selector: (row) => <ProgressBar progress={row.targets ? row.jumlah_simpatisans / row.targets.target : 0} bgcolor={"#FF5001"} height={"24px"} />,
     },
     {
       name: "Edit",
@@ -249,53 +208,31 @@ function DetailTargetDesa({ routes }) {
       );
     }
   }
-  console.log(filterKecamatan);
+
   return (
     <>
       <div className="flex items-center">
         <Logo />
-        <span className="ml-[50px] text-3xl font-bold">
-          Detail Target Simpatisan Per Desa
-        </span>
+        <span className="ml-[50px] text-3xl font-bold">Detail Target Simpatisan Per Desa</span>
       </div>
       <hr />
       <div
         className="px-[40px] py-[10px]"
         onClick={() => {
           router.back();
-          dispatch(
-            setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" })
-          );
+          dispatch(setTabPanelRelawanDash({ tabPanelRelawanDash: "target_per_desa" }));
         }}
       >
-        <Button
-          title={"Kembali"}
-          icon={<KembaliIcon />}
-          text={"white"}
-          w={"149px"}
-          h={"53px"}
-          bgColor={"rgb(51, 65, 85)"}
-        />
+        <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       </div>
       <div className=" px-[40px] pt-6 pb-3 text-[14px]">
-        <FilterData
-          short={short}
-          setShort={setShort}
-          keyword={setKeyword}
-          kecamatan={kecamatan?.data !== undefined && kecamatan}
-          setFilterKecamatan={setFilterKecamatan}
-        />
+        <FilterData short={short} setShort={setShort} keyword={setKeyword} kecamatan={kecamatan?.data !== undefined && kecamatan} setFilterKecamatan={setFilterKecamatan} />
       </div>
       <div className="px-[40px] py-[10px]">
         <DataTable columns={columns} data={data} customStyles={customStyles} />
       </div>
       <div className="px-[40px] mt-6 pb-[50px]">
-        <Pagination
-          setCurrentPage={setCurrentPage}
-          total_page={detailTarget?.metadata?.totalPage}
-          current_page={currenPage}
-          total={detailTarget?.metadata?.total}
-        />
+        <Pagination setCurrentPage={setCurrentPage} total_page={detailTarget?.metadata?.totalPage} current_page={currenPage} total={detailTarget?.metadata?.total} />
       </div>
       {popUp && (
         <div className="w-full h-[200vh] absolute top-0">

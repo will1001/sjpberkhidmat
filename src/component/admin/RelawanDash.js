@@ -9,11 +9,7 @@ import ButtonPrimary from "../ButtonPrimary";
 import axiosFetch from "../../API/axiosFetch";
 import RoundedBorderButton from "../RoundedBorderButton";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setEditData,
-  setTabPanelRelawanDash,
-  showOrHidePopUpDash,
-} from "../../redux/panelReducer";
+import { setEditData, setTabPanelRelawanDash, showOrHidePopUpDash } from "../../redux/panelReducer";
 import ListTargetDesa from "../ListTargetDesa";
 import { useRouter } from "next/router";
 import Pagination from "../Pagination";
@@ -35,9 +31,7 @@ const RelawanDash = () => {
   const token = useSelector((state) => state.user.token);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const roles = useSelector((state) => state.user.roles);
-  const tabPanelRelawanDash = useSelector(
-    (state) => state.panel.tabPanelRelawanDash
-  );
+  const tabPanelRelawanDash = useSelector((state) => state.panel.tabPanelRelawanDash);
   const [relawanSub, setRelawanSub] = useState(tabPanelRelawanDash);
   const [currenPage, setCurrentPage] = useState(1);
 
@@ -67,33 +61,20 @@ const RelawanDash = () => {
     dispatch(setTabPanelRelawanDash({ tabPanelRelawanDash: "relawan" }));
 
     if (roles === "koordinator") {
-      axiosFetch(
-        "get",
-        `user/relawan?page=${currenPage}&limit=10&id_kabupaten=${id_kabupaten}`
-      )
+      axiosFetch("get", `user/relawan?page=${currenPage}&limit=10&id_kabupaten=${id_kabupaten}`)
         .then((res) => setRelawan(res.data))
         .catch((err) => console.log(err));
     } else {
       axiosFetch(
         "get",
-        `user/relawan?page=${currenPage}&limit=10${
-          pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""
-        }${sorting !== null ? "&sort=" + sorting : ""}${
-          keyword !== null ? "&keyword=" + keyword : ""
-        }${
-          router.query.id_kabupaten !== undefined
-            ? "&id_kabupaten=" + router.query.id_kabupaten
-            : ""
-        }${
-          router.query.id_kecamatan !== undefined
-            ? "&id_kecamatan=" + router.query.id_kecamatan
-            : ""
-        }`
+        `user/relawan?page=${currenPage}&limit=10${pekerjaanFilter !== null ? "&pekerjaan=" + pekerjaanFilter : ""}${sorting !== null ? "&sort=" + sorting : ""}${keyword !== null ? "&keyword=" + keyword : ""}${
+          router.query.id_kabupaten !== undefined ? "&id_kabupaten=" + router.query.id_kabupaten : ""
+        }${router.query.id_kecamatan !== undefined ? "&id_kecamatan=" + router.query.id_kecamatan : ""}`
       )
         .then((res) => setRelawan(res.data))
         .catch((err) => console.log(err));
     }
-  }, [pekerjaanFilter, sorting, keyword, relawanSub, relawan]);
+  }, [pekerjaanFilter, sorting, keyword, relawanSub]);
 
   const pekerjaan = useFetch("get", "user/jobs");
   const kabupaten = useFetch("get", "user/target/details/kabupaten");
@@ -183,9 +164,7 @@ const RelawanDash = () => {
         <div className="flex items-center border border-orange-400 p-[5px] rounded-lg">
           <img src={PeopleIcon.src} className="h-[36px] m-[5px]" />
           <div>
-            <p className="text-orange-500 text-2xl">
-              {relawan.metadata?.total}
-            </p>
+            <p className="text-orange-500 text-2xl">{relawan.metadata?.total}</p>
             <p className="text-xl">Relawan</p>
           </div>
         </div>
@@ -217,10 +196,7 @@ const RelawanDash = () => {
             />
           </div>
           <div className="flex justify-between items-center px-[40px] py-[10px]">
-            <SearchInput
-              placeholder={"Cari Data"}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
+            <SearchInput placeholder={"Cari Data"} onChange={(e) => setKeyword(e.target.value)} />
             <select
               onChange={(e) => {
                 setTimeout(() => {
@@ -243,41 +219,21 @@ const RelawanDash = () => {
             </select>
             <div>
               <span>Urutkan </span>
-              <select
-                onChange={(e) => setSorting(e.target.value)}
-                id="sorting"
-                className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md"
-              >
+              <select onChange={(e) => setSorting(e.target.value)} id="sorting" className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md">
                 <option value="terbaru">Terbaru</option>
                 <option value="terbanyak">Terbanyak Rekrut</option>
               </select>
             </div>
           </div>
           <div className="px-[40px] py-[10px]">
-            <DataTable
-              columns={columns}
-              data={data}
-              customStyles={customStyles}
-            />
-            <Pagination
-              setCurrentPage={setCurrentPage}
-              total_page={relawan?.metadata?.totalPage}
-              current_page={currenPage}
-              total={relawan?.metadata?.total}
-            />
+            <DataTable columns={columns} data={data} customStyles={customStyles} />
+            <Pagination setCurrentPage={setCurrentPage} total_page={relawan?.metadata?.totalPage} current_page={currenPage} total={relawan?.metadata?.total} />
           </div>
         </>
       ) : (
         <div className="px-[40px] py-[10px]">
           {kabupaten.data?.map((res, i) => {
-            return (
-              <ListTargetDesa
-                label={res.name}
-                simpatisan={res.jumlah_simpatisans}
-                target={res.total_target}
-                id_kabupaten={res._id}
-              />
-            );
+            return <ListTargetDesa label={res.name} simpatisan={res.jumlah_simpatisans} target={res.total_target} id_kabupaten={res._id} />;
           })}
         </div>
       )}
