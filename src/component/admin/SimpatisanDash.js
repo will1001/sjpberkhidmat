@@ -67,7 +67,11 @@ const SimpatisanDash = ({ register, popupMobile }) => {
     roles === "koordinator"
       ? axiosFetch(
           "get",
-          `user/simpatisan?page=${currentPage}&limit=10&id_kabupaten=${id_kabupaten}`,
+          `user/simpatisan?page=${currentPage}&limit=10&id_kabupaten=${id_kabupaten}${
+            router.query.id_kecamatan !== undefined
+              ? "&id_kecamatan=" + router.query.id_kecamatan
+              : ""
+          }`,
           {},
           token
         ).then((res) => setSimpatisan(res.data))
@@ -146,13 +150,15 @@ const SimpatisanDash = ({ register, popupMobile }) => {
             }}
             src={EditIcon.src}
           />
-          <div
-            onClick={() => {
-              hapusSimpatisan(res.email);
-            }}
-          >
-            <DeletIcon />
-          </div>
+          {roles === "admin" && (
+            <div
+              onClick={() => {
+                hapusSimpatisan(res.email);
+              }}
+            >
+              <DeletIcon />
+            </div>
+          )}
         </div>
       );
     }

@@ -34,7 +34,7 @@ export const logoSidebar = [
     path: "DptDps",
     icon: <DPTDPSIcon />,
     component: <DptDps />,
-    koordinator: true,
+    koordinator: false,
   },
   {
     name: "Program",

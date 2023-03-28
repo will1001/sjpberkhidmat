@@ -127,7 +127,8 @@ function Dashboard() {
                   query: { kota: id_kabupaten },
                 });
 
-              roles === "admin" && router.push("/PetaKekuatan");
+              roles === "admin" ||
+                (roles === "ketua_tim" && router.push("/PetaKekuatan"));
             }}
           >
             <Button

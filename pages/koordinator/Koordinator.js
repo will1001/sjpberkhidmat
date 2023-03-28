@@ -199,7 +199,7 @@ const Relawan = () => {
       <div className={`${popupPeriode === true && "-z-50"} basis-9/12 overflow-scroll scrollbar-thin scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]`}>
         {selectTool === "Dashboard" && <Dashboard />}
         {selectTool === "Real Count" && <RealCount user={"Relawan"} />}
-        {selectTool === "DPT/DPS" && <DptDps />}
+        {/* {selectTool === "DPT/DPS" && <DptDps />} */}
         {selectTool === "Logistik" && <Logistik />}
         {selectTool === "Relawan" && <RelawanDash />}
         {selectTool === "Simpatisan" && <SimpatisanDash />}
