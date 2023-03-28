@@ -75,7 +75,7 @@ const SelectPeriode = ({ setPopupPeriode }) => {
               setPopupPeriode(true);
             }}
           >
-            <p className="font-medium text-white text-[16px]">Periode {periode}</p>
+            <p className="font-medium text-white text-[16px]">Periode {dataPeriode?.data?.data[0].from} - {dataPeriode?.data?.data[0].to}</p>
           </button>
           {popup === true && (
             <div className="fixed top-0 left-0 w-screen px-[21px] flex justify-center h-screen bg-[#37415152]" onClick={() => setPopup(false)}>
@@ -133,7 +133,7 @@ const SelectPeriode = ({ setPopupPeriode }) => {
               setPopupPeriode(true);
             }}
           >
-            <p className="font-medium text-white text-[16px]">Periode {periode}</p>
+            <p className="font-medium text-white text-[16px]">Periode {dataPeriode?.data?.data[0].from} - {dataPeriode?.data?.data[0].to}</p>
           </button>
           <div
             className="top-0 left-0 w-screen h-[1000px] fixed "
@@ -157,7 +157,7 @@ const SelectPeriode = ({ setPopupPeriode }) => {
                 <p className="font-bold text-[32px] text-slate-700 mb-3">Pilih Periode</p>
                 {dataPeriode?.data?.data?.map((res, i) => {
                   return (
-                    <button key={i} onClick={() => dispatch(setIdPeriode({ idPeriode: `${res.from} - ${res.to}` }))}>
+                    <button key={i} onClick={() => dispatch(setIdPeriode({ idPeriode: res._id }))}>
                       {periode === `${res.from} - ${res.to}` ? (
                         <div className="flex gap-4 mb-4">
                           <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
