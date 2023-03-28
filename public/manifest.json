@@ -1,12 +1,11 @@
 {
-    "theme_color": "#f69435",
-    "background_color": "#f69435",
+    "theme_color": "#f1e3d5",
+    "background_color": "#f1e3d5",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "sjpberkhidmat",
-    "short_name": "sjp",
-    "description": "sjpberkhidmat",
+    "name": "Sjp Berkhidmat",
+    "short_name": "Sjp Berkhidmat",
     "icons": [
         {
             "src": "/icon-192x192.png",

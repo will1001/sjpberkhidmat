@@ -35,6 +35,9 @@ const HomePage = ({ router }) => {
   const refAspirasi = useRef();
   const [popupMobile, setPopupMobile] = useState(false);
 
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
   const goto = (ref) => {
     window.scrollTo({
       top: ref.offsetTop,
@@ -60,7 +63,34 @@ const HomePage = ({ router }) => {
     width: window.innerWidth,
   });
 
+  const handleBeforeInstallPrompt = (event) => {
+    event.preventDefault();
+    setDeferredPrompt(event);
+    setShowInstallButton(true);
+  };
+
+  const handleInstallClick = (event) => {
+    event.preventDefault();
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+        setShowInstallButton(false);
+      });
+    }
+  };
+
   useEffect(() => {
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+  
+
     const handleResize = () => {
       setScreenSize({
         width: window.innerWidth,
@@ -69,14 +99,42 @@ const HomePage = ({ router }) => {
 
     window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    // return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
   console.log(screenSize);
   return (
     <>
+    
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
         // mobile view
         <div className="w-screen">
+          {showInstallButton && <>
+            <div className="bg-black w-full h-[200vh] opacity-75 absolute z-40"></div>
+            <div className="flex justify-center items-center w-full h-[100vh]  absolute z-50">
+              <div className="bg-white w-80 h-[200px] flex justify-center items-center rounded-xl">
+                <div className="flex flex-col items-center">
+                  <Logo />
+                  <button
+                    className=" cursor-pointer install-button border-gray-800 px-3 mt-2 text-orange-400 border rounded-xl p-1"
+                    onClick={handleInstallClick}
+                  >
+                    Install App
+                  </button>
+                  <p onClick={()=>{
+                    setShowInstallButton(false);
+                  }} className="text-orange-400 text-sm mt-3 cursor-pointer">Tutup</p>
+                </div>
+              </div>
+            </div>
+          </> }
+          
           <div className="p-[16px] sticky top-0 z-50 border-b-[1px] bg-white flex items-center justify-between">
             <Logo mobile={screenSize} />
             <img onClick={() => setPopupMobile(!popupMobile)} className="w-[24px] h-[24px]" src={listIcon.src} alt={"drop down"} />
@@ -98,6 +156,7 @@ const HomePage = ({ router }) => {
               <img className="w-[26.48px] h-[28.05px]  rounded-md" src="https://i.ibb.co/tpcPypN/Frame-2512.jpg" alt="gunakan-hak-pilih" />
               <div>
                 <p className="font-bold text-white text-[7.8px]">Ayo Gunakan Hak Pilih Anda</p>
+                
                 <p className="text-white text-[5.4px]">17 Agustus 2023 Pemilihan Umum DPR RI</p>
               </div>
               <CountDown mobile={screenSize} />
@@ -105,6 +164,7 @@ const HomePage = ({ router }) => {
           </div>
           {/* publikasi video */}
           <>
+          
             <p className="mt-[24px] mb-[12px] ml-[16px] font-bold text-[#374151]">Publikasi</p>
             <div className="">
               {getPublikasi?.data?.filter((data) => data.publication === true).filter((data) => data.description === "video")[0] && (
