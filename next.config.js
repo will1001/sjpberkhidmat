@@ -9,13 +9,13 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  pwa: {
-    dest: "public",
-    disable: process.env.NODE_ENV === "development",
-    register: true,
-    scope: "/",
-    sw: "service-worker.js",
-  },
+  // pwa: {
+  //   dest: "public",
+  //   disable: process.env.NODE_ENV === "development",
+  //   register: true,
+  //   scope: "/",
+  //   sw: "service-worker.js",
+  // },
 };
 
 module.exports = withPWA(nextConfig);
