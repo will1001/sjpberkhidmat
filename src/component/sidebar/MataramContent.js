@@ -6,7 +6,7 @@ import ProgressBar from "../../utility/ProgresBar";
 import ButtonPopUpInfo from "../ButtonPopUpInfo";
 import { useRouter } from "next/router";
 
-const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec }) => {
+const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec, mobile }) => {
   const jumlahSimpatisan =
     statisticKec !== undefined &&
     statisticKec?.reduce((accumulator, currentValue) => {
@@ -22,7 +22,6 @@ const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec }) =>
   const router = useRouter();
 
   const id_kabupaten = data?.toString();
-
   const namaKabupaten = () => {
     if (id_kabupaten === "5271") {
       setNama("Kota Mataram");
@@ -42,7 +41,6 @@ const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec }) =>
   }, []);
 
   // console.log(statisticKec !== undefined && statisticKec, "asdasd");
-
   return (
     <div>
       <div className="flex gap-2 mb-4">
@@ -51,9 +49,14 @@ const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec }) =>
         </div>
         <div
           onClick={() =>
-            router.push({
-              pathname: "./DetailKelurahan",
-            })
+            mobile !== true
+              ? router.push({
+                  pathname: "./DetailKelurahan",
+                })
+              : router.push({
+                  pathname: "./DetailKelurahan",
+                  query: { display: "mobile", id_kabupaten: id_kabupaten },
+                })
           }
         >
           <Button title={"Data Per Desa"} text="white" icon={<DataPerdesaIcon />} bgColor={"#FF5001"} w={"211px"} h={"53px"} />

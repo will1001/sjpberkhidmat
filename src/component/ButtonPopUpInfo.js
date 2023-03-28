@@ -743,7 +743,7 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
               : () => {
                   let path = "Dashboard";
                   let query = {};
-                  const idKabupaten = "5208";
+                  const idKabupaten = "5271";
                   const idKecamatan = "5271010";
 
                   switch (activeType) {
@@ -828,11 +828,74 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("sekarbela")}
           onMouseLeave={() => setHover()}
-          onClick={() =>
-            router.push({
-              pathname: "./DetailKelurahan",
-              query: { id_kabupaten: "5271", id_kecamatan: "5271011" },
-            })
+          onClick={
+            active === undefined
+              ? () =>
+                  router.push({
+                    pathname: "./DetailKelurahan",
+                    query: { id_kabupaten: "5271", id_kecamatan: "5271011" },
+                  })
+              : () => {
+                  let path = "Dashboard";
+                  let query = {};
+                  const idKabupaten = "5271";
+                  const idKecamatan = "5271011";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah TPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah Relawan":
+                      path = "../Admin";
+                      query = {
+                        component: "Relawan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "../Admin";
+                      query = {
+                        component: "Simpatisan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Logistik":
+                      path = "../Admin";
+                      query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+
+                      break;
+                    case "Program":
+                      path = "../Admin";
+                      query = {
+                        component: "/program",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: path,
+                    query: query,
+                  });
+                }
           }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[490px] top-[420px] rounded-md "
         >
@@ -860,11 +923,74 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("mataram")}
           onMouseLeave={() => setHover()}
-          onClick={() =>
-            router.push({
-              pathname: "./DetailKelurahan",
-              query: { id_kabupaten: "5271", id_kecamatan: "5271020" },
-            })
+          onClick={
+            active === undefined
+              ? () =>
+                  router.push({
+                    pathname: "./DetailKelurahan",
+                    query: { id_kabupaten: "5271", id_kecamatan: "5271020" },
+                  })
+              : () => {
+                  let path = "Dashboard";
+                  let query = {};
+                  const idKabupaten = "5271";
+                  const idKecamatan = "5271020";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah TPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah Relawan":
+                      path = "../Admin";
+                      query = {
+                        component: "Relawan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "../Admin";
+                      query = {
+                        component: "Simpatisan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Logistik":
+                      path = "../Admin";
+                      query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+
+                      break;
+                    case "Program":
+                      path = "../Admin";
+                      query = {
+                        component: "/program",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: path,
+                    query: query,
+                  });
+                }
           }
           className="flex justify-center cursor-pointer items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[700px] top-[390px] rounded-md "
         >
@@ -892,11 +1018,74 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("selaparang")}
           onMouseLeave={() => setHover()}
-          onClick={() =>
-            router.push({
-              pathname: "./DetailKelurahan",
-              query: { id_kabupaten: "5271", id_kecamatan: "5271021" },
-            })
+          onClick={
+            active === undefined
+              ? () =>
+                  router.push({
+                    pathname: "./DetailKelurahan",
+                    query: { id_kabupaten: "5271", id_kecamatan: "5271021" },
+                  })
+              : () => {
+                  let path = "Dashboard";
+                  let query = {};
+                  const idKabupaten = "5271";
+                  const idKecamatan = "5271021";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah TPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah Relawan":
+                      path = "../Admin";
+                      query = {
+                        component: "Relawan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "../Admin";
+                      query = {
+                        component: "Simpatisan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Logistik":
+                      path = "../Admin";
+                      query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+
+                      break;
+                    case "Program":
+                      path = "../Admin";
+                      query = {
+                        component: "/program",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: path,
+                    query: query,
+                  });
+                }
           }
           className="flex cursor-pointer justify-center items-center gap-2 py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[780px] top-[220px] rounded-md "
         >
@@ -924,11 +1113,74 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("cakranegara")}
           onMouseLeave={() => setHover()}
-          onClick={() =>
-            router.push({
-              pathname: "./DetailKelurahan",
-              query: { id_kabupaten: "5271", id_kecamatan: "5271030" },
-            })
+          onClick={
+            active === undefined
+              ? () =>
+                  router.push({
+                    pathname: "./DetailKelurahan",
+                    query: { id_kabupaten: "5271", id_kecamatan: "5271030" },
+                  })
+              : () => {
+                  let path = "Dashboard";
+                  let query = {};
+                  const idKabupaten = "5271";
+                  const idKecamatan = "5271030";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah TPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah Relawan":
+                      path = "../Admin";
+                      query = {
+                        component: "Relawan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "../Admin";
+                      query = {
+                        component: "Simpatisan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Logistik":
+                      path = "../Admin";
+                      query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+
+                      break;
+                    case "Program":
+                      path = "../Admin";
+                      query = {
+                        component: "/program",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: path,
+                    query: query,
+                  });
+                }
           }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[880px] top-[320px] rounded-md "
         >
@@ -956,11 +1208,74 @@ const ButtonPopUpInfo = ({ type, data, setHover, targetKab, targetKec, programDa
         <div
           onMouseOver={() => setHover("sandubaya")}
           onMouseLeave={() => setHover()}
-          onClick={() =>
-            router.push({
-              pathname: "./DetailKelurahan",
-              query: { id_kabupaten: "5271", id_kecamatan: "5271031" },
-            })
+          onClick={
+            active === undefined
+              ? () =>
+                  router.push({
+                    pathname: "./DetailKelurahan",
+                    query: { id_kabupaten: "5271", id_kecamatan: "5271031" },
+                  })
+              : () => {
+                  let path = "Dashboard";
+                  let query = {};
+                  const idKabupaten = "5271";
+                  const idKecamatan = "5271031";
+
+                  switch (activeType) {
+                    case "Target Suara":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Suara Periode Lalu":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah TPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah DPT/DPS":
+                      path = "../DetailTargetDesa";
+                      query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                      break;
+                    case "Jumlah Relawan":
+                      path = "../Admin";
+                      query = {
+                        component: "Relawan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Jumlah Simpatisan":
+                      path = "../Admin";
+                      query = {
+                        component: "Simpatisan",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+                      break;
+                    case "Logistik":
+                      path = "../Admin";
+                      query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+
+                      break;
+                    case "Program":
+                      path = "../Admin";
+                      query = {
+                        component: "/program",
+                        id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    default:
+                      break;
+                  }
+                  router.push({
+                    pathname: path,
+                    query: query,
+                  });
+                }
           }
           className="flex cursor-pointer justify-center items-center gap-2  py-2 px-[14px] border-[#FFCFB9] border bg-white fixed z-50 left-[950px] top-[400px] rounded-md "
         >

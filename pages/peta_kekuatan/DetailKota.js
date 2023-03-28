@@ -29,44 +29,52 @@ const DetailKota = ({ router }) => {
       .catch((err) => console.log(err));
   }, [router.query.kota]);
 
-  // console.log(statisticKec.data);
+  console.log(router.query.mobile);
 
   return (
-    <div className="flex">
-      <div className="basis-4/12 z-50 bg-white pb-[100px]  ">{<SideBar content={<MataramContent statisticKec={statisticKec?.data} setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
+    <>
+      {router.query.mobile === "true" ? (
+        <div className="px-[16px] pt-[24px]">
+          <MataramContent mobile={true} statisticKec={statisticKec?.data} setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />
+        </div>
+      ) : (
+        <div className="flex">
+          <div className="basis-4/12 z-50 bg-white pb-[100px]  ">{<SideBar content={<MataramContent statisticKec={statisticKec?.data} setIcon={setIcon} targetKab={targetKab} data={id_kabupaten?.toString()} setHover={setHover} />} />}</div>
 
-      <div className="basis-9/12 ">
-        {router.query.kota === "5271" && (
-          <div className="fixed left-[-900px] top-[-700px]">
-            <MataramMap hover={hover} />
+          <div className={`${router.query.mobile !== undefined ? "hidden" : "visible"} basis-9/12 `}>
+            {router.query.kota === "5271" && (
+              <div className="fixed left-[-900px] top-[-700px]">
+                <MataramMap hover={hover} />
+              </div>
+            )}
+            {router.query.kota === "5201" && (
+              <div className="fixed left-[550px] top-[]">
+                <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+                <PetaLombokBarat hover={hover} />
+              </div>
+            )}
+            {router.query.kota === "5208" && (
+              <div>
+                <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+                <PetaLombokUtara hover={hover} />
+              </div>
+            )}
+            {router.query.kota === "5202" && (
+              <div>
+                <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+                <PetaLombokTengah hover={hover} />
+              </div>
+            )}
+            {router.query.kota === "5203" && (
+              <div>
+                <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
+                <PetaLombokTimur hover={hover} />
+              </div>
+            )}
           </div>
-        )}
-        {router.query.kota === "5201" && (
-          <div className="fixed left-[550px] top-[]">
-            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
-            <PetaLombokBarat hover={hover} />
-          </div>
-        )}
-        {router.query.kota === "5208" && (
-          <div>
-            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
-            <PetaLombokUtara hover={hover} />
-          </div>
-        )}
-        {router.query.kota === "5202" && (
-          <div>
-            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
-            <PetaLombokTengah hover={hover} />
-          </div>
-        )}
-        {router.query.kota === "5203" && (
-          <div>
-            <ListKecamatan statisticKec={statisticKec?.data} kabupaten={router?.query?.kota} setHover={setHover} icon={icon} id={"5201"} />
-            <PetaLombokTimur hover={hover} />
-          </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

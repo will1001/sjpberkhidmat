@@ -210,7 +210,6 @@ const Relawan = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(popupMobile);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
