@@ -84,7 +84,8 @@ function Dashboard() {
                   query: { kota: id_kabupaten, mobile: "true" },
                 });
 
-              roles === "admin" && router.push("/PetaKekuatan");
+              roles === "admin" ||
+                (roles === "ketua_tim" && router.push("/PetaKekuatan"));
             }}
             className="mt-6"
           >
