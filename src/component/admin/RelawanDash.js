@@ -14,7 +14,7 @@ import ListTargetDesa from "../ListTargetDesa";
 import { useRouter } from "next/router";
 import Pagination from "../Pagination";
 
-const RelawanDash = ({ mobile }) => {
+const RelawanDash = ({ mobile, popupMobile }) => {
   const customStyles = {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
@@ -127,7 +127,7 @@ const RelawanDash = ({ mobile }) => {
       name: "Target Desa",
       selector: (row) => row.target_desa.name,
     },
-    {
+    roles !== "ketua_tim" && {
       name: "Aksi",
       selector: (row) => row.aksi,
     },
@@ -155,7 +155,6 @@ const RelawanDash = ({ mobile }) => {
       );
     }
   }
-  console.log(relawan);
 
   return (
     <div className="">
@@ -187,7 +186,7 @@ const RelawanDash = ({ mobile }) => {
       </div>
       {relawanSub === "relawan" ? (
         <>
-          <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"}  py-[10px]`}>
+          <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"} ${roles === "ketua_tim" && "hidden"}  py-[10px]`}>
             <ButtonPrimary
               title={"Tambah Akun Relawan"}
               action={() => {
@@ -225,7 +224,7 @@ const RelawanDash = ({ mobile }) => {
               </select>
             </div>
           </div>
-          <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"} py-[10px]`}>
+          <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"} ${popupMobile === true && "hidden"} py-[10px]`}>
             <DataTable columns={columns} data={data} customStyles={customStyles} />
             <Pagination mobile={mobile === true ? true : undefined} setCurrentPage={setCurrentPage} total_page={relawan?.metadata?.totalPage} current_page={currenPage} total={relawan?.metadata?.total} />
           </div>

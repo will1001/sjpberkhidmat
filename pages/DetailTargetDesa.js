@@ -43,6 +43,7 @@ function DetailTargetDesa({ routes }) {
 
   const token = useSelector((state) => state.user.token);
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
+  const roles = useSelector((state) => state.user.roles);
 
   const editTarget = async (data) => {
     await axiosFetch("get", `user/details/target_desa/current_input?id_kelurahan=${data._id}`, {}, token)
@@ -186,7 +187,7 @@ function DetailTargetDesa({ routes }) {
       name: "Status",
       selector: (row) => <ProgressBar progress={row.targets ? row.jumlah_simpatisans / row.targets.target : 0} bgcolor={"#FF5001"} height={"24px"} />,
     },
-    {
+    roles !== "ketua_tim" && {
       name: "Edit",
       selector: (row) => row.aksi,
     },
@@ -211,7 +212,7 @@ function DetailTargetDesa({ routes }) {
 
   return (
     <>
-      <div className="flex items-center">
+      <div className={`${router.query.display === "mobile" && "hidden"} flex items-center`}>
         <Logo />
         <span className="ml-[50px] text-3xl font-bold">Detail Target Simpatisan Per Desa</span>
       </div>
@@ -226,13 +227,21 @@ function DetailTargetDesa({ routes }) {
         <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       </div>
       <div className=" px-[40px] pt-6 pb-3 text-[14px]">
-        <FilterData short={short} setShort={setShort} keyword={setKeyword} kecamatan={kecamatan?.data !== undefined && kecamatan} setFilterKecamatan={setFilterKecamatan} />
+        <FilterData
+          display={router.query.display === "mobile" ? "hide" : ""}
+          mobile={router.query.display === "mobile" ? true : false}
+          short={short}
+          setShort={setShort}
+          keyword={setKeyword}
+          kecamatan={kecamatan?.data !== undefined && kecamatan}
+          setFilterKecamatan={setFilterKecamatan}
+        />
       </div>
       <div className="px-[40px] py-[10px]">
         <DataTable columns={columns} data={data} customStyles={customStyles} />
       </div>
       <div className="px-[40px] mt-6 pb-[50px]">
-        <Pagination setCurrentPage={setCurrentPage} total_page={detailTarget?.metadata?.totalPage} current_page={currenPage} total={detailTarget?.metadata?.total} />
+        <Pagination mobile={router.query.display === "mobile" ? true : false} setCurrentPage={setCurrentPage} total_page={detailTarget?.metadata?.totalPage} current_page={currenPage} total={detailTarget?.metadata?.total} />
       </div>
       {popUp && (
         <div className="w-full h-[200vh] absolute top-0">

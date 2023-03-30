@@ -25,6 +25,8 @@ import axiosFetch from "../../src/API/axiosFetch";
 import NavbarMobile from "../../src/component/mobile/NavbarMobile";
 import SelectPeriode from "../../src/component/SelectPeriode";
 import ToolSidebar from "../../src/component/mobile/ToolSidebar";
+import { useRouter } from "next/router";
+import { setToolMobile } from "../../src/redux/toolMobileReducer";
 var generator = require("generate-password");
 
 const gender = {
@@ -41,6 +43,7 @@ const gender = {
 };
 
 const Relawan = () => {
+  const router = useRouter();
   const [selectTool, setSelectTool] = useState("Dashboard");
   const [popupPeriode, setPopupPeriode] = useState(false);
   const dispatch = useDispatch();
@@ -209,7 +212,13 @@ const Relawan = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(tool);
+
+  useEffect(() => {
+    router.query.component === "Relawan" && setSelectTool("Relawan");
+    dispatch(setToolMobile({ tool: "Relawan" }));
+    router.query.component === "Simpatisan" && setSelectTool("Simpatisan");
+    dispatch(setToolMobile({ tool: "Simpatisan" }));
+  }, [router.query.component]);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
@@ -226,7 +235,7 @@ const Relawan = () => {
           {tool === "Logistik" && <Logistik popupMobile={popupMobile} />}
           {tool === "Simpatisan" && <SimpatisanDash popupMobile={popupMobile} />}
           {tool === "Forum" && <Forum mobile={true} />}
-          {tool === "Relawan" && <RelawanDash mobile={true} />}
+          {tool === "Relawan" && <RelawanDash mobile={true} popupMobile={popupMobile} />}
           {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
             <div className="bg-white h-screen w-screen absolute top-0 left-0 p-5">
               <div className="flex justify-end cursor-pointer">

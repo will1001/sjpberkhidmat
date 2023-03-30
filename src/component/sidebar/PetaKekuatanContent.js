@@ -4,7 +4,7 @@ import { KembaliIcon, TpsIcon } from "../../utility/icon/icon";
 import Button from "../Button";
 import ButtonPopUpInfo from "../ButtonPopUpInfo";
 
-function PetaKekuatanContent({ dataKabupaten, setHover, targetKab, program, statistic }) {
+function PetaKekuatanContent({ dataKabupaten, setHover, targetKab, program, statistic, mobile }) {
   const kabupaten = dataKabupaten?.data;
   const router = useRouter();
   // console.log(targetKab, "asdasd");
@@ -27,7 +27,7 @@ function PetaKekuatanContent({ dataKabupaten, setHover, targetKab, program, stat
         <Button title={"Kembali"} icon={<KembaliIcon />} text={"white"} w={"149px"} h={"53px"} bgColor={"rgb(51, 65, 85)"} />
       </div>
 
-      <ButtonPopUpInfo type={"kab_kota"} statistic={statistic} targetKab={targetKab} setHover={setHover} programData={program} data={undefined} />
+      <ButtonPopUpInfo mobile={mobile} type={"kab_kota"} statistic={statistic} targetKab={targetKab} setHover={setHover} programData={program} data={undefined} />
       {/* realcount progress */}
       <div className="border-b-2 mt-6" />
       <p className="mt-3 text-[18px] text-[#374151] font-bold">Suara Real Count</p>
