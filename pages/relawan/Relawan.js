@@ -149,7 +149,6 @@ const Relawan = () => {
             // setErrorMessage(error.response.data.message);
           });
       } else {
-
         let formDataSimpatisan = formData;
         delete formDataSimpatisan.role;
         delete formDataSimpatisan.password;
@@ -221,7 +220,7 @@ const Relawan = () => {
           {popupMobile === true && (
             <div className="w-[257px] fixed bg-white shadow-lg pl-[20px] pr-[17px] pt-[28px] h-screen">
               <SelectPeriode setPopupPeriode={setPopupPeriode} />
-              <ToolSidebar />
+              <ToolSidebar setPopupMobile={setPopupMobile} />
             </div>
           )}
           <div>

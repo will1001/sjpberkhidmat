@@ -227,7 +227,7 @@ const Relawan = () => {
           {popupMobile === true && (
             <div className="w-[257px] fixed bg-white shadow-lg pl-[20px] pr-[17px] pt-[28px] h-screen">
               <SelectPeriode setPopupPeriode={setPopupPeriode} />
-              <ToolSidebar />
+              <ToolSidebar setPopupMobile={setPopupMobile} />
             </div>
           )}
           {tool === "Dashboard" && <Dashboard />}

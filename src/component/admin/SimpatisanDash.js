@@ -159,7 +159,6 @@ const SimpatisanDash = ({ register, popupMobile }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log(simpatisan);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
@@ -244,7 +243,9 @@ const SimpatisanDash = ({ register, popupMobile }) => {
               </tbody>
             </table>
           </div>
-          <Pagination mobile={true} total={simpatisan?.metadata?.total} current_page={currentPage} setCurrentPage={setCurrentPage} total_page={simpatisan?.metadata?.totalPage} />
+          <div className="px-[16px]">
+            <Pagination mobile={true} total={simpatisan?.metadata?.total} current_page={currentPage} setCurrentPage={setCurrentPage} total_page={simpatisan?.metadata?.totalPage} />
+          </div>
         </div>
       ) : (
         <div className="">
