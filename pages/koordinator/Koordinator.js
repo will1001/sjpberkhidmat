@@ -226,6 +226,7 @@ const Relawan = () => {
           {tool === "Logistik" && <Logistik popupMobile={popupMobile} />}
           {tool === "Simpatisan" && <SimpatisanDash popupMobile={popupMobile} />}
           {tool === "Forum" && <Forum mobile={true} />}
+          {tool === "Relawan" && <RelawanDash mobile={true} />}
           {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
             <div className="bg-white h-screen w-screen absolute top-0 left-0 p-5">
               <div className="flex justify-end cursor-pointer">
