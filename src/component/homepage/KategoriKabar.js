@@ -57,7 +57,7 @@ const KategoriKabar = ({ mobile }) => {
                 query: { category: "Semua", display: "mobile" },
               })
             }
-            className={`flex w-[350px] py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
+            className={`flex w-full py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
           >
             <Icon9 mobile={mobile} />
             <p className="text-[18px] text-white font-extrabold">Semua Kategori</p>
@@ -73,7 +73,7 @@ const KategoriKabar = ({ mobile }) => {
                 }
                 key={i}
                 style={{ backgroundColor: res.bg }}
-                className={`flex w-[350px] py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
+                className={`flex w-full py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
               >
                 <res.icon mobile={mobile} />
                 <p className="text-[20px] text-white font-extrabold">{res.title}</p>
