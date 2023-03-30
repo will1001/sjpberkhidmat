@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../utility/Logo";
+import Moment from "moment";
+import "moment/locale/id";
+Moment.locale("id");
 
 const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone, tempat, mobile }) => {
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
@@ -12,8 +15,8 @@ const SuratPernyataan = ({ close, nama, tanggalLahir, alamat, phone, tempat, mob
   }
   useEffect(() => {
     if (tanggalLahir) {
-      const res = reformatDate(tanggalLahir);
-      setTanggal(res);
+      // const res = reformatDate(tanggalLahir);
+      setTanggal(Moment(tanggalLahir).format("d-MM-yyyy"));
     }
   }, [tanggalLahir]);
 
