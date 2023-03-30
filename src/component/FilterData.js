@@ -2,12 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { SearchIcon } from "../utility/icon/icon";
 
-const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort, setFilterKecamatan, setFilterKabupaten, display, filterKabupaten }) => {
+const FilterData = ({ mobile, keyword, kabupaten, kecamatan, kelurahan, short, setShort, setFilterKecamatan, setFilterKabupaten, display, filterKabupaten }) => {
   return (
-    <div className="flex justify-between">
+    <div className={`${mobile === true ? "" : "flex justify-between"}`}>
       {keyword !== undefined && (
         <label htmlFor="search_data" className={` flex items-center border rounded-sm stroke-black`}>
-          <input onChange={(e) => keyword(e.target.value)} className="outline-none py-2 px-2" placeholder="Cari Data" type={"text"} id="search_data" />
+          <input onChange={(e) => keyword(e.target.value)} className={`${mobile === true ? "outline-none py-2 px-2 w-full" : "outline-none py-2 px-2"}`} placeholder="Cari Data" type={"text"} id="search_data" />
           <div className="flex items-center px-2">
             <SearchIcon />
           </div>
@@ -35,13 +35,13 @@ const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort,
         </label>
       )}
       {kecamatan !== undefined && kecamatan.data !== undefined && (
-        <label htmlFor="kecamatan" className="flex items-center gap-3">
+        <label htmlFor="kecamatan" className={`${mobile === true && "mt-3"} flex items-center gap-3`}>
           <p className={`${display === "hide" ? "hidden" : "visible"}`}>Pilih Kecamatan</p>
           <select
             onChange={(e) => {
               setFilterKecamatan && setFilterKecamatan(e.target.value);
             }}
-            className="border p-2 rounded-sm"
+            className={`${mobile === true && "w-full"} border p-2 rounded-sm`}
             id="kecamatan"
           >
             <option value={"semua"}>Pilih Kecamatan</option>
@@ -67,7 +67,7 @@ const FilterData = ({ keyword, kabupaten, kecamatan, kelurahan, short, setShort,
         </label>
       )}
       {short !== undefined && (
-        <label htmlFor="shor" className="flex items-center gap-3">
+        <label htmlFor="shor" className={`${mobile === true && "mt-3 w-full justify-center"} flex items-center gap-3`}>
           <p>Urutkan</p>
           <select
             onChange={(e) => {

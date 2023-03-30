@@ -14,7 +14,7 @@ import ListTargetDesa from "../ListTargetDesa";
 import { useRouter } from "next/router";
 import Pagination from "../Pagination";
 
-const RelawanDash = () => {
+const RelawanDash = ({ mobile, popupMobile }) => {
   const customStyles = {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
@@ -127,7 +127,7 @@ const RelawanDash = () => {
       name: "Target Desa",
       selector: (row) => row.target_desa.name,
     },
-    {
+    roles !== "ketua_tim" && {
       name: "Aksi",
       selector: (row) => row.aksi,
     },
@@ -155,11 +155,10 @@ const RelawanDash = () => {
       );
     }
   }
-  console.log(relawan);
 
   return (
     <div className="">
-      <div className="flex justify-between items-center px-[40px] py-[10px]">
+      <div className={`flex justify-between items-center ${mobile === true ? "px-[16px]" : "px-[40px]"} py-[10px]`}>
         <h1 className="text-4xl font-bold">Relawan</h1>
         <div className="flex items-center border border-orange-400 p-[5px] rounded-lg">
           <img src={PeopleIcon.src} className="h-[36px] m-[5px]" />
@@ -169,7 +168,7 @@ const RelawanDash = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-start items-center px-[40px] py-[10px]">
+      <div className={`flex justify-start items-center ${mobile === true ? "px-[16px]" : "px-[40px]"} py-[10px]`}>
         <RoundedBorderButton
           onClick={() => {
             setRelawanSub("relawan");
@@ -187,7 +186,7 @@ const RelawanDash = () => {
       </div>
       {relawanSub === "relawan" ? (
         <>
-          <div className="px-[40px] py-[10px]">
+          <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"} ${roles === "ketua_tim" && "hidden"}  py-[10px]`}>
             <ButtonPrimary
               title={"Tambah Akun Relawan"}
               action={() => {
@@ -195,7 +194,7 @@ const RelawanDash = () => {
               }}
             />
           </div>
-          <div className="flex justify-between items-center px-[40px] py-[10px]">
+          <div className={`${mobile === true ? "px-[16px] flex flex-col gap-3" : "flex justify-between items-center px-[40px] py-[10px]"} `}>
             <SearchInput placeholder={"Cari Data"} onChange={(e) => setKeyword(e.target.value)} />
             <select
               onChange={(e) => {
@@ -204,7 +203,7 @@ const RelawanDash = () => {
                 }, 3000);
               }}
               id="pekerjaan"
-              className="h-[40px] w-[363px] border text-[#374151]"
+              className={`h-[40px] ${mobile === true ? "w-full" : "w-[363px]"}  border text-[#374151]`}
             >
               <option value="" disabled selected>
                 Pilih Pekerjaan
@@ -219,21 +218,21 @@ const RelawanDash = () => {
             </select>
             <div>
               <span>Urutkan </span>
-              <select onChange={(e) => setSorting(e.target.value)} id="sorting" className="h-[40px] w-[363px] border text-[#374151] p-[5px] border-gray-400 rounded-md">
+              <select onChange={(e) => setSorting(e.target.value)} id="sorting" className={`h-[40px] ${mobile === true ? "w-full" : "w-[363px]"} border text-[#374151] p-[5px] border-gray-400 rounded-md`}>
                 <option value="terbaru">Terbaru</option>
                 <option value="terbanyak">Terbanyak Rekrut</option>
               </select>
             </div>
           </div>
-          <div className="px-[40px] py-[10px]">
+          <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"} ${popupMobile === true && "hidden"} py-[10px]`}>
             <DataTable columns={columns} data={data} customStyles={customStyles} />
-            <Pagination setCurrentPage={setCurrentPage} total_page={relawan?.metadata?.totalPage} current_page={currenPage} total={relawan?.metadata?.total} />
+            <Pagination mobile={mobile === true ? true : undefined} setCurrentPage={setCurrentPage} total_page={relawan?.metadata?.totalPage} current_page={currenPage} total={relawan?.metadata?.total} />
           </div>
         </>
       ) : (
-        <div className="px-[40px] py-[10px]">
+        <div className={`${mobile === true ? "px-[16px]" : "px-[40px]"} py-[10px]`}>
           {kabupaten.data?.map((res, i) => {
-            return <ListTargetDesa label={res.name} simpatisan={res.jumlah_simpatisans} target={res.total_target} id_kabupaten={res._id} />;
+            return <ListTargetDesa mobile={mobile === true ? true : undefined} label={res.name} simpatisan={res.jumlah_simpatisans} target={res.total_target} id_kabupaten={res._id} />;
           })}
         </div>
       )}

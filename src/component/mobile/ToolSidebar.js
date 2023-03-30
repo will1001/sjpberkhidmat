@@ -29,24 +29,25 @@ const ToolSidebar = ({ setSelectTool }) => {
             ))}
         </>
       )}
-      {roles === "koordinator" && (
-        <>
-          {" "}
-          {logoSidebar
-            .filter((data) => [true].includes(data.koordinator))
-            .map((res, i) => (
-              <div
-                onClick={() => {
-                  dispatch(setToolMobile({ tool: res.name }));
-                }}
-                key={i}
-                className={`flex items-center gap-2 ${tool === res.name ? "bg-[#FFECE4] text-[#E44700] stroke-[#E44700]" : "stroke-[#374151] text-[#374151]"}  py-2 px-2 cursor-pointer text-[18px] font-medium`}
-              >
-                {res.icon} {res.name}
-              </div>
-            ))}
-        </>
-      )}
+      {roles === "koordinator" ||
+        (roles === "ketua_tim" && (
+          <>
+            {" "}
+            {logoSidebar
+              .filter((data) => [true].includes(data.koordinator))
+              .map((res, i) => (
+                <div
+                  onClick={() => {
+                    dispatch(setToolMobile({ tool: res.name }));
+                  }}
+                  key={i}
+                  className={`flex items-center gap-2 ${tool === res.name ? "bg-[#FFECE4] text-[#E44700] stroke-[#E44700]" : "stroke-[#374151] text-[#374151]"}  py-2 px-2 cursor-pointer text-[18px] font-medium`}
+                >
+                  {res.icon} {res.name}
+                </div>
+              ))}
+          </>
+        ))}
     </div>
   );
 };
