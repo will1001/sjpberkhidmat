@@ -74,7 +74,7 @@ const RelawanDash = () => {
         .then((res) => setRelawan(res.data))
         .catch((err) => console.log(err));
     }
-  }, [pekerjaanFilter, sorting, keyword, relawanSub]);
+  }, [pekerjaanFilter, sorting, keyword, relawanSub, currenPage]);
 
   const pekerjaan = useFetch("get", "user/jobs");
   const kabupaten = useFetch("get", "user/target/details/kabupaten");

@@ -195,7 +195,7 @@ const InputData = () => {
               <div className="pt-[28px] pb-[100px] scrollbar-thin scrollbar-thumb-[#374151] px-[16px] h-screen overflow-scroll">
                 <InputDataRealCount
                   mobile={true}
-                  suaraCalon={setSuaraCalon}
+                  suaraCalon={suaraCalon}
                   setSuaraCalon={setSuaraCalon}
                   formInput={{ ...formInput }}
                   setFormInput={setFormInput}
