@@ -295,7 +295,7 @@ const SemuaArtikel = () => {
               </select>
             </div>
           </div>
-          <div className="grid grid-cols-4  gap-4 mr-2 ml-[70px] pb-[50px]">
+          <div className="grid grid-cols-4 gap-4 mr-2 px-[16px] pb-[50px]">
             {getPublikasi?.data
               ?.filter((data) => ["jpg", "jpeg", "png"].includes(data?.image?.split(".").pop().toLowerCase()))
               .filter((data) => (filter === "Semua" ? true : filter.includes(data.category)))
