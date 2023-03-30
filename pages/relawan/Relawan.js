@@ -149,9 +149,12 @@ const Relawan = () => {
             // setErrorMessage(error.response.data.message);
           });
       } else {
+
         let formDataSimpatisan = formData;
         delete formDataSimpatisan.role;
         delete formDataSimpatisan.password;
+        delete formDataSimpatisan.detail;
+        delete formDataSimpatisan.kebutuhan;
 
         await axiosFetch("post", roles === "admin" ? `user/simpatisan` : `user/relawan/simpatisan`, formDataSimpatisan, roles === "admin" ? undefined : token)
           .then((res) => {
