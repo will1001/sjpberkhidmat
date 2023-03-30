@@ -54,7 +54,7 @@ const KategoriKabar = ({ mobile }) => {
             onClick={() =>
               router.push({
                 pathname: "../../../publikasi/SemuaArtikel",
-                query: { category: "Semua" },
+                query: { category: "Semua", display: "mobile" },
               })
             }
             className={`flex w-[350px] py-3 rounded-full items-center px-6 gap-4 cursor-pointer bg-[#FF5001]`}
