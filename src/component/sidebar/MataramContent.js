@@ -65,7 +65,7 @@ const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec, mobi
       <h1 className="text-[32px] font-bold text-slate-700">{nama}</h1>
       <ButtonPopUpInfo gantiIcon={setIcon} statisticKec={statisticKec} data={id_kabupaten} setHover={setHover} targetKec={targetKab} />
 
-      <div className="mt-4 ">
+      {/* <div className="mt-4 ">
         <div className="flex justify-between text[18px] text-[#374151] font-bold">
           <p className="w-[180px]">Target Simpatisan</p>
           <div className="flex gap-2">
@@ -74,7 +74,7 @@ const MataramContent = ({ data, setHover, targetKab, setIcon, statisticKec, mobi
           </div>
         </div>
         <ProgressBar progress={persentase.toFixed()} bgcolor={"#FF5001"} height={"11px"} />
-      </div>
+      </div> */}
     </div>
   );
 };
