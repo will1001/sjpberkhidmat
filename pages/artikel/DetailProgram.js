@@ -9,6 +9,7 @@ import nextIcon from "../../src/utility/icon/next.png";
 import listIcon from "../../src/utility/icon/centerIcon.png";
 import detailProgramImg from "../../src/utility/img/detailProgram.png";
 import { useEffect } from "react";
+import FooterLink from "../../src/component/FooterLink";
 
 function DetailProgram({ router }) {
   const [dropDownPublikasi, setDropDownPublikasi] = useState(false);
@@ -148,13 +149,8 @@ function DetailProgram({ router }) {
             <p className="text-[10px] text-[#FF5001] font-semibold">DPR RI Dapil II Provinsi Nusa Tenggara Barat</p>
             <p className="text-[10px] text-[#4B5563]">Bekerja bersama untuk membangun masa depan yang lebih baik bagi masyarakat dan generasi yang akan datang.</p>
             <div className="flex py-[40px]">
-              <div className="text-[14px] text-[#4B5563]">
-                Pemilu 2024 <br />
-                Publikasi <br />
-                Gallery <br />
-                Rumah Aspirasi <br />
-                Daftar Relawan <br />
-                Daftar Simpatisan
+              <div className="text-[14px] text-[#4B5563] flex flex-col">
+              <FooterLink />
               </div>
               <div className="ml-[52px]">
                 <p className="text-[16px] text-[#4B5563] font-bold">Social Media</p>
@@ -350,12 +346,7 @@ function DetailProgram({ router }) {
             </div>
 
             <div className="flex flex-col gap-1 text-[#4B5563] justify-center">
-              <p className="">Pemilu 2024</p>
-              <p className="">Publikasi</p>
-              <p className="">Gallery</p>
-              <p className="">Rumah Aspirasi</p>
-              <p className="">Daftar Relawan</p>
-              <p className="">Daftar Simpatisan</p>
+             <FooterLink />
             </div>
             <div className="flex flex-col gap-3 justify-center">
               <p className="flex justify-center font-semibold text-[16px] text-[#4B5563]">Social Media</p>
