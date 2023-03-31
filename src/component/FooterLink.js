@@ -36,7 +36,7 @@ function FooterLink() {
       <span
         className="cursor-pointer"
         onClick={() => {
-          router.push("Aspirasi");
+          router.push("/Aspirasi");
         }}
       >
         Rumah Aspirasi
