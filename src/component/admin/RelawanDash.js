@@ -93,8 +93,14 @@ const RelawanDash = ({ mobile, popupMobile }) => {
       selector: (row) => (
         <button
           onClick={() => {
+
+            let pathLink;
+            
+            if(roles === "admin") pathLink = "Admin";
+            if(roles === "koordinator") pathLink = "Koordinator";
+
             router.push({
-              pathname: "Admin",
+              pathname: pathLink,
               query: {
                 component: "Simpatisan",
                 id_relawan: row._id,

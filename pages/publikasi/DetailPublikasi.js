@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import useFetch from "../../src/API/useFetch";
-import { ButtonLogin, FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../../src/utility/icon/icon";
+import { ButtonLogin, FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon, TwitterIcon, WebIcon, YouTubeIcon } from "../../src/utility/icon/icon";
 import Logo from "../../src/utility/Logo";
 import listIcon from "../../src/utility/icon/centerIcon.png";
 import playIcon from "../../src/utility/icon/playIcon.png";
@@ -175,7 +175,10 @@ const DetailPublikasi = () => {
                   <a href="https://twitter.com/suryadi_sjpntb" target="_blank">
                     <TwitterIcon />
                   </a>
-                  <TikTokIcon />
+                  <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
+                  {/* <TikTokIcon /> */}
                 </div>
               </div>
             </div>
@@ -356,9 +359,12 @@ const DetailPublikasi = () => {
                 <a className="cursor-pointer" href="https://twitter.com/suryadi_sjpntb" target="_blank">
                   <TwitterIcon />
                 </a>
-                <button>
+                <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
+                {/* <button>
                   <TikTokIcon />
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

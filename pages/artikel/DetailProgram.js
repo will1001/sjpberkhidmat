@@ -1,6 +1,6 @@
 import { withRouter } from "next/router";
 import React, { useRef, useState } from "react";
-import { ButtonLogin, DropDownIcon, FacebookIcon, InstagramIcon, LinkedInIcon, SearchIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../../src/utility/icon/icon";
+import { ButtonLogin, DropDownIcon, FacebookIcon, InstagramIcon, LinkedInIcon, SearchIcon, TikTokIcon, TwitterIcon, WebIcon, YouTubeIcon } from "../../src/utility/icon/icon";
 import Logo from "../../src/utility/Logo";
 import cariProgramIcon from "../../src/utility/icon/searchIcon.png";
 import useFetch from "../../src/API/useFetch";
@@ -168,7 +168,10 @@ function DetailProgram({ router }) {
                   <a href="https://twitter.com/suryadi_sjpntb" target="_blank">
                     <TwitterIcon />
                   </a>
-                  <TikTokIcon />
+                  <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
+                  {/* <TikTokIcon /> */}
                 </div>
               </div>
             </div>
@@ -366,9 +369,12 @@ function DetailProgram({ router }) {
                 <a className="cursor-pointer" href="https://twitter.com/suryadi_sjpntb" target="_blank">
                   <TwitterIcon />
                 </a>
-                <button>
+                <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
+                {/* <button>
                   <TikTokIcon />
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

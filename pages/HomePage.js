@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ButtonLogin, DropDownIcon, FacebookIcon, InstagramIcon, LinkedInIcon, SearchIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../src/utility/icon/icon";
+import { ButtonLogin, DropDownIcon, FacebookIcon, InstagramIcon, LinkedInIcon, SearchIcon, TikTokIcon, TwitterIcon, WebIcon, YouTubeIcon } from "../src/utility/icon/icon";
 import Logo from "../src/utility/Logo";
 import Slideshow from "../src/component/homepage/SlideShow";
 import CountDown from "../src/component/homepage/CountDown";
@@ -304,7 +304,10 @@ const HomePage = ({ router }) => {
                       <a href="https://twitter.com/suryadi_sjpntb" target="_blank">
                         <TwitterIcon />
                       </a>
-                      <TikTokIcon />
+                      {/* <TikTokIcon /> */}
+                      <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -602,9 +605,12 @@ const HomePage = ({ router }) => {
                 <a className="cursor-pointer" href="https://twitter.com/suryadi_sjpntb" target="_blank">
                   <TwitterIcon />
                 </a>
-                <button>
+                <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                    <WebIcon />
+                </a>
+                {/* <button>
                   <TikTokIcon />
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

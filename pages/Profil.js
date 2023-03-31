@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { ButtonLogin, FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "../src/utility/icon/icon";
+import { ButtonLogin, FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon, TwitterIcon, WebIcon, YouTubeIcon } from "../src/utility/icon/icon";
 import Logo from "../src/utility/Logo";
 import image1 from "../src/utility/img/profil_1.png";
 import image2 from "../src/utility/img/profil_2.png";
@@ -159,7 +159,10 @@ const Profil = () => {
                   <a href="https://twitter.com/suryadi_sjpntb" target="_blank">
                     <TwitterIcon />
                   </a>
-                  <TikTokIcon />
+                  {/* <TikTokIcon /> */}
+                  <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
                 </div>
               </div>
             </div>
@@ -365,9 +368,12 @@ const Profil = () => {
                 <a className="cursor-pointer" href="https://twitter.com/suryadi_sjpntb" target="_blank">
                   <TwitterIcon />
                 </a>
-                <button>
+                <a href="http://suryadijayapurnama-sjp.id" target="_blank">
+                          <WebIcon />
+                      </a>
+                {/* <button>
                   <TikTokIcon />
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
