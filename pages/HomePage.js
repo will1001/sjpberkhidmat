@@ -471,7 +471,7 @@ const HomePage = ({ router }) => {
                   query: { type: "simpatisan" },
                 });
               }}
-              className="cursor-pointer ml-[740px]"
+              className="cursor-pointer ml-[878px] relative top-[30px]"
             >
               <DaftarSimpatisanButton />
             </div>
