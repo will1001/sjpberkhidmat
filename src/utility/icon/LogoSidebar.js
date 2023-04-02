@@ -7,12 +7,13 @@ import Relawan from "../../component/admin/RelawanDash";
 import SetingSlider from "../../component/admin/seting_slider/SetingSlider";
 import Simpatisan from "../../component/admin/SimpatisanDash";
 import AkunTimSjp from "../../component/akunTimSjp/AkunTimSjp";
+import APK from "../../component/APK";
 import RumahAspirasi from "../../component/aspirasi/RumahAspirasi";
 import Forum from "../../component/Forum";
 import Program from "../../component/program/IndexProgram";
 import Publikasi from "../../component/publikasi/Publikasi";
 
-import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, PublikasiIcon, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon, AspirasiIcon, TambahAkunIcon, ForumIcon } from "./icon";
+import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, PublikasiIcon, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon, AspirasiIcon, TambahAkunIcon, ForumIcon, APKIcon } from "./icon";
 export const logoSidebar = [
   {
     name: "Dashboard",
@@ -49,6 +50,12 @@ export const logoSidebar = [
     role: "relawan",
     component: <Logistik />,
     koordinator: true,
+  },
+  {
+    name: "APK",
+    icon: <APKIcon />,
+    path: "/apk",
+    component: <APK />,
   },
   {
     name: "Publikasi",
