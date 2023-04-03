@@ -83,7 +83,7 @@ const RelawanDash = ({ mobile, popupMobile }) => {
     {
       name: "No",
       selector: (row, i) => ++i + (currenPage - 1) * 10,
-      maxWidth: "5px"
+      width: "50px",
     },
     {
       name: "Nama Relawan",

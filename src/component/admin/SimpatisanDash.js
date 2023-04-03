@@ -82,7 +82,7 @@ const SimpatisanDash = ({ register, popupMobile }) => {
     {
       name: "No",
       selector: (row, i) => ++i + (currentPage - 1) * 10,
-      maxWidth: "5px"
+      width: "50px",
     },
     {
       name: "Nama",
