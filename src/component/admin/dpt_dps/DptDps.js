@@ -294,6 +294,7 @@ const DptDps = () => {
         <table className="table-auto">
           <thead className="">
             <tr className="bg-[#374151] text-white h-[51px]">
+              <th className="px-4 py-2 text-left font-normal">No</th>
               <th className="px-4 py-2 text-left font-normal">NIK</th>
               <th className="px-4 py-2 text-left font-normal">Nama</th>
               <th className="px-4 py-2 text-left font-normal">Tempat Lahir</th>
@@ -309,6 +310,7 @@ const DptDps = () => {
           <tbody>
             {dptdps?.data?.map((res, i) => (
               <tr key={i} className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} h-[51px] text-[#374151]`}>
+                <td className=" px-4 py-2 whitespace-nowrap">{++i + (currenPage - 1) * 10}</td>
                 <td className=" px-4 py-2 whitespace-nowrap">{res.nik}</td>
                 <td className=" px-4 py-2 whitespace-nowrap">{res.name}</td>
                 <td className=" px-4 py-2 whitespace-nowrap">{res.place_birth}</td>

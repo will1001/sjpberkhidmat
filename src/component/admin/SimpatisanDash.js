@@ -80,8 +80,9 @@ const SimpatisanDash = ({ register, popupMobile }) => {
 
   const columns = [
     {
-      name: "Nomor",
+      name: "No",
       selector: (row, i) => ++i + (currentPage - 1) * 10,
+      width: "50px",
     },
     {
       name: "Nama",
