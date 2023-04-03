@@ -6,11 +6,13 @@ import axiosFetch from "../API/axiosFetch";
 import { useSelector } from "react-redux";
 import success from "../utility/img/berhasiPost.png";
 import deleteData from "../utility/img/hapusData.png";
+import Pagination from "./Pagination";
 
 const APK = () => {
   const [popupTambah, setPopupTambah] = useState(false);
   const [popupBerhasil, setPopupBerhasil] = useState(false);
   const [popupDelete, setPopupDelete] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [edit, setEdit] = useState(false);
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
@@ -48,10 +50,10 @@ const APK = () => {
       .catch((err) => console.log(err));
 
   useEffect(() => {
-    const res = axiosFetch("get", `user/apk?page=1`, {}, token)
+    const res = axiosFetch("get", `user/apk?page=${currentPage}`, {}, token)
       .then((res) => setData(res.data))
       .catch((err) => console.log(res));
-  }, [popupBerhasil, popupDelete, popupTambah]);
+  }, [popupBerhasil, popupDelete, popupTambah, currentPage]);
   console.log(data);
   return (
     <>
@@ -272,6 +274,9 @@ const APK = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="mt-3">
+          <Pagination total={data?.metadata?.total} current_page={currentPage} setCurrentPage={setCurrentPage} total_page={data?.metadata?.totalPage} />
         </div>
       </div>
     </>
