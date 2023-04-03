@@ -11,6 +11,7 @@ const APK = () => {
   const [popupTambah, setPopupTambah] = useState(false);
   const [popupBerhasil, setPopupBerhasil] = useState(false);
   const [popupDelete, setPopupDelete] = useState(false);
+  const [edit, setEdit] = useState(false);
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
   const relawan = useFetch("get", "user/relawan?page=1&limit=100");
@@ -24,6 +25,9 @@ const APK = () => {
       .then((res) => {
         setPopupTambah(false);
         setPopupBerhasil(true);
+        setFormAPK({
+          id_periode: periode,
+        });
       })
       .catch((err) => console.log(err));
 
@@ -34,13 +38,21 @@ const APK = () => {
         setPopupDelete(false);
       })
       .catch((err) => console.log(err));
+  const editAPK = (id) =>
+    axiosFetch("put", `user/apk/${id}`, formAPK, token)
+      .then((res) => {
+        setIdAPK();
+        setPopupTambah(false);
+        setFormAPK({ id_periode: periode });
+      })
+      .catch((err) => console.log(err));
 
   useEffect(() => {
     const res = axiosFetch("get", `user/apk?page=1`, {}, token)
       .then((res) => setData(res.data))
       .catch((err) => console.log(res));
-  }, [popupBerhasil, popupDelete]);
-
+  }, [popupBerhasil, popupDelete, popupTambah]);
+  console.log(data);
   return (
     <>
       {popupDelete === true && (
@@ -102,23 +114,31 @@ const APK = () => {
                 <p className="text-[32px] text-[#374151] font-bold">Tambah Data Alat Peraga Kampanye</p>
                 <div className="flex justify-between items-center text-[#374151] ">
                   <p>Nama APK</p>
-                  <input onChange={(e) => setFormAPK({ ...formAPK, nama: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="text" />
+                  <input value={formAPK.nama} onChange={(e) => setFormAPK({ ...formAPK, nama: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="text" />
                 </div>
                 <div className="flex justify-between items-center text-[#374151] mt-3">
                   <p>Tgl Masuk</p>
-                  <input onChange={(e) => setFormAPK({ ...formAPK, tgl_masuk: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="date" />
+                  <input value={formAPK.tgl_masuk} onChange={(e) => setFormAPK({ ...formAPK, tgl_masuk: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="date" />
                 </div>
                 <div className="flex justify-between items-center text-[#374151] mt-3">
                   <p>Tgl Keluar</p>
-                  <input onChange={(e) => setFormAPK({ ...formAPK, tgl_keluar: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="date" />
+                  <input value={formAPK.tgl_keluar} onChange={(e) => setFormAPK({ ...formAPK, tgl_keluar: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="date" />
+                </div>
+                <div className="flex justify-between items-center text-[#374151] mt-3">
+                  <p>Jumlah APK Masuk</p>
+                  <input value={formAPK.jml_masuk} onChange={(e) => setFormAPK({ ...formAPK, jml_masuk: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="number" />
+                </div>
+                <div className="flex justify-between items-center text-[#374151] mt-3">
+                  <p>Jumlah APK Keluar</p>
+                  <input value={formAPK.jml_keluar} onChange={(e) => setFormAPK({ ...formAPK, jml_keluar: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="number" />
                 </div>
                 <div className="flex justify-between items-center text-[#374151] mt-3">
                   <p>Tujuan Distribusi</p>
-                  <input onChange={(e) => setFormAPK({ ...formAPK, tujuan: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="text" />
+                  <input value={formAPK.tujuan} onChange={(e) => setFormAPK({ ...formAPK, tujuan: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="text" />
                 </div>
                 <div className="flex justify-between items-center text-[#374151] mt-3">
                   <p>Penanggung Jawab</p>
-                  <select onChange={(e) => setFormAPK({ ...formAPK, id_relawan: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="text">
+                  <select value={formAPK.id_relawan} onChange={(e) => setFormAPK({ ...formAPK, id_relawan: e.target.value })} className="border p-2 w-[363px] rounded-md outline-none" type="text">
                     {relawan?.data?.map((res) => (
                       <option key={res._id} value={res._id}>
                         {res.name}
@@ -127,11 +147,27 @@ const APK = () => {
                   </select>
                 </div>
                 <div className="flex gap-3 justify-end mt-3">
-                  <div className="border px-3 py-1 text-[#9CA3AF] rounded-sm cursor-pointer">Batalkan</div>
-                  <div onClick={postAPK} className="flex gap-2 bg-[#E44700] stroke-white px-4 py-1 rounded-sm items-center cursor-pointer">
-                    <p className="font-medium text-white">Buat APK</p>
-                    <APKIcon />
+                  <div
+                    onClick={() => {
+                      setPopupTambah(false);
+                      setFormAPK({
+                        id_periode: periode,
+                      });
+                    }}
+                    className="border px-3 py-1 text-[#9CA3AF] rounded-sm cursor-pointer"
+                  >
+                    Batalkan
                   </div>
+                  {edit === false ? (
+                    <div onClick={postAPK} className="flex gap-2 bg-[#E44700] stroke-white px-4 py-1 rounded-sm items-center cursor-pointer">
+                      <p className="font-medium text-white">Buat APK</p>
+                      <APKIcon />
+                    </div>
+                  ) : (
+                    <div onClick={() => editAPK(idAPK)} className="px-6 py-1 border rounded-sm">
+                      Edit
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -141,7 +177,13 @@ const APK = () => {
 
       <div className="px-[60px] pt-[42px] pb-[200px]">
         <p className="text-[32px] text-[#374151] font-bold">APK</p>
-        <div onClick={() => setPopupTambah(true)} className="w-[159px] text-center bg-[#E44700] py-2 font-medium text-white mt-3 rounded-sm cursor-pointer">
+        <div
+          onClick={() => {
+            setPopupTambah(true);
+            setEdit(false);
+          }}
+          className="w-[159px] text-center bg-[#E44700] py-2 font-medium text-white mt-3 rounded-sm cursor-pointer"
+        >
           Tambah Data
         </div>
         <div className="flex stroke-[#374151] text-[#374151] w-[239px] border justify-between p-2 rounded-sm mt-4">
@@ -165,6 +207,12 @@ const APK = () => {
                   Tgl Keluar
                 </th>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium">
+                  APK Masuk
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium">
+                  APK Keluar
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium">
                   Tujuan Distribusi
                 </th>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-mediumrder">
@@ -182,13 +230,31 @@ const APK = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.nama}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.tgl_masuk?.split("T").shift().split("-").reverse().join("/")}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.tgl_keluar?.split("T").shift().split("-").reverse().join("/")}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{res.jml_masuk}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{res.jml_keluar}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.tujuan}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.nama_relawan}</td>
                   <td
                     className={`${popupBerhasil === true && "-z-50"} ${popupDelete === true && "-z-50"} ${(i + 1) % 2 !== 0 && "bg-[#F9FAFB]"} ${popupTambah === true && "-z-50"} px-2 sticky right-0 bg-white py-4 whitespace-nowrap text-sm`}
                   >
                     <div className="flex gap-3 justify-center">
-                      <div className="border-2 border-[#374151] p-1 rounded-sm cursor-pointer">
+                      <div
+                        onClick={() => {
+                          setFormAPK({
+                            nama: res.nama,
+                            tgl_masuk: res.tgl_masuk.split("T").shift(),
+                            tgl_keluar: res.tgl_keluar.split("T").shift(),
+                            jml_masuk: res?.jml_masuk,
+                            jml_keluar: res?.jml_keluar,
+                            tujuan: res.tujuan,
+                            id_relawan: res.relawan._id,
+                          });
+                          setEdit(true);
+                          setPopupTambah(true);
+                          setIdAPK(res._id);
+                        }}
+                        className="border-2 border-[#374151] p-1 rounded-sm cursor-pointer"
+                      >
                         <UbahIcon />
                       </div>
                       <div
