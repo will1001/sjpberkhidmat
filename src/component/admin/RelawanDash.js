@@ -81,8 +81,9 @@ const RelawanDash = ({ mobile, popupMobile }) => {
 
   const columns = [
     {
-      name: "Nomor",
+      name: "No",
       selector: (row, i) => ++i + (currenPage - 1) * 10,
+      maxWidth: "5px"
     },
     {
       name: "Nama Relawan",

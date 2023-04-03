@@ -178,7 +178,7 @@ const APK = () => {
             <tbody className="">
               {data?.data?.map((res, i) => (
                 <tr className={`${(i + 1) % 2 !== 0 && "bg-[#F9FAFB]"}`} key={res._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">{i + 1}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm w-[5px]">{i + 1}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.nama}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.tgl_masuk?.split("T").shift().split("-").reverse().join("/")}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{res.tgl_keluar?.split("T").shift().split("-").reverse().join("/")}</td>
