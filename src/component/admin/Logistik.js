@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BackIcon,
-  ChatIcon,
-  DeletIcon,
-  DetailIcon,
-  DropDownIcon,
-  NextIcon,
-  PrevIcon,
-  ReadIcon,
-  RelawanIcon,
-  SearchIcon,
-} from "../../utility/icon/icon";
+import { BackIcon, ChatIcon, DeletIcon, DetailIcon, DropDownIcon, NextIcon, PrevIcon, ReadIcon, RelawanIcon, SearchIcon } from "../../utility/icon/icon";
 import ChatInput from "../logistik/ChatInput";
 import alert from "../../utility/img/alert_broadcast.png";
 import forum from "../../utility/img/forum.png";
@@ -37,20 +26,23 @@ const Logistik = ({ popupMobile }) => {
   const [message, setMessage] = useState("");
   const [loadNewChat, setLoadNewChat] = useState(false);
   const [chats, setChat] = useState([]);
+  const [nomor, setnomor] = useState();
   const [chatTargetId, setChatTargetId] = useState("");
   const [dataChat, setDataChat] = useState();
   const [alertHapus, setAlertHapus] = useState(false);
   const [logistik, setLogistik] = useState();
   const [deleteId, setDeleteId] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const getAPK = useFetch("get", "user/apk?page=1&limit=1000");
   const router = useRouter();
 
-  const handlePopUp = async (name, id_relawan, data) => {
+  const handlePopUp = async (name, id_relawan, data, nomor) => {
     setPopup(true);
     name !== popupPage ? setPopupPage(name) : setPopupPage();
     setChatTargetId(id_relawan);
     getChats(id_relawan);
     setDataChat(data);
+    setnomor(nomor);
   };
 
   const token = useSelector((state) => state.user.token);
@@ -114,12 +106,7 @@ const Logistik = ({ popupMobile }) => {
 
   const getChats = async (id_relawan) => {
     {
-      await axiosFetch(
-        "get",
-        `user/chats?offset=0&target=${id_relawan}`,
-        [],
-        token
-      )
+      await axiosFetch("get", `user/chats?offset=0&target=${id_relawan}`, [], token)
         .then((res) => {
           setChat(res.data);
           // window.location.reload(false);
@@ -159,16 +146,8 @@ const Logistik = ({ popupMobile }) => {
   useEffect(() => {
     axiosFetch(
       "get",
-      `user/logistik?page=${currentPage}${
-        roles === "koordinator" ? `&id_kabupaten=${id_kabupaten}` : ""
-      }${
-        router.query.id_kabupaten !== undefined
-          ? "&id_kabupaten=" + router.query.id_kabupaten
-          : ""
-      }${
-        router.query.id_kecamatan !== undefined
-          ? "&id_kecamatan=" + router.query.id_kecamatan
-          : ""
+      `user/logistik?page=${currentPage}${roles === "koordinator" ? `&id_kabupaten=${id_kabupaten}` : ""}${router.query.id_kabupaten !== undefined ? "&id_kabupaten=" + router.query.id_kabupaten : ""}${
+        router.query.id_kecamatan !== undefined ? "&id_kecamatan=" + router.query.id_kecamatan : ""
       }`,
       {},
       token
@@ -195,24 +174,17 @@ const Logistik = ({ popupMobile }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log(id_kabupaten);
+  console.log(logistik);
   return (
     <>
       {screenSize.width >= 350 && screenSize.width <= 950 ? (
         <div className="px-[16px] pt-[20px] pb-[100px]">
           <p className="text-[24px] text-[#374151] font-bold">Logistik</p>
-          <div
-            onClick={() => setPopupPengajuan(true)}
-            className="bg-[#E44700] font-semibold w-[170px] mt-[16px] text-white rounded-md cursor-pointer py-2 px-4 "
-          >
+          <div onClick={() => setPopupPengajuan(true)} className="bg-[#E44700] font-semibold w-[170px] mt-[16px] text-white rounded-md cursor-pointer py-2 px-4 ">
             Tambah Pengajuan
           </div>
           <div className="flex text-[12px] stroke-[#374151] w-full border justify-between px-2 py-1 rounded-sm mt-[19px]">
-            <input
-              placeholder="Cari Data..."
-              className="outline-none w-full pr-2"
-              type={"text"}
-            />
+            <input placeholder="Cari Data..." className="outline-none w-full pr-2" type={"text"} />
             <SearchIcon />
           </div>
           <div className="flex gap-3 mt-3">
@@ -251,42 +223,23 @@ const Logistik = ({ popupMobile }) => {
               ))}
             </select>
           </div>
-          <div
-            className={`${
-              popupMobile === true && "scrollbar-none"
-            } flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]`}
-          >
+          <div className={`${popupMobile === true && "scrollbar-none"} flex overflow-x-auto pb-4 rounded-sm mt-[24px] scrollbar-thin scrollbar-track-[#D1D5DB] scrollbar-thumb-[#374151]`}>
             <table className="tabel-auto">
               <thead className="bg-[#374151]  ">
                 <tr className="h-[51px] text-white ">
-                  <th
-                    scope="col"
-                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                  >
+                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                     No
                   </th>
-                  <th
-                    scope="col"
-                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                  >
+                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                     tgl Pengajuan
                   </th>
-                  <th
-                    scope="col"
-                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                  >
+                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                     Kab / Kota
                   </th>
-                  <th
-                    scope="col"
-                    className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                  >
+                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                     Kebutuhan
                   </th>
-                  <th
-                    scope="col"
-                    className=" px-2 py-3 text-left text-xs font-medium"
-                  >
+                  <th scope="col" className=" px-2 py-3 text-left text-xs font-medium">
                     Kecamatan
                   </th>
                   <th scope="col" className=" px-2 py-3 text-xs font-medium">
@@ -295,12 +248,7 @@ const Logistik = ({ popupMobile }) => {
                   <th scope="col" className=" px-2 py-3 text-xs font-medium">
                     Status
                   </th>
-                  <th
-                    scope="col"
-                    className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 ${
-                      popupPage === "chat" && "-z-50"
-                    } text-white  text-xs font-medium`}
-                  >
+                  <th scope="col" className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 ${popupPage === "chat" && "-z-50"} text-white  text-xs font-medium`}>
                     Aksi
                   </th>
                 </tr>
@@ -309,59 +257,28 @@ const Logistik = ({ popupMobile }) => {
                 {logistik !== undefined &&
                   logistik.data?.map((res, i) => {
                     return (
-                      <tr
-                        className={`${
-                          (i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"
-                        }  h-[52px]`}
-                      >
+                      <tr className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"}  h-[52px]`}>
                         <td className="px-2 py-3">{++i}</td>
-                        <td className=" px-2 py-3 whitespace-nowrap">
-                          {Moment(res.createdAt).format("DD-MMMM-YYYY")}
-                        </td>
-                        <td className="px-2 py-3 whitespace-nowrap">
-                          {res.kabupaten.name}
-                        </td>
+                        <td className=" px-2 py-3 whitespace-nowrap">{Moment(res.createdAt).format("DD-MMMM-YYYY")}</td>
+                        <td className="px-2 py-3 whitespace-nowrap">{res.kabupaten.name}</td>
                         <td className="w-[120px] px-2 py-3">{res.kebutuhan}</td>
-                        <td className="w-[120px] px-2 py-3">
-                          {res.kecamatan.name}
-                        </td>
-                        <td className="px-2 py-3 whitespace-nowrap">
-                          {res.relawan[0]?.name}
-                        </td>
+                        <td className="w-[120px] px-2 py-3">{res.kecamatan.name}</td>
+                        <td className="px-2 py-3 whitespace-nowrap">{res.relawan[0]?.name}</td>
                         <td className="px-2 py-3 ">
-                          <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
-                            {res.status}
-                          </div>
+                          <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">{res.status}</div>
                         </td>
 
-                        <td
-                          className={`px-2 py-3 border-l-2  ${
-                            (i + 1) % 2 === 0 ? "bg-[#F9FAFB]" : "bg-white"
-                          } sticky right-0 ${popupPage === "chat" && "-z-50"}`}
-                        >
+                        <td className={`px-2 py-3 border-l-2  ${(i + 1) % 2 === 0 ? "bg-[#F9FAFB]" : "bg-white"} sticky right-0 ${popupPage === "chat" && "-z-50"}`}>
                           <div className="flex items-center justify-center gap-3">
-                            <div
-                              onClick={() =>
-                                handlePopUp("chat", res.id_relawan, res)
-                              }
-                              className={`${
-                                alertHapus === true && "hidden"
-                              } cursor-pointer`}
-                            >
+                            <div onClick={() => handlePopUp("chat", res.id_relawan, res)} className={`${alertHapus === true && "hidden"} cursor-pointer`}>
                               <DetailIcon />
                             </div>
                             {alertHapus !== false && res._id === deleteId ? (
                               <div className="flex gap-3 items-center justify-center">
-                                <div
-                                  className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md"
-                                  onClick={() => setAlertHapus(false)}
-                                >
+                                <div className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md" onClick={() => setAlertHapus(false)}>
                                   Batal
                                 </div>
-                                <div
-                                  className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md"
-                                  onClick={() => deletLogistik(res._id)}
-                                >
+                                <div className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md" onClick={() => deletLogistik(res._id)}>
                                   Hapus
                                 </div>
                               </div>
@@ -371,9 +288,7 @@ const Logistik = ({ popupMobile }) => {
                                   setAlertHapus(true);
                                   setDeleteId(res._id);
                                 }}
-                                className={`${
-                                  alertHapus === true && "hidden"
-                                } cursor-pointer`}
+                                className={`${alertHapus === true && "hidden"} cursor-pointer`}
                               >
                                 <DeletIcon />
                               </div>
@@ -386,45 +301,23 @@ const Logistik = ({ popupMobile }) => {
               </tbody>
             </table>
           </div>
-          <Pagination
-            mobile={true}
-            total_page={logistik?.metadata?.totalPage}
-            total={logistik?.metadata?.total}
-            current_page={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          <Pagination mobile={true} total_page={logistik?.metadata?.totalPage} total={logistik?.metadata?.total} current_page={currentPage} setCurrentPage={setCurrentPage} />
           {popupPengajuan === true && (
             <div className="fixed top-0 left-0 w-screen h-screen bg-[#37415152]">
               <div className=" bg-white pt-[24px] px-[16px] text-[#374151] h-screen overflow-scroll scrollbar-thin scrollbar-thumb-[#374151]">
-                <div
-                  onClick={() => setPopupPengajuan(false)}
-                  className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]"
-                >
+                <div onClick={() => setPopupPengajuan(false)} className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]">
                   X
                 </div>
-                <p className="text-[21px] text-center mb-[21px] font-bold">
-                  Tambah Pengajuan Logistik
-                </p>
+                <p className="text-[21px] text-center mb-[21px] font-bold">Tambah Pengajuan Logistik</p>
                 <div className="text-[14px]">
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] items-center flex"
-                      htmlFor="nama_relawan"
-                    >
+                    <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                       Nama Relawan
                     </label>
-                    <input
-                      className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                      type={"text"}
-                      id="nama_relawan"
-                      value={name}
-                    />
+                    <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"text"} id="nama_relawan" value={name} />
                   </div>
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] items-center flex"
-                      htmlFor="nama_relawan"
-                    >
+                    <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                       Kabupaten / Kota
                     </label>
                     <select
@@ -437,9 +330,7 @@ const Logistik = ({ popupMobile }) => {
                       }}
                       className="border py-2 px-2 rounded-sm outline-none w-[330px]"
                     >
-                      <option selected={"disabled"}>
-                        Pilih Kabupaten / Kota
-                      </option>
+                      <option selected={"disabled"}>Pilih Kabupaten / Kota</option>
                       {getKabupaten?.data?.map((res) => (
                         <option className="mb-2" key={res._id} value={res._id}>
                           {res.name}
@@ -448,10 +339,7 @@ const Logistik = ({ popupMobile }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] items-center flex"
-                      htmlFor="nama_relawan"
-                    >
+                    <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                       Kecamatan
                     </label>
                     <select
@@ -473,10 +361,7 @@ const Logistik = ({ popupMobile }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] items-center flex"
-                      htmlFor="nama_relawan"
-                    >
+                    <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                       Desa
                     </label>
                     <select
@@ -489,9 +374,7 @@ const Logistik = ({ popupMobile }) => {
                       }}
                       className="border py-2 px-2 rounded-sm outline-none w-[330px]"
                     >
-                      <option selected={"disabled"}>
-                        Pilih Desa / kelurahan
-                      </option>
+                      <option selected={"disabled"}>Pilih Desa / kelurahan</option>
                       {getKelurahans?.data?.map((res) => (
                         <option className="mb-2" key={res._id} value={res._id}>
                           {res.name}
@@ -500,24 +383,13 @@ const Logistik = ({ popupMobile }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] items-center flex"
-                      htmlFor="email"
-                    >
+                    <label className="w-[180px] items-center flex" htmlFor="email">
                       Email
                     </label>
-                    <input
-                      className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                      type={"email"}
-                      id="email"
-                      value={emaill}
-                    />
+                    <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"email"} id="email" value={emaill} />
                   </div>
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] items-center flex"
-                      htmlFor="kebutuhan"
-                    >
+                    <label className="w-[180px] items-center flex" htmlFor="kebutuhan">
                       Kebutuhan
                     </label>
                     <input
@@ -533,10 +405,7 @@ const Logistik = ({ popupMobile }) => {
                     />
                   </div>
                   <div className="flex flex-col gap-2 mb-3">
-                    <label
-                      className="w-[180px] flex"
-                      htmlFor="detail_pengajuan"
-                    >
+                    <label className="w-[180px] flex" htmlFor="detail_pengajuan">
                       Detail Pengajuan
                     </label>
                     <textarea
@@ -560,10 +429,7 @@ const Logistik = ({ popupMobile }) => {
                     >
                       Batalkan
                     </div>
-                    <div
-                      onClick={postLogistik}
-                      className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]"
-                    >
+                    <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
                       Buat Pengajuan
                     </div>
                   </div>
@@ -585,19 +451,10 @@ const Logistik = ({ popupMobile }) => {
                     X
                   </div>
                   <div className="px-[50px] py-[30px]">
-                    <p className="text-[21px] font-bold">
-                      Logistik Kota Mataram
-                    </p>
+                    <p className="text-[21px] font-bold">Logistik Kota Mataram</p>
                     <div className="flex gap-4 mt-2">
                       <p className="w-[140px] text-[#6B7280]">Tgl Pengajuan</p>
-                      <p>
-                        {dataChat?.createdAt
-                          ?.split("T")
-                          .shift()
-                          .split("-")
-                          .reverse()
-                          .join("/")}
-                      </p>
+                      <p>{dataChat?.createdAt?.split("T").shift().split("-").reverse().join("/")}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
                       <p className="w-[140px] text-[#6B7280]">Kebutuhan</p>
@@ -608,9 +465,7 @@ const Logistik = ({ popupMobile }) => {
                       <p>{dataChat?.status}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
-                      <p className="w-[140px] text-[#6B7280]">
-                        Detail Pengajuan
-                      </p>
+                      <p className="w-[140px] text-[#6B7280]">Detail Pengajuan</p>
                       <p className="w-[360px]">{dataChat?.detail}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
@@ -637,35 +492,19 @@ const Logistik = ({ popupMobile }) => {
             className="fixed top-0 left-0 bg-[#37415152] w-screen h-screen z-50"
           >
             <div className="fixed p-[20px] top-[80px] left-[450px] bg-white text-[#374151] h-screen overflow-scroll scrollbar-thin scrollbar-thumb-[#374151]">
-              <div
-                onClick={() => setPopupPengajuan(false)}
-                className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]"
-              >
+              <div onClick={() => setPopupPengajuan(false)} className="absolute right-0 top-0 pr-2 font-medium cursor-pointer text-[#9CA3AF] text-[21px]">
                 X
               </div>
-              <p className="text-[32px] text-center mb-[55px] font-bold">
-                Tambah Pengajuan Logistik
-              </p>
+              <p className="text-[32px] text-center mb-[55px] font-bold">Tambah Pengajuan Logistik</p>
               <div className="text-[14px]">
                 <div className="flex gap-[72px] justify-between mb-3">
-                  <label
-                    className="w-[180px] items-center flex"
-                    htmlFor="nama_relawan"
-                  >
+                  <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                     Nama Relawan
                   </label>
-                  <input
-                    className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                    type={"text"}
-                    id="nama_relawan"
-                    value={name}
-                  />
+                  <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"text"} id="nama_relawan" value={name} />
                 </div>
                 <div className="flex gap-[72px] justify-between mb-3">
-                  <label
-                    className="w-[180px] items-center flex"
-                    htmlFor="nama_relawan"
-                  >
+                  <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                     Kabupaten / Kota
                   </label>
                   <select
@@ -678,9 +517,7 @@ const Logistik = ({ popupMobile }) => {
                     }}
                     className="border py-2 px-2 rounded-sm outline-none w-[330px]"
                   >
-                    <option selected={"disabled"}>
-                      Pilih Kabupaten / Kota
-                    </option>
+                    <option selected={"disabled"}>Pilih Kabupaten / Kota</option>
                     {getKabupaten?.data?.map((res) => (
                       <option className="mb-2" key={res._id} value={res._id}>
                         {res.name}
@@ -689,10 +526,7 @@ const Logistik = ({ popupMobile }) => {
                   </select>
                 </div>
                 <div className="flex gap-[72px] justify-between mb-3">
-                  <label
-                    className="w-[180px] items-center flex"
-                    htmlFor="nama_relawan"
-                  >
+                  <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                     Kecamatan
                   </label>
                   <select
@@ -714,10 +548,7 @@ const Logistik = ({ popupMobile }) => {
                   </select>
                 </div>
                 <div className="flex gap-[72px] justify-between mb-3">
-                  <label
-                    className="w-[180px] items-center flex"
-                    htmlFor="nama_relawan"
-                  >
+                  <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
                     Desa
                   </label>
                   <select
@@ -730,9 +561,7 @@ const Logistik = ({ popupMobile }) => {
                     }}
                     className="border py-2 px-2 rounded-sm outline-none w-[330px]"
                   >
-                    <option selected={"disabled"}>
-                      Pilih Desa / kelurahan
-                    </option>
+                    <option selected={"disabled"}>Pilih Desa / kelurahan</option>
                     {getKelurahans?.data?.map((res) => (
                       <option className="mb-2" key={res._id} value={res._id}>
                         {res.name}
@@ -741,37 +570,31 @@ const Logistik = ({ popupMobile }) => {
                   </select>
                 </div>
                 <div className="flex gap-[72px] justify-between mb-3">
-                  <label
-                    className="w-[180px] items-center flex"
-                    htmlFor="email"
-                  >
+                  <label className="w-[180px] items-center flex" htmlFor="email">
                     Email
                   </label>
-                  <input
-                    className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                    type={"email"}
-                    id="email"
-                    value={emaill}
-                  />
+                  <input className="border py-2 px-2 rounded-sm outline-none w-[330px]" type={"email"} id="email" value={emaill} />
                 </div>
                 <div className="flex gap-[72px] justify-between mb-3">
-                  <label
-                    className="w-[180px] items-center flex"
-                    htmlFor="kebutuhan"
-                  >
-                    Kebutuhan
+                  <label className="w-[180px] items-center flex" htmlFor="nama_relawan">
+                    Nama APK
                   </label>
-                  <input
-                    className="border py-2 px-2 rounded-sm outline-none w-[330px]"
-                    type={"text"}
-                    id="kebutuhan"
+                  <select
                     onChange={(e) =>
                       setFormPengajuan({
                         ...formPengajuan,
                         kebutuhan: e.target.value,
                       })
                     }
-                  />
+                    className="border py-2 px-2 rounded-sm outline-none w-[330px]"
+                  >
+                    <option selected={"disabled"}></option>
+                    {getAPK?.data?.map((res) => (
+                      <option className="mb-2" key={res._id} value={res._id}>
+                        {res.nama}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex gap-[72px] justify-between mb-3">
                   <label className="w-[180px] flex" htmlFor="detail_pengajuan">
@@ -798,10 +621,7 @@ const Logistik = ({ popupMobile }) => {
                   >
                     Batalkan
                   </div>
-                  <div
-                    onClick={postLogistik}
-                    className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]"
-                  >
+                  <div onClick={postLogistik} className="text-white bg-[#E44700] py-2 px-4 font-semibold rounded-md cursor-pointer text-[18px]">
                     Buat Pengajuan
                   </div>
                 </div>
@@ -809,10 +629,7 @@ const Logistik = ({ popupMobile }) => {
             </div>
           </div>
           {/* popup chat */}
-          <div
-            style={{ visibility: popup === false ? "hidden" : "visible" }}
-            className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen"
-          >
+          <div style={{ visibility: popup === false ? "hidden" : "visible" }} className="fixed  top-0 left-0 bg-[#37415152] w-screen h-screen">
             {popupPage === "forum" && (
               <>
                 <div className="absolute top-[100px] left-[500px] py-[40px] px-[80px] text-[#374151] bg-white">
@@ -830,12 +647,8 @@ const Logistik = ({ popupMobile }) => {
                       <img src={forum.src} alt="Forum" />
                     </div>
 
-                    <p className="text-[32px] font-bold mt-3">
-                      Kirim Ke Forum?
-                    </p>
-                    <p className="mt-3">
-                      anda akan mengirimkan pesan ke semua akun
-                    </p>
+                    <p className="text-[32px] font-bold mt-3">Kirim Ke Forum?</p>
+                    <p className="mt-3">anda akan mengirimkan pesan ke semua akun</p>
                     <p>relawan</p>
                     <div className="flex w-full gap-3 justify-between px-3 mt-3">
                       <div
@@ -847,9 +660,7 @@ const Logistik = ({ popupMobile }) => {
                       >
                         Batal
                       </div>
-                      <div className="font-medium text-white bg-[#E44700] rounded-sm cursor-pointer py-2 w-full text-center">
-                        Kirim Pesan
-                      </div>
+                      <div className="font-medium text-white bg-[#E44700] rounded-sm cursor-pointer py-2 w-full text-center">Kirim Pesan</div>
                     </div>
                   </div>
                 </div>
@@ -867,28 +678,19 @@ const Logistik = ({ popupMobile }) => {
                   >
                     X
                   </div>
-                  <p className="text-[32px] font-bold mb-[42px]">
-                    Jumlah Penduduk NTB
-                  </p>
+                  <p className="text-[32px] font-bold mb-[42px]">Jumlah Penduduk NTB</p>
                   <img src={alert.src} alt="alert" />
                   <div className="flex justify-between items-center mt-3">
                     <label className="text-[18px]" htmlFor="perihal">
                       Perihal
                     </label>
-                    <input
-                      type={"text"}
-                      id="perihal"
-                      className="w-[300px] rounded-sm px-2 outline-none h-[40px] border"
-                    />
+                    <input type={"text"} id="perihal" className="w-[300px] rounded-sm px-2 outline-none h-[40px] border" />
                   </div>
                   <div className="flex justify-between items-center mt-3">
                     <label className="text-[18px]" htmlFor="status">
                       Status
                     </label>
-                    <select
-                      id="status"
-                      className="w-[300px] rounded-sm px-2 outline-none h-[40px] border"
-                    >
+                    <select id="status" className="w-[300px] rounded-sm px-2 outline-none h-[40px] border">
                       <option>Proses</option>
                       <option>Menunggu</option>
                       <option>Belum Input</option>
@@ -898,17 +700,10 @@ const Logistik = ({ popupMobile }) => {
                     <label className="text-[18px]" htmlFor="forum">
                       Detail Forum
                     </label>
-                    <textarea
-                      type={"text"}
-                      id="forum"
-                      className="w-[300px] rounded-sm px-2 outline-none h-[140px] border"
-                    />
+                    <textarea type={"text"} id="forum" className="w-[300px] rounded-sm px-2 outline-none h-[140px] border" />
                   </div>
                   <div className="flex justify-end">
-                    <div
-                      onClick={() => handlePopUp("forum")}
-                      className="py-2 px-4 bg-[#FF5001] text-white font-medium mt-3 rounded-sm cursor-pointer"
-                    >
+                    <div onClick={() => handlePopUp("forum")} className="py-2 px-4 bg-[#FF5001] text-white font-medium mt-3 rounded-sm cursor-pointer">
                       Broadcast Ke Relawan
                     </div>
                   </div>
@@ -917,52 +712,34 @@ const Logistik = ({ popupMobile }) => {
             )}
             {popupPage === "chat" && (
               <>
-                <div className="absolute z-50 inset-y-0 scrollbar scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]  overflow-scroll  right-0 bg-white text-[#374151]">
-                  <div
-                    onClick={() => {
-                      setPopup(false);
-                      setPopupPage();
-                    }}
-                    className="absolute pl-2 text-[21px] text-[#9CA3AF] cursor-pointer font-medium"
-                  >
-                    X
-                  </div>
-                  <div className="px-[50px] py-[30px]">
-                    <p className="text-[21px] font-bold">
-                      Logistik Kota Mataram
+                <div className="fixed top-0 left-0 w-screen h-screen bg-[#37415152] px-[400px] pt-[120px]">
+                  <div className="text-[#374151] bg-white">
+                    <p
+                      onClick={() => {
+                        setPopup(false);
+                        setPopupPage();
+                      }}
+                      className="flex w-full justify-end pr-2 font-medium cursor-pointer"
+                    >
+                      X
                     </p>
-                    <div className="flex gap-4 mt-2">
-                      <p className="w-[140px] text-[#6B7280]">Tgl Pengajuan</p>
-                      <p>
-                        {dataChat?.createdAt
-                          ?.split("T")
-                          .shift()
-                          .split("-")
-                          .reverse()
-                          .join("/")}
-                      </p>
-                    </div>
-                    <div className="flex gap-4 mt-2">
-                      <p className="w-[140px] text-[#6B7280]">Kebutuhan</p>
-                      <p>{dataChat?.kebutuhan}</p>
-                    </div>
-                    <div className="flex gap-4 mt-2">
-                      <p className="w-[140px] text-[#6B7280]">Status</p>
-                      <p>{dataChat?.status}</p>
-                    </div>
-                    <div className="flex gap-4 mt-2">
-                      <p className="w-[140px] text-[#6B7280]">
-                        Detail Pengajuan
-                      </p>
-                      <p className="w-[360px]">{dataChat?.detail}</p>
-                    </div>
-                    <div className="flex gap-4 mt-2">
-                      <p className="w-[140px] text-[#6B7280]">Ubah Status</p>
-                      <select className="border py-2 px-6 rounded-sm outline-0 cursor-pointer">
-                        <option>Proses</option>
-                        <option>Menunggu</option>
-                        <option>Belum Input</option>
-                      </select>
+                    <p className="text-[32px] font-bold text-center">Logistik Kota Mataram</p>
+                    <div className="flex flex-col gap-2 px-[80px]">
+                      <div className="flex">
+                        <p className="w-[210px]">nomor logistik</p> <p>: {nomor}</p>
+                      </div>
+                      <div className="flex">
+                        <p className="w-[210px]">Nama APK</p> <p className="">: {dataChat?.kebutuhan}</p>
+                      </div>
+                      <div className="flex">
+                        <p className="w-[210px]">Tgl Masuk</p> <p>:</p>
+                      </div>
+                      <div className="flex">
+                        <p className="w-[210px]">Tgl Keluar</p> <p>:</p>
+                      </div>
+                      <div className="flex">
+                        <p className="w-[210px]">Tujuan Distribusi</p> <p>:</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -983,10 +760,7 @@ const Logistik = ({ popupMobile }) => {
                       }}
                     />
                   ) : (
-                    <div
-                      onClick={() => setPopupPengajuan(true)}
-                      className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 "
-                    >
+                    <div onClick={() => setPopupPengajuan(true)} className="bg-[#E44700] font-semibold text-white rounded-md cursor-pointer py-2 px-4 ">
                       Tambah Pengajuan
                     </div>
                   )}
@@ -996,11 +770,7 @@ const Logistik = ({ popupMobile }) => {
             <div className="flex justify-between items-center mt-[24px]">
               <div className="flex items-center gap-4">
                 <div className="w-[234px] py-2 border flex justify-between rounded-sm px-3">
-                  <input
-                    className="outline-0 w-full"
-                    type={"text"}
-                    placeholder="Cari Data"
-                  />
+                  <input className="outline-0 w-full" type={"text"} placeholder="Cari Data" />
                   <SearchIcon />
                 </div>
                 <p>Filter</p>
@@ -1023,34 +793,19 @@ const Logistik = ({ popupMobile }) => {
               <table className="tabel-auto">
                 <thead className="bg-[#374151]  ">
                   <tr className="h-[51px] text-white ">
-                    <th
-                      scope="col"
-                      className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                    >
+                    <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                       No
                     </th>
-                    <th
-                      scope="col"
-                      className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                    >
+                    <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                       tgl Pengajuan
                     </th>
-                    <th
-                      scope="col"
-                      className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                    >
+                    <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                       Kab / Kota
                     </th>
-                    <th
-                      scope="col"
-                      className=" px-2 py-3 text-left text-xs font-medium text-clip"
-                    >
+                    <th scope="col" className=" px-2 py-3 text-left text-xs font-medium text-clip">
                       Kebutuhan
                     </th>
-                    <th
-                      scope="col"
-                      className=" px-2 py-3 text-left text-xs font-medium"
-                    >
+                    <th scope="col" className=" px-2 py-3 text-left text-xs font-medium">
                       Kecamatan
                     </th>
                     <th scope="col" className=" px-2 py-3 text-xs font-medium">
@@ -1059,12 +814,7 @@ const Logistik = ({ popupMobile }) => {
                     <th scope="col" className=" px-2 py-3 text-xs font-medium">
                       Status
                     </th>
-                    <th
-                      scope="col"
-                      className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 ${
-                        popupPage === "chat" && "-z-50"
-                      } text-white  text-xs font-medium`}
-                    >
+                    <th scope="col" className={`border-l-2 bg-[#374151] px-2 py-3 sticky right-0 ${popupPage === "chat" && "-z-50"} text-white  text-xs font-medium`}>
                       Aksi
                     </th>
                   </tr>
@@ -1073,63 +823,28 @@ const Logistik = ({ popupMobile }) => {
                   {logistik !== undefined &&
                     logistik.data?.map((res, i) => {
                       return (
-                        <tr
-                          className={`${
-                            (i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"
-                          }  h-[52px]`}
-                        >
+                        <tr className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"}  h-[52px]`}>
                           <td className="px-2 py-3">{++i}</td>
-                          <td className=" px-2 py-3 whitespace-nowrap">
-                            {Moment(res.createdAt).format("DD-MMMM-YYYY")}
-                          </td>
-                          <td className="px-2 py-3 whitespace-nowrap">
-                            {res.kabupaten.name}
-                          </td>
-                          <td className="w-[120px] px-2 py-3">
-                            {res.kebutuhan}
-                          </td>
-                          <td className="w-[120px] px-2 py-3">
-                            {res.kecamatan.name}
-                          </td>
-                          <td className="px-2 py-3 whitespace-nowrap">
-                            {res.relawan[0]?.name}
-                          </td>
+                          <td className=" px-2 py-3 whitespace-nowrap">{Moment(res.createdAt).format("DD-MMMM-YYYY")}</td>
+                          <td className="px-2 py-3 whitespace-nowrap">{res.kabupaten.name}</td>
+                          <td className="w-[120px] px-2 py-3">{res.kebutuhan}</td>
+                          <td className="w-[120px] px-2 py-3">{res.kecamatan.name}</td>
+                          <td className="px-2 py-3 whitespace-nowrap">{res.relawan[0]?.name}</td>
                           <td className="px-2 py-3 ">
-                            <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">
-                              {res.status}
-                            </div>
+                            <div className="bg-[#FEF3C7] border-[#F59E0B] border text-[#D97706] font-medium rounded-md text-center px-6 py-2">{res.status}</div>
                           </td>
 
-                          <td
-                            className={`px-2 py-3 border-l-2  ${
-                              (i + 1) % 2 === 0 ? "bg-[#F9FAFB]" : "bg-white"
-                            } sticky right-0 ${
-                              popupPage === "chat" && "-z-50"
-                            }`}
-                          >
+                          <td className={`px-2 py-3 border-l-2  ${(i + 1) % 2 === 0 ? "bg-[#F9FAFB]" : "bg-white"} sticky right-0 ${popupPage === "chat" && "-z-50"}`}>
                             <div className="flex items-center justify-center gap-3">
-                              <div
-                                onClick={() =>
-                                  handlePopUp("chat", res.id_relawan, res)
-                                }
-                                className={`${
-                                  alertHapus === true && "hidden"
-                                } cursor-pointer`}
-                              >
+                              <div onClick={() => handlePopUp("chat", res.id_relawan, res, i)} className={`${alertHapus === true && "hidden"} cursor-pointer`}>
                                 <DetailIcon />
                               </div>
                               {alertHapus !== false && res._id === deleteId ? (
                                 <div className="flex gap-3 items-center justify-center">
-                                  <div
-                                    className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md"
-                                    onClick={() => setAlertHapus(false)}
-                                  >
+                                  <div className="cursor-pointer border-2 font-medium border-[#374151] py-1 px-3 rounded-md" onClick={() => setAlertHapus(false)}>
                                     Batal
                                   </div>
-                                  <div
-                                    className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md"
-                                    onClick={() => deletLogistik(res._id)}
-                                  >
+                                  <div className="bg-[#DC2626] border-2 border-[#DC2626] text-white font-medium py-1 px-3 cursor-pointer rounded-md" onClick={() => deletLogistik(res._id)}>
                                     Hapus
                                   </div>
                                 </div>
@@ -1139,9 +854,7 @@ const Logistik = ({ popupMobile }) => {
                                     setAlertHapus(true);
                                     setDeleteId(res._id);
                                   }}
-                                  className={`${
-                                    alertHapus === true && "hidden"
-                                  } cursor-pointer`}
+                                  className={`${alertHapus === true && "hidden"} cursor-pointer`}
                                 >
                                   <DeletIcon />
                                 </div>
@@ -1166,9 +879,7 @@ const Logistik = ({ popupMobile }) => {
                 <div className="stroke-[#D1D5DB]">
                   <PrevIcon />
                 </div>
-                <div className="bg-[#FF5001] rounded-md py-2 px-4 text-white cursor-pointer">
-                  1
-                </div>
+                <div className="bg-[#FF5001] rounded-md py-2 px-4 text-white cursor-pointer">1</div>
                 <div className="stroke-black">
                   <NextIcon />
                 </div>
