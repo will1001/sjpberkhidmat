@@ -10,33 +10,7 @@ export default function Home() {
   const token = useSelector((state) => state.user.token);
 
   const requestNotifPermission = async () => {
-    const messaging = getMessaging(app);
-
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      getToken(messaging, {
-        vapidKey:
-          "BOZ5lS6LL3TkU3LI1WcH_S_2Vvo_Fg6FiDo7BUmqylHHZDmSMq6sRNcL-ObBCl6jN3geNd0anA7u_pOf8pP6TD8",
-      }).then(async (tokenFcm) => {
-        if (tokenFcm) {
-          console.log(tokenFcm);
-          console.log("token");
-          console.log("token");
-          const a = new FormData();
-          a.append("token", tokenFcm);
-
-          {
-            await axiosFetch("post", `user/token/save`, a, token);
-          }
-        } else {
-          console.log("no granted");
-        }
-      });
-    }
-
-    if (permission === "denied") {
-      alert("Anda menolak notifikasi akses");
-    }
+    await Notification.requestPermission();
   };
   useEffect(() => {
     requestNotifPermission();

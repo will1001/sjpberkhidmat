@@ -3,6 +3,8 @@ importScripts(
   "https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"
 );
 
+import { toast } from "react-toastify";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDozc7sXqMlWtp8BsuybwLKfO6FaP5nqKk",
   authDomain: "sjpberkhidmat-8fcb3.firebaseapp.com",
@@ -16,6 +18,9 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
+  toast.success("Your notification message here");
+  alert("Your notification message here");
+
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
@@ -25,6 +30,5 @@ messaging.onBackgroundMessage((payload) => {
     body: payload.notification.body,
     icon: payload.notification.image,
   };
-
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
