@@ -91,6 +91,7 @@ const Login = ({ router }) => {
               id_kabupaten: res.data.id_kabupaten,
             })
           );
+          window.location.reload(false);
         } else {
           return <p>Loading.....</p>;
         }
@@ -112,6 +113,7 @@ const Login = ({ router }) => {
   const [page, setPage] = useState("login");
 
   useEffect(() => {
+
     if (token) {
       saveFcmToken();
     }

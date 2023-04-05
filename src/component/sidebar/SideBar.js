@@ -24,7 +24,10 @@ function SideBar({ content }) {
   console.log(role);
   return (
     <>
-      <div onClick={() => router.back()} className="flex justify-end cursor-pointer mr-2">
+      <div
+        onClick={() => router.back()}
+        className="flex justify-end cursor-pointer mr-2"
+      >
         <BackIcon />
       </div>
       <div className="flex flex-col justify-between px-8 mt-2 h-full border-r-2 ">
@@ -32,7 +35,10 @@ function SideBar({ content }) {
           <Logo />
         </div>
         <div className="">{content}</div>
-        <div onClick={handleLogOut} className="flex border-b-2 gap-2 p-2 justify-start w-full text-[18px] text-[#9CA3AF] font-medium items-center cursor-pointer">
+        <div
+          onClick={handleLogOut}
+          className="flex border-b-2 gap-2 p-2 justify-start w-full text-[18px] text-[#9CA3AF] font-medium items-center cursor-pointer"
+        >
           <img src={logoutIcon.src} alt="logout.png" /> <p>Logout</p>
         </div>
         <div className="pt-[50px] bottom-0 -z-10">
