@@ -161,8 +161,8 @@ const Profil = () => {
                   </a>
                   {/* <TikTokIcon /> */}
                   <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
-                      </a>
+                    <WebIcon />
+                  </a>
                 </div>
               </div>
             </div>
@@ -222,6 +222,16 @@ const Profil = () => {
                   className="flex cursor-pointer stroke-[#374151] "
                 >
                   Pendaftaran Anggota
+                </p>
+                <p
+                  onClick={() => {
+                    router.push({
+                      pathname: "Download",
+                    });
+                  }}
+                  className="flex cursor-pointer stroke-[#374151] "
+                >
+                  Download
                 </p>
                 <div onClick={() => goto(refAspirasi.current)} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
                   Rumah Aspirasi
@@ -319,10 +329,8 @@ const Profil = () => {
             </div>
           </div>
           <div ref={refAspirasi} />
-          <div className="flex h-[248px] bg-[#FF5001] pt-[65px] w-screen">
-            <p className="text-white text-[26px] font-bold pl-[180px] w-full">
-              Kami membuka pintu komunikasi yang <br /> kondusif dan terbuka untuk menerima <br /> pesan dan aspirasi dari masyarakat.
-            </p>
+          <div className="flex h-[248px] bg-[#FF5001] pt-[32px] w-screen">
+            <p className="text-white text-[26px] font-bold pl-[180px] w-full">Kami membuka pintu komunikasi yang kondusif dan terbuka untuk menerima pesan dan aspirasi dari masyarakat.</p>
             <div className="pr-[144px] w-full ml-[39px]">
               <p className="text-[18px]  text-white">Kami menantikan dukungan dan masukan Anda. Ayo bersama-sama kita wujudkan perubahan yang diinginkan!</p>
               <button onClick={() => router.push("Aspirasi")} className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">
@@ -369,8 +377,8 @@ const Profil = () => {
                   <TwitterIcon />
                 </a>
                 <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
-                      </a>
+                  <WebIcon />
+                </a>
                 {/* <button>
                   <TikTokIcon />
                 </button> */}

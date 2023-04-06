@@ -87,10 +87,7 @@ const HomePage = ({ router }) => {
   };
 
   useEffect(() => {
-
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-  
 
     const handleResize = () => {
       setScreenSize({
@@ -102,40 +99,40 @@ const HomePage = ({ router }) => {
 
     // return () => window.removeEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        handleBeforeInstallPrompt
-      );
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
   console.log(screenSize);
   return (
     <>
-    
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
         // mobile view
         <div className="w-screen">
-          {showInstallButton && <>
-            <div className="bg-black w-full h-[200vh] opacity-75 absolute z-40"></div>
-            <div className="flex justify-center items-center w-full h-[100vh]  absolute z-50">
-              <div className="bg-white w-80 h-[200px] flex justify-center items-center rounded-xl">
-                <div className="flex flex-col items-center">
-                  <Logo />
-                  <button
-                    className=" cursor-pointer install-button border-gray-800 px-3 mt-2 text-orange-400 border rounded-xl p-1"
-                    onClick={handleInstallClick}
-                  >
-                    Install App
-                  </button>
-                  <p onClick={()=>{
-                    setShowInstallButton(false);
-                  }} className="text-orange-400 text-sm mt-3 cursor-pointer">Tutup</p>
+          {showInstallButton && (
+            <>
+              <div className="bg-black w-full h-[200vh] opacity-75 absolute z-40"></div>
+              <div className="flex justify-center items-center w-full h-[100vh]  absolute z-50">
+                <div className="bg-white w-80 h-[200px] flex justify-center items-center rounded-xl">
+                  <div className="flex flex-col items-center">
+                    <Logo />
+                    <button className=" cursor-pointer install-button border-gray-800 px-3 mt-2 text-orange-400 border rounded-xl p-1" onClick={handleInstallClick}>
+                      Install App
+                    </button>
+                    <p
+                      onClick={() => {
+                        setShowInstallButton(false);
+                      }}
+                      className="text-orange-400 text-sm mt-3 cursor-pointer"
+                    >
+                      Tutup
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </> }
-          
+            </>
+          )}
+
           <div className="p-[16px] sticky top-0 z-50 border-b-[1px] bg-white flex items-center justify-between">
             <Logo mobile={screenSize} />
             <img onClick={() => setPopupMobile(!popupMobile)} className="w-[24px] h-[24px]" src={listIcon.src} alt={"drop down"} />
@@ -157,7 +154,7 @@ const HomePage = ({ router }) => {
               <img className="w-[26.48px] h-[28.05px]  rounded-md" src="https://i.ibb.co/tpcPypN/Frame-2512.jpg" alt="gunakan-hak-pilih" />
               <div>
                 <p className="font-bold text-white text-[7.8px]">Ayo Gunakan Hak Pilih Anda</p>
-                
+
                 <p className="text-white text-[5.4px]">17 Agustus 2023 Pemilihan Umum DPR RI</p>
               </div>
               <CountDown mobile={screenSize} />
@@ -165,7 +162,6 @@ const HomePage = ({ router }) => {
           </div>
           {/* publikasi video */}
           <>
-          
             <p className="mt-[24px] mb-[12px] ml-[16px] font-bold text-[#374151]">Publikasi</p>
             <div className="">
               {getPublikasi?.data?.filter((data) => data.publication === true).filter((data) => data.description === "video")[0] && (
@@ -286,7 +282,7 @@ const HomePage = ({ router }) => {
                 <p className="text-[10px] text-[#4B5563]">Bekerja bersama untuk membangun masa depan yang lebih baik bagi masyarakat dan generasi yang akan datang.</p>
                 <div className="flex py-[40px]">
                   <div className="text-[14px] text-[#4B5563] flex flex-col">
-                   <FooterLink />
+                    <FooterLink />
                   </div>
                   <div className="ml-[52px]">
                     <p className="text-[16px] text-[#4B5563] font-bold">Social Media</p>
@@ -306,7 +302,7 @@ const HomePage = ({ router }) => {
                       </a>
                       {/* <TikTokIcon /> */}
                       <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
+                        <WebIcon />
                       </a>
                     </div>
                   </div>
@@ -395,6 +391,9 @@ const HomePage = ({ router }) => {
                 </p>
                 <p onClick={() => goto(refPendaftaran.current)} className="flex cursor-pointer stroke-[#374151] ">
                   Pendaftaran Anggota
+                </p>
+                <p onClick={() => router.push("Download")} className="flex cursor-pointer stroke-[#374151] ">
+                  Download
                 </p>
                 <div onClick={() => router.push("Aspirasi")} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
                   Rumah Aspirasi
@@ -585,7 +584,7 @@ const HomePage = ({ router }) => {
             </div>
 
             <div className="flex flex-col gap-1 text-[#4B5563] justify-center">
-             <FooterLink />
+              <FooterLink />
             </div>
             <div className="flex flex-col gap-3 justify-center">
               <p className="flex justify-center font-semibold text-[16px] text-[#4B5563]">Social Media</p>
@@ -606,7 +605,7 @@ const HomePage = ({ router }) => {
                   <TwitterIcon />
                 </a>
                 <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                    <WebIcon />
+                  <WebIcon />
                 </a>
                 {/* <button>
                   <TikTokIcon />

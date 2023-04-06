@@ -150,7 +150,7 @@ function DetailProgram({ router }) {
             <p className="text-[10px] text-[#4B5563]">Bekerja bersama untuk membangun masa depan yang lebih baik bagi masyarakat dan generasi yang akan datang.</p>
             <div className="flex py-[40px]">
               <div className="text-[14px] text-[#4B5563] flex flex-col">
-              <FooterLink />
+                <FooterLink />
               </div>
               <div className="ml-[52px]">
                 <p className="text-[16px] text-[#4B5563] font-bold">Social Media</p>
@@ -169,8 +169,8 @@ function DetailProgram({ router }) {
                     <TwitterIcon />
                   </a>
                   <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
-                      </a>
+                    <WebIcon />
+                  </a>
                   {/* <TikTokIcon /> */}
                 </div>
               </div>
@@ -214,6 +214,16 @@ function DetailProgram({ router }) {
                   className="flex cursor-pointer stroke-[#374151] "
                 >
                   Pendaftaran Anggota
+                </p>
+                <p
+                  onClick={() => {
+                    router.push({
+                      pathname: "../Download",
+                    });
+                  }}
+                  className="flex cursor-pointer stroke-[#374151] "
+                >
+                  Download
                 </p>
                 <button onClick={() => goto(refAspirasi.current)}>
                   <svg width="139" height="31" viewBox="0 0 139 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -320,10 +330,8 @@ function DetailProgram({ router }) {
             </div>
             <div ref={refAspirasi} />
           </div>
-          <div className="flex h-[248px] bg-[#FF5001] pt-[65px]">
-            <p className="text-white text-[26px] font-bold pl-[180px] w-full">
-              Kami membuka pintu komunikasi yang <br /> kondusif dan terbuka untuk menerima <br /> pesan dan aspirasi dari masyarakat.
-            </p>
+          <div className="flex h-[248px] bg-[#FF5001] pt-[32px]">
+            <p className="text-white text-[26px] font-bold pl-[180px] w-full">Kami membuka pintu komunikasi yang kondusif dan terbuka untuk menerima pesan dan aspirasi dari masyarakat.</p>
             <div className="pr-[144px] w-full ml-[39px]">
               <p className="text-[18px]  text-white">Kami menantikan dukungan dan masukan Anda. Ayo bersama-sama kita wujudkan perubahan yang diinginkan!</p>
               <button onClick={() => router.push("/Aspirasi")} className="w-[230px] h-[48px] bg-white text-slate-700 text-[18px] font-bold mt-6">
@@ -349,7 +357,7 @@ function DetailProgram({ router }) {
             </div>
 
             <div className="flex flex-col gap-1 text-[#4B5563] justify-center">
-             <FooterLink />
+              <FooterLink />
             </div>
             <div className="flex flex-col gap-3 justify-center">
               <p className="flex justify-center font-semibold text-[16px] text-[#4B5563]">Social Media</p>
@@ -370,8 +378,8 @@ function DetailProgram({ router }) {
                   <TwitterIcon />
                 </a>
                 <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
-                      </a>
+                  <WebIcon />
+                </a>
                 {/* <button>
                   <TikTokIcon />
                 </button> */}

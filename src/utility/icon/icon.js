@@ -436,6 +436,13 @@ export function DropDownIcon() {
     </svg>
   );
 }
+export function DownloadIcon() {
+  return (
+    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 13.5L1 14.5C1 16.1569 2.34315 17.5 4 17.5L14 17.5C15.6569 17.5 17 16.1569 17 14.5L17 13.5M13 9.5L9 13.5M9 13.5L5 9.5M9 13.5L9 1.5" stroke="current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 export function DropDownIconBlack() {
   return (
     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">

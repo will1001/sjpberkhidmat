@@ -119,8 +119,8 @@ const DetailArtikel = () => {
                     <TwitterIcon />
                   </a>
                   <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
-                      </a>
+                    <WebIcon />
+                  </a>
                   {/* <TikTokIcon /> */}
                 </div>
               </div>
@@ -174,6 +174,16 @@ const DetailArtikel = () => {
                   className="flex cursor-pointer stroke-[#374151] "
                 >
                   Pendaftaran Anggota
+                </p>
+                <p
+                  onClick={() => {
+                    router.push({
+                      pathname: "../Download",
+                    });
+                  }}
+                  className="flex cursor-pointer stroke-[#374151] "
+                >
+                  Download
                 </p>
                 <div onClick={() => router.push("../../../Aspirasi")} className="bg-[#FF5001] text-white h-[31px] px-4 cursor-pointer flex items-center rounded-md">
                   Rumah Aspirasi
@@ -299,8 +309,8 @@ const DetailArtikel = () => {
                   <TwitterIcon />
                 </a>
                 <a href="http://suryadijayapurnama-sjp.id" target="_blank">
-                          <WebIcon />
-                      </a>
+                  <WebIcon />
+                </a>
                 {/* <button>
                   <TikTokIcon />
                 </button> */}
