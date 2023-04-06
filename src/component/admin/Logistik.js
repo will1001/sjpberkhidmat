@@ -939,7 +939,7 @@ const Logistik = ({ popupMobile }) => {
                       </div>
                       <div className="flex">
                         <p className="w-[210px]">Kebutuhan</p>{" "}
-                        <p className="">: {detailLogistik?.kebutuhan}</p>
+                        <p className="">: {detailLogistik?.apk.nama}</p>
                       </div>
                       <div className="flex">
                         <p className="w-[210px]">Status</p>{" "}
