@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import { UserIcon } from "../../utility/icon/icon";
@@ -10,6 +11,7 @@ const KoordinatorContetn = ({
   setSelectTool,
   selectTool,
 }) => {
+  const router = useRouter();
   const username = useSelector((state) => state.user.name);
   return (
     <div>
@@ -28,7 +30,10 @@ const KoordinatorContetn = ({
         .filter((data) => data.koordinator === true)
         .map((res, i) => (
           <div
-            onClick={() => setSelectTool(res.name)}
+            onClick={() => {
+              setSelectTool(res.name);
+              router.push({ pathname: "/koordinator/Koordinator" });
+            }}
             className={`${
               selectTool === res.name
                 ? "bg-[#FFECE4] text-[#FF5001] stroke-[#FF5001]"
