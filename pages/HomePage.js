@@ -347,6 +347,12 @@ const HomePage = ({ router }) => {
                 >
                   Pendaftaran Anggota
                 </p>
+                <p
+                  onClick={() => router.push("Download")}
+                  className="text-[16px] text-[#374151] font-medium border-b-[1px] pb-2 mt-2"
+                >
+                  Download
+                </p>
               </div>
               {/* end popup di mobile */}
             </div>
