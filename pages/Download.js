@@ -32,14 +32,13 @@ const Download = () => {
 
   const handleInstallClick = (event) => {
     event.preventDefault();
-    console.log(window.matchMedia("(display-mode: standalone)").matches);
-    console.log(window.navigator.standalone);
     if (
       window.matchMedia("(display-mode: standalone)").matches ||
       window.navigator.standalone === true
     ) {
       alert("App sudah terinstal di ponsel");
     }
+
     if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult) => {
@@ -50,6 +49,8 @@ const Download = () => {
         }
         setDeferredPrompt(null);
       });
+    } else {
+      alert("App sudah terinstal di ponsel");
     }
   };
 
