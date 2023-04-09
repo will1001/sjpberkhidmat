@@ -36,7 +36,7 @@ const Download = () => {
       window.matchMedia("(display-mode: standalone)").matches ||
       window.navigator.standalone === true
     ) {
-      alert("App sudah terinstal di ponsel");
+      alert("App sudah terinstal di perangkat anda");
     }
 
     if (deferredPrompt) {
@@ -50,7 +50,7 @@ const Download = () => {
         setDeferredPrompt(null);
       });
     } else {
-      alert("App sudah terinstal di ponsel");
+      alert("App sudah terinstal di perangkat anda");
     }
   };
 
