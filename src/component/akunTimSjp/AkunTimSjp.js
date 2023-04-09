@@ -5,7 +5,7 @@ import axiosFetch from "../../API/axiosFetch";
 import { DeletIcon } from "../../utility/icon/icon";
 import EditIcon from "../../utility/icon/edit2.png";
 import ButtonPrimary from "../ButtonPrimary";
-import { showOrHidePopUpDash } from "../../redux/panelReducer";
+import { setEditData, showOrHidePopUpDash } from "../../redux/panelReducer";
 
 const AkunTimSjp = () => {
   const customStyles = {
@@ -33,6 +33,14 @@ const AkunTimSjp = () => {
     }
   };
 
+  const editAkunTim = (data) => {
+    delete data.aksi;
+    if (data) {
+      dispatch(setEditData({ editData: JSON.stringify(data) }));
+      dispatch(showOrHidePopUpDash({ type: "Akun Tim" }));
+    }
+  };
+
   useEffect(() => {
     axiosFetch("get", `user/akunTim?page=${1}`, {}, token)
       .then((res) => setAkunTim(res.data))
@@ -47,7 +55,7 @@ const AkunTimSjp = () => {
         <div className="flex justify-between w-[55px] cursor-pointer">
           <img
             onClick={() => {
-              // editRelawan();
+              editAkunTim(res);
             }}
             src={EditIcon.src}
           />

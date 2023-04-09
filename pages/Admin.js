@@ -227,26 +227,37 @@ function Admin({ router }) {
         }
       }
     } else if (popUpDashType === "Akun Tim") {
-      let formDataSimpatisan = formData;
-      formDataSimpatisan.role = "koordinator";
-      delete formDataSimpatisan.phone;
-      delete formDataSimpatisan.pekerjaan;
-      delete formDataSimpatisan.detail;
-      delete formDataSimpatisan.kebutuhan;
-      delete formDataSimpatisan.target_desa;
-      formDataSimpatisan.id_kecamatan = "5201010";
-
-      if (formData.password === confirmPassword) {
-        await axiosFetch("post", `user/register`, formDataSimpatisan)
+      if (editData) {
+        await axiosFetch("put", `user/users`, formData, token)
           .then(() => {
-            alert("Pendaftaran Berhasil");
+            alert("Edit Berhasil");
           })
           .catch((error) => {
             // setHandelError(true);
             // setErrorMessage(error.response.data.message);
           });
       } else {
-        alert("Password Tidak Sama");
+        let formDataSimpatisan = formData;
+        formDataSimpatisan.role = "koordinator";
+        delete formDataSimpatisan.phone;
+        delete formDataSimpatisan.pekerjaan;
+        delete formDataSimpatisan.detail;
+        delete formDataSimpatisan.kebutuhan;
+        delete formDataSimpatisan.target_desa;
+        formDataSimpatisan.id_kecamatan = "5201010";
+
+        if (formData.password === confirmPassword) {
+          await axiosFetch("post", `user/register`, formDataSimpatisan)
+            .then(() => {
+              alert("Pendaftaran Berhasil");
+            })
+            .catch((error) => {
+              // setHandelError(true);
+              // setErrorMessage(error.response.data.message);
+            });
+        } else {
+          alert("Password Tidak Sama");
+        }
       }
     } else {
       if (editData) {
@@ -285,7 +296,7 @@ function Admin({ router }) {
     }
     dispatch(showOrHidePopUpDash({ type: null }));
 
-    // location.reload();
+    location.reload();
   };
 
   const [popupPeriode, setPopupPeriode] = useState(false);
