@@ -63,6 +63,7 @@ const Logistik = ({ popupMobile }) => {
     getChats(id_relawan);
     setdetailLogistik(data);
     setLogistikStatus(data.status);
+    setJmlLogistikDisetujui(data?.jumlah);
     setnomor(nomor);
   };
 
@@ -939,7 +940,7 @@ const Logistik = ({ popupMobile }) => {
                       </div>
                       <div className="flex">
                         <p className="w-[210px]">Kebutuhan</p>{" "}
-                        <p className="">: {detailLogistik?.apk.nama}</p>
+                        <p className="">: {detailLogistik?.apk?.nama}</p>
                       </div>
                       <div className="flex">
                         <p className="w-[210px]">Status</p>{" "}
