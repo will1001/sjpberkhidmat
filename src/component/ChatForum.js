@@ -120,6 +120,30 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
     }, 1000);
   });
 
+  const [isPressed, setIsPressed] = useState();
+  const [timer, setTimer] = useState();
+
+  const handleMouseDown = (id) => {
+    setTimer(
+      setTimeout(() => {
+        setIsPressed(id);
+        // Tambahkan kode untuk menangani event long press di sini
+      }, 1000)
+    ); // Waktu (dalam milidetik) yang dibutuhkan untuk dianggap sebagai long press
+  };
+
+  const handleMouseUp = () => {
+    // setIsPressed(false);
+    clearTimeout(timer);
+  };
+
+  const [balasPesan, setBalasPesan] = useState({
+    user: undefined,
+    message: undefined,
+    image: undefined,
+    file: undefined,
+  });
+
   return (
     <div className="">
       <div className="flex items-center pt-[25px] justify-between border-b-[1px] pb-[25px] px-[32px] sticky top-0 bg-white">
@@ -149,7 +173,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
               if (e.type === "image") {
                 if (e.image.split(".").pop() === "png" || e.image.split(".").pop() === "jpg" || e.image.split(".").pop() === "jpeg") {
                   return (
-                    <div className="flex gap-3 mb-6">
+                    <div onTouchStart={() => handleMouseDown(e._id)} onTouchEnd={handleMouseUp} onMouseDown={() => handleMouseDown(e._id)} onMouseUp={handleMouseUp} className="flex gap-3 mb-6">
                       <div className="flex items-end">
                         <img className="h-[32px] w-[32px] rounded-full" src={ppUser.src} />
                       </div>
@@ -169,11 +193,27 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                         <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
                       </div>
+                      {isPressed === e._id && (
+                        <div className="text-[14px] bg-slate-300 px-2 text-[#374151] rounded-lg">
+                          <p className="text-red-500 text-right" onClick={() => setIsPressed()}>
+                            x
+                          </p>
+                          <p
+                            onClick={() => {
+                              setBalasPesan({ ...balasPesan, user: e.user?.name, message: e.message, image: e.image });
+                              setIsPressed();
+                            }}
+                          >
+                            {" "}
+                            Balas Pesan
+                          </p>
+                        </div>
+                      )}
                     </div>
                   );
                 } else {
                   return (
-                    <div className="flex gap-3 mb-6">
+                    <div onTouchStart={() => handleMouseDown(e._id)} onTouchEnd={handleMouseUp} onMouseDown={() => handleMouseDown(e._id)} onMouseUp={handleMouseUp} className="flex gap-3 mb-6">
                       <div className="flex items-end">
                         <img className="h-[32px] w-[32px] rounded-full" src={ppUser.src} />
                       </div>
@@ -194,22 +234,60 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         </div>
                         <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
                       </div>
+                      {isPressed === e._id && (
+                        <div className="text-[14px] bg-slate-300 px-2 text-[#374151] rounded-lg">
+                          <p className="text-red-500 text-right" onClick={() => setIsPressed()}>
+                            x
+                          </p>
+                          <p
+                            onClick={() => {
+                              setBalasPesan({ ...balasPesan, file: fileIcon, user: e.user?.name, message: e.message });
+                              setIsPressed();
+                            }}
+                          >
+                            {" "}
+                            Balas Pesan
+                          </p>
+                        </div>
+                      )}
                     </div>
                   );
                 }
               } else {
                 return (
                   <>
-                    <div className="flex gap-3 mb-6">
-                      <div className="flex items-end">
+                    <div
+                      onTouchStart={() => handleMouseDown(e._id)}
+                      onTouchEnd={handleMouseUp}
+                      onMouseDown={() => handleMouseDown(e._id)}
+                      onMouseUp={handleMouseUp}
+                      className={`${mobile === true ? "flex gap-3 mb-6" : "flex gap-3 mb-6 cursor-pointer"}  `}
+                    >
+                      <div className={`flex items-end`}>
                         <img className="h-[32px] w-[32px] rounded-full" src={ppUser.src} />
                       </div>
 
                       <div className="shadow-lg bg-white px-2 py-1 rounded-xl rounded-bl-none">
                         <p className="text-[14px] text-[#FF5001] font-semibold">{e.user?.name}</p>
-                        <p className="w-[345px] text-[14px] text-[#374151]">{e.message}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-[#374151]" : "w-[345px] text-[14px] text-[#374151]"}`}>{e.message}</p>
                         <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
                       </div>
+                      {isPressed === e._id && (
+                        <div className="text-[14px] bg-slate-300 px-2 text-[#374151] rounded-lg">
+                          <p className="text-red-500 text-right" onClick={() => setIsPressed()}>
+                            x
+                          </p>
+                          <p
+                            onClick={() => {
+                              setBalasPesan({ ...balasPesan, user: e.user?.name, message: e.message });
+                              setIsPressed();
+                            }}
+                          >
+                            {" "}
+                            Balas Pesan
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </>
                 );
@@ -287,6 +365,31 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
       )}
 
       <div className="sticky bottom-0  bg-[#E5E7EB] py-2">
+        {balasPesan.user !== undefined && (
+          <div className="bg-white px-[24px] mb-2 pb-[24px]">
+            <p onClick={() => setBalasPesan({ user: undefined, message: undefined, image: undefined, file: undefined })} className="text-right cursor-pointer">
+              x
+            </p>
+            <p className="text-[14px] text-[#FF5001] font-semibold">{balasPesan.user}</p>
+            <p className="text-[14px] text-[#374151]">{balasPesan.message}</p>
+            {balasPesan.image !== undefined && <img className="w-[150px] cursor-pointer" src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + balasPesan.image} />}
+            {balasPesan.file !== undefined && (
+              <div>
+                File
+                <img className="cursor-pointer w-[50px] my-[10px]" src={balasPesan.file.src} />
+                <div
+                  onClick={() => {
+                    window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + balasPesan.image, "_blank");
+                  }}
+                  className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl"
+                >
+                  Open
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="flex gap-3 px-[24px]">
           {/* import gambar */}
           <div className="h-[48px] w-[60px] bg-white flex items-center justify-center rounded-full cursor-pointer">
