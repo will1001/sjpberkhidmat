@@ -19,6 +19,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
   const [fileMessage, setFileMessage] = useState("");
   const [filePreview, setFilePreview] = useState("");
   const [typeFilePreview, setTypeFilePreview] = useState("");
+  const [idChat, setIDChat] = useState(null);
   const dispatch = useDispatch();
 
   Moment.locale("id");
@@ -38,6 +39,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
         a.append("message", message);
         a.append("type", "text");
       }
+      if(idChat)  a.append("reply_to", idChat);
 
       {
         await axiosFetch("post", `user/chats/forum`, a, token)
@@ -47,6 +49,8 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
             setFileMessage(null);
             setFilePreview(null);
             setTypeFilePreview(null);
+            setIDChat(null);
+
           })
           .catch((error) => {
             console.log(error);
@@ -65,6 +69,9 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
         a.append("message", message);
         a.append("type", "text");
       }
+      
+      if(idChat)  a.append("reply_to", idChat);
+
       {
         await axiosFetch("post", `user/chats`, a, token)
           .then((res) => {
@@ -73,6 +80,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
             setFileMessage(null);
             setFilePreview(null);
             setTypeFilePreview(null);
+            setIDChat(null);
           })
           .catch((error) => {
             console.log(error);
@@ -179,6 +187,40 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                       </div>
 
                       <div className="shadow-lg bg-white px-2 py-1 rounded-xl rounded-bl-none">
+                      {e.reply_to && 
+                      <div className="border border-white border-l-4 p-3 rounded-xl">
+                        <p className="text-[14px] text-white font-semibold">{e.reply_to.user?.name}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.reply_to.message}</p>
+                        {e.reply_to?.type === "image" && e.reply_to?.image?.split(".").pop() === "png" || e.reply_to?.image?.split(".").pop() === "jpg" || e.reply_to?.image?.split(".").pop() === "jpeg" ? 
+                      <>
+                      <img
+                          className="w-[150px] cursor-pointer"
+                          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image}
+                          onClick={() => {
+                            dispatch(
+                              setImagePreviewer({
+                                imagePreviewer: process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image,
+                              })
+                            );
+                          }}
+                        />
+                      </>
+                      :
+                      <>
+                       File
+                       <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
+                       <div
+                            onClick={() => {
+                              window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to.image, "_blank");
+                            }}
+                            className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl w-[55px]"
+                          >
+                            Open
+                       </div>
+                      </>  
+                      }
+                      </div>
+                    }
                         <p className="text-[14px] text-[#FF5001] font-semibold">{e.user?.name}</p>
                         <img
                           className="w-[150px] cursor-pointer"
@@ -194,14 +236,17 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
                       </div>
                       {isPressed === e._id && (
-                        <div className="text-[14px] bg-slate-300 px-2 text-[#374151] rounded-lg">
-                          <p className="text-red-500 text-right" onClick={() => setIsPressed()}>
+                        <div 
+                        className="relative text-[14px] bg-white shadow-lg px-2 text-[#374151] rounded-lg h-[60px] cursor-pointer">
+                          <p className="z-20 text-red-500 text-right cursor-pointer" onClick={() => setIsPressed()}>
                             x
                           </p>
                           <p
-                            onClick={() => {
+                          className="z-10 flex flex-col justify-center items-center relative bottom-[20px] h-[60px] w-[90px] mr-3"
+                             onClick={() => {
                               setBalasPesan({ ...balasPesan, user: e.user?.name, message: e.message, image: e.image });
                               setIsPressed();
+                              setIDChat(e._id);
                             }}
                           >
                             {" "}
@@ -217,8 +262,41 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                       <div className="flex items-end">
                         <img className="h-[32px] w-[32px] rounded-full" src={ppUser.src} />
                       </div>
-
                       <div className="shadow-lg bg-white px-2 py-1 rounded-xl rounded-bl-none">
+                      {e.reply_to && 
+                      <div className="border border-white border-l-4 p-3 rounded-xl">
+                        <p className="text-[14px] text-white font-semibold">{e.reply_to.user?.name}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.reply_to.message}</p>
+                        {e.reply_to?.type === "image" && e.reply_to?.image?.split(".").pop() === "png" || e.reply_to?.image?.split(".").pop() === "jpg" || e.reply_to?.image?.split(".").pop() === "jpeg" ? 
+                      <>
+                      <img
+                          className="w-[150px] cursor-pointer"
+                          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image}
+                          onClick={() => {
+                            dispatch(
+                              setImagePreviewer({
+                                imagePreviewer: process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image,
+                              })
+                            );
+                          }}
+                        />
+                      </>
+                      :
+                      <>
+                       File
+                       <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
+                       <div
+                            onClick={() => {
+                              window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to.image, "_blank");
+                            }}
+                            className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl w-[55px]"
+                          >
+                            Open
+                       </div>
+                      </>  
+                      }
+                      </div>
+                    }
                         <p className="text-[14px] text-[#FF5001] font-semibold">{e.user?.name}</p>
                         <div>
                           File
@@ -235,14 +313,17 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
                       </div>
                       {isPressed === e._id && (
-                        <div className="text-[14px] bg-slate-300 px-2 text-[#374151] rounded-lg">
-                          <p className="text-red-500 text-right" onClick={() => setIsPressed()}>
+                        <div 
+                        className="relative text-[14px] bg-white shadow-lg px-2 text-[#374151] rounded-lg h-[60px] cursor-pointer">
+                          <p className="z-20 text-red-500 text-right cursor-pointer" onClick={() => setIsPressed()}>
                             x
                           </p>
                           <p
-                            onClick={() => {
+                          className="z-10 flex flex-col justify-center items-center relative bottom-[20px] h-[60px] w-[90px] mr-3"
+                             onClick={() => {
                               setBalasPesan({ ...balasPesan, file: fileIcon, user: e.user?.name, message: e.message });
                               setIsPressed();
+                              setIDChat(e._id);
                             }}
                           >
                             {" "}
@@ -256,6 +337,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
               } else {
                 return (
                   <>
+                  
                     <div
                       onTouchStart={() => handleMouseDown(e._id)}
                       onTouchEnd={handleMouseUp}
@@ -268,19 +350,56 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                       </div>
 
                       <div className="shadow-lg bg-white px-2 py-1 rounded-xl rounded-bl-none">
+                      {e.reply_to && 
+                      <div className="border border-white border-l-4 p-3 rounded-xl">
+                        <p className="text-[14px] text-white font-semibold">{e.reply_to.user?.name}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.reply_to.message}</p>
+                        {e.reply_to?.type === "image" && e.reply_to?.image?.split(".").pop() === "png" || e.reply_to?.image?.split(".").pop() === "jpg" || e.reply_to?.image?.split(".").pop() === "jpeg" ? 
+                      <>
+                      <img
+                          className="w-[150px] cursor-pointer"
+                          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image}
+                          onClick={() => {
+                            dispatch(
+                              setImagePreviewer({
+                                imagePreviewer: process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image,
+                              })
+                            );
+                          }}
+                        />
+                      </>
+                      :
+                      <>
+                       File
+                       <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
+                       <div
+                            onClick={() => {
+                              window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to.image, "_blank");
+                            }}
+                            className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl w-[55px]"
+                          >
+                            Open
+                       </div>
+                      </>  
+                      }
+                      </div>
+                    }
                         <p className="text-[14px] text-[#FF5001] font-semibold">{e.user?.name}</p>
                         <p className={`${mobile === true ? "w-full text-[14px] text-[#374151]" : "w-[345px] text-[14px] text-[#374151]"}`}>{e.message}</p>
                         <p className="flex justify-end text-[10px] text-[#1F2937]">{Moment(e.createdAt).format("hh:mm")}</p>
                       </div>
                       {isPressed === e._id && (
-                        <div className="text-[14px] bg-slate-300 px-2 text-[#374151] rounded-lg">
-                          <p className="text-red-500 text-right" onClick={() => setIsPressed()}>
+                        <div 
+                        className="relative text-[14px] bg-white shadow-lg px-2 text-[#374151] rounded-lg h-[60px] cursor-pointer">
+                          <p className="z-20 text-red-500 text-right cursor-pointer" onClick={() => setIsPressed()}>
                             x
                           </p>
                           <p
-                            onClick={() => {
-                              setBalasPesan({ ...balasPesan, user: e.user?.name, message: e.message });
+                          className="z-10 flex flex-col justify-center items-center relative bottom-[20px] h-[60px] w-[90px] mr-3"
+                             onClick={() => {
+                              setBalasPesan({ ...balasPesan, file: fileIcon, user: e.user?.name, message: e.message });
                               setIsPressed();
+                              setIDChat(e._id);
                             }}
                           >
                             {" "}
@@ -297,6 +416,40 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                 if (e.image.split(".").pop() === "png" || e.image.split(".").pop() === "jpg" || e.image.split(".").pop() === "jpeg") {
                   return (
                     <div className="flex justify-end mb-6">
+                      {e.reply_to && 
+                      <div className="border border-white border-l-4 p-3 rounded-xl">
+                        <p className="text-[14px] text-white font-semibold">{e.reply_to.user?.name}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.reply_to.message}</p>
+                        {e.reply_to?.type === "image" && e.reply_to?.image?.split(".").pop() === "png" || e.reply_to?.image?.split(".").pop() === "jpg" || e.reply_to?.image?.split(".").pop() === "jpeg" ? 
+                      <>
+                      <img
+                          className="w-[150px] cursor-pointer"
+                          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image}
+                          onClick={() => {
+                            dispatch(
+                              setImagePreviewer({
+                                imagePreviewer: process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image,
+                              })
+                            );
+                          }}
+                        />
+                      </>
+                      :
+                      <>
+                       File
+                       <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
+                       <div
+                            onClick={() => {
+                              window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to.image, "_blank");
+                            }}
+                            className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl w-[55px]"
+                          >
+                            Open
+                       </div>
+                      </>  
+                      }
+                      </div>
+                    }
                       <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
                         <img
                           className="w-[150px] cursor-pointer"
@@ -316,6 +469,40 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                 } else {
                   return (
                     <div className="flex justify-end mb-6">
+                      {e.reply_to && 
+                      <div className="border border-white border-l-4 p-3 rounded-xl">
+                        <p className="text-[14px] text-white font-semibold">{e.reply_to.user?.name}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.reply_to.message}</p>
+                        {e.reply_to?.type === "image" && e.reply_to?.image?.split(".").pop() === "png" || e.reply_to?.image?.split(".").pop() === "jpg" || e.reply_to?.image?.split(".").pop() === "jpeg" ? 
+                      <>
+                      <img
+                          className="w-[150px] cursor-pointer"
+                          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image}
+                          onClick={() => {
+                            dispatch(
+                              setImagePreviewer({
+                                imagePreviewer: process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image,
+                              })
+                            );
+                          }}
+                        />
+                      </>
+                      :
+                      <>
+                       File
+                       <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
+                       <div
+                            onClick={() => {
+                              window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to.image, "_blank");
+                            }}
+                            className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl w-[55px]"
+                          >
+                            Open
+                       </div>
+                      </>  
+                      }
+                      </div>
+                    }
                       <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
                         File
                         <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
@@ -334,11 +521,48 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                 }
               } else {
                 return (
+                  <div className="flex flex-col">
                   <div className="flex justify-end mb-6">
                     <div className="bg-[#FF5001] text-white py-1 px-2 rounded-xl rounded-br-none">
-                      <p className="text-[14px] w-[345px]">{e.message}</p>
+                    {e.reply_to && 
+                      <div className="border border-white border-l-4 p-3 rounded-xl">
+                        <p className="text-[14px] text-white font-semibold">{e.reply_to.user?.name}</p>
+                        <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.reply_to.message}</p>
+                        {e.reply_to?.type === "image" && e.reply_to?.image?.split(".").pop() === "png" || e.reply_to?.image?.split(".").pop() === "jpg" || e.reply_to?.image?.split(".").pop() === "jpeg" ? 
+                      <>
+                      <img
+                          className="w-[150px] cursor-pointer"
+                          src={process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image}
+                          onClick={() => {
+                            dispatch(
+                              setImagePreviewer({
+                                imagePreviewer: process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to?.image,
+                              })
+                            );
+                          }}
+                        />
+                      </>
+                      :
+                      <>
+                       File
+                       <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
+                       <div
+                            onClick={() => {
+                              window.open(process.env.NEXT_PUBLIC_BASE_URL_IMAGE + e.reply_to.image, "_blank");
+                            }}
+                            className="cursor-pointer flex items-center p-1 border border-black border-3 rounded-xl w-[55px]"
+                          >
+                            Open
+                       </div>
+                      </>  
+                      }
+                      </div>
+                    }
+                    
+                      <p className={`${mobile === true ? "w-full text-[14px] text-white" : "w-[345px] text-[14px] text-white"}`}>{e.message}</p>
                       <p className="text-[10px] flex justify-end">{Moment(e.createdAt).format("hh:mm")}</p>
                     </div>
+                  </div>
                   </div>
                 );
               }
@@ -418,6 +642,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 sendMessage();
+                setBalasPesan({ user: undefined, message: undefined, image: undefined, file: undefined })
               }
             }}
             value={message}
@@ -427,6 +652,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
           <div
             onClick={(e) => {
               sendMessage();
+              setBalasPesan({ user: undefined, message: undefined, image: undefined, file: undefined })
             }}
             className="h-[48px] w-[60px] bg-white flex items-center justify-center rounded-full cursor-pointer"
           >

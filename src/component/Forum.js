@@ -20,7 +20,20 @@ const Forum = ({ mobile }) => {
   const imagePreviewer = useSelector((state) => state.panel.imagePreviewer);
   const dispatch = useDispatch();
 
-  const contacts = useFetch("get", `user/chats/room/list${contactSearch !== "" ? `?keyword=${contactSearch}` : ""}`);
+  const contacts = useFetch(
+    "get",
+    `user/chats/room/list${
+      contactSearch !== "" ? `?keyword=${contactSearch}` : ""
+    }`
+  );
+  const chatForumBesar = useFetch(
+    "get",
+    `user/chats/forum?offset=0&forum=a5d0dd52-7856-402f-95b9-e7785f2abc68`
+  );
+  const chatTimKoordinator = useFetch(
+    "get",
+    `user/chats/forum?offset=0&forum=7c1b3334-22c2-4c92-8255-c1c6105aae6c`
+  );
 
   return (
     <>
@@ -42,7 +55,11 @@ const Forum = ({ mobile }) => {
           {/* list forum */}
           <div className="border-y-[1px] py-6">
             <div className="flex gap-3 items-center bg-[#FFECE480] px-2 py-1 mb-2">
-              <img className="h-[52px] w-[52px] rounded-full" src={forumTimIcon.src} alt="forum Tim Koordinator" />
+              <img
+                className="h-[52px] w-[52px] rounded-full"
+                src={forumTimIcon.src}
+                alt="forum Tim Koordinator"
+              />
               <div
                 onClick={() => {
                   setRoomChat("7c1b3334-22c2-4c92-8255-c1c6105aae6c");
@@ -53,11 +70,25 @@ const Forum = ({ mobile }) => {
                 className="cursor-pointer"
               >
                 <p className="text-black font-semibold">Tim Koordinator</p>
-                <p className="text-[14px] text-[#4B5563]">Pandji: Siap Meluncur!</p>
+
+                {chatTimKoordinator.data?.map((e, i) => {
+                  if (i === Number(chatTimKoordinator.data?.length - 1))
+                    return (
+                      <p className="text-[14px] text-[#4B5563]">
+                        {e.message.length > 15
+                          ? e.message.substring(0, 15) + ". . ."
+                          : e.message}
+                      </p>
+                    );
+                })}
               </div>
             </div>
             <div className="flex gap-3 items-center bg-[#FFECE480] px-2 py-1 mb-2">
-              <img className="h-[52px] w-[52px] rounded-full" src={forumBesarIcon.src} alt="forum Besar" />
+              <img
+                className="h-[52px] w-[52px] rounded-full"
+                src={forumBesarIcon.src}
+                alt="forum Besar"
+              />
               <div
                 onClick={() => {
                   setRoomChat("a5d0dd52-7856-402f-95b9-e7785f2abc68");
@@ -68,7 +99,17 @@ const Forum = ({ mobile }) => {
                 className="cursor-pointer"
               >
                 <p className="text-black font-semibold">Forum Besar Tim SJP</p>
-                <p className="text-[14px] text-[#4B5563]">Pandji: Siap Meluncur!</p>
+
+                {chatForumBesar.data?.map((e, i) => {
+                  if (i === Number(chatForumBesar.data?.length - 1))
+                    return (
+                      <p className="text-[14px] text-[#4B5563]">
+                        {e.message.length > 15
+                          ? e.message.substring(0, 15) + ". . ."
+                          : e.message}
+                      </p>
+                    );
+                })}
               </div>
             </div>
           </div>
@@ -84,13 +125,28 @@ const Forum = ({ mobile }) => {
                 }}
                 className="flex gap-3 items-center px-2 py-1 my-2 w-[350px]"
               >
-                <img className="h-[52px] w-[52px] rounded-full" src={ppUser.src} />
+                <img
+                  className="h-[52px] w-[52px] rounded-full"
+                  src={ppUser.src}
+                />
                 <div className="cursor-pointer">
                   <div className="flex gap-3">
-                    <p className="text-black font-semibold">{e.name.length > 15 ? e.name.substring(0, 15) + ". . ." : e.name}</p>
-                    <p className="text-[#FF5001] text-[14px] border border-[#FF5001] px-2 rounded-full">{e.role}</p>
+                    <p className="text-black font-semibold">
+                      {e.name.length > 15
+                        ? e.name.substring(0, 15) + ". . ."
+                        : e.name}
+                    </p>
+                    <p className="text-[#FF5001] text-[14px] border border-[#FF5001] px-2 rounded-full">
+                      {e.role}
+                    </p>
                   </div>
-                  <p className="text-[14px] w-[180px] text-[#4B5563] whitespace-nowrap truncate">{e.chat.length !== 0 ? (e.chat[0].message.length > 15 ? e.chat[0].message.substring(0, 15) + ". . ." : e.chat[0].message) : ""}</p>
+                  <p className="text-[14px] w-[180px] text-[#4B5563] whitespace-nowrap truncate">
+                    {e.chat.length !== 0
+                      ? e.chat[0].message.length > 15
+                        ? e.chat[0].message.substring(0, 15) + ". . ."
+                        : e.chat[0].message
+                      : ""}
+                  </p>
                 </div>
                 {/* <div className="px-2 flex justify-center items-center bg-[#FF5001] text-[14px] rounded-full text-white">
             1
@@ -100,7 +156,14 @@ const Forum = ({ mobile }) => {
           })}
           {roomChat !== undefined && (
             <div className="fixed w-screen h-screen bg-white top-0 left-0 overflow-scroll">
-              <ChatForum mobile={true} setRoomChat={setRoomChat} roomChat={roomChat} roomtitle={roomtitle} roomLogo={roomLogo} chatType={chatType} />
+              <ChatForum
+                mobile={true}
+                setRoomChat={setRoomChat}
+                roomChat={roomChat}
+                roomtitle={roomtitle}
+                roomLogo={roomLogo}
+                chatType={chatType}
+              />
             </div>
           )}
           {imagePreviewer && (
@@ -124,7 +187,11 @@ const Forum = ({ mobile }) => {
                   </div>
                 </div>
                 <div className="">
-                  <img className="w-full absolute top-[20%]" src={imagePreviewer} alt="" />
+                  <img
+                    className="w-full absolute top-[20%]"
+                    src={imagePreviewer}
+                    alt=""
+                  />
                 </div>
               </div>
             </>
@@ -153,7 +220,11 @@ const Forum = ({ mobile }) => {
                   </div>
                 </div>
                 <div className="">
-                  <img className="w-[700px] absolute top-10 left-60" src={imagePreviewer} alt="" />
+                  <img
+                    className="w-[700px] absolute top-10 left-60"
+                    src={imagePreviewer}
+                    alt=""
+                  />
                 </div>
               </div>
             </>
@@ -175,7 +246,11 @@ const Forum = ({ mobile }) => {
             {/* list forum */}
             <div className="border-y-[1px] py-6">
               <div className="flex gap-3 items-center bg-[#FFECE480] px-2 py-1 mb-2">
-                <img className="h-[52px] w-[52px] rounded-full" src={forumTimIcon.src} alt="forum Tim Koordinator" />
+                <img
+                  className="h-[52px] w-[52px] rounded-full"
+                  src={forumTimIcon.src}
+                  alt="forum Tim Koordinator"
+                />
                 <div
                   onClick={() => {
                     setRoomChat("7c1b3334-22c2-4c92-8255-c1c6105aae6c");
@@ -186,11 +261,25 @@ const Forum = ({ mobile }) => {
                   className="cursor-pointer"
                 >
                   <p className="text-black font-semibold">Tim Koordinator</p>
-                  <p className="text-[14px] text-[#4B5563]">Pandji: Siap Meluncur!</p>
+
+                  {chatTimKoordinator.data?.map((e, i) => {
+                    if (i === Number(chatTimKoordinator.data?.length - 1))
+                      return (
+                        <p className="text-[14px] text-[#4B5563]">
+                          {e.message.length > 15
+                            ? e.message.substring(0, 15) + ". . ."
+                            : e.message}
+                        </p>
+                      );
+                  })}
                 </div>
               </div>
               <div className="flex gap-3 items-center bg-[#FFECE480] px-2 py-1 mb-2">
-                <img className="h-[52px] w-[52px] rounded-full" src={forumBesarIcon.src} alt="forum Besar" />
+                <img
+                  className="h-[52px] w-[52px] rounded-full"
+                  src={forumBesarIcon.src}
+                  alt="forum Besar"
+                />
                 <div
                   onClick={() => {
                     setRoomChat("a5d0dd52-7856-402f-95b9-e7785f2abc68");
@@ -200,8 +289,20 @@ const Forum = ({ mobile }) => {
                   }}
                   className="cursor-pointer"
                 >
-                  <p className="text-black font-semibold">Forum Besar Tim SJP</p>
-                  <p className="text-[14px] text-[#4B5563]">Pandji: Siap Meluncur!</p>
+                  <p className="text-black font-semibold">
+                    Forum Besar Tim SJP
+                  </p>
+
+                  {chatForumBesar.data?.map((e, i) => {
+                    if (i === Number(chatForumBesar.data?.length - 1))
+                      return (
+                        <p className="text-[14px] text-[#4B5563]">
+                          {e.message.length > 15
+                            ? e.message.substring(0, 15) + ". . ."
+                            : e.message}
+                        </p>
+                      );
+                  })}
                 </div>
               </div>
             </div>
@@ -217,13 +318,28 @@ const Forum = ({ mobile }) => {
                   }}
                   className="flex gap-3 items-center px-2 py-1 my-2 w-[350px]"
                 >
-                  <img className="h-[52px] w-[52px] rounded-full" src={ppUser.src} />
+                  <img
+                    className="h-[52px] w-[52px] rounded-full"
+                    src={ppUser.src}
+                  />
                   <div className="cursor-pointer">
                     <div className="flex gap-3">
-                      <p className="text-black font-semibold">{e.name.length > 15 ? e.name.substring(0, 15) + ". . ." : e.name}</p>
-                      <p className="text-[#FF5001] text-[14px] border border-[#FF5001] px-2 rounded-full">{e.role}</p>
+                      <p className="text-black font-semibold">
+                        {e.name.length > 15
+                          ? e.name.substring(0, 15) + ". . ."
+                          : e.name}
+                      </p>
+                      <p className="text-[#FF5001] text-[14px] border border-[#FF5001] px-2 rounded-full">
+                        {e.role}
+                      </p>
                     </div>
-                    <p className="text-[14px] w-[180px] text-[#4B5563] whitespace-nowrap truncate">{e.chat.length !== 0 ? (e.chat[0].message.length > 15 ? e.chat[0].message.substring(0, 15) + ". . ." : e.chat[0].message) : ""}</p>
+                    <p className="text-[14px] w-[180px] text-[#4B5563] whitespace-nowrap truncate">
+                      {e.chat.length !== 0
+                        ? e.chat[0].message.length > 15
+                          ? e.chat[0].message.substring(0, 15) + ". . ."
+                          : e.chat[0].message
+                        : ""}
+                    </p>
                   </div>
                   {/* <div className="px-2 flex justify-center items-center bg-[#FF5001] text-[14px] rounded-full text-white">
                 1
@@ -284,7 +400,12 @@ const Forum = ({ mobile }) => {
       </div> */}
           </div>
           <div className="overflow-scroll h-screen w-full scrollbar-thin scrollbar-track-white">
-            <ChatForum roomChat={roomChat} roomtitle={roomtitle} roomLogo={roomLogo} chatType={chatType} />
+            <ChatForum
+              roomChat={roomChat}
+              roomtitle={roomtitle}
+              roomLogo={roomLogo}
+              chatType={chatType}
+            />
           </div>
         </div>
       )}
