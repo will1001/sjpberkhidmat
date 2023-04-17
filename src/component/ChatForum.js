@@ -206,6 +206,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                       </>
                       :
+                      e.reply_to?.type === "text" ? <></>:
                       <>
                        File
                        <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
@@ -282,6 +283,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                       </>
                       :
+                      e.reply_to?.type === "text" ? <></>:
                       <>
                        File
                        <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
@@ -369,6 +371,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                       </>
                       :
+                      e.reply_to?.type === "text" ? <></>:
                       <>
                        File
                        <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
@@ -397,7 +400,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                           <p
                           className="z-10 flex flex-col justify-center items-center relative bottom-[20px] h-[60px] w-[90px] mr-3"
                              onClick={() => {
-                              setBalasPesan({ ...balasPesan, file: fileIcon, user: e.user?.name, message: e.message });
+                              setBalasPesan({ ...balasPesan, user: e.user?.name, message: e.message });
                               setIsPressed();
                               setIDChat(e._id);
                             }}
@@ -435,6 +438,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                       </>
                       :
+                      e.reply_to?.type === "text" ? <></>:
                       <>
                        File
                        <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
@@ -488,6 +492,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                       </>
                       :
+                      e.reply_to?.type === "text" ? <></>:
                       <>
                        File
                        <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
@@ -543,6 +548,7 @@ const ChatForum = ({ roomChat, roomtitle, roomLogo, chatType, mobile, setRoomCha
                         />
                       </>
                       :
+                      e.reply_to?.type === "text" ? <></>:
                       <>
                        File
                        <img className="cursor-pointer w-[50px] my-[10px]" src={fileIcon.src} />
