@@ -32,12 +32,12 @@ const Download = () => {
 
   const handleInstallClick = (event) => {
     event.preventDefault();
-    if (
-      window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone === true
-    ) {
-      alert("App sudah terinstal di perangkat anda");
-    }
+    // if (
+    //   window.matchMedia("(display-mode: standalone)").matches ||
+    //   window.navigator.standalone === true
+    // ) {
+    //   alert("App sudah terinstal di perangkat anda");
+    // }
 
     if (deferredPrompt) {
       deferredPrompt.prompt();
