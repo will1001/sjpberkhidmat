@@ -8,12 +8,29 @@ import SetingSlider from "../../component/admin/seting_slider/SetingSlider";
 import Simpatisan from "../../component/admin/SimpatisanDash";
 import AkunTimSjp from "../../component/akunTimSjp/AkunTimSjp";
 import APK from "../../component/APK";
+import Jaringan from "../../component/Jaringan";
 import RumahAspirasi from "../../component/aspirasi/RumahAspirasi";
 import Forum from "../../component/Forum";
 import Program from "../../component/program/IndexProgram";
 import Publikasi from "../../component/publikasi/Publikasi";
 
-import { DashboardIcon, RealCountIcon, DPTDPSIcon, ProgramIcon, Logistic, PublikasiIcon, SetingSliderIcon, DaftarAkunIcon, SimpatisanIcon, RelawanIcon, AspirasiIcon, TambahAkunIcon, ForumIcon, APKIcon } from "./icon";
+import {
+  JaringanIcon,
+  DashboardIcon,
+  RealCountIcon,
+  DPTDPSIcon,
+  ProgramIcon,
+  Logistic,
+  PublikasiIcon,
+  SetingSliderIcon,
+  DaftarAkunIcon,
+  SimpatisanIcon,
+  RelawanIcon,
+  AspirasiIcon,
+  TambahAkunIcon,
+  ForumIcon,
+  APKIcon,
+} from "./icon";
 export const logoSidebar = [
   {
     name: "Dashboard",
@@ -76,6 +93,14 @@ export const logoSidebar = [
     path: "Simpatisan",
     icon: <SimpatisanIcon />,
     component: <Simpatisan />,
+    role: "relawan",
+    koordinator: true,
+  },
+  {
+    name: "Jaringan",
+    path: "Jaringan",
+    icon: <JaringanIcon />,
+    component: <Jaringan />,
     role: "relawan",
     koordinator: true,
   },
