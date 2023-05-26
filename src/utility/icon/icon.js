@@ -1029,6 +1029,7 @@ export function DetailIcon() {
   );
 }
 
+
 // icon kategori Kabar
 
 export function Icon1({ mobile }) {

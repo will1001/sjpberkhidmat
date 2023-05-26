@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ButtonPrimary from "../src/component/ButtonPrimary";
 import SearchInput from "../src/component/SearchInput";
 import DataTable from "react-data-table-component";
@@ -9,11 +9,39 @@ import EditIcon from "../src/utility/icon/edit2.png";
 import { useSelector } from "react-redux";
 import FormInputItem from "../src/component/FormInputItem";
 import Button from "../src/component/Button";
+import { useRouter, withRouter } from "next/router";
+import axiosFetch from "../src/API/axiosFetch";
+import Moment from "moment";
+import "moment/locale/id";
 
 const AnggotaJaringan = () => {
   const [currentPage, setCurrentPage] = useState("1");
   const roles = useSelector((state) => state.user.roles);
   const [popupTambah, setPopupTambah] = useState(false);
+  const router = useRouter();
+  const [anggotaJaringan, setAnggotaJaringan] = useState(null);
+  const token = useSelector((state) => state.user.token);
+  const periode = useSelector((state) => state.panel.idPeriode);
+  const [keyword, setKeyword] = useState(null);
+  const id_jaringan = localStorage.getItem("id_jaringan");
+  const [form, setForm] = useState({
+    id_periode: periode,
+    id_jaringan,
+  });
+  const [idJaringan, setIdJaringan] = useState(null);
+
+  const postAnggota = () => {
+    axiosFetch("post", "user/jaringan/member", form, token)
+      .then((res) => {
+        setPopupTambah(false);
+        setForm({
+          id_periode: periode,
+          id_jaringan: idJaringan,
+        });
+      })
+      .catch((err) => console.log(err));
+    window.location.reload(false);
+  };
 
   const customStyles = {
     headCells: {
@@ -21,14 +49,19 @@ const AnggotaJaringan = () => {
     },
   };
 
-  const data = [
+  const gender = [
     {
-      nama: "test",
-      ketua: "test",
-      pj: "test",
-      target: "test",
+      id: 0,
+      name: "Laki-Laki",
+    },
+    {
+      id: 1,
+      name: "Perempuan",
     },
   ];
+
+  const data = anggotaJaringan?.data ? anggotaJaringan?.data : [];
+
   const columns = [
     {
       name: "No",
@@ -36,20 +69,32 @@ const AnggotaJaringan = () => {
       width: "50px",
     },
     {
-      name: "Nama Jaringan",
+      name: "Nama Anggota",
       selector: (row) => row.nama,
     },
     {
-      name: "Ketua",
-      selector: (row) => row.ketua,
+      name: "No KK",
+      selector: (row) => row.no_kk,
     },
     {
-      name: "PJ Relawan",
-      selector: (row) => row.pj,
+      name: "NIK",
+      selector: (row) => row.nik,
     },
     {
-      name: "Target",
-      selector: (row) => row.target,
+      name: "Jenis Kelamin",
+      selector: (row) => row.gender,
+    },
+    {
+      name: "Tempat Lahir",
+      selector: (row) => row.tmpt_lahir,
+    },
+    {
+      name: "Tanggal Lahir",
+      selector: (row) => Moment(row.tgl_lahir).format("DD-MMMM-YYYY"),
+    },
+    {
+      name: "Alamat",
+      selector: (row) => row.alamat,
     },
     {
       name: "Aksi",
@@ -81,6 +126,24 @@ const AnggotaJaringan = () => {
       );
     }
   }
+
+  useEffect(() => {
+    let id_jar;
+    if (id_jaringan !== undefined) {
+      id_jar = id_jaringan;
+    } else {
+      localStorage.setItem("id_jaringan", router.query.id);
+      id_jar = router.query.id;
+    }
+    setIdJaringan(id_jar);
+
+    axiosFetch(
+      "get",
+      `user/jaringan/member?page=${currentPage}&id_jaringan=${id_jar}&limit=10`,
+      {},
+      token
+    ).then((res) => setAnggotaJaringan(res.data));
+  }, [currentPage, keyword]);
   return (
     <>
       {" "}
@@ -95,16 +158,14 @@ const AnggotaJaringan = () => {
             bgColor={"rgb(51, 65, 85)"}
           />
         </div>
-        <h1 className="text-4xl font-bold">
-          Himpunan Pengusaha Muda Indonesia
-        </h1>
+        <h1 className="text-4xl font-bold">{router.query.nama}</h1>
         <div className="flex space-x-20">
           <div className="flex space-x-3">
             <div>
-              <p>Ketua</p> <p>PJ Relawan</p>
+              <p>Jaringan</p> <p>PJ Relawan</p>
             </div>
             <div>
-              <p>: Digdaya Firgantoro</p> <p>: Marsudi Rajasa</p>
+              <p>: {router.query.nama}</p> <p>: {router.query.pj_relawan}</p>
             </div>
           </div>
           <div className="flex space-x-3">
@@ -114,9 +175,10 @@ const AnggotaJaringan = () => {
             </div>
             <div>
               <p>
-                : 91/ <span className="text-orange-400">100</span>
+                : 91/{" "}
+                <span className="text-orange-400">{router.query.target}</span>
               </p>
-              <p>: Kotaraja, Kec. Sikur, Lombok Tmur</p>
+              <p>: {router.query.alamat}</p>
             </div>
           </div>
         </div>
@@ -160,57 +222,45 @@ const AnggotaJaringan = () => {
                   <FormInputItem
                     label={"No KK"}
                     type="text"
-                    onChange={
-                      (e) => {}
-                      // setFormData({ ...formData, kebutuhan: e.target.value })
-                    }
-                    //   value={formData.kebutuhan}
+                    onChange={(e) => {
+                      setForm({ ...form, no_kk: e.target.value });
+                    }}
+                    value={form.no_kk}
                   />
                   <FormInputItem
                     label={"NIK"}
                     type="text"
-                    onChange={
-                      (e) => {}
-                      // setFormData({ ...formData, kebutuhan: e.target.value })
-                    }
-                    //   value={formData.kebutuhan}
+                    onChange={(e) => {
+                      setForm({ ...form, nik: e.target.value });
+                    }}
+                    value={form.nik}
                   />
                   <FormInputItem
                     label={"Nama"}
-                    type="number"
-                    onChange={
-                      (e) => {}
-                      // setFormData({ ...formData, kebutuhan: e.target.value })
-                    }
-                    //   value={formData.kebutuhan}
+                    type="text"
+                    onChange={(e) => {
+                      setForm({ ...form, nama: e.target.value });
+                    }}
+                    value={form.nama}
                   />
                   <FormInputItem
                     label={"Tempat Lahir"}
                     type="text"
-                    onChange={
-                      (e) => {}
-                      // setFormData({ ...formData, kebutuhan: e.target.value })
-                    }
-                    //   value={formData.kebutuhan}
+                    onChange={(e) => {
+                      setForm({ ...form, tmpt_lahir: e.target.value });
+                    }}
+                    value={form.tmpt_lahir}
                   />
-                  {/* <FormInputItem
-                  label={"Tanggal Lahir"}
-                  type="number"
-                  onChange={
-                    (e) => {}
-                    // setFormData({ ...formData, kebutuhan: e.target.value })
-                  }
-                  //   value={formData.kebutuhan}
-                /> */}
                   <div className="flex justify-between">
                     <p className="text-[16px] my-2 text-[#6B7280]">
                       Tanggal Lahir
                     </p>
 
                     <input
-                      // disabled={disableForm === true ? true : false}
-                      // value={formData.date_birth.split("T")[0]}
-                      // onChange={(e) => setFormData({ ...formData, date_birth: e.target.value })}
+                      value={form.tgl_lahir?.split("T")[0]}
+                      onChange={(e) =>
+                        setForm({ ...form, tgl_lahir: e.target.value })
+                      }
                       className=" outline-0 border w-[51%] p-1"
                       type="date"
                       id="tanggal lahir"
@@ -220,37 +270,54 @@ const AnggotaJaringan = () => {
                       max="2024-12-31"
                     />
                   </div>
-                  <FormInputItem
+                  {/* <FormInputItem
                     label={"Jenis Kelamin"}
                     type="text"
-                    onChange={
-                      (e) => {}
-                      // setFormData({ ...formData, kebutuhan: e.target.value })
-                    }
-                    //   value={formData.kebutuhan}
-                  />
+                    onChange={(e) => {
+                      setForm({ ...form, gender: e.target.value });
+                    }}
+                    value={form.gender}
+                  /> */}
+                  <div className="flex items-center">
+                    <span className="w-[50%]">Jenis Kelamin</span>
+                    <select
+                      value={form.gender}
+                      onChange={(e) =>
+                        setForm({ ...form, gender: e.target.value })
+                      }
+                      className="border p-2 rounded-md outline-none w-[52%]"
+                      type="text"
+                    >
+                      <option selected disabled>
+                        Pilih Opsi
+                      </option>
+                      {gender.map((res) => (
+                        <option key={res.id} value={res.name}>
+                          {res.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <FormInputItem
                     label={"Alamat"}
                     type="text"
-                    onChange={
-                      (e) => {}
-                      // setFormData({ ...formData, kebutuhan: e.target.value })
-                    }
-                    //   value={formData.kebutuhan}
+                    onChange={(e) => {
+                      setForm({ ...form, alamat: e.target.value });
+                    }}
+                    value={form.alamat}
                   />
                   <div className="flex mt-[40px] justify-end">
                     <div
                       onClick={() => {
-                        //   dispatch(showOrHidePopUpDash({ type: null }));
+                        setForm({});
                       }}
                       className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
                     >
-                      {/* <img src={homeIcn.src} /> */}
                       <p className="text-[18px] font-semibold">Bersihkan </p>
                     </div>
                     <div
                       onClick={() => {
-                        //   postLogistic();
+                        postAnggota();
                       }}
                       className="h-[42px] w-[140px] bg-[#E44700] rounded-md  cursor-pointer  text-[18px] text-white font-semibold items-center justify-center gap-2 flex"
                     >
@@ -267,4 +334,4 @@ const AnggotaJaringan = () => {
   );
 };
 
-export default AnggotaJaringan;
+export default withRouter(AnggotaJaringan);
