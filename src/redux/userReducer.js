@@ -4,8 +4,9 @@ const initialState = {
   token: "",
   roles: "",
   name: "",
-  email:"",
+  email: "",
   id_kabupaten: "",
+  id_jaringan: "",
 };
 
 export const userSlice = createSlice({
@@ -17,14 +18,17 @@ export const userSlice = createSlice({
       state.roles = action.payload.roles;
       state.name = action.payload.name;
       state.email = action.payload.email;
-      state.id_kabupaten = action.payload.id_kabupaten
+      state.id_kabupaten = action.payload.id_kabupaten;
     },
     setIdKabupaten: (state, action) => {
       state.id_kabupaten = action.payload.id_kabupaten;
     },
+    setIdJaringan: (state, action) => {
+      state.id_jaringan = action.payload.id_jaringan;
+    },
   },
 });
 
-export const { setToken, setIdKabupaten } = userSlice.actions;
+export const { setToken, setIdKabupaten, setIdJaringan } = userSlice.actions;
 
 export default userSlice.reducer;

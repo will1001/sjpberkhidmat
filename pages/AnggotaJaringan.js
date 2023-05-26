@@ -6,29 +6,30 @@ import Pagination from "../src/component/Pagination";
 import { useState } from "react";
 import { DeletIcon, KembaliIcon } from "../src/utility/icon/icon";
 import EditIcon from "../src/utility/icon/edit2.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FormInputItem from "../src/component/FormInputItem";
 import Button from "../src/component/Button";
 import { useRouter, withRouter } from "next/router";
 import axiosFetch from "../src/API/axiosFetch";
 import Moment from "moment";
 import "moment/locale/id";
+import { setIdJaringan } from "../src/redux/userReducer";
 
 const AnggotaJaringan = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const id_jaringan = useSelector((state) => state.user.id_jaringan);
   const [currentPage, setCurrentPage] = useState("1");
   const roles = useSelector((state) => state.user.roles);
   const [popupTambah, setPopupTambah] = useState(false);
-  const router = useRouter();
   const [anggotaJaringan, setAnggotaJaringan] = useState(null);
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
   const [keyword, setKeyword] = useState(null);
-  const id_jaringan = localStorage.getItem("id_jaringan");
   const [form, setForm] = useState({
     id_periode: periode,
     id_jaringan,
   });
-  const [idJaringan, setIdJaringan] = useState(null);
 
   const postAnggota = () => {
     axiosFetch("post", "user/jaringan/member", form, token)
@@ -36,7 +37,7 @@ const AnggotaJaringan = () => {
         setPopupTambah(false);
         setForm({
           id_periode: periode,
-          id_jaringan: idJaringan,
+          id_jaringan,
         });
       })
       .catch((err) => console.log(err));
@@ -128,22 +129,19 @@ const AnggotaJaringan = () => {
   }
 
   useEffect(() => {
-    let id_jar;
-    if (id_jaringan !== undefined) {
-      id_jar = id_jaringan;
-    } else {
-      localStorage.setItem("id_jaringan", router.query.id);
-      id_jar = router.query.id;
+    if (router.query.id) {
+      dispatch(setIdJaringan({ id_jaringan: router.query.id }));
     }
-    setIdJaringan(id_jar);
 
     axiosFetch(
       "get",
-      `user/jaringan/member?page=${currentPage}&id_jaringan=${id_jar}&limit=10`,
+      `user/jaringan/member?page=${currentPage}&id_jaringan=${
+        id_jaringan ? id_jaringan : router.query.id
+      }&limit=10`,
       {},
       token
     ).then((res) => setAnggotaJaringan(res.data));
-  }, [currentPage, keyword]);
+  }, [currentPage, keyword, router.query.id_kabupaten]);
   return (
     <>
       {" "}
