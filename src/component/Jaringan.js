@@ -27,6 +27,8 @@ const Jaringan = () => {
   const kabupaten = useFetch("get", "user/kabupaten");
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
+  const [tipeForm, setTipeForm] = useState("post");
+  const [idJaringan, setIdJaringan] = useState(null);
 
   const [form, setForm] = useState({
     id_periode: periode,
@@ -42,14 +44,22 @@ const Jaringan = () => {
     return res.data;
   };
   const postJaringan = () => {
-    axiosFetch("post", "user/jaringan", form, token)
-      .then((res) => {
-        setPopupTambah(false);
-        setForm({
-          id_periode: periode,
-        });
-      })
-      .catch((err) => console.log(err));
+    if (tipeForm === "post") {
+      axiosFetch("post", "user/jaringan", form, token)
+        .then((res) => {
+          setPopupTambah(false);
+          setForm({
+            id_periode: periode,
+          });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axiosFetch("put", `user/jaringan/${idJaringan}`, form, token)
+        .then((res) => {
+          setPopupTambah(false);
+        })
+        .catch((err) => console.log(err));
+    }
     window.location.reload(false);
   };
   const deleteJaringan = (id) => {
@@ -64,6 +74,25 @@ const Jaringan = () => {
       // Do nothing!
       // console.log('Thing was not saved to the database.');
     }
+  };
+  const editJaringan = (res) => {
+    setPopupTambah(true);
+    setTipeForm("put");
+    setIdJaringan(res._id);
+    setForm({
+      id_periode: periode,
+      nama: res.nama,
+      tokoh: res.tokoh,
+      nama_tokoh: res.nama_tokoh,
+      no_hp_tokoh: res.no_hp_tokoh,
+      no_hp_relawan: res.no_hp_relawan,
+      id_kabupaten: res.id_kabupaten,
+      id_kecamatan: res.id_kecamatan,
+      id_kelurahan: res.id_kelurahan,
+      id_relawan: res.id_relawan,
+      target: res.target,
+      alamat: res.alamat,
+    });
   };
 
   const changeKabupaten = async (idKabupaten) => {
@@ -166,7 +195,7 @@ const Jaringan = () => {
         <div className="flex justify-between w-[75px] cursor-pointer items-center">
           <img
             onClick={() => {
-              //   editSimpatisan(res);
+              editJaringan(res);
             }}
             src={EditIcon.src}
           />
@@ -211,7 +240,7 @@ const Jaringan = () => {
       {},
       token
     ).then((res) => setJaringan(res.data));
-  }, [currentPage, keyword]);
+  }, [currentPage, keyword, form]);
   return (
     <>
       {" "}
@@ -219,7 +248,13 @@ const Jaringan = () => {
         <h1 className="text-4xl font-bold">Jaringan</h1>
         <ButtonPrimary
           title={"Tambah Jaringan"}
-          action={() => setPopupTambah(true)}
+          action={() => {
+            setTipeForm("post");
+            setForm({
+              id_periode: periode,
+            });
+            setPopupTambah(true);
+          }}
         />
         <div className="flex justify-between">
           <SearchInput
@@ -268,7 +303,7 @@ const Jaringan = () => {
                     onChange={(e) => {
                       setForm({ ...form, nama: e.target.value });
                     }}
-                    value={form.ketua}
+                    value={form.nama}
                   />
                   <div className="flex items-center">
                     {/* <span className="w-[33%]"></span> */}
@@ -337,14 +372,13 @@ const Jaringan = () => {
                     onChange={(e) => {
                       setForm({ ...form, alamat: e.target.value });
                     }}
-                    //   value={formData.kebutuhan}
+                    value={form.alamat}
                   />
 
                   <div className="flex items-center">
                     <span className="w-[33%]">PJ Relawan</span>
                     <select
-                      //    value={formAPK.id_relawan}
-
+                      value={form.id_relawan}
                       onChange={(e) => {
                         setForm({ ...form, id_relawan: e.target.value });
                       }}
@@ -367,7 +401,7 @@ const Jaringan = () => {
                     onChange={(e) => {
                       setForm({ ...form, no_hp_relawan: e.target.value });
                     }}
-                    //   value={formData.kebutuhan}
+                    value={form.no_hp_relawan}
                   />
                   <FormInputItem
                     label={"Target Anggota"}
@@ -375,19 +409,17 @@ const Jaringan = () => {
                     onChange={(e) => {
                       setForm({ ...form, target: e.target.value });
                     }}
-                    //   value={formData.kebutuhan}
+                    value={form.target}
                   />
 
                   <div className="flex mt-[40px] justify-end">
-                    <div
+                    {/* <div
                       onClick={() => {
-                        //   dispatch(showOrHidePopUpDash({ type: null }));
                       }}
                       className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
                     >
-                      {/* <img src={homeIcn.src} /> */}
                       <p className="text-[18px] font-semibold">Bersihkan </p>
-                    </div>
+                    </div> */}
                     <div
                       onClick={() => {
                         postJaringan();

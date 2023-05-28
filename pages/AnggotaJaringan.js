@@ -30,18 +30,38 @@ const AnggotaJaringan = () => {
     id_periode: periode,
     id_jaringan,
   });
+  const [tipeForm, setTipeForm] = useState("post");
+  const [idAnggotaJaringan, setIdAnggotaJaringan] = useState(null);
 
   const postAnggota = () => {
-    axiosFetch("post", "user/jaringan/member", form, token)
-      .then((res) => {
-        setPopupTambah(false);
-        setForm({
-          id_periode: periode,
-          id_jaringan,
-        });
-      })
-      .catch((err) => console.log(err));
-    window.location.reload(false);
+    if (tipeForm === "post") {
+      axiosFetch("post", "user/jaringan/member", form, token)
+        .then((res) => {
+          if (res.data.data === "NIK Sudah Terdaftar") {
+            alert("NIK Sudah Terdaftar");
+          } else {
+            window.location.reload(false);
+          }
+          setPopupTambah(false);
+          setForm({
+            id_periode: periode,
+            id_jaringan,
+          });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axiosFetch(
+        "put",
+        `user/jaringan/member/${idAnggotaJaringan}`,
+        form,
+        token
+      )
+        .then((res) => {
+          setPopupTambah(false);
+          window.location.reload(false);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const deleteAnggotaJaringan = (id) => {
@@ -58,6 +78,20 @@ const AnggotaJaringan = () => {
     }
   };
 
+  const editAnggotaJaringan = (res) => {
+    setPopupTambah(true);
+    setTipeForm("put");
+    setIdAnggotaJaringan(res._id);
+    setForm({
+      id_periode: periode,
+      nama: res.nama,
+      nik: res.nik,
+      tmpt_lahir: res.tmpt_lahir,
+      tgl_lahir: res.tgl_lahir,
+      gender: res.gender,
+      alamat: res.alamat,
+    });
+  };
   const customStyles = {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
@@ -121,7 +155,7 @@ const AnggotaJaringan = () => {
         <div className="flex justify-between w-[55px] cursor-pointer">
           <img
             onClick={() => {
-              //   editSimpatisan(res);
+              editAnggotaJaringan(res);
             }}
             src={EditIcon.src}
           />
@@ -228,7 +262,14 @@ const AnggotaJaringan = () => {
         </div>
         <ButtonPrimary
           title={"Tambah Anggota"}
-          action={() => setPopupTambah(true)}
+          action={() => {
+            setTipeForm("post");
+            setPopupTambah(true);
+            setForm({
+              id_periode: periode,
+              id_jaringan,
+            });
+          }}
         />
         <div className="flex justify-between">
           <SearchInput
@@ -337,14 +378,14 @@ const AnggotaJaringan = () => {
                     value={form.alamat}
                   />
                   <div className="flex mt-[40px] justify-end">
-                    <div
+                    {/* <div
                       onClick={() => {
                         setForm({});
                       }}
                       className="h-[42px] mr-3 px-4 cursor-pointer flex justify-center items-center gap-2 border border-[#374151] text-[#374151] rounded-md"
                     >
                       <p className="text-[18px] font-semibold">Bersihkan </p>
-                    </div>
+                    </div> */}
                     <div
                       onClick={() => {
                         postAnggota();
