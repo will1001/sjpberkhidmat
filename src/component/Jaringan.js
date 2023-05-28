@@ -142,7 +142,7 @@ const Jaringan = () => {
       selector: (row) => row.target,
     },
     {
-      name: "Status",
+      name: "Progres Target",
       selector: (row) => (
         <ProgressBar
           progress={Math.floor(
@@ -187,7 +187,9 @@ const Jaringan = () => {
                   nama: res.nama,
                   tokoh: res.tokoh,
                   nama_tokoh: res.nama_tokoh,
+                  no_hp_tokoh: res.no_hp_tokoh,
                   pj_relawan: res.relawan.name,
+                  no_hp_relawan: res.no_hp_relawan,
                   id: res._id,
                   target: res.target,
                   alamat: res.alamat,
@@ -279,7 +281,7 @@ const Jaringan = () => {
                       type="text"
                     >
                       <option selected disabled>
-                        Pilih Opsi
+                        Pilih Tokoh
                       </option>
                       {tipe_jaringan.map((res) => (
                         <option key={res.id} value={res.name}>
@@ -349,7 +351,7 @@ const Jaringan = () => {
                       type="text"
                     >
                       <option selected disabled>
-                        Pilih Opsi
+                        Pilih Relawan
                       </option>
                       {relawan?.data?.map((res) => (
                         <option key={res._id} value={res._id}>

@@ -126,44 +126,72 @@ const AnggotaJaringan = () => {
   }
 
   useEffect(() => {
-    if (router.query.id) {
-      dispatch(setIdJaringan({ id_jaringan: router.query.id }));
+    if (roles === "relawan") {
+      axiosFetch(
+        "get",
+        `user/jaringan/member?page=${currentPage}&limit=10`,
+        {},
+        token
+      ).then((res) => {
+        console.log(res.data.data[0]);
+        dispatch(setIdJaringan({ id_jaringan: res.data?.data[0].id_jaringan }));
+        setAnggotaJaringan(res.data);
+      });
+    } else {
+      if (router.query.id) {
+        dispatch(setIdJaringan({ id_jaringan: router.query.id }));
+      }
+      axiosFetch(
+        "get",
+        `user/jaringan/member?page=${currentPage}&id_jaringan=${
+          id_jaringan ? id_jaringan : router.query.id
+        }&limit=10`,
+        {},
+        token
+      ).then((res) => setAnggotaJaringan(res.data));
     }
-
-    axiosFetch(
-      "get",
-      `user/jaringan/member?page=${currentPage}&id_jaringan=${
-        id_jaringan ? id_jaringan : router.query.id
-      }&limit=10`,
-      {},
-      token
-    ).then((res) => setAnggotaJaringan(res.data));
   }, [currentPage, keyword, router.query.id_kabupaten]);
   return (
     <>
       {" "}
       <div className="m-10 space-y-5">
-        <div onClick={() => router.back()}>
-          <Button
-            title={"Kembali"}
-            icon={<KembaliIcon />}
-            text={"white"}
-            w={"149px"}
-            h={"53px"}
-            bgColor={"rgb(51, 65, 85)"}
-          />
-        </div>
+        {roles === "admin" && (
+          <div onClick={() => router.back()}>
+            <Button
+              title={"Kembali"}
+              icon={<KembaliIcon />}
+              text={"white"}
+              w={"149px"}
+              h={"53px"}
+              bgColor={"rgb(51, 65, 85)"}
+            />
+          </div>
+        )}
         <h1 className="text-4xl font-bold">{router.query.nama}</h1>
         <div className="flex space-x-20">
           <div className="flex space-x-3">
             <div>
-              <p>Jaringan</p> <p>Nama</p>
-              <p>PJ Relawan</p>
+              <p>Tokoh</p> <p>Nama</p>
+              <p>No HP</p>
+              {roles === "admin" && <p>PJ Relawan</p>}
+              {roles === "admin" && <p>No Hp Relawan</p>}
             </div>
             <div>
-              <p>: {router.query.tokoh}</p>
-              <p>: {router.query.nama_tokoh}</p>{" "}
-              <p>: {router.query.pj_relawan}</p>
+              <p>
+                : {anggotaJaringan && anggotaJaringan?.data[0].jaringan?.tokoh}
+              </p>
+              <p>
+                :{" "}
+                {anggotaJaringan &&
+                  anggotaJaringan?.data[0].jaringan?.nama_tokoh}
+              </p>{" "}
+              <p>
+                :{" "}
+                {anggotaJaringan &&
+                  anggotaJaringan?.data[0].jaringan?.no_hp_tokoh}
+              </p>
+              {roles === "admin" && <p>: {router.query.pj_relawan}</p>}
+              {roles === "admin" && <p>: {router.query.no_hp_relawan}</p>}
             </div>
           </div>
           <div className="flex space-x-3">
@@ -174,9 +202,13 @@ const AnggotaJaringan = () => {
             <div>
               <p>
                 : {anggotaJaringan?.metadata?.total}/{" "}
-                <span className="text-orange-400">{router.query.target}</span>
+                <span className="text-orange-400">
+                  {anggotaJaringan && anggotaJaringan?.data[0].jaringan?.target}
+                </span>
               </p>
-              <p>: {router.query.alamat}</p>
+              <p>
+                : {anggotaJaringan && anggotaJaringan?.data[0].jaringan?.alamat}
+              </p>
             </div>
           </div>
         </div>
@@ -213,9 +245,9 @@ const AnggotaJaringan = () => {
                 <p className="text-[32px] text-[#374151] font-bold">
                   Tambah Anggota Jaringan
                 </p>
-                <p className="text-[16px] text-[#374151] font-bold">
+                {/* <p className="text-[16px] text-[#374151] font-bold">
                   Himpunan Pengusaha Muda Indonesia
-                </p>
+                </p> */}
                 <div>
                   <FormInputItem
                     label={"NIK"}
@@ -261,7 +293,7 @@ const AnggotaJaringan = () => {
                       max="2024-12-31"
                     />
                   </div>
-                 
+
                   <div className="flex items-center space-y-3">
                     <span className="w-[33%]">Jenis Kelamin</span>
                     <select

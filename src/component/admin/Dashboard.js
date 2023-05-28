@@ -8,12 +8,20 @@ import useFetch from "../../API/useFetch";
 import Button from "../../component/Button";
 import JumlahPenduduk from "../../component/JumlahPenduduk";
 
-import { BackIcon, PendudukIcon, PetaKekuatanIcon, RelawanIcon, TargetSuaraIcon, TpsIcon } from "../../utility/icon/icon";
+import {
+  BackIcon,
+  PendudukIcon,
+  PetaKekuatanIcon,
+  RelawanIcon,
+  TargetSuaraIcon,
+  TpsIcon,
+} from "../../utility/icon/icon";
 import PetaLombok from "../../utility/PetaLombok";
 
 function Dashboard() {
   const router = useRouter();
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
+  const jaringan = useFetch("get", "user/jaringan/total");
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const roles = useSelector((state) => state.user.roles);
 
@@ -66,14 +74,64 @@ function Dashboard() {
     <>
       {screenSize.width >= 350 && screenSize.width <= 450 ? (
         <div className="px-[16px]">
-          <p className="mt-[21px] mb-[21px] text-[24px] text-[#374151] font-bold">Dashboard</p>
+          <p className="mt-[21px] mb-[21px] text-[24px] text-[#374151] font-bold">
+            Dashboard
+          </p>
           <div className="flex flex-col gap-3">
-            <JumlahPenduduk title={"Target Suara"} total={targetSuara?.toLocaleString()} icon={<TargetSuaraIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-            <JumlahPenduduk title={"Suara Periode Lalu"} total={suaraLalu?.toLocaleString()} icon={<TargetSuaraIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-            <JumlahPenduduk title={"Jumlah TPS"} total={jumlahTPS?.toLocaleString()} icon={<TpsIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-            <JumlahPenduduk title={"Jumlah DPT/DPS"} total={jumlahDPTDPS?.toLocaleString()} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-            <JumlahPenduduk title={"Jumlah Relawan"} total={jumlahRelawans?.toLocaleString()} icon={<RelawanIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-            <JumlahPenduduk title={"Jumlah Simpatisan"} total={jumlahSimpatisan?.toLocaleString()} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
+            <JumlahPenduduk
+              title={"Target Suara"}
+              total={targetSuara?.toLocaleString()}
+              icon={<TargetSuaraIcon />}
+              totalSize={"32px"}
+              titleSize={"21px"}
+              w={"287px"}
+              h={"73px"}
+            />
+            <JumlahPenduduk
+              title={"Suara Periode Lalu"}
+              total={suaraLalu?.toLocaleString()}
+              icon={<TargetSuaraIcon />}
+              totalSize={"32px"}
+              titleSize={"21px"}
+              w={"287px"}
+              h={"73px"}
+            />
+            <JumlahPenduduk
+              title={"Jumlah TPS"}
+              total={jumlahTPS?.toLocaleString()}
+              icon={<TpsIcon />}
+              totalSize={"32px"}
+              titleSize={"21px"}
+              w={"287px"}
+              h={"73px"}
+            />
+            <JumlahPenduduk
+              title={"Jumlah DPT/DPS"}
+              total={jumlahDPTDPS?.toLocaleString()}
+              icon={<PendudukIcon />}
+              totalSize={"32px"}
+              titleSize={"21px"}
+              w={"287px"}
+              h={"73px"}
+            />
+            <JumlahPenduduk
+              title={"Jumlah Relawan"}
+              total={jumlahRelawans?.toLocaleString()}
+              icon={<RelawanIcon />}
+              totalSize={"32px"}
+              titleSize={"21px"}
+              w={"287px"}
+              h={"73px"}
+            />
+            <JumlahPenduduk
+              title={"Jumlah Simpatisan"}
+              total={jumlahSimpatisan?.toLocaleString()}
+              icon={<PendudukIcon />}
+              totalSize={"32px"}
+              titleSize={"21px"}
+              w={"287px"}
+              h={"73px"}
+            />
           </div>
           <div
             onClick={() => {
@@ -84,26 +142,101 @@ function Dashboard() {
                   query: { kota: id_kabupaten, mobile: "true" },
                 });
 
-              roles === "ketua_tim" && router.push({ pathname: "/PetaKekuatan", query: { display: "mobile" } });
+              roles === "ketua_tim" &&
+                router.push({
+                  pathname: "/PetaKekuatan",
+                  query: { display: "mobile" },
+                });
             }}
             className="mt-6"
           >
-            <Button title={"Peta Kekuatan"} text={"white"} icon={<PetaKekuatanIcon />} w={"100%"} h={"63px"} bgColor={"rgb(51, 65, 85)"} />
+            <Button
+              title={"Peta Kekuatan"}
+              text={"white"}
+              icon={<PetaKekuatanIcon />}
+              w={"100%"}
+              h={"63px"}
+              bgColor={"rgb(51, 65, 85)"}
+            />
           </div>
         </div>
       ) : (
         <div className="bg-orange-50 h-screen">
           <div className="pt-4 pl-8 ">
-            <h1 className="font-bold text-[32px] text-slate-700 ml-24">Dapil Nusa Tenggara Barat II</h1>
+            <h1 className="font-bold text-[32px] text-slate-700 ml-24">
+              Dapil Nusa Tenggara Barat II
+            </h1>
             <div className="flex mx-24 item-center gap-4 mt-2">
-              <JumlahPenduduk title={"Target Suara"} total={targetSuara?.toLocaleString()} icon={<TargetSuaraIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-              <JumlahPenduduk title={"Suara Periode Lalu"} total={suaraLalu?.toLocaleString()} icon={<TargetSuaraIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-              <JumlahPenduduk title={"Jumlah TPS"} total={jumlahTPS?.toLocaleString()} icon={<TpsIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
+              <JumlahPenduduk
+                title={"Target Suara"}
+                total={targetSuara?.toLocaleString()}
+                icon={<TargetSuaraIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              <JumlahPenduduk
+                title={"Suara Periode Lalu"}
+                total={suaraLalu?.toLocaleString()}
+                icon={<TargetSuaraIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              <JumlahPenduduk
+                title={"Jumlah TPS"}
+                total={jumlahTPS?.toLocaleString()}
+                icon={<TpsIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
             </div>
             <div className="flex mx-24 item-center gap-4 mt-2">
-              <JumlahPenduduk title={"Jumlah DPT/DPS"} total={jumlahDPTDPS?.toLocaleString()} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-              <JumlahPenduduk title={"Jumlah Relawan"} total={jumlahRelawans?.toLocaleString()} icon={<RelawanIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
-              <JumlahPenduduk title={"Jumlah Simpatisan"} total={jumlahSimpatisan?.toLocaleString()} icon={<PendudukIcon />} totalSize={"32px"} titleSize={"21px"} w={"287px"} h={"73px"} />
+              <JumlahPenduduk
+                title={"Jumlah DPT/DPS"}
+                total={jumlahDPTDPS?.toLocaleString()}
+                icon={<PendudukIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              <JumlahPenduduk
+                title={"Jumlah Relawan"}
+                total={jumlahRelawans?.toLocaleString()}
+                icon={<RelawanIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              <JumlahPenduduk
+                title={"Jumlah Simpatisan"}
+                total={jumlahSimpatisan?.toLocaleString()}
+                icon={<PendudukIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+            </div>
+            <div className="flex mx-24 item-center gap-4 mt-2">
+              <JumlahPenduduk
+                title={"Jumlah Jaringan"}
+                total={jaringan?.data?.toLocaleString()}
+                icon={<PendudukIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              <div className="h-[73px] w-[1900px]">
+                
+              </div>
             </div>
             <div className="pl-24 mt-6 mb-8">
               <div
@@ -119,7 +252,14 @@ function Dashboard() {
                   roles === "admin" && router.push("/PetaKekuatan");
                 }}
               >
-                <Button title={"Peta Kekuatan"} text={"white"} icon={<PetaKekuatanIcon />} w={"280px"} h={"63px"} bgColor={"rgb(51, 65, 85)"} />
+                <Button
+                  title={"Peta Kekuatan"}
+                  text={"white"}
+                  icon={<PetaKekuatanIcon />}
+                  w={"280px"}
+                  h={"63px"}
+                  bgColor={"rgb(51, 65, 85)"}
+                />
               </div>
             </div>
             <div className="pl-24 bg-orange-50">
