@@ -44,6 +44,20 @@ const AnggotaJaringan = () => {
     window.location.reload(false);
   };
 
+  const deleteAnggotaJaringan = (id) => {
+    if (confirm("Hapus Anggota Jaringan ?")) {
+      axiosFetch("delete", `user/member/jaringan/${id}`, {}, token)
+        .then((res) => {
+          setPopupTambah(false);
+        })
+        .catch((err) => console.log(err));
+      window.location.reload(false);
+    } else {
+      // Do nothing!
+      // console.log('Thing was not saved to the database.');
+    }
+  };
+
   const customStyles = {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
@@ -114,7 +128,7 @@ const AnggotaJaringan = () => {
           {roles === "admin" && (
             <div
               onClick={() => {
-                // hapusSimpatisan(res.email);
+                deleteAnggotaJaringan(res._id);
               }}
             >
               <DeletIcon />

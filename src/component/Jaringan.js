@@ -271,13 +271,13 @@ const Jaringan = () => {
                     value={form.ketua}
                   />
                   <div className="flex items-center">
-                    <span className="w-[33%]"></span>
+                    {/* <span className="w-[33%]"></span> */}
                     <select
                       value={form.tokoh}
                       onChange={(e) =>
                         setForm({ ...form, tokoh: e.target.value })
                       }
-                      className="border p-2 rounded-md outline-none w-[67%]"
+                      className="border p-2 rounded-md outline-none w-[31%] mr-1"
                       type="text"
                     >
                       <option selected disabled>
@@ -289,15 +289,16 @@ const Jaringan = () => {
                         </option>
                       ))}
                     </select>
+                    <FormInputItem
+                      label={"Nama"}
+                      type="text"
+                      onChange={(e) => {
+                        setForm({ ...form, nama_tokoh: e.target.value });
+                      }}
+                      value={form.nama_tokoh}
+                    />
                   </div>
-                  <FormInputItem
-                    label={"Nama"}
-                    type="text"
-                    onChange={(e) => {
-                      setForm({ ...form, nama_tokoh: e.target.value });
-                    }}
-                    value={form.nama_tokoh}
-                  />
+
                   <FormInputItem
                     label={"No Hp"}
                     type="number"
