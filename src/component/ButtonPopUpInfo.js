@@ -18,6 +18,7 @@ import simpatisan from "../utility/peta/simpatisan.png";
 import program from "../utility/peta/program.png";
 import targetSuara from "../utility/peta/target_suara.png";
 import suaraPeriodeLalu from "../utility/peta/suara_periode_lalu.png";
+import JaringanIconSvg from "../utility/icon/jaringan.svg";
 import TPS from "../utility/peta/TPS.png";
 import DPTDPS from "../utility/peta/DPT_DPS.png";
 import useFetch from "../API/useFetch";
@@ -84,6 +85,9 @@ const ButtonPopUpInfo = ({
     } else if (active === "Jumlah DPT/DPS") {
       setIcon(DPTDPS);
       setTotal("jumlah dpt/dps");
+    } else if (active === "Jaringan") {
+      setIcon(JaringanIconSvg);
+      setTotal("jaringan");
     } else {
       setIcon(kotaIcon);
       setTotal();
@@ -487,6 +491,16 @@ const ButtonPopUpInfo = ({
                       };
 
                       break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
                     default:
                       break;
                   }
@@ -627,6 +641,16 @@ const ButtonPopUpInfo = ({
                       };
 
                       break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
                     default:
                       break;
                   }
@@ -763,6 +787,16 @@ const ButtonPopUpInfo = ({
                         : (path = "PetaKekuatan");
                       query = {
                         component: "/program",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
                         id_kabupaten: idKabupaten,
                       };
 
@@ -908,6 +942,16 @@ const ButtonPopUpInfo = ({
                       };
 
                       break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
                     default:
                       break;
                   }
@@ -1044,6 +1088,16 @@ const ButtonPopUpInfo = ({
                         : (path = "PetaKekuatan");
                       query = {
                         component: "/program",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
                         id_kabupaten: idKabupaten,
                       };
 
@@ -1189,6 +1243,16 @@ const ButtonPopUpInfo = ({
                       };
 
                       break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
                     default:
                       break;
                   }
@@ -1319,6 +1383,16 @@ const ButtonPopUpInfo = ({
                         component: "/program",
                         id_kabupaten: idKabupaten,
                         id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
                       };
 
                       break;
@@ -1455,6 +1529,16 @@ const ButtonPopUpInfo = ({
                       };
 
                       break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
                     default:
                       break;
                   }
@@ -1585,6 +1669,16 @@ const ButtonPopUpInfo = ({
                         component: "/program",
                         id_kabupaten: idKabupaten,
                         id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
                       };
 
                       break;
@@ -1721,6 +1815,16 @@ const ButtonPopUpInfo = ({
                       };
 
                       break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
+                      };
+
+                      break;
                     default:
                       break;
                   }
@@ -1851,6 +1955,16 @@ const ButtonPopUpInfo = ({
                         component: "/program",
                         id_kabupaten: idKabupaten,
                         id_kecamatan: idKecamatan,
+                      };
+
+                      break;
+                    case "Jaringan":
+                      roles === "admin"
+                        ? (path = "Admin")
+                        : (path = "PetaKekuatan");
+                      query = {
+                        component: "Jaringan",
+                        id_kabupaten: idKabupaten,
                       };
 
                       break;

@@ -10,6 +10,7 @@ import JumlahPenduduk from "../../component/JumlahPenduduk";
 
 import {
   BackIcon,
+  JaringanIcon,
   PendudukIcon,
   PetaKekuatanIcon,
   RelawanIcon,
@@ -228,7 +229,7 @@ function Dashboard() {
               <JumlahPenduduk
                 title={"Jumlah Jaringan"}
                 total={jaringan?.data?.toLocaleString()}
-                icon={<PendudukIcon />}
+                icon={<JaringanIcon />}
                 totalSize={"32px"}
                 titleSize={"21px"}
                 w={"287px"}
