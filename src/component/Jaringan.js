@@ -11,6 +11,8 @@ import FormInputItem from "./FormInputItem";
 import axiosFetch from "../API/axiosFetch";
 import useFetch from "../API/useFetch";
 import { useRouter } from "next/router";
+import FormSelect from "./FormSelect";
+import ProgressBar from "../utility/ProgresBar";
 
 const Jaringan = () => {
   const [currentPage, setCurrentPage] = useState("1");
@@ -21,12 +23,24 @@ const Jaringan = () => {
   const [keyword, setKeyword] = useState(null);
   const [jaringan, setJaringan] = useState(null);
   const relawan = useFetch("get", "user/relawan?page=1&limit=100");
+  // const totalAnggota = useFetch("get", "user/jaringan/member/total");
+  const kabupaten = useFetch("get", "user/kabupaten");
+  const [kecamatan, setKecamatan] = useState([]);
+  const [kelurahan, setKelurahan] = useState([]);
+
   const [form, setForm] = useState({
     id_periode: periode,
   });
 
   const router = useRouter();
 
+  const getTotalAnggotaJaringan = (id_jaringan) => {
+    const res = useFetch(
+      "get",
+      `user/jaringan/member/total?id_jaringan=${id_jaringan}`
+    );
+    return res.data;
+  };
   const postJaringan = () => {
     axiosFetch("post", "user/jaringan", form, token)
       .then((res) => {
@@ -52,6 +66,17 @@ const Jaringan = () => {
     }
   };
 
+  const changeKabupaten = async (idKabupaten) => {
+    setForm({ ...form, id_kabupaten: idKabupaten });
+    const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
+    setKecamatan(res.data);
+  };
+
+  const changeKecamatan = async (idKecamatan) => {
+    setForm({ ...form, id_kecamatan: idKecamatan });
+    const res = await axiosFetch("get", `user/kelurahan/${idKecamatan}`);
+    setKelurahan(res.data);
+  };
   const customStyles = {
     headCells: {
       style: { backgroundColor: "#374151", color: "white" },
@@ -93,16 +118,40 @@ const Jaringan = () => {
       selector: (row) => row.nama,
     },
     {
+      name: "",
+      selector: (row) => row.tokoh,
+    },
+    {
+      name: "Nama",
+      selector: (row) => row.nama_tokoh,
+    },
+    {
       name: "No HP",
-      selector: (row) => row.no_hp_ketua,
+      selector: (row) => row.no_hp_tokoh,
     },
     {
       name: "PJ Relawan",
       selector: (row) => row.relawan.name,
     },
     {
+      name: "No Hp PJ Relawan",
+      selector: (row) => row.no_hp_relawan,
+    },
+    {
       name: "Target",
       selector: (row) => row.target,
+    },
+    {
+      name: "Status",
+      selector: (row) => (
+        <ProgressBar
+          progress={Math.floor(
+            (Number(getTotalAnggotaJaringan(row._id)) / row.target) * 100
+          )}
+          bgcolor={"#FF5001"}
+          height={"24px"}
+        />
+      ),
     },
     {
       name: "Aksi",
@@ -136,6 +185,8 @@ const Jaringan = () => {
                 pathname: "/AnggotaJaringan",
                 query: {
                   nama: res.nama,
+                  tokoh: res.tokoh,
+                  nama_tokoh: res.nama_tokoh,
                   pj_relawan: res.relawan.name,
                   id: res._id,
                   target: res.target,
@@ -194,8 +245,8 @@ const Jaringan = () => {
   /> */}
       </div>
       {popupTambah && (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-[#37415152]">
-          <div className="flex justify-center mt-[80px]">
+        <div className="fixed top-0 left-0 w-screen h-screen bg-[#37415152] overflow-scroll">
+          <div className="flex justify-center mt-[50px] ">
             <div className="bg-white">
               <div
                 onClick={() => setPopupTambah(false)}
@@ -209,14 +260,22 @@ const Jaringan = () => {
                   Tambah Jaringan
                 </p>
                 <div>
+                  <FormInputItem
+                    label={"Nama Jaringan"}
+                    type="text"
+                    onChange={(e) => {
+                      setForm({ ...form, nama: e.target.value });
+                    }}
+                    value={form.ketua}
+                  />
                   <div className="flex items-center">
-                    <span className="w-[50%]">Nama Jaringan</span>
+                    <span className="w-[33%]"></span>
                     <select
-                      value={form.nama}
+                      value={form.tokoh}
                       onChange={(e) =>
-                        setForm({ ...form, nama: e.target.value })
+                        setForm({ ...form, tokoh: e.target.value })
                       }
-                      className="border p-2 rounded-md outline-none w-[52%]"
+                      className="border p-2 rounded-md outline-none w-[67%]"
                       type="text"
                     >
                       <option selected disabled>
@@ -229,25 +288,64 @@ const Jaringan = () => {
                       ))}
                     </select>
                   </div>
-
                   <FormInputItem
-                    label={"No Hp Ketua"}
+                    label={"Nama"}
+                    type="text"
+                    onChange={(e) => {
+                      setForm({ ...form, nama_tokoh: e.target.value });
+                    }}
+                    value={form.nama_tokoh}
+                  />
+                  <FormInputItem
+                    label={"No Hp"}
                     type="number"
                     onChange={(e) => {
-                      setForm({ ...form, no_hp_ketua: e.target.value });
+                      setForm({ ...form, no_hp_tokoh: e.target.value });
                     }}
-                    // value={form.kebutuhan}
+                    value={form.no_hp_tokoh}
+                  />
+                  <FormSelect
+                    label={"Kabupaten"}
+                    type="text"
+                    onChange={(e) => changeKabupaten(e.target.value)}
+                    options={kabupaten}
+                    value={form.id_kabupaten}
+                  />
+                  <FormSelect
+                    label={"Kecamatan"}
+                    type="text"
+                    onChange={(e) => changeKecamatan(e.target.value)}
+                    options={kecamatan}
+                    value={form.id_kecamatan}
+                  />
+                  <FormSelect
+                    label={"Desa / Kelurahan"}
+                    type="text"
+                    onChange={(e) =>
+                      setForm({ ...form, id_kelurahan: e.target.value })
+                    }
+                    options={kelurahan}
+                    value={form.id_kelurahan}
+                  />
+
+                  <FormInputItem
+                    label={"Alamat"}
+                    type="text"
+                    onChange={(e) => {
+                      setForm({ ...form, alamat: e.target.value });
+                    }}
+                    //   value={formData.kebutuhan}
                   />
 
                   <div className="flex items-center">
-                    <span className="w-[50%]">PJ Relawan</span>
+                    <span className="w-[33%]">PJ Relawan</span>
                     <select
                       //    value={formAPK.id_relawan}
 
                       onChange={(e) => {
                         setForm({ ...form, id_relawan: e.target.value });
                       }}
-                      className="border p-2 rounded-md outline-none w-[52%]"
+                      className="border p-2 rounded-md outline-none w-[67%]"
                       type="text"
                     >
                       <option selected disabled>
@@ -270,20 +368,13 @@ const Jaringan = () => {
                   />
                   <FormInputItem
                     label={"Target Anggota"}
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setForm({ ...form, target: e.target.value });
                     }}
                     //   value={formData.kebutuhan}
                   />
-                  <FormInputItem
-                    label={"Alamat"}
-                    type="text"
-                    onChange={(e) => {
-                      setForm({ ...form, alamat: e.target.value });
-                    }}
-                    //   value={formData.kebutuhan}
-                  />
+
                   <div className="flex mt-[40px] justify-end">
                     <div
                       onClick={() => {

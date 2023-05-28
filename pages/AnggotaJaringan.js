@@ -73,10 +73,7 @@ const AnggotaJaringan = () => {
       name: "Nama Anggota",
       selector: (row) => row.nama,
     },
-    {
-      name: "No KK",
-      selector: (row) => row.no_kk,
-    },
+
     {
       name: "NIK",
       selector: (row) => row.nik,
@@ -160,10 +157,13 @@ const AnggotaJaringan = () => {
         <div className="flex space-x-20">
           <div className="flex space-x-3">
             <div>
-              <p>Jaringan</p> <p>PJ Relawan</p>
+              <p>Jaringan</p> <p>Nama</p>
+              <p>PJ Relawan</p>
             </div>
             <div>
-              <p>: {router.query.nama}</p> <p>: {router.query.pj_relawan}</p>
+              <p>: {router.query.tokoh}</p>
+              <p>: {router.query.nama_tokoh}</p>{" "}
+              <p>: {router.query.pj_relawan}</p>
             </div>
           </div>
           <div className="flex space-x-3">
@@ -173,7 +173,7 @@ const AnggotaJaringan = () => {
             </div>
             <div>
               <p>
-                : 91/{" "}
+                : {anggotaJaringan?.metadata?.total}/{" "}
                 <span className="text-orange-400">{router.query.target}</span>
               </p>
               <p>: {router.query.alamat}</p>
@@ -218,20 +218,13 @@ const AnggotaJaringan = () => {
                 </p>
                 <div>
                   <FormInputItem
-                    label={"No KK"}
-                    type="text"
-                    onChange={(e) => {
-                      setForm({ ...form, no_kk: e.target.value });
-                    }}
-                    value={form.no_kk}
-                  />
-                  <FormInputItem
                     label={"NIK"}
                     type="text"
                     onChange={(e) => {
                       setForm({ ...form, nik: e.target.value });
                     }}
                     value={form.nik}
+                    maxLength={16}
                   />
                   <FormInputItem
                     label={"Nama"}
@@ -259,7 +252,7 @@ const AnggotaJaringan = () => {
                       onChange={(e) =>
                         setForm({ ...form, tgl_lahir: e.target.value })
                       }
-                      className=" outline-0 border w-[51%] p-1"
+                      className=" outline-0 border w-[68%] p-1"
                       type="date"
                       id="tanggal lahir"
                       name="trip-start"
@@ -268,22 +261,15 @@ const AnggotaJaringan = () => {
                       max="2024-12-31"
                     />
                   </div>
-                  {/* <FormInputItem
-                    label={"Jenis Kelamin"}
-                    type="text"
-                    onChange={(e) => {
-                      setForm({ ...form, gender: e.target.value });
-                    }}
-                    value={form.gender}
-                  /> */}
-                  <div className="flex items-center">
-                    <span className="w-[50%]">Jenis Kelamin</span>
+                 
+                  <div className="flex items-center space-y-3">
+                    <span className="w-[33%]">Jenis Kelamin</span>
                     <select
                       value={form.gender}
                       onChange={(e) =>
                         setForm({ ...form, gender: e.target.value })
                       }
-                      className="border p-2 rounded-md outline-none w-[52%]"
+                      className="border p-2 rounded-md outline-none w-[70%]"
                       type="text"
                     >
                       <option selected disabled>
