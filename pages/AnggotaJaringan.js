@@ -182,23 +182,22 @@ const AnggotaJaringan = () => {
         token
       ).then((res) => {
         console.log(res.data.data[0]);
-        dispatch(setIdJaringan({ id_jaringan: res.data?.data[0].id_jaringan }));
+        // dispatch(setIdJaringan({ id_jaringan: res.data?.data[0].id_jaringan }));
         setAnggotaJaringan(res.data);
       });
     } else {
       if (router.query.id) {
-        dispatch(setIdJaringan({ id_jaringan: router.query.id }));
+        // dispatch(setIdJaringan({ id_jaringan: router.query.id }));
       }
       axiosFetch(
         "get",
-        `user/jaringan/member?page=${currentPage}&id_jaringan=${
-          id_jaringan ? id_jaringan : router.query.id
-        }&limit=10`,
+        `user/jaringan/member?page=${currentPage}&id_jaringan=${router.query.id}&limit=10`,
         {},
         token
       ).then((res) => setAnggotaJaringan(res.data));
     }
   }, [currentPage, keyword, router.query.id_kabupaten]);
+
   return (
     <>
       {" "}
@@ -226,17 +225,23 @@ const AnggotaJaringan = () => {
             </div>
             <div>
               <p>
-                : {anggotaJaringan && anggotaJaringan?.data[0].jaringan?.tokoh}
+                :{" "}
+                {roles === "relawan"
+                  ? anggotaJaringan?.data[0].jaringan?.tokoh
+                  : router.query.tokoh}
               </p>
               <p>
                 :{" "}
-                {anggotaJaringan &&
-                  anggotaJaringan?.data[0].jaringan?.nama_tokoh}
+                {roles === "relawan"
+                  ? anggotaJaringan?.data.length !== 0 &&
+                    anggotaJaringan?.data[0].jaringan?.nama_tokoh
+                  : router.query.nama_tokoh}
               </p>{" "}
               <p>
                 :{" "}
-                {anggotaJaringan &&
-                  anggotaJaringan?.data[0].jaringan?.no_hp_tokoh}
+                {roles === "relawan"
+                  ? anggotaJaringan?.data[0].jaringan?.no_hp_tokoh
+                  : router.query.no_hp_tokoh}
               </p>
               {roles === "admin" && <p>: {router.query.pj_relawan}</p>}
               {roles === "admin" && <p>: {router.query.no_hp_relawan}</p>}
@@ -251,11 +256,16 @@ const AnggotaJaringan = () => {
               <p>
                 : {anggotaJaringan?.metadata?.total}/{" "}
                 <span className="text-orange-400">
-                  {anggotaJaringan && anggotaJaringan?.data[0].jaringan?.target}
+                  {roles === "relawan"
+                    ? anggotaJaringan?.data[0].jaringan?.target
+                    : router.query.target}
                 </span>
               </p>
               <p>
-                : {anggotaJaringan && anggotaJaringan?.data[0].jaringan?.alamat}
+                :{" "}
+                {roles === "relawan"
+                  ? anggotaJaringan?.data[0].jaringan?.alamat
+                  : router.query.alamat}
               </p>
             </div>
           </div>

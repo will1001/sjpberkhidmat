@@ -51,9 +51,7 @@ const Login = ({ router }) => {
         vapidKey:
           "BOZ5lS6LL3TkU3LI1WcH_S_2Vvo_Fg6FiDo7BUmqylHHZDmSMq6sRNcL-ObBCl6jN3geNd0anA7u_pOf8pP6TD8",
       }).then(async (tokenFcm) => {
-        console.log("tokenFcm");
-        console.log(tokenFcm);
-        console.log("tokenFcm");
+       
         if (tokenFcm) {
           const a = new FormData();
           a.append("token", tokenFcm);

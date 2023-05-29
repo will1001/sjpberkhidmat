@@ -6,6 +6,7 @@ import relawan from "../../utility/peta/relawan.png";
 import logistik from "../../utility/peta/logistik.png";
 import simpatisan from "../../utility/peta/simpatisan.png";
 import program from "../../utility/peta/program.png";
+import JaringanIconSvg from "../../utility/icon/jaringan.svg";
 import targetSuara from "../../utility/peta/target_suara.png";
 import suaraPeriodeLalu from "../../utility/peta/suara_periode_lalu.png";
 import TPS from "../../utility/peta/TPS.png";
@@ -33,6 +34,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
     icon === "Jumlah Simpatisan" && setSelectIcon(simpatisan);
     icon === "Logistik" && setSelectIcon(logistik);
     icon === "Program" && setSelectIcon(program);
+    icon === "Jaringan" && setSelectIcon(JaringanIconSvg);
     icon === undefined && setSelectIcon();
   }, [icon]);
 

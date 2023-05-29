@@ -115,7 +115,6 @@ function Admin({ router }) {
         setStopEditData(true);
       }, 1000);
     }
-    console.log(editData);
   }, [formData, editData, formDataDPtDps]);
 
   const generatePassword = () => {

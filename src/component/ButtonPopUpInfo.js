@@ -46,16 +46,51 @@ const ButtonPopUpInfo = ({
   const [total, setTotal] = useState();
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
   const jaringan = useFetch("get", "user/jaringan/total");
+  const [jaringanRegion, setJaringanRegion] = useState([]);
   const [detailTarget, setDetailTarget] = useState();
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
 
   const handleButton = (button) => {
+    getJaringanRegion(0, "5208");
+    getJaringanRegion(1, "5271");
+    getJaringanRegion(2, "5201");
+    getJaringanRegion(3, "5202");
+    getJaringanRegion(4, "5203");
+    getJaringanRegion(5, "5271", "5271010");
+    getJaringanRegion(6, "5271", "5271011");
+    getJaringanRegion(7, "5271", "5271020");
+    getJaringanRegion(8, "5271", "5271021");
+    getJaringanRegion(9, "5271", "5271030");
+    getJaringanRegion(10, "5271", "5271031");
     active !== button ? setActive(button) : setActive();
     if (gantiIcon !== undefined) {
       active !== button ? gantiIcon(button) : gantiIcon();
     }
     setActiveType(button);
+  };
+  const getJaringanRegion = (i, id_kabupaten, id_kecamatan) => {
+    const res = axiosFetch(
+      "get",
+      `user/jaringan/total?id_kabupaten=${id_kabupaten}${
+        id_kecamatan ? `id_kecamatan=${id_kecamatan}` : ""
+      }`,
+      {},
+      token
+    )
+      .then((res) => {
+        // console.log(res?.data?.data);
+        // setJaringanRegion(res?.data?.data);
+        // return res?.data?.data ? res?.data?.data : 0;
+        // Create a copy of the array
+        const newArray = [...jaringanRegion];
+        // Insert the element at the specified index
+        jaringanRegion.splice(i, 0, res?.data?.data);
+        // Update the state with the modified array
+        setJaringanRegion(newArray);
+      })
+      .catch((err) => console.log(err));
+    return 0;
   };
 
   const roles = useSelector((state) => state.user.roles);
@@ -92,14 +127,13 @@ const ButtonPopUpInfo = ({
       setIcon(kotaIcon);
       setTotal();
     }
-  }, [handleButton, targetKab, activeType]);
+  }, [handleButton, targetKab, activeType, jaringanRegion]);
 
   const id_kabupaten = data?.toString();
   const [namaKecamatan, setNamaKecamatan] = useState();
 
   useEffect(() => {
     if (id_kabupaten === undefined) {
-      console.log("loading");
     } else if (id_kabupaten !== undefined) {
       const kecamatan = axios
         .get(`https://api.sjpberkhidmat.id/user/kecamatan/5271`)
@@ -541,6 +575,7 @@ const ButtonPopUpInfo = ({
                     statistic[3]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[3]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[0]}
                 </>
               )}
             </p>
@@ -691,6 +726,7 @@ const ButtonPopUpInfo = ({
                     statistic[4]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[4]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[1]}
                 </>
               )}
             </p>
@@ -841,6 +877,7 @@ const ButtonPopUpInfo = ({
                     statistic[0]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[0]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[2]}
                 </>
               )}
             </p>
@@ -992,6 +1029,7 @@ const ButtonPopUpInfo = ({
                     statistic[1]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[1]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[3]}
                 </>
               )}
             </p>
@@ -1142,6 +1180,7 @@ const ButtonPopUpInfo = ({
                     statistic[2]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[2]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[4]}
                 </>
               )}
             </p>
@@ -1294,6 +1333,7 @@ const ButtonPopUpInfo = ({
                     statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[0]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[5]}
                 </>
               )}
             </p>
@@ -1437,6 +1477,7 @@ const ButtonPopUpInfo = ({
                     statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[2]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[6]}
                 </>
               )}
             </p>
@@ -1580,6 +1621,7 @@ const ButtonPopUpInfo = ({
                     statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[5]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[7]}
                 </>
               )}
             </p>
@@ -1723,6 +1765,7 @@ const ButtonPopUpInfo = ({
                     statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[3]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[8]}
                 </>
               )}
             </p>
@@ -1866,6 +1909,7 @@ const ButtonPopUpInfo = ({
                     statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[4]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[9]}
                 </>
               )}
             </p>
@@ -2009,6 +2053,7 @@ const ButtonPopUpInfo = ({
                     statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[1]?.jumlah_logistik?.toLocaleString()}
+                  {total === "jaringan" && jaringanRegion[10]}
                 </>
               )}
             </p>
