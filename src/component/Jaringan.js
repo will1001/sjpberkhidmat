@@ -25,8 +25,10 @@ const Jaringan = () => {
   const relawan = useFetch("get", "user/relawan?page=1&limit=100");
   // const totalAnggota = useFetch("get", "user/jaringan/member/total");
   const kabupaten = useFetch("get", "user/kabupaten");
+  const kategoriJaringan = useFetch("get", "user/jaringan/kategori");
   const [kecamatan, setKecamatan] = useState([]);
   const [kelurahan, setKelurahan] = useState([]);
+  const [subKategoriJaringan, setSubKategoriJaringan] = useState([]);
   const [tipeForm, setTipeForm] = useState("post");
   const [idJaringan, setIdJaringan] = useState(null);
 
@@ -95,6 +97,16 @@ const Jaringan = () => {
     });
   };
 
+  const changeKategoriJaringan = async (idKategoriJaringan) => {
+    setForm({ ...form, kategori: idKategoriJaringan });
+    const res = await axiosFetch(
+      "get",
+      `user/jaringan/sub-kategori?id_kategori=${idKategoriJaringan}`,
+      {},
+      token
+    );
+    setSubKategoriJaringan(res.data);
+  };
   const changeKabupaten = async (idKabupaten) => {
     setForm({ ...form, id_kabupaten: idKabupaten });
     const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
@@ -112,29 +124,6 @@ const Jaringan = () => {
     },
   };
 
-  const tipe_jaringan = [
-    {
-      id: 0,
-      name: "Ketua",
-    },
-    {
-      id: 1,
-      name: "Kepala Desa",
-    },
-    {
-      id: 2,
-      name: "Tokoh Pemuda",
-    },
-    {
-      id: 3,
-      name: "Tokoh Agama",
-    },
-    {
-      id: 4,
-      name: "Tokoh Adat",
-    },
-  ];
-
   const data = jaringan?.data ? jaringan?.data : [];
   const columns = [
     {
@@ -143,20 +132,20 @@ const Jaringan = () => {
       width: "50px",
     },
     {
+      name: "kategori Jaringan",
+      selector: (row) => row.kategori_jaringan?.name,
+    },
+    {
       name: "Nama Jaringan",
-      selector: (row) => row.nama,
+      selector: (row) => row.sub_kategori?.name,
     },
     {
-      name: "",
-      selector: (row) => row.tokoh,
-    },
-    {
-      name: "Nama",
-      selector: (row) => row.nama_tokoh,
+      name: "ketua",
+      selector: (row) => row.nama_ketua,
     },
     {
       name: "No HP",
-      selector: (row) => row.no_hp_tokoh,
+      selector: (row) => row.no_hp_ketua,
     },
     {
       name: "PJ Relawan",
@@ -297,17 +286,37 @@ const Jaringan = () => {
                   Tambah Jaringan
                 </p>
                 <div>
-                  <FormInputItem
-                    label={"Nama Jaringan"}
-                    type="text"
-                    onChange={(e) => {
-                      setForm({ ...form, nama: e.target.value });
-                    }}
-                    value={form.nama}
+                  <FormSelect
+                    label={"Kategori Jaringan"}
+                    onChange={(e) => changeKategoriJaringan(e.target.value)}
+                    options={kategoriJaringan}
+                    value={form.kategori}
                   />
+                  {form.kategori === "3" ||
+                  form.kategori === "6" ||
+                  form.kategori === "7" ? (
+                    <FormInputItem
+                      label={"Nama Jaringan"}
+                      type="text"
+                      onChange={(e) => {
+                        setForm({ ...form, nama: e.target.value });
+                      }}
+                      value={form.nama}
+                    />
+                  ) : (
+                    <FormSelect
+                      label={"Nama Jaringan"}
+                      onChange={(e) => {
+                        setForm({ ...form, nama: e.target.value });
+                      }}
+                      options={subKategoriJaringan}
+                      value={form.nama}
+                    />
+                  )}
+
                   <div className="flex items-center">
                     {/* <span className="w-[33%]"></span> */}
-                    <select
+                    {/* <select
                       value={form.tokoh}
                       onChange={(e) =>
                         setForm({ ...form, tokoh: e.target.value })
@@ -323,24 +332,23 @@ const Jaringan = () => {
                           {res.name}
                         </option>
                       ))}
-                    </select>
-                    <FormInputItem
-                      label={"Nama"}
-                      type="text"
-                      onChange={(e) => {
-                        setForm({ ...form, nama_tokoh: e.target.value });
-                      }}
-                      value={form.nama_tokoh}
-                    />
+                    </select> */}
                   </div>
-
+                  <FormInputItem
+                    label={"Ketua"}
+                    type="text"
+                    onChange={(e) => {
+                      setForm({ ...form, nama_ketua: e.target.value });
+                    }}
+                    value={form.tokoh}
+                  />
                   <FormInputItem
                     label={"No Hp"}
                     type="number"
                     onChange={(e) => {
-                      setForm({ ...form, no_hp_tokoh: e.target.value });
+                      setForm({ ...form, no_hp_ketua: e.target.value });
                     }}
-                    value={form.no_hp_tokoh}
+                    value={form.no_hp_ketua}
                   />
                   <FormSelect
                     label={"Kabupaten"}

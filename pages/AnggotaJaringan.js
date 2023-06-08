@@ -226,7 +226,7 @@ const AnggotaJaringan = () => {
             <div>
               <p>
                 :{" "}
-                {roles === "relawan"
+                {roles === "relawan" && anggotaJaringan?.data?.length !== 0
                   ? anggotaJaringan?.data[0].jaringan?.tokoh
                   : router.query.tokoh}
               </p>
@@ -239,7 +239,7 @@ const AnggotaJaringan = () => {
               </p>{" "}
               <p>
                 :{" "}
-                {roles === "relawan"
+                {roles === "relawan" && anggotaJaringan?.data?.length !== 0
                   ? anggotaJaringan?.data[0].jaringan?.no_hp_tokoh
                   : router.query.no_hp_tokoh}
               </p>
@@ -256,14 +256,14 @@ const AnggotaJaringan = () => {
               <p>
                 : {anggotaJaringan?.metadata?.total}/{" "}
                 <span className="text-orange-400">
-                  {roles === "relawan"
+                  {roles === "relawan" && anggotaJaringan?.data?.length !== 0
                     ? anggotaJaringan?.data[0].jaringan?.target
                     : router.query.target}
                 </span>
               </p>
               <p>
                 :{" "}
-                {roles === "relawan"
+                {roles === "relawan" && anggotaJaringan?.data?.length !== 0
                   ? anggotaJaringan?.data[0].jaringan?.alamat
                   : router.query.alamat}
               </p>

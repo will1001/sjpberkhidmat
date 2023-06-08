@@ -245,13 +245,7 @@ const Relawan = () => {
               <SimpatisanDash register={register} popupMobile={popupMobile} />
             )}
             {tool === "Aspirasi" && <RumahAspirasi popupMobile={popupMobile} />}
-            {tool === "Jaringan" && anggotaJaringanCheck?.data?.length !== 0 ? (
-              <AnggotaJaringan />
-            ) : (
-              <div className="p-5">
-                <h1>Anda Tidak Termasuk PJ Jaringan</h1>
-              </div>
-            )}
+            {tool === "Jaringan" && <AnggotaJaringan />}
             {tool === "Forum" && <Forum mobile={true} />}
           </div>
           {(popUpDashType === "Relawan" ||
@@ -505,14 +499,7 @@ const Relawan = () => {
             {selectTool === "Logistik" && <Logistik />}
             {selectTool === "Simpatisan" && <SimpatisanDash />}
             {selectTool === "Aspirasi" && <RumahAspirasi />}
-            {selectTool === "Jaringan" &&
-            anggotaJaringanCheck?.data?.length !== 0 ? (
-              <AnggotaJaringan />
-            ) : (
-              <div className="p-5">
-                <h1>Anda Tidak Termasuk PJ Jaringan</h1>
-              </div>
-            )}
+            {selectTool === "Jaringan" && <AnggotaJaringan />}
             {selectTool === "Forum" && <Forum />}
           </div>
           {(popUpDashType === "Relawan" ||

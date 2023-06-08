@@ -12,11 +12,16 @@ import suaraPeriodeLalu from "../../utility/peta/suara_periode_lalu.png";
 import TPS from "../../utility/peta/TPS.png";
 import DPTDPS from "../../utility/peta/DPT_DPS.png";
 import { useRouter } from "next/router";
+import useFetch from "../../API/useFetch";
 
 const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
   const router = useRouter();
   const [lombokBarat, setLombokBarat] = useState();
   const [selectIcon, setSelectIcon] = useState();
+  const jaringanStatisticPerRegion = useFetch(
+    "get",
+    `user/jaringan/total/region?id_kabupaten=${router.query.kota}`
+  );
   if (id !== undefined) {
     useEffect(() => {
       axiosFetch("get", `user/kecamatan/${id}`)
@@ -41,6 +46,10 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
   const hoverhandler = (nama) => {
     setHover(nama);
   };
+
+  console.log("first")
+console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data)
+  console.log("first")
 
   return (
     <>
@@ -1567,6 +1576,7 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
                     {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_logistik?.toLocaleString()}
                     {icon === "Program" && statisticKec?.length !== undefined && statisticKec[5]?.program?.toLocaleString()}
+                    {icon === "Jaringan" && jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data[11].count.toLocaleString()}
                   </p>
                 )}
                 {icon === undefined ? <p className="font-medium">Kec. Batukliang Utara</p> : <p className="font-medium text-[14px]">Batukliang Utara</p>}
@@ -1661,6 +1671,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
                     {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_logistik?.toLocaleString()}
                     {icon === "Program" && statisticKec?.length !== undefined && statisticKec[1]?.program?.toLocaleString()}
+                    {icon === "Jaringan" && jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data[5].count.toLocaleString()}
+
                   </p>
                 )}
                 {icon === undefined ? <p className="font-medium">Kec. Kopang</p> : <p className="font-medium text-[14px]">Kopang</p>}
