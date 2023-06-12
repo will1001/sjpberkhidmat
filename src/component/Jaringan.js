@@ -107,6 +107,14 @@ const Jaringan = () => {
     );
     setSubKategoriJaringan(res.data);
   };
+  const filterJaringan = async (idKategori) => {
+    axiosFetch(
+      "get",
+      `user/jaringan?page=${currentPage}&limit=10&id_kategori=${idKategori}`,
+      {},
+      token
+    ).then((res) => setJaringan(res.data));
+  };
   const changeKabupaten = async (idKabupaten) => {
     setForm({ ...form, id_kabupaten: idKabupaten });
     const res = await axiosFetch("get", `user/kecamatan/${idKabupaten}`);
@@ -245,11 +253,25 @@ const Jaringan = () => {
             setPopupTambah(true);
           }}
         />
-        <div className="flex justify-between">
-          <SearchInput
+        <div className="flex justify-between items-center">
+          <FormSelect
+            label={"Filter "}
+            onChange={(e) => filterJaringan(e.target.value)}
+            options={kategoriJaringan}
+            value={form.kategori}
+          />
+          <span
+            className="cursor-pointer"
+            onClick={() => {
+              window.location.reload(false);
+            }}
+          >
+            Reset Filter
+          </span>
+          {/* <SearchInput
             placeholder={"Cari Data"}
             onChange={(e) => setKeyword(e.target.value)}
-          />
+          /> */}
           {/* <div>
             <span>Urutkan </span>
             <select

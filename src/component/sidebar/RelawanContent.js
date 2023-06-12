@@ -29,9 +29,6 @@ const RelawanContent = ({ setSelectTool, username, role, setPopupPeriode }) => {
         {logoSidebar
           .filter((data) => ["relawan"].includes(data.role))
           .map((res, i) => {
-            console.log("asdasdasd");
-            console.log(jaringan?.data?.length);
-            console.log("asdasdasd");
             if (jaringan?.data?.length === 0 && res.name === "Jaringan") {
               return <></>;
             }

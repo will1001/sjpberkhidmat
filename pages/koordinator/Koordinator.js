@@ -27,6 +27,7 @@ import SelectPeriode from "../../src/component/SelectPeriode";
 import ToolSidebar from "../../src/component/mobile/ToolSidebar";
 import { useRouter } from "next/router";
 import { setToolMobile } from "../../src/redux/toolMobileReducer";
+import Jaringan from "../../src/component/Jaringan";
 var generator = require("generate-password");
 
 const gender = {
@@ -178,7 +179,12 @@ const Relawan = () => {
         delete formDataSimpatisan.role;
         delete formDataSimpatisan.password;
 
-        await axiosFetch("post", roles === "admin" ? `user/simpatisan` : `user/relawan/simpatisan`, formDataSimpatisan, roles === "admin" ? undefined : token)
+        await axiosFetch(
+          "post",
+          roles === "admin" ? `user/simpatisan` : `user/relawan/simpatisan`,
+          formDataSimpatisan,
+          roles === "admin" ? undefined : token
+        )
           .then((res) => {
             console.log(res, "berhasil daftar");
             alert("Pendaftaran Berhasil");
@@ -233,10 +239,16 @@ const Relawan = () => {
           {tool === "Dashboard" && <Dashboard />}
           {tool === "Real Count" && <RealCount user={"koordinator"} />}
           {tool === "Logistik" && <Logistik popupMobile={popupMobile} />}
-          {tool === "Simpatisan" && <SimpatisanDash popupMobile={popupMobile} />}
+          {tool === "Simpatisan" && (
+            <SimpatisanDash popupMobile={popupMobile} />
+          )}
           {tool === "Forum" && <Forum mobile={true} />}
-          {tool === "Relawan" && <RelawanDash mobile={true} popupMobile={popupMobile} />}
-          {(popUpDashType === "Relawan" || popUpDashType === "Simpatisan" || popUpDashType === "Akun Tim") && (
+          {tool === "Relawan" && (
+            <RelawanDash mobile={true} popupMobile={popupMobile} />
+          )}
+          {(popUpDashType === "Relawan" ||
+            popUpDashType === "Simpatisan" ||
+            popUpDashType === "Akun Tim") && (
             <div className="bg-white h-screen w-screen absolute top-0 left-0 p-5">
               <div className="flex justify-end cursor-pointer">
                 <img
@@ -267,61 +279,161 @@ const Relawan = () => {
                 />
               </div>
               <div className="font-bold text-4xl">Tambah {popUpDashType}</div>
-              <FormInputItem mobile={true} label={"Nama Akun"} type="text" onChange={(e) => setFormData({ ...formData, name: e.target.value })} value={formData.name} />
-              <FormInputItem mobile={true} label={"Email"} type="text" onChange={(e) => setFormData({ ...formData, email: e.target.value })} value={formData.email} disabled={editData && true} />
-              <FormInputItem mobile={true} label={"No Hp"} type="text" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} value={formData.phone} />
-              <FormInputItem mobile={true} label={"NIK"} type="text" onChange={(e) => setFormData({ ...formData, nik: e.target.value })} value={formData.nik} disabled={editData && true} maxLength={16} />
-              <FormSelect mobile={true} label={"Jenis Kelamin"} type="text" onChange={(e) => setFormData({ ...formData, gender: e.target.value })} options={gender} value={formData.gender} />
+              <FormInputItem
+                mobile={true}
+                label={"Nama Akun"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                value={formData.name}
+              />
+              <FormInputItem
+                mobile={true}
+                label={"Email"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                value={formData.email}
+                disabled={editData && true}
+              />
+              <FormInputItem
+                mobile={true}
+                label={"No Hp"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                value={formData.phone}
+              />
+              <FormInputItem
+                mobile={true}
+                label={"NIK"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, nik: e.target.value })
+                }
+                value={formData.nik}
+                disabled={editData && true}
+                maxLength={16}
+              />
+              <FormSelect
+                mobile={true}
+                label={"Jenis Kelamin"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, gender: e.target.value })
+                }
+                options={gender}
+                value={formData.gender}
+              />
               <FormDatePlaceBirth
-                onChangePlace={(e) => setFormData({ ...formData, place_birth: e.target.value })}
+                onChangePlace={(e) =>
+                  setFormData({ ...formData, place_birth: e.target.value })
+                }
                 valuePlace={formData.place_birth}
-                onChangeDate={(e) => setFormData({ ...formData, date_birth: e.target.value })}
+                onChangeDate={(e) =>
+                  setFormData({ ...formData, date_birth: e.target.value })
+                }
                 valueDate={formData.date_birth}
                 mobile={true}
               />
-              {popUpDashType !== "Akun Tim" && <FormSelect mobile={true} label={"Pekerjaan"} type="text" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} options={pekerjaan} value={formData.pekerjaan?._id} />}
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  mobile={true}
+                  label={"Pekerjaan"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, pekerjaan: e.target.value })
+                  }
+                  options={pekerjaan}
+                  value={formData.pekerjaan?._id}
+                />
+              )}
 
               <h1>ALAMAT {popUpDashType.toUpperCase()}</h1>
-              <FormSelect mobile={true} label={"Kabupaten Kota"} type="text" onChange={(e) => changeKabupaten(e.target.value)} options={kabupaten} value={formData.id_kabupaten} />
-              {popUpDashType !== "Akun Tim" && <FormSelect mobile={true} label={"Kecamatan"} type="text" onChange={(e) => changeKecamatan(e.target.value)} options={kecamatan} value={formData.id_kecamatan} />}
-              {popUpDashType !== "Akun Tim" && <FormSelect mobile={true} label={"Target Desa"} type="text" onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} options={kelurahan} value={formData.target_desa} />}
-
-              <FormInputItem mobile={true} label={"Alamat"} type="text" onChange={(e) => setFormData({ ...formData, address: e.target.value })} value={formData.address} />
-              <div className="border-b-2 my-[30px]" />
-              {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") && editData === null && (
-                <>
-                  {" "}
-                  <div className="flex justify-start items-center">
-                    <div className="w-[20%] mr-[50px]">Set Password</div>
-                    <div
-                      onClick={() => {
-                        generatePassword();
-                      }}
-                      className="flex items-center border-2 rounded-md p-3 cursor-pointer"
-                    >
-                      <img src={KeyIcon.src} /> <span className="font-bold ml-3">Generate Password</span>
-                    </div>
-                  </div>
-                  <FormInputPassword
-                    label={""}
-                    value={formData.password}
-                    type={passwordType}
-                    onclickShow={() => setPasswordType("text")}
-                    onClickHide={() => setPasswordType("password")}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  />
-                  <FormInputPassword
-                    label={"Tulis Ulang Password"}
-                    value={confirmPassword}
-                    type={passwordType2}
-                    onclickShow={() => setPasswordType2("text")}
-                    onClickHide={() => setPasswordType2("password")}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                    }}
-                  />
-                </>
+              <FormSelect
+                mobile={true}
+                label={"Kabupaten Kota"}
+                type="text"
+                onChange={(e) => changeKabupaten(e.target.value)}
+                options={kabupaten}
+                value={formData.id_kabupaten}
+              />
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  mobile={true}
+                  label={"Kecamatan"}
+                  type="text"
+                  onChange={(e) => changeKecamatan(e.target.value)}
+                  options={kecamatan}
+                  value={formData.id_kecamatan}
+                />
               )}
+              {popUpDashType !== "Akun Tim" && (
+                <FormSelect
+                  mobile={true}
+                  label={"Target Desa"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, target_desa: e.target.value })
+                  }
+                  options={kelurahan}
+                  value={formData.target_desa}
+                />
+              )}
+
+              <FormInputItem
+                mobile={true}
+                label={"Alamat"}
+                type="text"
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
+                value={formData.address}
+              />
+              <div className="border-b-2 my-[30px]" />
+              {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") &&
+                editData === null && (
+                  <>
+                    {" "}
+                    <div className="flex justify-start items-center">
+                      <div className="w-[20%] mr-[50px]">Set Password</div>
+                      <div
+                        onClick={() => {
+                          generatePassword();
+                        }}
+                        className="flex items-center border-2 rounded-md p-3 cursor-pointer"
+                      >
+                        <img src={KeyIcon.src} />{" "}
+                        <span className="font-bold ml-3">
+                          Generate Password
+                        </span>
+                      </div>
+                    </div>
+                    <FormInputPassword
+                      label={""}
+                      value={formData.password}
+                      type={passwordType}
+                      onclickShow={() => setPasswordType("text")}
+                      onClickHide={() => setPasswordType("password")}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                    />
+                    <FormInputPassword
+                      label={"Tulis Ulang Password"}
+                      value={confirmPassword}
+                      type={passwordType2}
+                      onclickShow={() => setPasswordType2("text")}
+                      onClickHide={() => setPasswordType2("password")}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                      }}
+                    />
+                  </>
+                )}
 
               <div className="flex mt-[40px] justify-end">
                 <div
@@ -365,15 +477,29 @@ const Relawan = () => {
       ) : (
         <div className="flex h-screen">
           <div className="basis-3/12 sticky min-h-screen overflow-scroll  scrollbar-thin scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]">
-            <SideBar content={<KoordinatorContetn roles={roles} setPopupPeriode={setPopupPeriode} setSelectTool={setSelectTool} selectTool={selectTool} />} />
+            <SideBar
+              content={
+                <KoordinatorContetn
+                  roles={roles}
+                  setPopupPeriode={setPopupPeriode}
+                  setSelectTool={setSelectTool}
+                  selectTool={selectTool}
+                />
+              }
+            />
           </div>
-          <div className={`${popupPeriode === true && "-z-50"} basis-9/12 overflow-scroll scrollbar-thin scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]`}>
+          <div
+            className={`${
+              popupPeriode === true && "-z-50"
+            } basis-9/12 overflow-scroll scrollbar-thin scrollbar-thumb-[#9CA3AF] scrollbar-track-[#E5E7EB]`}
+          >
             {selectTool === "Dashboard" && <Dashboard />}
             {selectTool === "Real Count" && <RealCount user={"Relawan"} />}
             {selectTool === "DPT/DPS" && <DptDps />}
-            {selectTool === "Logistik" && <Logistik />}
+            {selectTool === "Logistik" && <Logistik />} 
             {selectTool === "Relawan" && <RelawanDash />}
             {selectTool === "Simpatisan" && <SimpatisanDash />}
+            {selectTool === "Jaringan" && <Jaringan />}
             {selectTool === "Forum" && <Forum />}
           </div>
           {popUpDashType === "Relawan" && (
@@ -409,60 +535,150 @@ const Relawan = () => {
                   />
                 </div>
                 <div className="font-bold text-4xl">Tambah {popUpDashType}</div>
-                <FormInputItem label={"Nama Akun"} type="text" onChange={(e) => setFormData({ ...formData, name: e.target.value })} value={formData.name} />
-                <FormInputItem label={"Email"} type="text" onChange={(e) => setFormData({ ...formData, email: e.target.value })} value={formData.email} disabled={editData && true} />
-                <FormInputItem label={"No Hp"} type="text" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} value={formData.phone} />
-                <FormInputItem label={"NIK"} type="text" onChange={(e) => setFormData({ ...formData, nik: e.target.value })} value={formData.nik} disabled={editData && true} />
-                <FormSelect label={"Jenis Kelamin"} type="text" onChange={(e) => setFormData({ ...formData, gender: e.target.value })} options={gender} value={formData.gender} />
+                <FormInputItem
+                  label={"Nama Akun"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  value={formData.name}
+                />
+                <FormInputItem
+                  label={"Email"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  value={formData.email}
+                  disabled={editData && true}
+                />
+                <FormInputItem
+                  label={"No Hp"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  value={formData.phone}
+                />
+                <FormInputItem
+                  label={"NIK"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, nik: e.target.value })
+                  }
+                  value={formData.nik}
+                  disabled={editData && true}
+                />
+                <FormSelect
+                  label={"Jenis Kelamin"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, gender: e.target.value })
+                  }
+                  options={gender}
+                  value={formData.gender}
+                />
                 <FormDatePlaceBirth
-                  onChangePlace={(e) => setFormData({ ...formData, place_birth: e.target.value })}
+                  onChangePlace={(e) =>
+                    setFormData({ ...formData, place_birth: e.target.value })
+                  }
                   valuePlace={formData.place_birth}
-                  onChangeDate={(e) => setFormData({ ...formData, date_birth: e.target.value })}
+                  onChangeDate={(e) =>
+                    setFormData({ ...formData, date_birth: e.target.value })
+                  }
                   valueDate={formData.date_birth}
                 />
-                {popUpDashType !== "Akun Tim" && <FormSelect label={"Pekerjaan"} type="text" onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })} options={pekerjaan} value={formData.pekerjaan?._id} />}
+                {popUpDashType !== "Akun Tim" && (
+                  <FormSelect
+                    label={"Pekerjaan"}
+                    type="text"
+                    onChange={(e) =>
+                      setFormData({ ...formData, pekerjaan: e.target.value })
+                    }
+                    options={pekerjaan}
+                    value={formData.pekerjaan?._id}
+                  />
+                )}
 
                 <h1>ALAMAT {popUpDashType.toUpperCase()}</h1>
-                <FormSelect label={"Kabupaten Kota"} type="text" onChange={(e) => changeKabupaten(e.target.value)} options={kabupaten} value={formData.id_kabupaten} />
-                {popUpDashType !== "Akun Tim" && <FormSelect label={"Kecamatan"} type="text" onChange={(e) => changeKecamatan(e.target.value)} options={kecamatan} value={formData.id_kecamatan} />}
-                {popUpDashType !== "Akun Tim" && <FormSelect label={"Target Desa"} type="text" onChange={(e) => setFormData({ ...formData, target_desa: e.target.value })} options={kelurahan} value={formData.target_desa} />}
-
-                <FormInputItem label={"Alamat"} type="text" onChange={(e) => setFormData({ ...formData, address: e.target.value })} value={formData.address} />
-                <div className="border-b-2 my-[30px]" />
-                {(popUpDashType === "Relawan" || popUpDashType === "Akun Tim") && editData === null && (
-                  <>
-                    {" "}
-                    <div className="flex justify-start items-center">
-                      <div className="w-[20%] mr-[50px]">Set Password</div>
-                      <div
-                        onClick={() => {
-                          generatePassword();
-                        }}
-                        className="flex items-center border-2 rounded-md p-3 cursor-pointer"
-                      >
-                        <img src={KeyIcon.src} /> <span className="font-bold ml-3">Generate Password</span>
-                      </div>
-                    </div>
-                    <FormInputPassword
-                      label={""}
-                      value={formData.password}
-                      type={passwordType}
-                      onclickShow={() => setPasswordType("text")}
-                      onClickHide={() => setPasswordType("password")}
-                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    />
-                    <FormInputPassword
-                      label={"Tulis Ulang Password"}
-                      value={confirmPassword}
-                      type={passwordType2}
-                      onclickShow={() => setPasswordType2("text")}
-                      onClickHide={() => setPasswordType2("password")}
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                      }}
-                    />
-                  </>
+                <FormSelect
+                  label={"Kabupaten Kota"}
+                  type="text"
+                  onChange={(e) => changeKabupaten(e.target.value)}
+                  options={kabupaten}
+                  value={formData.id_kabupaten}
+                />
+                {popUpDashType !== "Akun Tim" && (
+                  <FormSelect
+                    label={"Kecamatan"}
+                    type="text"
+                    onChange={(e) => changeKecamatan(e.target.value)}
+                    options={kecamatan}
+                    value={formData.id_kecamatan}
+                  />
                 )}
+                {popUpDashType !== "Akun Tim" && (
+                  <FormSelect
+                    label={"Target Desa"}
+                    type="text"
+                    onChange={(e) =>
+                      setFormData({ ...formData, target_desa: e.target.value })
+                    }
+                    options={kelurahan}
+                    value={formData.target_desa}
+                  />
+                )}
+
+                <FormInputItem
+                  label={"Alamat"}
+                  type="text"
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                  value={formData.address}
+                />
+                <div className="border-b-2 my-[30px]" />
+                {(popUpDashType === "Relawan" ||
+                  popUpDashType === "Akun Tim") &&
+                  editData === null && (
+                    <>
+                      {" "}
+                      <div className="flex justify-start items-center">
+                        <div className="w-[20%] mr-[50px]">Set Password</div>
+                        <div
+                          onClick={() => {
+                            generatePassword();
+                          }}
+                          className="flex items-center border-2 rounded-md p-3 cursor-pointer"
+                        >
+                          <img src={KeyIcon.src} />{" "}
+                          <span className="font-bold ml-3">
+                            Generate Password
+                          </span>
+                        </div>
+                      </div>
+                      <FormInputPassword
+                        label={""}
+                        value={formData.password}
+                        type={passwordType}
+                        onclickShow={() => setPasswordType("text")}
+                        onClickHide={() => setPasswordType("password")}
+                        onChange={(e) =>
+                          setFormData({ ...formData, password: e.target.value })
+                        }
+                      />
+                      <FormInputPassword
+                        label={"Tulis Ulang Password"}
+                        value={confirmPassword}
+                        type={passwordType2}
+                        onclickShow={() => setPasswordType2("text")}
+                        onClickHide={() => setPasswordType2("password")}
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                        }}
+                      />
+                    </>
+                  )}
 
                 <div className="flex mt-[40px] justify-end">
                   <div
