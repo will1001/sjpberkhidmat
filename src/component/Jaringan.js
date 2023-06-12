@@ -210,10 +210,10 @@ const Jaringan = () => {
               router.push({
                 pathname: "/AnggotaJaringan",
                 query: {
-                  nama: res.nama,
-                  tokoh: res.tokoh,
-                  nama_tokoh: res.nama_tokoh,
-                  no_hp_tokoh: res.no_hp_tokoh,
+                  kategori: res.kategori_jaringan?.name,
+                  nama: res.sub_kategori?.name,
+                  nama_ketua: res.nama_ketua,
+                  no_hp_ketua: res.no_hp_ketua,
                   pj_relawan: res.relawan.name,
                   no_hp_relawan: res.no_hp_relawan,
                   id: res._id,

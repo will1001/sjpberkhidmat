@@ -28,24 +28,25 @@ const AnggotaJaringan = () => {
   const [keyword, setKeyword] = useState(null);
   const [form, setForm] = useState({
     id_periode: periode,
-    id_jaringan,
+    id_jaringan: router.query.id,
   });
   const [tipeForm, setTipeForm] = useState("post");
   const [idAnggotaJaringan, setIdAnggotaJaringan] = useState(null);
 
   const postAnggota = () => {
     if (tipeForm === "post") {
+      console.log(form);
       axiosFetch("post", "user/jaringan/member", form, token)
         .then((res) => {
           if (res.data.data === "NIK Sudah Terdaftar") {
             alert("NIK Sudah Terdaftar");
           } else {
-            window.location.reload(false);
+            // window.location.reload(false);
           }
           setPopupTambah(false);
           setForm({
             id_periode: periode,
-            id_jaringan,
+            id_jaringan: router.query.id,
           });
         })
         .catch((err) => console.log(err));
@@ -58,7 +59,7 @@ const AnggotaJaringan = () => {
       )
         .then((res) => {
           setPopupTambah(false);
-          window.location.reload(false);
+          // window.location.reload(false);
         })
         .catch((err) => console.log(err));
     }
@@ -196,7 +197,13 @@ const AnggotaJaringan = () => {
         token
       ).then((res) => setAnggotaJaringan(res.data));
     }
-  }, [currentPage, keyword, router.query.id_kabupaten]);
+  }, [
+    currentPage,
+    keyword,
+    router.query.id_kabupaten,
+    // anggotaJaringan,
+    popupTambah,
+  ]);
 
   return (
     <>
@@ -214,11 +221,12 @@ const AnggotaJaringan = () => {
             />
           </div>
         )}
-        <h1 className="text-4xl font-bold">{router.query.nama}</h1>
+        <h1 className="text-4xl font-bold">{router.query.kategori}</h1>
         <div className="flex space-x-20">
           <div className="flex space-x-3">
             <div>
-              <p>Tokoh</p> <p>Nama</p>
+              <p>Nama Jaringan</p>
+              <p>Ketua</p>
               <p>No HP</p>
               {roles === "admin" && <p>PJ Relawan</p>}
               {roles === "admin" && <p>No Hp Relawan</p>}
@@ -227,21 +235,21 @@ const AnggotaJaringan = () => {
               <p>
                 :{" "}
                 {roles === "relawan" && anggotaJaringan?.data?.length !== 0
-                  ? anggotaJaringan?.data[0].jaringan?.tokoh
-                  : router.query.tokoh}
+                  ? anggotaJaringan?.data[0].jaringan?.nama
+                  : router.query.nama}
               </p>
               <p>
                 :{" "}
                 {roles === "relawan"
                   ? anggotaJaringan?.data.length !== 0 &&
-                    anggotaJaringan?.data[0].jaringan?.nama_tokoh
-                  : router.query.nama_tokoh}
+                    anggotaJaringan?.data[0].jaringan?.nama_ketua
+                  : router.query.nama_ketua}
               </p>{" "}
               <p>
                 :{" "}
                 {roles === "relawan" && anggotaJaringan?.data?.length !== 0
-                  ? anggotaJaringan?.data[0].jaringan?.no_hp_tokoh
-                  : router.query.no_hp_tokoh}
+                  ? anggotaJaringan?.data[0].jaringan?.no_hp_ketua
+                  : router.query.no_hp_ketua}
               </p>
               {roles === "admin" && <p>: {router.query.pj_relawan}</p>}
               {roles === "admin" && <p>: {router.query.no_hp_relawan}</p>}
@@ -277,7 +285,7 @@ const AnggotaJaringan = () => {
             setPopupTambah(true);
             setForm({
               id_periode: periode,
-              id_jaringan,
+              id_jaringan: router.query.id,
             });
           }}
         />
