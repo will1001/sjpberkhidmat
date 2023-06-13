@@ -45,28 +45,59 @@ const ButtonPopUpInfo = ({
   const [icon, setIcon] = useState(kotaIcon);
   const [total, setTotal] = useState();
   const getProgram = useFetch("get", "user/articles?page=1&type=program");
-  const jaringan = useFetch("get", "user/jaringan/total");
+  const jaringan = useFetch(
+    "get",
+    `user/jaringan/total${
+      router.query.kota !== undefined
+        ? "?id_kabupaten=" + router.query.kota
+        : ""
+    }`
+  );
   const jaringanStatisticPerRegion = useFetch(
     "get",
-    "user/jaringan/total/region"
+    `user/jaringan/total/region${
+      router.query.kota !== undefined
+        ? "?id_kabupaten=" + router.query.kota
+        : ""
+    }`
   );
   const [jaringanRegion, setJaringanRegion] = useState([]);
   const [detailTarget, setDetailTarget] = useState();
   const token = useSelector((state) => state.user.token);
   const periode = useSelector((state) => state.panel.idPeriode);
 
+  const checkIndexRegionKecamatan = (index) => {
+    let idKabupaten = router.query.kota;
+    switch (index) {
+      case 5:
+        if (idKabupaten === 5271)
+          return jaringanStatisticPerRegion?.data?.[0]?.count;
+        break;
+      case 6:
+        if (idKabupaten === 5271)
+          return jaringanStatisticPerRegion?.data?.[2]?.count;
+        break;
+      case 7:
+        if (idKabupaten === 5271)
+          return jaringanStatisticPerRegion?.data?.[5]?.count;
+        break;
+      case 8:
+        if (idKabupaten === 5271)
+          return jaringanStatisticPerRegion?.data?.[3]?.count;
+        break;
+      case 9:
+        if (idKabupaten === 5271)
+          return jaringanStatisticPerRegion?.data?.[4]?.count;
+        break;
+
+      default:
+        jaringanStatisticPerRegion?.data?.[index]?.count;
+        return index;
+        break;
+    }
+  };
+
   const handleButton = (button) => {
-    // getJaringanRegion(0, "5208");
-    // getJaringanRegion(1, "5271");
-    // getJaringanRegion(2, "5201");
-    // getJaringanRegion(3, "5202");
-    // getJaringanRegion(4, "5203");
-    // getJaringanRegion(5, "5271","5271010");
-    // getJaringanRegion(6, "5271","5271011");
-    // getJaringanRegion(7, "5271","5271020");
-    // getJaringanRegion(8, "5271","5271021");
-    // getJaringanRegion(9, "5271","5271030");
-    // getJaringanRegion(10, "5271","5271031");
     active !== button ? setActive(button) : setActive();
     if (gantiIcon !== undefined) {
       active !== button ? gantiIcon(button) : gantiIcon();
@@ -530,9 +561,7 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
@@ -579,7 +608,8 @@ const ButtonPopUpInfo = ({
                     statistic[3]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[3]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[3].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[3]?.count}
                 </>
               )}
             </p>
@@ -681,9 +711,7 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
@@ -730,7 +758,8 @@ const ButtonPopUpInfo = ({
                     statistic[4]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[4]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[2].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[2]?.count}
                 </>
               )}
             </p>
@@ -832,9 +861,7 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
@@ -881,7 +908,8 @@ const ButtonPopUpInfo = ({
                     statistic[0]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[0]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[8].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[8]?.count}
                 </>
               )}
             </p>
@@ -984,9 +1012,7 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
@@ -1033,7 +1059,8 @@ const ButtonPopUpInfo = ({
                     statistic[1]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[1]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[7].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[7]?.count}
                 </>
               )}
             </p>
@@ -1135,9 +1162,7 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
@@ -1184,7 +1209,8 @@ const ButtonPopUpInfo = ({
                     statistic[2]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statistic[2]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[0].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[0]?.count}
                 </>
               )}
             </p>
@@ -1287,12 +1313,11 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
                       };
 
                       break;
@@ -1337,7 +1362,8 @@ const ButtonPopUpInfo = ({
                     statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[0]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[5].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[0]?.count}
                 </>
               )}
             </p>
@@ -1431,12 +1457,11 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
                       };
 
                       break;
@@ -1481,7 +1506,8 @@ const ButtonPopUpInfo = ({
                     statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[2]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[6].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[2]?.count}
                 </>
               )}
             </p>
@@ -1575,12 +1601,11 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
                       };
 
                       break;
@@ -1625,7 +1650,8 @@ const ButtonPopUpInfo = ({
                     statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[5]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[7].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[5]?.count}
                 </>
               )}
             </p>
@@ -1719,12 +1745,11 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
                       };
 
                       break;
@@ -1769,7 +1794,8 @@ const ButtonPopUpInfo = ({
                     statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[3]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[8].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[3]?.count}
                 </>
               )}
             </p>
@@ -1863,12 +1889,11 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
                       };
 
                       break;
@@ -1913,7 +1938,8 @@ const ButtonPopUpInfo = ({
                     statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[4]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[9].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[4]?.count}
                 </>
               )}
             </p>
@@ -2007,12 +2033,11 @@ const ButtonPopUpInfo = ({
 
                       break;
                     case "Jaringan":
-                      roles === "admin"
-                        ? (path = "Admin")
-                        : (path = "PetaKekuatan");
+                      path = "/Admin";
                       query = {
                         component: "Jaringan",
                         id_kabupaten: idKabupaten,
+                        id_kecamatan: idKecamatan,
                       };
 
                       break;
@@ -2057,7 +2082,8 @@ const ButtonPopUpInfo = ({
                     statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
                   {total === "logistik" &&
                     statisticKec[1]?.jumlah_logistik?.toLocaleString()}
-                  {total === "jaringan" && jaringanStatisticPerRegion?.data[9].count}
+                  {total === "jaringan" &&
+                    jaringanStatisticPerRegion?.data?.[1]?.count}
                 </>
               )}
             </p>

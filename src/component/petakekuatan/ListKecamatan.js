@@ -47,9 +47,11 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
     setHover(nama);
   };
 
-  console.log("first")
-console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data)
-  console.log("first")
+  console.log("first");
+  console.log(
+    jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data
+  );
+  console.log("first");
 
   return (
     <>
@@ -59,7 +61,8 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
           {/* kab lombok barat */}
           <div className="text-[#374151]">
             <div className="fixed left-[750px] flex gap-2 mt-2 border-2 text-[#374151] py-2 px-4 rounded-full">
-              <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p> <p className="font-semibold">Kab. Lombok Barat</p>
+              <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p>{" "}
+              <p className="font-semibold">Kab. Lombok Barat</p>
             </div>
             {/* Batu Layar */}
             <div
@@ -68,7 +71,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201061" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201061",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -79,19 +85,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -111,13 +129,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -136,19 +167,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[60px] left-[700px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[6]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[6]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[6]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[6]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[6].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Batu Layar</p>
@@ -162,7 +217,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201060" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201060",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -173,19 +231,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -205,13 +275,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -230,19 +313,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[65px] left-[880px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[4]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[4]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[4]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[4].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Gunung Sari</p>
@@ -256,7 +363,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201051" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201051",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -267,19 +377,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -299,13 +421,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -324,19 +459,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[150px] left-[940px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[7]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[7]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[7]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[7]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[7].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Lingsar</p>
@@ -350,7 +509,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201050" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201050",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -361,19 +523,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -393,13 +567,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -418,19 +605,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[150px] left-[1100px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[8]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[8]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[8]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[8]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[8].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Narmada</p>
@@ -444,7 +655,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201030" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201030",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -455,19 +669,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -487,15 +713,18 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
-
-                          break;
-                        case "Program":
-                          path = "../Admin";
                           query = {
-                            component: "/program",
+                            component: "/logistik",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
+                            id_kabupaten: idKabupaten,
                           };
 
                           break;
@@ -512,19 +741,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[250px] left-[780px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[2]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[2]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[2]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[2].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Labu Api</p>
@@ -538,7 +791,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201040" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201040",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -549,19 +805,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -581,15 +849,18 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
-
-                          break;
-                        case "Program":
-                          path = "../Admin";
                           query = {
-                            component: "/program",
+                            component: "/logistik",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
+                            id_kabupaten: idKabupaten,
                           };
 
                           break;
@@ -606,19 +877,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[260px] left-[960px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[1]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[1]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[1]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[1].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Kediri</p>
@@ -632,7 +927,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201041" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201041",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -643,19 +941,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -675,7 +985,11 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
@@ -687,6 +1001,16 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           };
 
                           break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+
                         default:
                           break;
                       }
@@ -700,19 +1024,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[350px] left-[980px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[5]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[5]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[5]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[5].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Kuripan</p>
@@ -726,7 +1074,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201020" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201020",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -737,19 +1088,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -769,13 +1132,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -794,19 +1170,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[340px] left-[780px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[9]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[9]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[9]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[9]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[9].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Gerung</p>
@@ -820,7 +1220,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201011" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201011",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -831,19 +1234,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -863,13 +1278,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -888,19 +1316,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[440px] left-[900px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[3]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[3]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[3]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[3].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Lembar</p>
@@ -914,7 +1366,10 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                   ? () =>
                       router.push({
                         pathname: "./DetailKelurahan",
-                        query: { id_kabupaten: "5201", id_kecamatan: "5201010" },
+                        query: {
+                          id_kabupaten: "5201",
+                          id_kecamatan: "5201010",
+                        },
                       })
                   : () => {
                       let path = "Dashboard";
@@ -925,19 +1380,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                       switch (icon) {
                         case "Target Suara":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Suara Periode Lalu":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah TPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah DPT/DPS":
                           path = "../DetailTargetDesa";
-                          query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
                           break;
                         case "Jumlah Relawan":
                           path = "../Admin";
@@ -957,13 +1424,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                           break;
                         case "Logistik":
                           path = "../Admin";
-                          query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                          query = {
+                            component: "/logistik",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
 
                           break;
                         case "Program":
                           path = "../Admin";
                           query = {
                             component: "/program",
+                            id_kabupaten: idKabupaten,
+                            id_kecamatan: idKecamatan,
+                          };
+
+                          break;
+                        case "Jaringan":
+                          path = "/Admin";
+                          query = {
+                            component: "Jaringan",
                             id_kabupaten: idKabupaten,
                             id_kecamatan: idKecamatan,
                           };
@@ -982,19 +1462,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
               onMouseLeave={() => hoverhandler()}
               className="fixed top-[460px] left-[600px]"
             >
-              <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-                {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+              <div
+                className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                  icon === undefined && "justify-center"
+                } p-2 rounded-md`}
+              >
+                {selectIcon !== undefined && (
+                  <img className="mr-3" src={selectIcon.src} alt={icon} />
+                )}
                 <div className="">
                   {icon !== undefined && (
                     <p className="text-[#FF5001] font-bold text-[26px]">
-                      {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[0]?.target_suara?.toLocaleString()}
-                      {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
-                      {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_tps?.toLocaleString()}
-                      {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
-                      {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_relawans?.toLocaleString()}
-                      {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
-                      {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_logistik?.toLocaleString()}
-                      {icon === "Program" && statisticKec?.length !== undefined && statisticKec[0]?.program?.toLocaleString()}
+                      {icon === "Target Suara" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.target_suara?.toLocaleString()}
+                      {icon === "Suara Periode Lalu" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
+                      {icon === "Jumlah TPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.jumlah_tps?.toLocaleString()}
+                      {icon === "Jumlah DPT/DPS" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
+                      {icon === "Jumlah Relawan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.jumlah_relawans?.toLocaleString()}
+                      {icon === "Jumlah Simpatisan" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
+                      {icon === "Logistik" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.jumlah_logistik?.toLocaleString()}
+                      {icon === "Program" &&
+                        statisticKec?.length !== undefined &&
+                        statisticKec[0]?.program?.toLocaleString()}
+                      {icon === "Jaringan" &&
+                        jaringanStatisticPerRegion?.data[0].count}
                     </p>
                   )}
                   <p className="font-medium">Kec. Sekotong</p>
@@ -1008,7 +1512,8 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
       {kabupaten === "5208" && (
         <div className="text-[#374151]">
           <div className="fixed left-[750px] flex gap-2 mt-2 border-2 text-[#374151] py-2 px-4 rounded-full">
-            <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p> <p className="font-semibold">Kab. Lombok Utara</p>
+            <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p>{" "}
+            <p className="font-semibold">Kab. Lombok Utara</p>
           </div>
           {/* Pemenang */}
           <div
@@ -1028,19 +1533,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1060,13 +1577,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1085,19 +1615,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[400px] left-[580px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[26px]">
-                    {icon === "Target Suara" && statisticKec.length !== undefined && statisticKec[3]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec.length !== undefined && statisticKec[3].suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec.length !== undefined && statisticKec[3].jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec.length !== undefined && statisticKec[3].jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec.length !== undefined && statisticKec[3].jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec.length !== undefined && statisticKec[3].jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec.length !== undefined && statisticKec[3].jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec.length !== undefined && statisticKec[3].program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[3].program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[3].count}
                   </p>
                 )}
                 <p className="font-medium">Kec. Pemenang</p>
@@ -1122,19 +1676,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1154,13 +1720,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1179,19 +1758,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[420px] left-[760px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[26px]">
-                    {icon === "Target Suara" && statisticKec.length !== undefined && statisticKec[1]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec.length !== undefined && statisticKec[1].suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec.length !== undefined && statisticKec[1].jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec.length !== undefined && statisticKec[1].jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec.length !== undefined && statisticKec[1].jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec.length !== undefined && statisticKec[1].jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec.length !== undefined && statisticKec[1].jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec.length !== undefined && statisticKec[1].program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[1].program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[1].count}
                   </p>
                 )}
                 <p className="font-medium">Kec. Tanjung</p>
@@ -1216,19 +1819,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1248,13 +1863,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1273,19 +1901,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[320px] left-[860px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[26px]">
-                    {icon === "Target Suara" && statisticKec.length !== undefined && statisticKec[4]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec.length !== undefined && statisticKec[4].suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec.length !== undefined && statisticKec[4].jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec.length !== undefined && statisticKec[4].jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec.length !== undefined && statisticKec[4].jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec.length !== undefined && statisticKec[4].jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec.length !== undefined && statisticKec[4].jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec.length !== undefined && statisticKec[4].program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[4].program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[4].count}
                   </p>
                 )}
                 <p className="font-medium">Kec. Gangga</p>
@@ -1310,19 +1962,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1342,13 +2006,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1367,19 +2044,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[220px] left-[960px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[26px]">
-                    {icon === "Target Suara" && statisticKec.length !== undefined && statisticKec[2]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec.length !== undefined && statisticKec[2].suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec.length !== undefined && statisticKec[2].jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec.length !== undefined && statisticKec[2].jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec.length !== undefined && statisticKec[2].jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec.length !== undefined && statisticKec[2].jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec.length !== undefined && statisticKec[2].jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec.length !== undefined && statisticKec[2].program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[2].program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[2].count}
                   </p>
                 )}
                 <p className="font-medium">Kec. Kayangan</p>
@@ -1404,19 +2105,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1436,13 +2149,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1461,19 +2187,43 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[320px] left-[1100px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[26px]">
-                    {icon === "Target Suara" && statisticKec.length !== undefined && statisticKec[0]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec.length !== undefined && statisticKec[0].suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec.length !== undefined && statisticKec[0].jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec.length !== undefined && statisticKec[0].jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec.length !== undefined && statisticKec[0].jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec.length !== undefined && statisticKec[0].jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec.length !== undefined && statisticKec[0].jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec.length !== undefined && statisticKec[0].program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec.length !== undefined &&
+                      statisticKec[0].program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[0].count}
                   </p>
                 )}
                 <p className="font-medium">Kec. Bayan</p>
@@ -1486,7 +2236,8 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
       {kabupaten === "5202" && (
         <div className="text-[#374151] fixed">
           <div className="fixed bg-white left-[750px] flex gap-2 mt-2 border-2 text-[#374151] py-2 px-4 rounded-full">
-            <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p> <p className="font-semibold">Kab. Lombok Tengah</p>
+            <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p>{" "}
+            <p className="font-semibold">Kab. Lombok Tengah</p>
           </div>
           {/* Batukliang Utara */}
           <div
@@ -1506,19 +2257,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1538,13 +2301,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1563,23 +2339,51 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[80px] left-[880px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[5]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[5]?.program?.toLocaleString()}
-                    {icon === "Jaringan" && jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data[11].count.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.length !== 0 &&
+                      jaringanStatisticPerRegion?.data[11].count.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Batukliang Utara</p> : <p className="font-medium text-[14px]">Batukliang Utara</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Batukliang Utara</p>
+                ) : (
+                  <p className="font-medium text-[14px]">Batukliang Utara</p>
+                )}
               </div>
             </div>
           </div>
@@ -1601,19 +2405,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1633,13 +2449,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1658,24 +2487,51 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[250px] left-[1030px]"
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[1]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[1]?.program?.toLocaleString()}
-                    {icon === "Jaringan" && jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegion?.data[5].count.toLocaleString()}
-
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.length !== 0 &&
+                      jaringanStatisticPerRegion?.data[5].count.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Kopang</p> : <p className="font-medium text-[14px]">Kopang</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Kopang</p>
+                ) : (
+                  <p className="font-medium text-[14px]">Kopang</p>
+                )}
               </div>
             </div>
           </div>
@@ -1697,19 +2553,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1729,13 +2597,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1754,22 +2635,48 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             onMouseLeave={() => hoverhandler()}
             className="fixed top-[190px] left-[850px] bg-white shadow-md border-[#FFCFB9] border rounded-md p-2"
           >
-            <div className={`cursor-pointer items-center flex ${icon === undefined && "justify-center"} `}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`cursor-pointer items-center flex ${
+                icon === undefined && "justify-center"
+              } `}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[11]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[11]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[11]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Batukliang</p> : <p className="font-medium text-[14px]">Batukliang</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Batukliang</p>
+                ) : (
+                  <p className="font-medium text-[14px]">Batukliang</p>
+                )}
               </div>
             </div>
           </div>
@@ -1791,19 +2698,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1823,13 +2742,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1846,24 +2778,52 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Pringgarata")}
             onMouseLeave={() => hoverhandler()}
-            className={` fixed top-[220px] ${icon === undefined ? "left-[700px]" : "left-[660px]"}  bg-white shadow-md border-[#FFCFB9] border rounded-md p-2`}
+            className={` fixed top-[220px] ${
+              icon === undefined ? "left-[700px]" : "left-[660px]"
+            }  bg-white shadow-md border-[#FFCFB9] border rounded-md p-2`}
           >
-            <div className={`cursor-pointer items-center flex ${icon === undefined && "justify-center"} `}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`cursor-pointer items-center flex ${
+                icon === undefined && "justify-center"
+              } `}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[10]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[10]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[10]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Pringgarata</p> : <p className="font-medium text-[16px]">Pringgarata</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Pringgarata</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Pringgarata</p>
+                )}
               </div>
             </div>
           </div>
@@ -1885,19 +2845,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -1917,13 +2889,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -1940,24 +2925,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Praya")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[270px] left-[900px]" : "top-[280px] left-[860px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[270px] left-[900px]"
+                : "top-[280px] left-[860px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[8]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[8]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[8]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Praya</p> : <p className="font-medium text-[16px]">Praya</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Praya</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Praya</p>
+                )}
               </div>
             </div>
           </div>
@@ -1979,19 +2994,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2011,13 +3038,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2034,24 +3074,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Jonggat")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[280px] left-[750px]" : "top-[310px] left-[700px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[280px] left-[750px]"
+                : "top-[310px] left-[700px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[6]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[6]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[6]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Jonggat</p> : <p className="font-medium text-[16px]">Jonggat</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Jonggat</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Jonggat</p>
+                )}
               </div>
             </div>
           </div>
@@ -2073,19 +3143,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2105,13 +3187,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2128,24 +3223,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Janapria")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[320px] left-[1050px]" : "top-[340px] left-[1050px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[320px] left-[1050px]"
+                : "top-[340px] left-[1050px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[7]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[7]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[7]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Janapria</p> : <p className="font-medium text-[16px]">Janapria</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Janapria</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Janapria</p>
+                )}
               </div>
             </div>
           </div>
@@ -2167,19 +3292,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2199,13 +3336,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2222,24 +3372,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Praya Timur")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[420px] left-[1050px]" : "top-[430px] left-[1050px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[420px] left-[1050px]"
+                : "top-[430px] left-[1050px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[0]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[0]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Praya Timur</p> : <p className="font-medium text-[16px]">Praya Timur</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Praya Timur</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Praya Timur</p>
+                )}
               </div>
             </div>
           </div>
@@ -2261,19 +3441,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2293,13 +3485,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2316,24 +3521,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Praya Tengah")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[960px]" : "top-[370px] left-[860px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[370px] left-[960px]"
+                : "top-[370px] left-[860px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[3]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[3]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Praya Tengah</p> : <p className="font-medium text-[16px]">Praya Tengah</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Praya Tengah</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Praya Tengah</p>
+                )}
               </div>
             </div>
           </div>
@@ -2355,19 +3590,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2387,13 +3634,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2410,24 +3670,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Pujut")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[470px] left-[900px]" : "top-[470px] left-[890px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[470px] left-[900px]"
+                : "top-[470px] left-[890px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[2]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[2]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Pujut</p> : <p className="font-medium text-[16px]">Pujut</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Pujut</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Pujut</p>
+                )}
               </div>
             </div>
           </div>
@@ -2449,19 +3739,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2481,13 +3783,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2504,24 +3819,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Praya Barat")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[480px] left-[700px]" : "top-[500px] left-[700px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[480px] left-[700px]"
+                : "top-[500px] left-[700px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[9]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[9]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[9]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Praya Barat</p> : <p className="font-medium text-[16px]">Praya Barat</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Praya Barat</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Praya Barat</p>
+                )}
               </div>
             </div>
           </div>
@@ -2543,19 +3888,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2575,13 +3932,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2598,24 +3968,54 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Praya Barat Daya")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[670px]" : "top-[400px] left-[640px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[370px] left-[670px]"
+                : "top-[400px] left-[640px]"
+            } `}
           >
-            <div className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border p-2 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img className="mr-3" src={selectIcon.src} alt={icon} />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[4]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[4]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium">Kec. Praya Barat Daya</p> : <p className="font-medium text-[16px]">Praya Barat Daya</p>}
+                {icon === undefined ? (
+                  <p className="font-medium">Kec. Praya Barat Daya</p>
+                ) : (
+                  <p className="font-medium text-[16px]">Praya Barat Daya</p>
+                )}
               </div>
             </div>
           </div>
@@ -2625,7 +4025,8 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
       {kabupaten === "5203" && (
         <div className="text-[#374151] fixed">
           <div className="fixed bg-white left-[750px] flex gap-2 mt-2 border-2 text-[#374151] py-2 px-4 rounded-full">
-            <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p> <p className="font-semibold">Kab. Lombok Timur</p>
+            <p>{icon !== undefined ? `${icon}:` : "Peta Kekuatan:"}</p>{" "}
+            <p className="font-semibold">Kab. Lombok Timur</p>
           </div>
           {/* Sambelia */}
           <div
@@ -2645,19 +4046,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2677,13 +4090,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2700,25 +4126,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sambelia")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[80px] left-[1000px]" : "top-[65px] left-[1040px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[80px] left-[1000px]"
+                : "top-[65px] left-[1040px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[9]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[9]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[9]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[9]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[9]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sambelia</p> : <p className="font-medium text-[12px]">Sambelia</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sambelia</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sambelia</p>
+                )}
               </div>
             </div>
           </div>
@@ -2740,19 +4202,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2772,13 +4246,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2795,25 +4282,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Suralaga")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[320px] left-[920px]" : "top-[335px] left-[920px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[320px] left-[920px]"
+                : "top-[335px] left-[920px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[16]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[16]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[16]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[16]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[16]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[16]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[16]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[16]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[16]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Suralaga</p> : <p className="font-medium text-[12px]">Suralaga</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Suralaga</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Suralaga</p>
+                )}
               </div>
             </div>
           </div>
@@ -2835,19 +4358,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2867,13 +4402,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2890,24 +4438,58 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sembalun")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[80px] left-[780px]" : "top-[65px] left-[730px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[80px] left-[780px]"
+                : "top-[65px] left-[730px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[2]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[2]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[2]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[2]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sembalun</p> : <p className="font-medium text-[12px]">Sembalun</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sembalun</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sembalun</p>
+                )}
               </div>
             </div>
           </div>
@@ -2929,19 +4511,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -2961,13 +4555,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -2984,24 +4591,58 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Pringgabaya")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[160px] left-[1000px]" : "top-[155px] left-[1040px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[160px] left-[1000px]"
+                : "top-[155px] left-[1040px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[0]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[0]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[0]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[0]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Pringgabaya</p> : <p className="font-medium text-[12px]">Pringgabaya</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Pringgabaya</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Pringgabaya</p>
+                )}
               </div>
             </div>
           </div>
@@ -3023,19 +4664,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3055,13 +4708,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3078,25 +4744,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Suela")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[160px] left-[900px]" : "top-[130px] left-[890px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[160px] left-[900px]"
+                : "top-[130px] left-[890px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[19]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[19]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[19]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[19]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[19]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[19]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[19]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[19]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[19]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Suela</p> : <p className="font-medium text-[12px]">Suela</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Suela</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Suela</p>
+                )}
               </div>
             </div>
           </div>
@@ -3118,19 +4820,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3150,13 +4864,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3173,25 +4900,59 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Wanasaba")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[220px] left-[910px]" : "top-[200px] left-[900px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[220px] left-[910px]"
+                : "top-[200px] left-[900px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[7]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[7]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[7]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[7]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[7]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Wanasaba</p> : <p className="font-medium text-[12px]">Wanasaba</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Wanasaba</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Wanasaba</p>
+                )}
               </div>
             </div>
           </div>
@@ -3213,19 +4974,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3245,13 +5018,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3268,25 +5054,59 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Aikmel")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[180px] left-[790px]" : "top-[150px] left-[780px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[180px] left-[790px]"
+                : "top-[150px] left-[780px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[6]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[6]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[6]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[6]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[6]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Aikmel</p> : <p className="font-medium text-[12px]">Aikmel</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Aikmel</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Aikmel</p>
+                )}
               </div>
             </div>
           </div>
@@ -3308,19 +5128,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3340,13 +5172,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3363,24 +5208,58 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Pringgasela")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[230px] left-[730px]" : "top-[205px] left-[720px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[230px] left-[730px]"
+                : "top-[205px] left-[720px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[4]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[4]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[4]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[4]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Pringgasela</p> : <p className="font-medium text-[12px]">Pringgasela</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Pringgasela</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Pringgasela</p>
+                )}
               </div>
             </div>
           </div>
@@ -3402,19 +5281,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3434,13 +5325,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3457,25 +5361,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sikur")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[280px] left-[740px]" : "top-[275px] left-[710px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[280px] left-[740px]"
+                : "top-[275px] left-[710px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[11]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[11]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[11]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[11]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[11]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sikur</p> : <p className="font-medium text-[12px]">Sikur</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sikur</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sikur</p>
+                )}
               </div>
             </div>
           </div>
@@ -3497,19 +5437,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3529,13 +5481,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3552,24 +5517,58 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Montong Gading")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[325px] left-[630px]" : "top-[345px] left-[620px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[325px] left-[630px]"
+                : "top-[345px] left-[620px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[5]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[5]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[5]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[5]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Montong Gading</p> : <p className="font-medium text-[12px]">Montong Gading</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Montong Gading</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Montong Gading</p>
+                )}
               </div>
             </div>
           </div>
@@ -3591,19 +5590,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3623,13 +5634,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3646,25 +5670,59 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Lenek")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[270px] left-[890px]" : "top-[265px] left-[910px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[270px] left-[890px]"
+                : "top-[265px] left-[910px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[20]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[20]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[20]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[20]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[20]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[20]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[20]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[20]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[20]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Lenek</p> : <p className="font-medium text-[12px]">Lenek</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Lenek</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Lenek</p>
+                )}
               </div>
             </div>
           </div>
@@ -3686,19 +5744,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3718,13 +5788,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3741,25 +5824,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Masbagik")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[300px] left-[820px]" : "top-[275px] left-[800px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[300px] left-[820px]"
+                : "top-[275px] left-[800px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[14]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[14]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[14]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[14]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[14]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[14]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[14]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[14]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[14]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Masbagik</p> : <p className="font-medium text-[12px]">Masbagik</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Masbagik</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Masbagik</p>
+                )}
               </div>
             </div>
           </div>
@@ -3781,19 +5900,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3813,13 +5944,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3836,25 +5980,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Terara")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[690px]" : "top-[400px] left-[700px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[370px] left-[690px]"
+                : "top-[400px] left-[700px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[13]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[13]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[13]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[13]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[13]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[13]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[13]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[13]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[13]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Terara</p> : <p className="font-medium text-[12px]">Terara</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Terara</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Terara</p>
+                )}
               </div>
             </div>
           </div>
@@ -3876,19 +6056,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -3908,13 +6100,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -3931,25 +6136,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Labuhan Haji")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[970px]" : "top-[390px] left-[960px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[370px] left-[970px]"
+                : "top-[390px] left-[960px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[18]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[18]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[18]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[18]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[18]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[18]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[18]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[18]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[18]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Labuhan Haji</p> : <p className="font-medium text-[12px]">Labuhan Haji</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Labuhan Haji</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Labuhan Haji</p>
+                )}
               </div>
             </div>
           </div>
@@ -3971,19 +6212,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4003,13 +6256,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4026,25 +6292,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Selong")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[370px] left-[880px]" : "top-[390px] left-[870px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[370px] left-[880px]"
+                : "top-[390px] left-[870px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[17]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[17]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[17]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[17]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[17]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[17]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[17]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[17]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[17]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Selong</p> : <p className="font-medium text-[12px]">Selong</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Selong</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Selong</p>
+                )}
               </div>
             </div>
           </div>
@@ -4066,19 +6368,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4098,13 +6412,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4121,25 +6448,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sukamulia")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[340px] left-[800px]" : "top-[330px] left-[800px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[340px] left-[800px]"
+                : "top-[330px] left-[800px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[15]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[15]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[15]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[15]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[15]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[15]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[15]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[15]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[15]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sukamulia</p> : <p className="font-medium text-[12px]">Sukamulia</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sukamulia</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sukamulia</p>
+                )}
               </div>
             </div>
           </div>
@@ -4161,19 +6524,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4193,13 +6568,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4216,24 +6604,58 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sakra")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[400px] left-[750px]" : "top-[400px] left-[790px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[400px] left-[750px]"
+                : "top-[400px] left-[790px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[3]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[3]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[3]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[3]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sakra</p> : <p className="font-medium text-[12px]">Sakra</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sakra</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sakra</p>
+                )}
               </div>
             </div>
           </div>
@@ -4255,19 +6677,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4287,13 +6721,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4310,25 +6757,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sakra Timur")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[455px] left-[890px]" : "top-[455px] left-[900px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[455px] left-[890px]"
+                : "top-[455px] left-[900px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[12]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[12]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[12]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[12]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[12]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[12]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[12]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[12]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[12]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sakra Timur</p> : <p className="font-medium text-[12px]">Sakra Timur</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sakra Timur</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sakra Timur</p>
+                )}
               </div>
             </div>
           </div>
@@ -4350,19 +6833,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4382,13 +6877,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4405,24 +6913,58 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Sakra Barat")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[440px] left-[730px]" : "top-[460px] left-[690px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[440px] left-[730px]"
+                : "top-[460px] left-[690px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[1]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[1]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[1]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[1]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Sakra Barat</p> : <p className="font-medium text-[12px]">Sakra Barat</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Sakra Barat</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Sakra Barat</p>
+                )}
               </div>
             </div>
           </div>
@@ -4444,19 +6986,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4476,13 +7030,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4499,25 +7066,59 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Keruak")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[485px] left-[780px]" : "top-[490px] left-[810px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[485px] left-[780px]"
+                : "top-[490px] left-[810px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[8]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[8]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[8]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[8]?.program?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[8]?.program?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Keruak</p> : <p className="font-medium text-[12px]">Keruak</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Keruak</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Keruak</p>
+                )}
               </div>
             </div>
           </div>
@@ -4539,19 +7140,31 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                     switch (icon) {
                       case "Target Suara":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Suara Periode Lalu":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah TPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah DPT/DPS":
                         path = "../DetailTargetDesa";
-                        query = { id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
                         break;
                       case "Jumlah Relawan":
                         path = "../Admin";
@@ -4571,13 +7184,26 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
                         break;
                       case "Logistik":
                         path = "../Admin";
-                        query = { component: "/logistik", id_kabupaten: idKabupaten, id_kecamatan: idKecamatan };
+                        query = {
+                          component: "/logistik",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
 
                         break;
                       case "Program":
                         path = "../Admin";
                         query = {
                           component: "/program",
+                          id_kabupaten: idKabupaten,
+                          id_kecamatan: idKecamatan,
+                        };
+
+                        break;
+                      case "Jaringan":
+                        path = "/Admin";
+                        query = {
+                          component: "Jaringan",
                           id_kabupaten: idKabupaten,
                           id_kecamatan: idKecamatan,
                         };
@@ -4594,25 +7220,61 @@ console.log(jaringanStatisticPerRegion?.length !== 0 && jaringanStatisticPerRegi
             }
             onMouseEnter={() => hoverhandler("Jerowaru")}
             onMouseLeave={() => hoverhandler()}
-            className={`fixed ${icon === undefined ? "top-[550px] left-[790px]" : "top-[565px] left-[890px]"} `}
+            className={`fixed ${
+              icon === undefined
+                ? "top-[550px] left-[790px]"
+                : "top-[565px] left-[890px]"
+            } `}
           >
-            <div className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${icon === undefined && "justify-center"} p-2 rounded-md`}>
-              {selectIcon !== undefined && <img className="mr-3 h-[16px] w-[18px]" src={selectIcon.src} alt={icon} />}
+            <div
+              className={`border py-1 cursor-pointer items-center mb-2 bg-white shadow-md border-[#FFCFB9] flex ${
+                icon === undefined && "justify-center"
+              } p-2 rounded-md`}
+            >
+              {selectIcon !== undefined && (
+                <img
+                  className="mr-3 h-[16px] w-[18px]"
+                  src={selectIcon.src}
+                  alt={icon}
+                />
+              )}
               <div className="">
                 {icon !== undefined && (
                   <p className="text-[#FF5001] font-bold text-[16px]">
                     {" "}
-                    {icon === "Target Suara" && statisticKec?.length !== undefined && statisticKec[10]?.target_suara?.toLocaleString()}
-                    {icon === "Suara Periode Lalu" && statisticKec?.length !== undefined && statisticKec[10]?.suara_periode_lalu?.toLocaleString()}
-                    {icon === "Jumlah TPS" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_tps?.toLocaleString()}
-                    {icon === "Jumlah DPT/DPS" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_dpt_dps?.toLocaleString()}
-                    {icon === "Jumlah Relawan" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_relawans?.toLocaleString()}
-                    {icon === "Jumlah Simpatisan" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_simpatisans?.toLocaleString()}
-                    {icon === "Logistik" && statisticKec?.length !== undefined && statisticKec[10]?.jumlah_logistik?.toLocaleString()}
-                    {icon === "Program" && statisticKec?.length !== undefined && statisticKec[10]?.program?.toLocaleString()?.toLocaleString()}
+                    {icon === "Target Suara" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.target_suara?.toLocaleString()}
+                    {icon === "Suara Periode Lalu" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.suara_periode_lalu?.toLocaleString()}
+                    {icon === "Jumlah TPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_tps?.toLocaleString()}
+                    {icon === "Jumlah DPT/DPS" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_dpt_dps?.toLocaleString()}
+                    {icon === "Jumlah Relawan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_relawans?.toLocaleString()}
+                    {icon === "Jumlah Simpatisan" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_simpatisans?.toLocaleString()}
+                    {icon === "Logistik" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.jumlah_logistik?.toLocaleString()}
+                    {icon === "Program" &&
+                      statisticKec?.length !== undefined &&
+                      statisticKec[10]?.program
+                        ?.toLocaleString()
+                        ?.toLocaleString()}
                   </p>
                 )}
-                {icon === undefined ? <p className="font-medium text-[12px]">Kec. Jerowaru</p> : <p className="font-medium text-[12px]">Jerowaru</p>}
+                {icon === undefined ? (
+                  <p className="font-medium text-[12px]">Kec. Jerowaru</p>
+                ) : (
+                  <p className="font-medium text-[12px]">Jerowaru</p>
+                )}
               </div>
             </div>
           </div>
