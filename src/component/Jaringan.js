@@ -233,7 +233,15 @@ const Jaringan = () => {
   useEffect(() => {
     axiosFetch(
       "get",
-      `user/jaringan?page=${currentPage}&limit=10`,
+      `user/jaringan?page=${currentPage}&limit=10${
+        router.query.id_kabupaten !== undefined
+          ? "&id_kabupaten=" + router.query.id_kabupaten
+          : ""
+      }${
+        router.query.id_kecamatan !== undefined
+          ? "&id_kecamatan=" + router.query.id_kecamatan
+          : ""
+      }`,
       {},
       token
     ).then((res) => setJaringan(res.data));
