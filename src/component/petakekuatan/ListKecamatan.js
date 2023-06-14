@@ -2374,9 +2374,9 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[5]?.program?.toLocaleString()}
-                    {icon === "Jaringan" &&
-                      jaringanStatisticPerRegion?.length !== 0 &&
-                      jaringanStatisticPerRegion?.data[11].count.toLocaleString()}
+                  
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[5].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -2522,9 +2522,9 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[1]?.program?.toLocaleString()}
-                    {icon === "Jaringan" &&
-                      jaringanStatisticPerRegion?.length !== 0 &&
-                      jaringanStatisticPerRegion?.data[5].count.toLocaleString()}
+                   
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[1].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -2670,6 +2670,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[11]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[11].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -2817,6 +2819,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[10]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[10].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -2966,6 +2970,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[8]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[8].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -3115,6 +3121,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[6]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[6].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -3264,6 +3272,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[7]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[7].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -3413,6 +3423,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[0]?.program?.toLocaleString()}
+                    {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[0].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -3562,6 +3574,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[3]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[3].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -3711,6 +3725,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[2]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[2].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -3860,6 +3876,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[9]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[9].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4009,6 +4027,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[4]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[4].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4174,6 +4194,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[9]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[9].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4330,6 +4352,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[16]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[16].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4483,6 +4507,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[2]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[2].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4636,6 +4662,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[0]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[0].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4792,6 +4820,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[19]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[19].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -4946,6 +4976,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[7]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[7].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -5100,6 +5132,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[6]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[6].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -5253,6 +5287,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[4]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[4].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -5409,6 +5445,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[11]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[11].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -5562,6 +5600,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[5]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[5].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -5716,6 +5756,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[20]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[20].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -5872,6 +5914,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[14]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[14].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6028,6 +6072,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[13]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[13].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6184,6 +6230,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[18]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[18].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6340,6 +6388,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[17]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[17].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6496,6 +6546,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[15]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[15].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6649,6 +6701,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[3]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[3].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6805,6 +6859,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[12]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[12].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -6958,6 +7014,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[1]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[1].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -7112,6 +7170,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                     {icon === "Program" &&
                       statisticKec?.length !== undefined &&
                       statisticKec[8]?.program?.toLocaleString()}
+                       {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[8].count}
                   </p>
                 )}
                 {icon === undefined ? (
@@ -7268,6 +7328,8 @@ const ListKecamatan = ({ id, icon, setHover, kabupaten, statisticKec }) => {
                       statisticKec[10]?.program
                         ?.toLocaleString()
                         ?.toLocaleString()}
+                         {icon === "Jaringan" &&
+                      jaringanStatisticPerRegion?.data[10].count}
                   </p>
                 )}
                 {icon === undefined ? (
