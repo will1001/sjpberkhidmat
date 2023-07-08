@@ -164,6 +164,14 @@ function DetailTargetDesa({ routes }) {
       selector: (row) => row.jumlah_simpatisans,
     },
     {
+      name: "Relawan",
+      selector: (row) => row.jumlah_relawans,
+    },
+    {
+      name: "anggota Jaringan",
+      selector: (row) => row.jumlah_anggota_jaringans,
+    },
+    {
       name: "Target",
       selector: (row) => row.targets?.target,
     },
