@@ -32,10 +32,20 @@ const AnggotaJaringan = () => {
   });
   const [tipeForm, setTipeForm] = useState("post");
   const [idAnggotaJaringan, setIdAnggotaJaringan] = useState(null);
+  const [jaringan, setJaringan] = useState(null);
 
   const postAnggota = () => {
+    let idJaringanTemp;
+
+    if (roles === "relawan") {
+      idJaringanTemp = jaringan?.data?.[0]?._id;
+    } else {
+      idJaringanTemp = router.query.id;
+    }
+
+    form.id_jaringan = idJaringanTemp;
+
     if (tipeForm === "post") {
-      console.log(form);
       axiosFetch("post", "user/jaringan/member", form, token)
         .then((res) => {
           if (res.data.data === "NIK Sudah Terdaftar") {
@@ -46,7 +56,7 @@ const AnggotaJaringan = () => {
           setPopupTambah(false);
           setForm({
             id_periode: periode,
-            id_jaringan: router.query.id,
+            id_jaringan: idJaringanTemp,
           });
         })
         .catch((err) => console.log(err));
@@ -186,6 +196,16 @@ const AnggotaJaringan = () => {
         // dispatch(setIdJaringan({ id_jaringan: res.data?.data[0].id_jaringan }));
         setAnggotaJaringan(res.data);
       });
+      axiosFetch(
+        "get",
+        `user/jaringan?page=${currentPage}&limit=10`,
+        {},
+        token
+      ).then((res) => {
+        // console.log(res.data.data[0]);
+        // dispatch(setIdJaringan({ id_jaringan: res.data?.data[0].id_jaringan }));
+        setJaringan(res.data);
+      });
     } else {
       if (router.query.id) {
         // dispatch(setIdJaringan({ id_jaringan: router.query.id }));
@@ -234,21 +254,21 @@ const AnggotaJaringan = () => {
             <div>
               <p>
                 :{" "}
-                {roles === "relawan" && anggotaJaringan?.data?.length !== 0
-                  ? anggotaJaringan?.data[0].jaringan?.nama
+                {roles === "relawan" && jaringan?.data?.length !== 0
+                  ? jaringan?.data?.[0]?.kategori_jaringan?.name
                   : router.query.nama}
               </p>
               <p>
                 :{" "}
                 {roles === "relawan"
-                  ? anggotaJaringan?.data.length !== 0 &&
-                    anggotaJaringan?.data[0].jaringan?.nama_ketua
+                  ? jaringan?.data.length !== 0 &&
+                    jaringan?.data?.[0]?.nama_ketua
                   : router.query.nama_ketua}
               </p>{" "}
               <p>
                 :{" "}
-                {roles === "relawan" && anggotaJaringan?.data?.length !== 0
-                  ? anggotaJaringan?.data[0].jaringan?.no_hp_ketua
+                {roles === "relawan" && jaringan?.data?.length !== 0
+                  ? jaringan?.data?.[0]?.no_hp_ketua
                   : router.query.no_hp_ketua}
               </p>
               {roles === "admin" && <p>: {router.query.pj_relawan}</p>}
@@ -264,15 +284,15 @@ const AnggotaJaringan = () => {
               <p>
                 : {anggotaJaringan?.metadata?.total}/{" "}
                 <span className="text-orange-400">
-                  {roles === "relawan" && anggotaJaringan?.data?.length !== 0
-                    ? anggotaJaringan?.data[0].jaringan?.target
+                  {roles === "relawan" && jaringan?.data?.length !== 0
+                    ? jaringan?.data?.[0]?.target
                     : router.query.target}
                 </span>
               </p>
               <p>
                 :{" "}
-                {roles === "relawan" && anggotaJaringan?.data?.length !== 0
-                  ? anggotaJaringan?.data[0].jaringan?.alamat
+                {roles === "relawan" && jaringan?.data?.length !== 0
+                  ? jaringan?.data?.[0]?.alamat
                   : router.query.alamat}
               </p>
             </div>

@@ -157,7 +157,7 @@ const Jaringan = () => {
     },
     {
       name: "PJ Relawan",
-      selector: (row) => row.relawan.name,
+      selector: (row) => row.relawan?.name,
     },
     {
       name: "No Hp PJ Relawan",

@@ -23,6 +23,7 @@ function Dashboard() {
   const router = useRouter();
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
   const jaringan = useFetch("get", "user/jaringan/total");
+  const anggota_jaringan = useFetch("get", "user/jaringan/member/total");
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const roles = useSelector((state) => state.user.roles);
 
@@ -235,9 +236,31 @@ function Dashboard() {
                 w={"287px"}
                 h={"73px"}
               />
-              <div className="h-[73px] w-[1900px]">
+              <JumlahPenduduk
+                title={"Jumlah Anggota Jaringan"}
+                total={anggota_jaringan?.data?.toLocaleString()}
+                icon={<JaringanIcon />}
+                totalSize={"32px"}
+                titleSize={"19px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              <JumlahPenduduk
+                title={"Jumlah Calon Pemilih"}
+                total={(
+                  jumlahRelawans +
+                  jumlahSimpatisan +
+                  anggota_jaringan?.data
+                ).toLocaleString()}
+                icon={<JaringanIcon />}
+                totalSize={"32px"}
+                titleSize={"21px"}
+                w={"287px"}
+                h={"73px"}
+              />
+              {/* <div className="h-[73px] w-[600px]">
                 
-              </div>
+              </div> */}
             </div>
             <div className="pl-24 mt-6 mb-8">
               <div
