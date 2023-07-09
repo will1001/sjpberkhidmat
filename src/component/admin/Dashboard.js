@@ -24,6 +24,8 @@ function Dashboard() {
   const getTarget = useFetch("get", "user/dashboard/statistik/kabupaten");
   const jaringan = useFetch("get", "user/jaringan/total");
   const anggota_jaringan = useFetch("get", "user/jaringan/member/total");
+  const getStatistik = useFetch("get", "user/dashboard/statistik/all");
+
   const id_kabupaten = useSelector((state) => state.user.id_kabupaten);
   const roles = useSelector((state) => state.user.roles);
 
@@ -100,7 +102,7 @@ function Dashboard() {
             />
             <JumlahPenduduk
               title={"Jumlah TPS"}
-              total={jumlahTPS?.toLocaleString()}
+              total={getStatistik?.data?.jumlah_tps?.toLocaleString()}
               icon={<TpsIcon />}
               totalSize={"32px"}
               titleSize={"21px"}
@@ -109,7 +111,7 @@ function Dashboard() {
             />
             <JumlahPenduduk
               title={"Jumlah DPT/DPS"}
-              total={jumlahDPTDPS?.toLocaleString()}
+              total={getStatistik?.data?.jumlah_dpt_dps?.toLocaleString()}
               icon={<PendudukIcon />}
               totalSize={"32px"}
               titleSize={"21px"}
@@ -189,7 +191,7 @@ function Dashboard() {
               />
               <JumlahPenduduk
                 title={"Jumlah TPS"}
-                total={jumlahTPS?.toLocaleString()}
+                total={getStatistik?.data?.jumlah_tps?.toLocaleString()}
                 icon={<TpsIcon />}
                 totalSize={"32px"}
                 titleSize={"21px"}
@@ -200,7 +202,7 @@ function Dashboard() {
             <div className="flex mx-24 item-center gap-4 mt-2">
               <JumlahPenduduk
                 title={"Jumlah DPT/DPS"}
-                total={jumlahDPTDPS?.toLocaleString()}
+                total={getStatistik?.data?.jumlah_dpt_dps?.toLocaleString()}
                 icon={<PendudukIcon />}
                 totalSize={"32px"}
                 titleSize={"21px"}

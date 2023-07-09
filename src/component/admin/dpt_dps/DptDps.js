@@ -304,7 +304,7 @@ const DptDps = () => {
               <th className="px-4 py-2 text-left font-normal">Desa / Kel</th>
               <th className="px-4 py-2 text-left font-normal whitespace-nowrap">Jenis Kelamin</th>
               <th className="px-4 py-2 text-left font-normal">Alamat</th>
-              <th className=" font-normal sticky right-0  bg-[#374151] border-l-2 w-[100px] dpy-4">Aksi</th>
+              {/* <th className=" font-normal sticky right-0  bg-[#374151] border-l-2 w-[100px] dpy-4">Aksi</th> */}
             </tr>
           </thead>
           <tbody>
@@ -327,8 +327,8 @@ const DptDps = () => {
                   }}
                   className="sticky right-0 border-l-2 bg-slate-300 flex px-6 py-4  gap-3 w-[100px] justify-center items-center"
                 >
-                  <img className="cursor-pointer" src={edit.src} />
-                  <img className="cursor-pointer" src={deletIcon.src} />
+                  {/* <img className="cursor-pointer" src={edit.src} /> */}
+                  {/* <img className="cursor-pointer" src={deletIcon.src} /> */}
                 </td>
               </tr>
             ))}
