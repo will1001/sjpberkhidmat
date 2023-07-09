@@ -77,7 +77,7 @@ const AnggotaJaringan = () => {
 
   const deleteAnggotaJaringan = (id) => {
     if (confirm("Hapus Anggota Jaringan ?")) {
-      axiosFetch("delete", `user/member/jaringan/${id}`, {}, token)
+      axiosFetch("delete", `user/jaringan/member/${id}`, {}, token)
         .then((res) => {
           setPopupTambah(false);
         })
