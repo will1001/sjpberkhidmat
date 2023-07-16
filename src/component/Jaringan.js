@@ -43,7 +43,7 @@ const Jaringan = () => {
       "get",
       `user/jaringan/member/total?id_jaringan=${id_jaringan}`
     );
-    return res.data;
+    return res?.data;
   };
   const postJaringan = () => {
     if (tipeForm === "post") {
@@ -171,9 +171,9 @@ const Jaringan = () => {
       name: "Progres Target",
       selector: (row) => (
         <ProgressBar
-          progress={Math.floor(
+          progress={
             (Number(getTotalAnggotaJaringan(row._id)) / row.target) * 100
-          )}
+          }
           bgcolor={"#FF5001"}
           height={"24px"}
         />
