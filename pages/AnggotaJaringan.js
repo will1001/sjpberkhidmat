@@ -188,7 +188,7 @@ const AnggotaJaringan = () => {
     if (roles === "relawan") {
       axiosFetch(
         "get",
-        `user/jaringan/member?page=${currentPage}&limit=10`,
+        `user/jaringan/member?page=${currentPage}&limit=1000`,
         {},
         token
       ).then((res) => {
