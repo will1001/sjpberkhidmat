@@ -212,7 +212,7 @@ const AnggotaJaringan = () => {
       }
       axiosFetch(
         "get",
-        `user/jaringan/member?page=${currentPage}&id_jaringan=${router.query.id}&limit=10`,
+        `user/jaringan/member?page=${currentPage}&id_jaringan=${router.query.id}&limit=1000`,
         {},
         token
       ).then((res) => setAnggotaJaringan(res.data));
