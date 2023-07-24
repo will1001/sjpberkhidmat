@@ -171,9 +171,10 @@ const Jaringan = () => {
       name: "Progres Target",
       selector: (row) => (
         <ProgressBar
-          progress={
-            (Number(getTotalAnggotaJaringan(row._id)) / row.target) * 100
-          }
+          progress={(
+            (Number(getTotalAnggotaJaringan(row._id)) / row.target) *
+            100
+          ).toFixed(2)}
           bgcolor={"#FF5001"}
           height={"24px"}
         />

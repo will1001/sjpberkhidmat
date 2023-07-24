@@ -311,15 +311,15 @@ const DptDps = () => {
             {dptdps?.data?.map((res, i) => (
               <tr key={i} className={`${(i + 1) % 2 !== 0 ? "bg-[#F9FAFB]" : "bg-white"} h-[51px] text-[#374151]`}>
                 <td className=" px-4 py-2 whitespace-nowrap">{++i + (currenPage - 1) * 10}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.nik}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.name}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.place_birth}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.date_birth?.split("T").shift().split("-").reverse().join("/")}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.kabupaten.name}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.kecamatan.name}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.kelurahan.name}</td>
-                <td className=" px-4 py-2 text-center">{res.gender}</td>
-                <td className=" px-4 py-2 whitespace-nowrap">{res.address}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.nik}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.place_birth}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.date_birth?.split("T").shift().split("-").reverse().join("/")}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.kabupaten?.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.kecamatan?.name}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.kelurahan?.name}</td>
+                <td className=" px-4 py-2 text-center">{res?.gender}</td>
+                <td className=" px-4 py-2 whitespace-nowrap">{res?.address}</td>
                 {/* <td className=" px-4 py-2">Indonesia</td> */}
                 <td
                   style={{
