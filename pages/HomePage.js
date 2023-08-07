@@ -155,7 +155,7 @@ const HomePage = ({ router }) => {
               <div>
                 <p className="font-bold text-white text-[7.8px]">Ayo Gunakan Hak Pilih Anda</p>
 
-                <p className="text-white text-[5.4px]">17 Agustus 2023 Pemilihan Umum DPR RI</p>
+                <p className="text-white text-[5.4px]">14 Februari 2024 Pemilihan Umum DPR RI</p>
               </div>
               <CountDown mobile={screenSize} />
             </div>
@@ -438,7 +438,7 @@ const HomePage = ({ router }) => {
               <p>
                 <span className="font-bold text-white text-[26px]">Ayo Gunakan Hak Pilih Anda</span>
                 <br />
-                <span className="text-white text-[18px]">17 Agustus 2023 Pemilihan Umum DPR RI</span>
+                <span className="text-white text-[18px]">14 Februari 2024 Pemilihan Umum DPR RI</span>
               </p>
               <CountDown />
               <div className="" ref={refPublikasi}></div>
