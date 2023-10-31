@@ -287,7 +287,7 @@ const DptDps = () => {
             <NewButton
               action={() => {
                 console.log(exportExcel);
-                console.log("exportExcel");
+                // console.log("exportExcel");
                 // alert(exportExcel.link);
                 window.open(
                   process.env.NEXT_PUBLIC_BASE_URL_IMAGE + exportExcel.link,
