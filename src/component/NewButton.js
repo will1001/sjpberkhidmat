@@ -2,7 +2,13 @@ import React from "react";
 
 const NewButton = ({ style, title, action, icon }) => {
   return (
-    <button className="flex items-center justify-center gap-2" onClick={action} style={style}>
+    <a
+      target="_blank"
+      href="https://file.sjpberkhidmat.id/export/export.xlsx"
+      rel="noopener noreferrer"
+      className="flex items-center justify-center gap-2"
+      style={style}
+    >
       {icon === undefined ? (
         title
       ) : (
@@ -10,7 +16,7 @@ const NewButton = ({ style, title, action, icon }) => {
           {title} <img src={icon.src} alt={`${title}`} />
         </>
       )}
-    </button>
+    </a>
   );
 };
 

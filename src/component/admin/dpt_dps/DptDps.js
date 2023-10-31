@@ -284,27 +284,27 @@ const DptDps = () => {
                 dispatch(showOrHidePopUpDptDps({ type: "import" }));
               }}
             />
-            <a
+            {/* <a
               target="_blank"
               href="https://file.sjpberkhidmat.id/export/export.xlsx"
               rel="noopener noreferrer"
             >
               Export
-            </a>
+            </a> */}
             <NewButton
-              action={() => {
-                console.log(exportExcel);
-                // console.log("exportExcel");
-                // alert(exportExcel.link);
-                window.open(
-                  "https://file.sjpberkhidmat.id/export/export.xlsx"
-                  // "_blank"
-                );
-                // router.push({
-                //   pathname: "/Admin",
-                //   query: { component: "EksportDataDpt" },
-                // });
-              }}
+              // action={() => {
+              //   console.log(exportExcel);
+              //   // console.log("exportExcel");
+              //   // alert(exportExcel.link);
+              //   window.open(
+              //     "https://file.sjpberkhidmat.id/export/export.xlsx"
+              //     // "_blank"
+              //   );
+              //   // router.push({
+              //   //   pathname: "/Admin",
+              //   //   query: { component: "EksportDataDpt" },
+              //   // });
+              // }}
               style={exportButton}
               icon={Icon1}
             />
