@@ -284,13 +284,14 @@ const DptDps = () => {
                 dispatch(showOrHidePopUpDptDps({ type: "import" }));
               }}
             />
+
             <NewButton
               action={() => {
                 console.log(exportExcel);
                 // console.log("exportExcel");
                 // alert(exportExcel.link);
                 window.open(
-                  process.env.NEXT_PUBLIC_BASE_URL_IMAGE + exportExcel.link,
+                  "https://file.sjpberkhidmat.id/export/export.xlsx"
                   // "_blank"
                 );
                 // router.push({
