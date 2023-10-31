@@ -284,7 +284,13 @@ const DptDps = () => {
                 dispatch(showOrHidePopUpDptDps({ type: "import" }));
               }}
             />
-
+            <a
+              target="_blank"
+              href="https://file.sjpberkhidmat.id/export/export.xlsx"
+              rel="noopener noreferrer"
+            >
+              Export
+            </a>
             <NewButton
               action={() => {
                 console.log(exportExcel);
