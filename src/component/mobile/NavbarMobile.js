@@ -44,7 +44,7 @@ const NavbarMobile = ({ popup, setPopup }) => {
   return (
     <>
       {" "}
-      <div className="flex items-center justify-between px-[16px] py-[10px] border-b-[1px] sticky top-0 bg-white">
+      <div className="flex items-center justify-between px-[16px] py-[10px] border-b-[1px] sticky top-0 bg-white mt-[30px]">
         <div className="flex gap-3 items-center">
           <img
             onClick={() => {
