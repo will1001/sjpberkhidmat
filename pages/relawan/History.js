@@ -22,6 +22,7 @@ import NavbarMobile from "../../src/component/mobile/NavbarMobile";
 import SelectPeriode from "../../src/component/SelectPeriode";
 import ToolSidebar from "../../src/component/mobile/ToolSidebar";
 import Camera from "../../src/component/Camera";
+import Pagination from "../../src/component/Pagination";
 
 const History = () => {
   const token = useSelector((state) => state.user.token);
@@ -35,23 +36,29 @@ const History = () => {
   const [popup, setPopup] = useState(false);
   const [uploadPlano, setUploadPlano] = useState();
   const [keyword, setKeyword] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (keyword !== "" && keyword.length >= 3) {
       axiosFetch(
         "get",
-        `user/real_count/plano?page=1&limit=10&keyword=${keyword}`,
+        `user/real_count/plano?page=${currentPage}&limit=10&keyword=${keyword}`,
         {},
         token
       )
         .then((res) => setPlano(res))
         .catch((err) => console.log(err));
     } else {
-      axiosFetch("get", "user/real_count/plano?page=1&limit=10", {}, token)
+      axiosFetch(
+        "get",
+        `user/real_count/plano?page=${currentPage}&limit=10`,
+        {},
+        token
+      )
         .then((res) => setPlano(res))
         .catch((err) => console.log(err));
     }
-  }, [keyword]);
+  }, [keyword, currentPage]);
 
   const hapusPlano = (id) =>
     axiosFetch("delete", `user/real_count/plano/${id}`, {}, token)
@@ -214,6 +221,7 @@ const History = () => {
               <img src={uploadIcon.src} alt="upload_plano.png" />
               <p className="text-white font-semibold">Upload Foto C1 Plano</p>
             </div>
+
             <div className="overflow-x-scroll scrollbar-thin scrollbar-thumb-[#374151]">
               <div className="flex items-center bg-[#374151] text-white gap-3 p-2 mt-3 rounded-t-sm h-[50px] w-[900px]">
                 <p className="w-[150px]">Thumbnail</p>
@@ -554,6 +562,14 @@ const History = () => {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="mt-3">
+              <Pagination
+                total={planao?.data?.metadata?.total}
+                current_page={currentPage}
+                setCurrentPage={setCurrentPage}
+                total_page={planao?.data?.metadata?.totalPage}
+              />
             </div>
           </div>
         </>
