@@ -274,7 +274,12 @@ const InputData = () => {
                     {roles === "relawan" ? "Submit" : "Verifikasi"}
                   </p>
                 </div>
-                <div className="py-2 px-4 border rounded-sm border-[#374151] text-[#374151] font-semibold cursor-pointer">
+                <div
+                  onClick={() => {
+                    router.back();
+                  }}
+                  className="py-2 px-4 border rounded-sm border-[#374151] text-[#374151] font-semibold cursor-pointer"
+                >
                   Lanjutkan Nanti
                 </div>
               </div>
